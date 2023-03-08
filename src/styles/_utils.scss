@@ -1,0 +1,74 @@
+$tablet: 768;
+$large: 1024;
+$desktop: 1280;
+
+@mixin box($width, $height: $width, $radius: 0) {
+  width: $width;
+  height: $height;
+  @if $radius != 0 {
+    border-radius: $radius;
+  }
+}
+
+@mixin cover-background {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+
+@mixin pseudo($width: 100%,
+  $height: 100%,
+  $display: inline-block,
+  $pos: absolute,
+  $content: ""
+
+) {
+  content: $content;
+  display: $display;
+  position: $pos;
+  @include box($width, $height);
+}
+
+// /* ===== Usage ===== */
+// div {
+//   position: relative;
+//   width: 200px;
+//   height: 200px;
+
+//   &:after {
+//     @include pseudo(100px, 100px);
+//   }
+// }
+
+@mixin tablet {
+  @media only screen and (min-width: ($tablet * 1px)) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (min-width: ($large * 1px)) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (min-width: ($desktop * 1px)) {
+    @content;
+  }
+}
+
+@mixin fade($type) {
+  @if $type=="hide" {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s, opacity 1s;
+  }
+
+  @else if $type=="show" {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 1s, opacity 1s;
+  }
+}

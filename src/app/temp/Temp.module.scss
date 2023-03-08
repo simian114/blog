@@ -1,0 +1,14 @@
+@use "@styles/utils";
+
+$color-primary: #0070f3;
+
+.zz  {
+  @include utils.box(100px, 200px);
+  background-color: var(--primary1);
+  @include utils.tablet {
+    color:red;
+  }
+  @include utils.large {
+    color: var(--gray12);
+  }
+}
