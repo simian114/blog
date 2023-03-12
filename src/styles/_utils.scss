@@ -1,7 +1,3 @@
-$tablet: 768;
-$large: 1024;
-$desktop: 1280;
-
 @mixin box($width, $height: $width, $radius: 0) {
   width: $width;
   height: $height;
@@ -16,13 +12,12 @@ $desktop: 1280;
   background-position: center;
 }
 
-
-@mixin pseudo($width: 100%,
+@mixin pseudo(
+  $width: 100%,
   $height: 100%,
   $display: inline-block,
   $pos: absolute,
   $content: ""
-
 ) {
   content: $content;
   display: $display;
@@ -40,6 +35,10 @@ $desktop: 1280;
 //     @include pseudo(100px, 100px);
 //   }
 // }
+
+$tablet: 768;
+$large: 1024;
+$desktop: 1280;
 
 @mixin tablet {
   @media only screen and (min-width: ($tablet * 1px)) {
@@ -60,13 +59,11 @@ $desktop: 1280;
 }
 
 @mixin fade($type) {
-  @if $type=="hide" {
+  @if $type== "hide" {
     visibility: hidden;
     opacity: 0;
     transition: visibility 1s, opacity 1s;
-  }
-
-  @else if $type=="show" {
+  } @else if $type== "show" {
     visibility: visible;
     opacity: 1;
     transition: visibility 1s, opacity 1s;

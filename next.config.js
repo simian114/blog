@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path")
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -8,11 +8,17 @@ const nextConfig = {
   webpack(config) {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@styles': path.resolve(__dirname, 'src/styles'),
-    };
+      "@styles": path.resolve(__dirname, "src/styles"),
+    }
 
-    return config;
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ["@svgr/webpack"],
+    })
+
+    return config
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

@@ -1,0 +1,48 @@
+@use "@styles/utils";
+@use "@styles/typography";
+
+.navigation {
+  @include utils.box(100%, 80px);
+  color: var(--gray12);
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+  .navigation__menus {
+    display: flex;
+    align-items: center;
+
+    > li {
+      &:hover {
+        > a {
+          background-color: var(--gray4);
+        }
+      }
+    }
+
+    > li:not(:first-child) {
+      > a {
+        @include typography.h3;
+        @include typography.medium;
+        display: block;
+        padding: 4px 12px;
+        color: var(--gray8);
+        border-radius: 0.5rem;
+      }
+    }
+    > li.active {
+      > a {
+        color: var(--gray12);
+      }
+    }
+  }
+
+  &__utils {
+    color: yellow;
+    //
+  }
+}
