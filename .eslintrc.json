@@ -6,6 +6,7 @@
   ],
   "plugins": ["prettier"],
   "rules": {
+    "@next/next/no-html-link-for-pages": ["error", "packages/my-app/pages/"],
     "prettier/prettier": [
       "error",
       {
