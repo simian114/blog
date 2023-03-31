@@ -1,138 +1,38 @@
 @import "@styles/reset.css";
 @import "@radix-ui/colors/cyan.css";
+@import "@radix-ui/colors/cyanDark.css";
 @import "@radix-ui/colors/gray.css";
 @import "@radix-ui/colors/grayDark.css";
 @import "@styles/utils";
 
-/* 1 App background */
-/* 2 Subtle background */
-/* 3 UI element background */
-/* 4 Hovered UI element background */
-/* 5 Active / Selected UI element background */
-/* 6 Subtle borders and separators */
-/* 7 UI element border and focus rings */
-/* 8 Hovered UI element border */
-/* 9 Solid backgrounds */
-/* 10 Hovered solid backgrounds */
-/* 11 Low-contrast text */
-/* 12 High-contrast text */
+@import "@styles/root.scss";
 
-:root {
-  body {
-    transition: background-color 0.25s linear;
-    font-family: "Pretendard Variable", Pretendard, -apple-system,
-      BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
-      "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
-      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-  }
-  --slate1: hsl(206, 30%, 98.8%);
-  --slate2: hsl(210, 16.7%, 97.6%);
-  --slate3: hsl(209, 13.3%, 95.3%);
-  --slate4: hsl(209, 12.2%, 93.2%);
-  --slate5: hsl(208, 11.7%, 91.1%);
-  --slate6: hsl(208, 11.3%, 88.9%);
-  --slate7: hsl(207, 11.1%, 85.9%);
-  --slate8: hsl(205, 10.7%, 78%);
-  --slate9: hsl(206, 6%, 56.1%);
-  --slate10: hsl(206, 5.8%, 52.3%);
-  --slate11: hsl(206, 6%, 43.5%);
-  --slate12: hsl(206, 24%, 9%);
-  --slateDark1: hsl(200, 7%, 8.8%);
-  --slateDark2: hsl(195, 7.1%, 11%);
-  --slateDark3: hsl(197, 6.8%, 13.6%);
-  --slateDark4: hsl(198, 6.6%, 15.8%);
-  --slateDark5: hsl(199, 6.4%, 17.9%);
-  --slateDark6: hsl(201, 6.2%, 20.5%);
-  --slateDark7: hsl(203, 6%, 24.3%);
-  --slateDark8: hsl(207, 5.6%, 31.6%);
-  --slateDark9: hsl(206, 6%, 43.9%);
-  --slateDark10: hsl(206, 5.2%, 49.5%);
-  --slateDark11: hsl(206, 6%, 63%);
-  --slateDark12: hsl(210, 6%, 93%);
-  /*  */
-  --gray1: var(--slate1);
-  --gray2: var(--slate2);
-  --gray3: var(--slate3);
-  --gray4: var(--slate4);
-  --gray5: var(--slate5);
-  --gray6: var(--slate6);
-  --gray7: var(--slate7);
-  --gray8: var(--slate8);
-  --gray9: var(--slate9);
-  --gray10: var(--slate10);
-  --gray11: var(--slate11);
-  --gray12: var(--slate12);
-  --max-width: 1100px;
-  --border-radius: 12px;
-}
-@media (prefers-color-scheme: light) {
-  :root {
-    --gray1: var(--slate1);
-    --gray2: var(--slate2);
-    --gray3: var(--slate3);
-    --gray4: var(--slate4);
-    --gray5: var(--slate5);
-    --gray6: var(--slate6);
-    --gray7: var(--slate7);
-    --gray8: var(--slate8);
-    --gray9: var(--slate9);
-    --gray10: var(--slate10);
-    --gray11: var(--slate11);
-    --gray12: var(--slate12);
-  }
-}
+/* components start */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --gray1: var(--slateDark1);
-    --gray2: var(--slateDark2);
-    --gray3: var(--slateDark3);
-    --gray4: var(--slateDark4);
-    --gray5: var(--slateDark5);
-    --gray6: var(--slateDark6);
-    --gray7: var(--slateDark7);
-    --gray8: var(--slateDark8);
-    --gray9: var(--slateDark9);
-    --gray10: var(--slateDark10);
-    --gray11: var(--slateDark11);
-    --gray12: var(--slateDark12);
-  }
-}
+@import "@styles/components/layout/nav.scss";
 
-.light-theme {
-  --gray1: var(--slate1);
-  --gray2: var(--slate2);
-  --gray3: var(--slate3);
-  --gray4: var(--slate4);
-  --gray5: var(--slate5);
-  --gray6: var(--slate6);
-  --gray7: var(--slate7);
-  --gray8: var(--slate8);
-  --gray9: var(--slate9);
-  --gray10: var(--slate10);
-  --gray11: var(--slate11);
-  --gray12: var(--slate12);
-}
+/* components end */
 
-.dark-theme {
-  --gray1: var(--slateDark1);
-  --gray2: var(--slateDark2);
-  --gray3: var(--slateDark3);
-  --gray4: var(--slateDark4);
-  --gray5: var(--slateDark5);
-  --gray6: var(--slateDark6);
-  --gray7: var(--slateDark7);
-  --gray8: var(--slateDark8);
-  --gray9: var(--slateDark9);
-  --gray10: var(--slateDark10);
-  --gray11: var(--slateDark11);
-  --gray12: var(--slateDark12);
-}
+/* mdx start */
+
+@import "@styles/mdx.scss";
+
+/* mdx end */
+
+/* pages start */
+
+@import "@styles/page/main.scss";
+
+/* pages end */
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,
@@ -164,6 +64,9 @@ a {
   max-width: 48rem;
   padding-left: 1rem;
   padding-right: 1rem;
+  > main {
+    min-height: 100vh;
+  }
   // 769 ~ 1024 ->
   @include tablet {
     padding-left: 1.5rem;

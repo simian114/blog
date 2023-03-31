@@ -1,0 +1,68 @@
+---
+title: main home
+date: "2022-12-11"
+---
+
+<AnchorH1 href="Rocketman">Rocketman</AnchorH1>
+
+Frontend Developer at [Stunning](https://about.stunning.kr/), developing [LOUD](https://www.loud.kr)
+
+---
+
+<AnchorH1 href="sketch-book">낙서장....</AnchorH1>
+
+블로그 개발하면서 겪는 일 & 해결법 일단 모조리 넣는곳...
+
+---
+
+<AnchorH2 href="color">color 색</AnchorH2>
+
+> [radix-color](https://www.radix-ui.com/docs/colors/getting-started/installation)
+
+- 블로그에서 사용할 메인 컬러 선택
+  - primary: [Cyan](https://www.radix-ui.com/docs/colors/palette-composition/the-scales#cyan)
+  - gray scale: [Slate](https://www.radix-ui.com/docs/colors/palette-composition/the-scales#slate)
+- 색 설정 기준은 내마음.
+
+---
+
+<AnchorH2 href="theme">light / dark 테마</AnchorH2>
+
+- `theme` 을 `toggle` 할 때 마다 **`cookie`** 값을 변경해줌.
+- 사용자가 서버에 접속 했을 때 `cookie` 를 확인하고 `layout` 에서 `body` 의 `class` 명을 `light` / `dark` 로 지정
+  - `localStorage` 를 사용하지 않고 `cookie` 로 저장하는 이유
+- 만약 `theme` 쿠키가 설정되어있지 않다면 **사용자 컴퓨터의 기본 설정**을 따라감
+  - `media query` 의 `prefer-color-theme` 를 이용
+  - `theme` 을 한번이라도 `toggle` 하면 `cookie` 값 저장되므로 `media query` 의 `prefer-color-theme` 은 사용안함
+
+---
+
+<AnchorH2 href="style">스타일링</AnchorH2>
+
+- `전통적인` 방법의 스타일링을 해본적이 없음. 따라서 이번에 해보기로함
+  - 회사에서 사용하는`css-in-js` 만 다룸...
+  - 기왕 css 파일 사용하는거 `scss` 도 도입 결정
+
+---
+
+<AnchorH2 href="css-module">module css이 내 생각과는 다르게 동작</AnchorH2>
+
+> 아직 부정확한 정보. 정확히 어떤 경우에 `css-module` 이 정상 동작하고 / 안하는지 분석이 필요함.
+
+- page 같은 server-side 컴포넌트들은 csr 로 이동할 때 css module 가 정상동작하지 않음
+  - 확인해보니 js 파일을 전부 받고, 가장 마지막에 css 파일을 불러옴.
+  - 때문에 css flickering 현상이 발생함.
+- 하지만 csr-components 들은 css module 을 사용할 수 있음(정확하지 않음.)
+
+---
+
+<AnchorH2 href="mdx">mdx를 이용한 블로그 만들기</AnchorH2>
+
+> [MDX Docx](https://mdxjs.com/docs/)
+
+- 인터넷 글 보면 모조리 tailwind 를 사용해서 `mdx` 의 기본 컴포넌트들의 스타일링을 진행해주고있었다.
+- 이왕 `css` 와 `color` 조합을 처음부터 하는김에 `mdx` 의 기본 컴포넌트들의 스타일링도 직접해주기로함.
+  - 우선 [mdx-components](https://mdxjs.com/table-of-components/) 의 컴포넌트 리스트들을 따라서 하나하나 스타일링 진행.
+  - `code` / `pre` 과 같은 `code syntax` 가 필요한 부분은 [`highlight.js`](https://highlightjs.org/) 의 도움을 받음.
+  - 스타일링 된 컴포넌트들은 [여기](/mdx-sketch) 에서 확인 가능
+- 추후에는 브라우저에서 실시간으로 mdx 파일 작성하고 저장하는게 만들 예정

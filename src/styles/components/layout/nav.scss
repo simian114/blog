@@ -2,9 +2,9 @@
 @use "@styles/typography";
 
 .navigation {
-  @include utils.box(100%, 80px);
   color: var(--gray12);
-  padding-top: 32px;
+  padding-top: 2rem;
+  padding-bottom: 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,13 +12,14 @@
     width: 32px;
     height: 32px;
   }
-  .navigation__menus {
+  &__menus {
     display: flex;
     align-items: center;
 
     > li {
       &:hover {
         > a {
+          height: 100%;
           background-color: var(--gray4);
         }
       }
@@ -37,12 +38,8 @@
     > li.active {
       > a {
         color: var(--gray12);
+        @include typography.bold;
       }
     }
-  }
-
-  &__utils {
-    color: yellow;
-    //
   }
 }

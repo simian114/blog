@@ -1,8 +1,8 @@
 import { ReactElement, useEffect, useState } from "react"
 import { Theme } from "./themeProvider"
 import { useCookies } from "react-cookie"
-import { Utils } from "@/app/client"
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons"
+import { isMachesMediaQuery } from "@/lib/client/mediaQuery.client"
 
 // NOTE:
 export default function ThemeToggler(): ReactElement {
@@ -22,7 +22,9 @@ export default function ThemeToggler(): ReactElement {
     let nextTheme = prevTheme === "dark" ? "light" : "dark"
 
     if (!prevTheme) {
-      const isSystemDarkMode = Utils.isMaches("(prefers-color-scheme: dark)")
+      const isSystemDarkMode = isMachesMediaQuery(
+        "(prefers-color-scheme: dark)"
+      )
       nextTheme = isSystemDarkMode ? "light" : "dark"
     }
     setCookie("theme", nextTheme, {
@@ -45,7 +47,7 @@ export default function ThemeToggler(): ReactElement {
       document.body.classList.add("light-theme")
     }
   }, [theme])
-  // return <button onClick={() => handleThemeToggle(theme)}>theme toggle!</button>
+
   if (!isMounted) {
     return <button onClick={() => handleThemeToggle(theme)}>...</button>
   }

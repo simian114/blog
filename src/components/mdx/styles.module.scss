@@ -1,0 +1,12 @@
+.anchor {
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--primary9);
+    &::after {
+      display: inline;
+      content: "#";
+      margin-left: 4px;
+      color: var(--primary9);
+    }
+  }
+}

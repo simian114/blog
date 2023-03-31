@@ -1,8 +1,8 @@
 "use client"
 
 import { ReactElement } from "react"
-import { ThemeProvider } from "./components/theme"
-import { ThemeProviderProps } from "./components/theme/themeProvider"
+import { ThemeProvider } from "../components/theme"
+import { ThemeProviderProps } from "../components/theme/themeProvider"
 
 interface ProvidersProps {
   themeProvider: ThemeProviderProps

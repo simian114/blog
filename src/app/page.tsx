@@ -1,18 +1,9 @@
-import styles from "./page.module.scss"
+import { HOME_PATH } from "@/constants/path"
+import { getInfoByCurrentPath } from "@/lib/server/post.server"
+import { MdxContent } from "./mdx-content"
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div
-        style={{
-          fontSize: "40px",
-          lineHeight: "56px",
-          letterSpacing: "-0.5px",
-          fontWeight: "700",
-        }}
-      >
-        헬로우 월드입니다!
-      </div>
-    </main>
-  )
+export default async function Home() {
+  const { frontmatter, serialized } = await getInfoByCurrentPath(HOME_PATH)
+  frontmatter
+  return <main>{serialized && <MdxContent source={serialized} />}</main>
 }
