@@ -29,7 +29,7 @@ export default function Nav(): ReactElement {
               pathname !== "/" && pathname.startsWith(menu.href) ? "active" : ""
             }
           >
-            <Link href={menu.href} key={menu.id} prefetch={false}>
+            <Link href={menu.href} key={menu.id} prefetch>
               {menu.content}
             </Link>
           </li>
