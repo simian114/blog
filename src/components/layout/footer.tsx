@@ -16,7 +16,7 @@ const LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer inner">
       <div className="footer__spacer" />
       <div className="footer__contents">
         <div className="footer__contents__links">

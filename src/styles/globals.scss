@@ -4,7 +4,7 @@
 @import "@styles/root.scss";
 
 /* components start */
-@import "@styles/components/layout/nav.scss";
+@import "@styles/components/layout/header.scss";
 @import "@styles/components/layout/footer.scss";
 /* components end */
 
@@ -31,7 +31,7 @@ html {
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  // overflow-x: hidden;
 }
 
 body {
@@ -50,7 +50,36 @@ a {
 
 // mobile(default): 0 ~ 768
 #app {
-  width: 100%;
+  > section {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 48rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    // 769 ~ 1024 ->
+    @include tablet {
+      padding-left: 1.5rem;
+      max-width: 64rem;
+    }
+    // 1025 ~ 1280 ->
+    @include large {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      // width: 960px;
+      max-width: 80rem;
+    }
+    // 1281 ~
+    @include desktop {
+      // width: 1280px;
+      padding-left: 5rem;
+      padding-right: 5rem;
+      max-whdt: 90rem;
+    }
+  }
+}
+
+.inner {
   margin: 0 auto;
   max-width: 48rem;
   padding-left: 1rem;
@@ -63,9 +92,9 @@ a {
   }
   // 1025 ~ 1280 ->
   @include large {
+    // width: 960px;
     padding-left: 2rem;
     padding-right: 2rem;
-    // width: 960px;
     max-width: 80rem;
   }
   // 1281 ~
