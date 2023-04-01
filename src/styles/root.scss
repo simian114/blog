@@ -1,204 +1,88 @@
-//
+// LINK: https://www.radix-ui.com/docs/colors/palette-composition/understanding-the-scale
+// NOTE: backgrounds
 /* 1 App background */
-/* 2 Subtle background */ /* 3 UI element background */
+/* 2 Subtle background */
+/* 3 UI element background */
 /* 4 Hovered UI element background */
 /* 5 Active / Selected UI element background */
+
+// NOTE: borders
 /* 6 Subtle borders and separators */
-/* 7 UI element border and focus rings */ /* 8 Hovered UI element border */
-/* 9 Solid backgrounds */ /* 10 Hovered solid backgrounds */
-/* 11 Low-contrast text */ /* 12 High-contrast text */
+/* 7 UI element border and focus rings */
+/* 8 Hovered UI element border */
+
+/* 9 Solid backgrounds */
+/* 10 Hovered solid backgrounds */
+
+/* 11 Low-contrast text */
+/* 12 High-contrast text */
+
+@import "@styles/theme/light.scss";
+@import "@styles/theme/dark.scss";
 
 :root {
-  body {
-    transition: background-color 0.25s linear;
-    font-family: "Pretendard Variable", Pretendard, -apple-system,
-      BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
-      "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
-      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-  }
   --box-border-radius: 0.25rem;
-  // NOTE: 색 선언
-  --slate1: hsl(206, 30%, 98.8%);
-  --slate2: hsl(210, 16.7%, 97.6%);
-  --slate3: hsl(209, 13.3%, 95.3%);
-  --slate4: hsl(209, 12.2%, 93.2%);
-  --slate5: hsl(208, 11.7%, 91.1%);
-  --slate6: hsl(208, 11.3%, 88.9%);
-  --slate7: hsl(207, 11.1%, 85.9%);
-  --slate8: hsl(205, 10.7%, 78%);
-  --slate9: hsl(206, 6%, 56.1%);
-  --slate10: hsl(206, 5.8%, 52.3%);
-  --slate11: hsl(206, 6%, 43.5%);
-  --slate12: hsl(206, 24%, 9%);
-  --slateDark1: hsl(200, 7%, 8.8%);
-  --slateDark2: hsl(195, 7.1%, 11%);
-  --slateDark3: hsl(197, 6.8%, 13.6%);
-  --slateDark4: hsl(198, 6.6%, 15.8%);
-  --slateDark5: hsl(199, 6.4%, 17.9%);
-  --slateDark6: hsl(201, 6.2%, 20.5%);
-  --slateDark7: hsl(203, 6%, 24.3%);
-  --slateDark8: hsl(207, 5.6%, 31.6%);
-  --slateDark9: hsl(206, 6%, 43.9%);
-  --slateDark10: hsl(206, 5.2%, 49.5%);
-  --slateDark11: hsl(206, 6%, 63%);
-  --slateDark12: hsl(210, 6%, 93%);
-  /*  */
-  --gray1: var(--slate1);
-  --gray2: var(--slate2);
-  --gray3: var(--slate3);
-  --gray4: var(--slate4);
-  --gray5: var(--slate5);
-  --gray6: var(--slate6);
-  --gray7: var(--slate7);
-  --gray8: var(--slate8);
-  --gray9: var(--slate9);
-  --gray10: var(--slate10);
-  --gray11: var(--slate11);
-  --gray12: var(--slate12);
-
-  // NOTE: primary
-  --cyan1: hsl(185, 60%, 98.7%);
-  --cyan2: hsl(185, 73.3%, 97.1%);
-  --cyan3: hsl(186, 70.2%, 94.4%);
-  --cyan4: hsl(186, 63.8%, 90.6%);
-  --cyan5: hsl(187, 58.3%, 85.4%);
-  --cyan6: hsl(188, 54.6%, 78.4%);
-  --cyan7: hsl(189, 53.7%, 68.7%);
-  --cyan8: hsl(189, 60.3%, 52.5%);
-  --cyan9: hsl(190, 95%, 39%);
-  --cyan10: hsl(191, 91.2%, 36.8%);
-  --cyan11: hsl(192, 85%, 31%);
-  --cyan12: hsl(192, 88%, 12.5%);
-  // NOTE: primary dark
-  --cyanDark1: hsl(192, 60%, 7.2%);
-  --cyanDark2: hsl(192, 71.4%, 8.2%);
-  --cyanDark3: hsl(192, 75.9%, 10.8%);
-  --cyanDark4: hsl(192, 79.3%, 12.8%);
-  --cyanDark5: hsl(192, 82.5%, 14.6%);
-  --cyanDark6: hsl(192, 86.6%, 16.9%);
-  --cyanDark7: hsl(192, 92.6%, 20.1%);
-  --cyanDark8: hsl(192, 100%, 24.5%);
-  --cyanDark9: hsl(190, 95%, 39%);
-  --cyanDark10: hsl(188, 100%, 40%);
-  --cyanDark11: hsl(186, 100%, 42.2%);
-  --cyanDark12: hsl(185, 73%, 93.2%);
-
   --max-width: 1100px;
   --border-radius: 12px;
+
+  /*
+    bg: background
+    sub: subtle
+    el: element
+  */
+  --app-bg-color: var(--gray1);
+  --app-sub-bg-color: var(--gray2);
+
+  // NOTE: ui -- components
+  --ui-el-bg-color: var(--gray3);
+  --ui-el-hovered-bg-color: var(--gray4);
+  --ui-el-active-bg-color: var(--gray5);
+  --ui-el-selected-bg-color: var(--gray5);
+
+  // borders & separators
+  --separator-color: var(--gray6);
+  --ui-static-border-color: var(--gray6); // 정적인 컴포넌트의 border
+  // interactive 한 컴포넌트의 border
+  --ui-interactive-border-color: var(--gray7);
+  --ui-focused-border-color: var(--gray7);
+  --ui-hovered-border-color: var(--gray8);
+
+  // solid backgrounds (app, header, comopnent 모든곳에 사용)
+  --solid-bg-color: var(--gray9);
+  --solid-hovered-bg-color: var(--gray10);
+
+  // text (contrast 생략)
+  --text-low-color: var(--gray11);
+  --text-high-color: var(--gray12);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --gray1: var(--slate1);
-    --gray2: var(--slate2);
-    --gray3: var(--slate3);
-    --gray4: var(--slate4);
-    --gray5: var(--slate5);
-    --gray6: var(--slate6);
-    --gray7: var(--slate7);
-    --gray8: var(--slate8);
-    --gray9: var(--slate9);
-    --gray10: var(--slate10);
-    --gray11: var(--slate11);
-    --gray12: var(--slate12);
+:root {
+  $palettes: "primary", "secondary", "tertiary";
+  @each $palette in $palettes {
+    --app-bg-#{$palette}-color: var(--#{$palette}1);
+    --app-sub-bg-#{$palette}-color: var(--#{$palette}2);
 
-    --primary1: var(--cyan1);
-    --primary2: var(--cyan2);
-    --primary3: var(--cyan3);
-    --primary4: var(--cyan4);
-    --primary5: var(--cyan5);
-    --primary6: var(--cyan6);
-    --primary7: var(--cyan7);
-    --primary8: var(--cyan8);
-    --primary9: var(--cyan9);
-    --primary10: var(--cyan10);
-    --primary11: var(--cyan11);
-    --primary12: var(--cyan12);
+    // NOTE: ui -- components
+    --ui-el-bg-#{$palette}-color: var(--#{$palette}3);
+    --ui-el-hovered-bg-#{$palette}-color: var(--#{$palette}4);
+    --ui-el-active-bg-#{$palette}-color: var(--#{$palette}5);
+    --ui-el-selected-bg-#{$palette}-color: var(--#{$palette}5);
+
+    // borders & separators
+    // 정적인 컴포넌트의 border
+    --separator-#{$palette}-color: var(--#{$palette}6);
+    --ui-static-border-#{$palette}-color: var(--#{$palette}6);
+    // interactive 한 컴포넌트의 border
+    --ui-interactive-border-#{$palette}-color: var(--#{$palette}7);
+    --ui-focused-border-#{$palette}-color: var(--#{$palette}7);
+    --ui-hovered-border-#{$palette}-color: var(--#{$palette}8);
+
+    // solid backgrounds (app, header, comopnent 모든곳에 사용)
+    --solid-bg-#{$palette}-color: var(--#{$palette}9);
+    --solid-hovered-bg-#{$palette}-color: var(--#{$palette}10);
+
+    // text (contrast 생략)
+    --text-low-#{$palette}-color: var(--#{$palette}11);
+    --text-high-#{$palette}-color: var(--#{$palette}12);
   }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --gray1: var(--slateDark1);
-    --gray2: var(--slateDark2);
-    --gray3: var(--slateDark3);
-    --gray4: var(--slateDark4);
-    --gray5: var(--slateDark5);
-    --gray6: var(--slateDark6);
-    --gray7: var(--slateDark7);
-    --gray8: var(--slateDark8);
-    --gray9: var(--slateDark9);
-    --gray10: var(--slateDark10);
-    --gray11: var(--slateDark11);
-    --gray12: var(--slateDark12);
-    //
-    --primary1: var(--cyanDark1);
-    --primary2: var(--cyanDark2);
-    --primary3: var(--cyanDark3);
-    --primary4: var(--cyanDark4);
-    --primary5: var(--cyanDark5);
-    --primary6: var(--cyanDark6);
-    --primary7: var(--cyanDark7);
-    --primary8: var(--cyanDark8);
-    --primary9: var(--cyanDark9);
-    --primary10: var(--cyanDark10);
-    --primary11: var(--cyanDark11);
-    --primary12: var(--cyanDark12);
-  }
-}
-
-.light-theme {
-  --gray1: var(--slate1);
-  --gray2: var(--slate2);
-  --gray3: var(--slate3);
-  --gray4: var(--slate4);
-  --gray5: var(--slate5);
-  --gray6: var(--slate6);
-  --gray7: var(--slate7);
-  --gray8: var(--slate8);
-  --gray9: var(--slate9);
-  --gray10: var(--slate10);
-  --gray11: var(--slate11);
-  --gray12: var(--slate12);
-  //
-  --primary1: var(--cyan1);
-  --primary2: var(--cyan2);
-  --primary3: var(--cyan3);
-  --primary4: var(--cyan4);
-  --primary5: var(--cyan5);
-  --primary6: var(--cyan6);
-  --primary7: var(--cyan7);
-  --primary8: var(--cyan8);
-  --primary9: var(--cyan9);
-  --primary10: var(--cyan10);
-  --primary11: var(--cyan11);
-  --primary12: var(--cyan12);
-}
-
-.dark-theme {
-  --gray1: var(--slateDark1);
-  --gray2: var(--slateDark2);
-  --gray3: var(--slateDark3);
-  --gray4: var(--slateDark4);
-  --gray5: var(--slateDark5);
-  --gray6: var(--slateDark6);
-  --gray7: var(--slateDark7);
-  --gray8: var(--slateDark8);
-  --gray9: var(--slateDark9);
-  --gray10: var(--slateDark10);
-  --gray11: var(--slateDark11);
-  --gray12: var(--slateDark12);
-  //
-  --primary1: var(--cyanDark1);
-  --primary2: var(--cyanDark2);
-  --primary3: var(--cyanDark3);
-  --primary4: var(--cyanDark4);
-  --primary5: var(--cyanDark5);
-  --primary6: var(--cyanDark6);
-  --primary7: var(--cyanDark7);
-  --primary8: var(--cyanDark8);
-  --primary9: var(--cyanDark9);
-  --primary10: var(--cyanDark10);
-  --primary11: var(--cyanDark11);
-  --primary12: var(--cyanDark12);
 }

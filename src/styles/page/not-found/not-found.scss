@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  // NOTE: 고쳐야함
   min-height: calc(100vh - 113px);
   &__img-container {
     display: flex;
@@ -26,6 +27,6 @@
     margin-top: 2rem;
     @include typography.bold;
     @include typography.h1;
-    color: var(--gray11);
+    color: var(--text-low-color);
   }
 }

@@ -5,7 +5,7 @@
   margin-bottom: 2rem;
   &__spacer {
     height: 2px;
-    background-color: var(--gray8);
+    background-color: var(--separator-color);
     margin: 3rem auto;
   }
   &__contents {
@@ -19,12 +19,12 @@
         margin-right: 0.375rem;
       }
       > a {
-        color: var(--gray12);
+        color: var(--text-high-color);
       }
     }
     &__text {
       > span {
-        color: var(--gray11);
+        color: var(--text-low-color);
         > strong {
           @include typography.bold;
         }

@@ -1,12 +1,12 @@
 .anchor {
   &:hover {
     text-decoration: underline;
-    text-decoration-color: var(--primary9);
+    text-decoration-color: var(--solid-hovered-bg-primary-color);
     &::after {
       display: inline;
       content: "#";
       margin-left: 4px;
-      color: var(--primary9);
+      color: var(--solid-hovered-bg-primary-color);
     }
   }
 }

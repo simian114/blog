@@ -2,7 +2,7 @@
 @use "@styles/typography";
 
 .navigation {
-  color: var(--gray12);
+  color: var(--text-high-color);
   padding-top: 2rem;
   padding-bottom: 2.5rem;
   display: flex;
@@ -20,7 +20,7 @@
       &:hover {
         > a {
           height: 100%;
-          background-color: var(--gray4);
+          background-color: var(--ui-el-hovered-bg-color);
         }
       }
     }
@@ -31,13 +31,13 @@
         @include typography.medium;
         display: block;
         padding: 4px 12px;
-        color: var(--gray8);
+        color: var(--text-low-color);
         border-radius: 0.5rem;
       }
     }
     > li.active {
       > a {
-        color: var(--gray12);
+        color: var(--text-high-color);
         @include typography.bold;
       }
     }
