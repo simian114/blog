@@ -1,3 +1,5 @@
+@use "@styles/css-variable";
+
 @media (prefers-color-scheme: dark) {
   :root {
     --gray1: var(--slateDark1);
@@ -51,6 +53,7 @@
     --tertiary10: var(--yellowDark110);
     --tertiary11: var(--yellowDark111);
     --tertiary12: var(--yellowDark112);
+    @include css-variable.colors;
   }
 }
 
@@ -106,4 +109,5 @@
   --tertiary10: var(--yellowDark10);
   --tertiary11: var(--yellowDark11);
   --tertiary12: var(--yellowDark12);
+  @include css-variable.colors;
 }

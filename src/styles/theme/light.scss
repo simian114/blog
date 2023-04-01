@@ -1,3 +1,5 @@
+@use "@styles/css-variable";
+
 :root {
   --gray1: var(--slate1);
   --gray2: var(--slate2);
@@ -11,6 +13,7 @@
   --gray10: var(--slate10);
   --gray11: var(--slate11);
   --gray12: var(--slate12);
+  @include css-variable.colors;
 }
 
 @media (prefers-color-scheme: light) {
@@ -66,6 +69,7 @@
     --tertiary10: var(--yellow10);
     --tertiary11: var(--yellow11);
     --tertiary12: var(--yellow12);
+    @include css-variable.colors;
   }
 }
 
@@ -121,4 +125,5 @@
   --tertiary10: var(--yellow10);
   --tertiary11: var(--yellow11);
   --tertiary12: var(--yellow12);
+  @include css-variable.colors;
 }

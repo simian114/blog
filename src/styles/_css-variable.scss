@@ -1,0 +1,66 @@
+@mixin colors {
+  --box-border-radius: 0.25rem;
+  --max-width: 1100px;
+  --border-radius: 12px;
+
+  /*
+    bg: background
+    sub: subtle
+    el: element
+  */
+  --app-bg-color: var(--gray1);
+  --app-sub-bg-color: var(--gray2);
+
+  // NOTE: ui -- components
+  --ui-el-bg-color: var(--gray3);
+  --ui-el-hovered-bg-color: var(--gray4);
+  --ui-el-active-bg-color: var(--gray5);
+  --ui-el-selected-bg-color: var(--gray5);
+
+  // borders & separators
+  --separator-color: var(--gray6);
+  --ui-static-border-color: var(--gray6); // 정적인 컴포넌트의 border
+  // interactive 한 컴포넌트의 border
+  --ui-interactive-border-color: var(--gray7);
+  --ui-focused-border-color: var(--gray7);
+  --ui-hovered-border-color: var(--gray8);
+
+  // solid backgrounds (app, header, comopnent 모든곳에 사용)
+  --solid-bg-color: var(--gray9);
+  --solid-hovered-bg-color: var(--gray10);
+
+  // text (contrast 생략)
+  --text-low-color: var(--gray11);
+  --text-high-color: var(--gray12);
+}
+
+:root {
+  $palettes: "primary", "secondary", "tertiary";
+  @each $palette in $palettes {
+    --app-bg-#{$palette}-color: var(--#{$palette}1);
+    --app-sub-bg-#{$palette}-color: var(--#{$palette}2);
+
+    // NOTE: ui -- components
+    --ui-el-bg-#{$palette}-color: var(--#{$palette}3);
+    --ui-el-hovered-bg-#{$palette}-color: var(--#{$palette}4);
+    --ui-el-active-bg-#{$palette}-color: var(--#{$palette}5);
+    --ui-el-selected-bg-#{$palette}-color: var(--#{$palette}5);
+
+    // borders & separators
+    // 정적인 컴포넌트의 border
+    --separator-#{$palette}-color: var(--#{$palette}6);
+    --ui-static-border-#{$palette}-color: var(--#{$palette}6);
+    // interactive 한 컴포넌트의 border
+    --ui-interactive-border-#{$palette}-color: var(--#{$palette}7);
+    --ui-focused-border-#{$palette}-color: var(--#{$palette}7);
+    --ui-hovered-border-#{$palette}-color: var(--#{$palette}8);
+
+    // solid backgrounds (app, header, comopnent 모든곳에 사용)
+    --solid-bg-#{$palette}-color: var(--#{$palette}9);
+    --solid-hovered-bg-#{$palette}-color: var(--#{$palette}10);
+
+    // text (contrast 생략)
+    --text-low-#{$palette}-color: var(--#{$palette}11);
+    --text-high-#{$palette}-color: var(--#{$palette}12);
+  }
+}
