@@ -114,12 +114,13 @@
   background-color: transparent;
 }
 
-// .mdx-code {
-//   padding: 0.2em 0;
-//   margin: 0;
-//   background-color: var(--ui-el-bg-primary-color);
-//   border-radius: var(--box-border-radius);
-// }
+.mdx-code {
+  padding: 0.2em 0;
+  margin: 0;
+  background-color: var(--ui-el-bg-primary-color);
+  border-radius: var(--box-border-radius);
+  color: var(--text-low-primary-color);
+}
 
 .mdx-pre {
   margin: 0.75rem auto;

@@ -71,16 +71,16 @@ const MdxComponents = {
     <hr className="mdx-hr" {...props} />
   ),
   /** Custom component */
-  AnchorH1: ({ children, href }: { children: ReactNode; href: string }) => {
+  AnchorH1: ({ children }: { children: string }) => {
     return (
-      <AnchorText as="h1" className="mdx-h1" href={href}>
+      <AnchorText as="h1" className="mdx-h1">
         {children}
       </AnchorText>
     )
   },
-  AnchorH2: ({ children, href }: { children: ReactNode; href: string }) => {
+  AnchorH2: ({ children }: { children: string }) => {
     return (
-      <AnchorText as="h2" className="mdx-h2" href={href}>
+      <AnchorText as="h2" className="mdx-h2">
         {children}
       </AnchorText>
     )
