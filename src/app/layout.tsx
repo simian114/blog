@@ -1,4 +1,4 @@
-import { Footer, Nav } from "@/components/layout"
+import { Footer, Header } from "@/components/layout"
 import "@styles/globals.scss"
 import localFont from "next/font/local"
 import { cookies } from "next/headers"
@@ -43,8 +43,8 @@ export default async function RootLayout(props: any) {
     <html lang="en" className={myFont.className}>
       <body className={bodyThemeClass}>
         <div id="app">
-          <Nav />
-          {props.children}
+          <Header />
+          <section className="inner">{props.children}</section>
           <Footer />
         </div>
       </body>

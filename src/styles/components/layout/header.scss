@@ -1,7 +1,18 @@
 @use "@styles/utils";
 @use "@styles/typography";
 
+header.header {
+  position: sticky;
+  top: 0px;
+  background: rgba(var(--app-bg-color), 0.35);
+  transition: background-color 0.25s linear;
+  backdrop-filter: blur(24px);
+}
+
 .navigation {
+  position: sticky;
+  top: 0px;
+
   color: var(--text-high-color);
   padding-top: 2rem;
   padding-bottom: 2.5rem;
