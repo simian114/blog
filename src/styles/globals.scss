@@ -10,6 +10,7 @@
 /* components start */
 
 @import "@styles/components/layout/nav.scss";
+@import "@styles/components/layout/footer.scss";
 
 /* components end */
 
@@ -33,6 +34,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-y: scroll;
 }
 
 html,
@@ -64,9 +66,7 @@ a {
   max-width: 48rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  > main {
-    min-height: 100vh;
-  }
+
   // 769 ~ 1024 ->
   @include tablet {
     padding-left: 1.5rem;

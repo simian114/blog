@@ -1,7 +1,7 @@
+import { Footer, Nav } from "@/components/layout"
 import "@styles/globals.scss"
 import localFont from "next/font/local"
 import { cookies } from "next/headers"
-import { Nav } from "../components/layout"
 
 // Font files can be colocated inside of `app`
 const myFont = localFont({
@@ -45,7 +45,7 @@ export default async function RootLayout(props: any) {
         <div id="app">
           <Nav />
           {props.children}
-          <footer>footer</footer>
+          <Footer />
         </div>
       </body>
     </html>
