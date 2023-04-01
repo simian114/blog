@@ -28,7 +28,7 @@
 .mdx-h4,
 .mdx-h5,
 .mdx-h6 {
-  color: var(--gray12);
+  color: var(--text-high-color);
 }
 
 .mdx-ol,
@@ -37,7 +37,7 @@
 .mdx-em,
 .mdx-strong,
 .mdx-p {
-  color: var(--gray11);
+  color: var(--text-low-color);
   @include typography.body1;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .mdx-strong {
-  color: var(--gray12);
+  color: var(--text-high-color);
 }
 
 .mdx-p,
@@ -76,7 +76,7 @@
 .mdx-a {
   text-decoration: none;
   @include typography.bold;
-  color: var(--primary9);
+  color: var(--text-low-primary-color);
 }
 
 .mdx-a:active,
@@ -89,7 +89,7 @@
 .mdx-a:focus,
 .mdx-a:hover {
   text-decoration: underline;
-  color: var(--primary10);
+  color: var(--text-low-primary-color);
 }
 
 .mdx-ul,
@@ -114,13 +114,12 @@
   background-color: transparent;
 }
 
-.mdx-code {
-  padding: 0.2em 0;
-  margin: 0;
-  background-color: var(--primary4);
-  border-radius: var(--box-border-radius);
-  color: var(--primary10);
-}
+// .mdx-code {
+//   padding: 0.2em 0;
+//   margin: 0;
+//   background-color: var(--ui-el-bg-primary-color);
+//   border-radius: var(--box-border-radius);
+// }
 
 .mdx-pre {
   margin: 0.75rem auto;
@@ -158,7 +157,7 @@
   height: 36px;
   border-radius: var(--box-border-radius);
   transition: all 0.3s;
-  color: var(--primary10);
+  color: var(--text-low-primary-color);
 }
 
 .mdx-a > .mdx-em {
@@ -166,7 +165,7 @@
 }
 
 .mdx-a > .mdx-strong {
-  background-color: var(--primary4);
+  background-color: var(--ui-el-bg-primary-color);
 }
 
 .mdx-a > .mdx-em:hover {
@@ -174,21 +173,19 @@
 }
 
 .mdx-a > .mdx-strong:hover {
-  background-color: var(--primary5);
+  background-color: var(--ui-el-hovered-bg-primary-color);
   box-shadow: inset 0 0 0 99em rgba(255, 255, 255, 0.24);
 }
 
 .mdx-blockquote {
   quotes: "\201C""\201D""\2018""\2019";
-  border-left: 0.25rem solid var(--gray11);
-  // border-left: 0.25rem solid var(--primary8);
+  border-left: 0.25rem solid var(--solid-bg-tertiary-color);
   color: #d4d4d4;
   padding-left: 1em;
-  // border-left-color: var(--gray8);
   > .p {
     line-height: 2rem;
     font-style: italic;
-    color: var(--gray12);
+    color: var(--text-high-color);
     @include typography.bold;
   }
 }
@@ -197,7 +194,6 @@
 .vblockquote > .mdx-h5,
 .vblockquote > .mdx-h6 {
   width: 300px;
-  width: var(--bf-card-width);
 }
 
 .mdx-blockquote > .mdx-p:only-child > .mdx-a {
@@ -225,7 +221,7 @@
 
 .mdx-hr {
   height: 2px;
-  background-color: var(--gray8);
+  background-color: var(--separator-color);
   border: none;
   margin: 0;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
