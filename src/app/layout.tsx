@@ -2,6 +2,7 @@ import { Footer, Header } from "@/components/layout"
 import "@styles/globals.scss"
 import localFont from "next/font/local"
 import { cookies } from "next/headers"
+import { Providers } from "./providers"
 
 // Font files can be colocated inside of `app`
 const myFont = localFont({
@@ -43,9 +44,11 @@ export default async function RootLayout(props: any) {
     <html lang="en" className={myFont.className}>
       <body className={bodyThemeClass}>
         <div id="app">
-          <Header />
-          <section className="inner">{props.children}</section>
-          <Footer />
+          <Providers>
+            <Header />
+            <section className="inner">{props.children}</section>
+            <Footer />
+          </Providers>
         </div>
       </body>
     </html>

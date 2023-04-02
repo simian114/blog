@@ -37,23 +37,23 @@
 // }
 
 $tablet: 768;
-$large: 1024;
+$labtop: 1024;
 $desktop: 1280;
 
+@mixin mobile {
+  @media only screen and (max-width: ($tablet * 1px)) {
+    @content;
+  }
+}
+
 @mixin tablet {
-  @media only screen and (min-width: ($tablet * 1px)) {
+  @media only screen and (max-width: ($labtop * 1px)) {
     @content;
   }
 }
 
-@mixin large {
-  @media only screen and (min-width: ($large * 1px)) {
-    @content;
-  }
-}
-
-@mixin desktop {
-  @media only screen and (min-width: ($desktop * 1px)) {
+@mixin labtop {
+  @media only screen and (max-width: (($desktop) * 1px)) {
     @content;
   }
 }
