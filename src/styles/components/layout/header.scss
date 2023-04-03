@@ -92,6 +92,11 @@ header.header {
           max-height: calc(100vh - 51px);
           background: var(--app-bg-color);
         }
+        > li {
+          width: 100%;
+          justify-content: center;
+          text-align: center;
+        }
       }
       &__utils {
         &__mobile-menu {
