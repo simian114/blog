@@ -3,6 +3,8 @@ import "@styles/globals.scss"
 import localFont from "next/font/local"
 import { Providers } from "./providers"
 
+export const dynamic = "force-static"
+
 // Font files can be colocated inside of `app`
 const myFont = localFont({
   src: [
