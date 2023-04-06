@@ -4,21 +4,27 @@ import { useCookies } from "react-cookie"
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons"
 import { isMachesMediaQuery } from "@/lib/client/mediaQuery.client"
 
-// NOTE:
+const MEDIA = "(prefers-color-scheme: dark)"
+
 export default function ThemeToggler(): ReactElement {
   const [isMounted, setIsMounted] = useState(false)
-  // NOTE: 쿠키를 상태로 관리하기 위해서...
-  // NOTE: 상태로 관리한다는 것의 의미는 감지하는 값이 변화하면 컴포넌트를 새로 rendering 한다는것.
-  // NOTE: 또한 상태를 effect 의 dps 에 넣음으로써 상태의 변화를 감지하고 특정한 동작 / 값의 변화를 일으킬 수 있다.
   const [cookies, setCookie] = useCookies(["theme"])
   const theme = cookies.theme as Theme
+  const [mediaQueryTheme, setMediaQueryTheme] = useState(() => {
+    if (typeof window === "undefined") {
+      return ""
+    }
+    return window.matchMedia(MEDIA).matches ? "dark" : "light"
+  })
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
 
   const handleThemeToggle = (prevTheme: Theme) => {
-    // NOTE: prevTheme 이 없으면 window.matchMediaQuery 를 사용한다.
+    if (typeof window === "undefined") {
+      return
+    }
     let nextTheme = prevTheme === "dark" ? "light" : "dark"
 
     if (!prevTheme) {
@@ -34,7 +40,6 @@ export default function ThemeToggler(): ReactElement {
     })
   }
 
-  // NOTE: cookie 의 변화를 감지
   useEffect(() => {
     if (!theme) {
       return
@@ -48,9 +53,35 @@ export default function ThemeToggler(): ReactElement {
     }
   }, [theme])
 
+  const changeMediaQueryHandler = (e: MediaQueryListEvent) => {
+    setMediaQueryTheme(e.matches ? "dark" : "light")
+  }
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(MEDIA)
+    if (theme) {
+      mediaQuery.removeEventListener("change", changeMediaQueryHandler)
+      return
+    }
+    mediaQuery.addEventListener("change", changeMediaQueryHandler)
+    return () => {
+      mediaQuery.removeEventListener("change", changeMediaQueryHandler)
+    }
+  }, [theme])
+
   if (!isMounted) {
     return <button onClick={() => handleThemeToggle(theme)}>...</button>
   }
+  console.log({ mediaQueryTheme })
+
+  if (!theme) {
+    return (
+      <button onClick={() => handleThemeToggle(theme)}>
+        {mediaQueryTheme === "dark" ? <MoonIcon /> : <SunIcon />}
+      </button>
+    )
+  }
+
   return (
     <button onClick={() => handleThemeToggle(theme)}>
       {theme === "dark" ? <MoonIcon /> : <SunIcon />}

@@ -1,8 +1,10 @@
 "use client"
+
 import {
   createContext,
+  ReactNode,
   useContext,
-  useLayoutEffect,
+  useEffect,
   useMemo,
   useState,
 } from "react"
@@ -32,7 +34,16 @@ export const useDevice = () => {
   return ret
 }
 
-export default function DeviceWidthProvider(props: any) {
+/**
+ * media query 사용하는 로직으로 수정할것. 현재는 왜인지는 몰라도
+ * 모바일로 접속했을 시 width 가 900px; 로 고정되서 모바일로 안바뀜
+ *
+ */
+export default function DeviceWidthProvider({
+  children,
+}: {
+  children: ReactNode
+}) {
   const [device, setDevice] = useState<Device | undefined>(undefined)
 
   const onResizeDevice = () => {
@@ -45,7 +56,7 @@ export default function DeviceWidthProvider(props: any) {
       : setDevice("desktop")
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     onResizeDevice()
     window.addEventListener("resize", onResizeDevice)
     return () => {
@@ -55,7 +66,7 @@ export default function DeviceWidthProvider(props: any) {
 
   return (
     <DeviceWidthProviderContext.Provider value={{ device }}>
-      {props?.children}
+      {children}
     </DeviceWidthProviderContext.Provider>
   )
 }
