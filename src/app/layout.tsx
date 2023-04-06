@@ -1,7 +1,6 @@
 import { Footer, Header } from "@/components/layout"
 import "@styles/globals.scss"
 import localFont from "next/font/local"
-import { cookies } from "next/headers"
 import { Providers } from "./providers"
 
 // Font files can be colocated inside of `app`
@@ -36,20 +35,16 @@ export const metadata = {
 }
 
 export default async function RootLayout(props: any) {
-  const cookieStore = cookies()
-  const theme = cookieStore.get("theme")
-  const bodyThemeClass = !theme?.value ? "" : `${theme.value}-theme`
-
   return (
-    <html lang="en" className={myFont.className}>
-      <body className={bodyThemeClass}>
-        <div id="app">
-          <Providers>
+    <html lang="en" className={myFont.className} suppressHydrationWarning>
+      <body>
+        <Providers>
+          <div id="app">
             <Header />
             <section className="inner">{props.children}</section>
             <Footer />
-          </Providers>
-        </div>
+          </div>
+        </Providers>
       </body>
     </html>
   )
