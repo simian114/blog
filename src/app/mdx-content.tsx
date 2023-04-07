@@ -1,8 +1,8 @@
 "use client"
 
+import MainTitle from "@/components/mdx/mainTitle/MainTitle"
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote"
 import Image, { ImageProps } from "next/image"
-import { ReactNode } from "react"
 import AnchorText from "../components/mdx/AnchorText"
 
 type MdxContentProps = {
@@ -71,6 +71,7 @@ const MdxComponents = {
     <hr className="mdx-hr" {...props} />
   ),
   /** Custom component */
+  MainTitle,
   AnchorH1: ({ children }: { children: string }) => {
     return (
       <AnchorText as="h1" className="mdx-h1">

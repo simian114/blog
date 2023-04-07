@@ -72,7 +72,6 @@ export default function ThemeToggler(): ReactElement {
   if (!isMounted) {
     return <button onClick={() => handleThemeToggle(theme)}>...</button>
   }
-  console.log({ mediaQueryTheme })
 
   if (!theme) {
     return (

@@ -1,8 +1,10 @@
-import { MDX_SKETCH_PATH } from "@/constants/path"
-import { getInfoByCurrentPath } from "@/lib/server/post.server"
+import { getPostBySlugs } from "@/helpers/slug"
 import { MdxContent } from "../mdx-content"
 
 export default async function MdxStyle() {
-  const { serialized } = await getInfoByCurrentPath(MDX_SKETCH_PATH)
-  return <main>{serialized && <MdxContent source={serialized} />}</main>
+  const post = await getPostBySlugs("/mdx-sketch")
+
+  return (
+    <main>{post.serialized && <MdxContent source={post.serialized} />}</main>
+  )
 }

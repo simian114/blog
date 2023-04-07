@@ -1,8 +1,10 @@
-import { SNIPPET_PATH } from "@/constants/path"
-import { getInfoByCurrentPath } from "@/lib/server/post.server"
+import { getPostBySlugs } from "@/helpers/slug"
 import { MdxContent } from "../mdx-content"
 
 export default async function Snippet() {
-  const { serialized } = await getInfoByCurrentPath(SNIPPET_PATH)
-  return <main>{serialized && <MdxContent source={serialized} />}</main>
+  const post = await getPostBySlugs("/snippet")
+
+  return (
+    <main>{post.serialized && <MdxContent source={post.serialized} />}</main>
+  )
 }

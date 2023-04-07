@@ -1,8 +1,10 @@
-import { ARCHIVES_PATH } from "@/constants/path"
-import { getInfoByCurrentPath } from "@/lib/server/post.server"
+import { getPostBySlugs } from "@/helpers/slug"
 import { MdxContent } from "../mdx-content"
 
 export default async function archives() {
-  const { serialized } = await getInfoByCurrentPath(ARCHIVES_PATH)
-  return <main>{serialized && <MdxContent source={serialized} />}</main>
+  const post = await getPostBySlugs("/archives")
+
+  return (
+    <main>{post.serialized && <MdxContent source={post.serialized} />}</main>
+  )
 }
