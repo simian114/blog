@@ -5,12 +5,18 @@ export type PostFrontmatter = {
   description: string
   date: Date
   tags?: string[]
-  draft: boolean
+  isPublished: boolean
   thumbnail?: string
-  icon?: string
 }
 
-export type Post<TFrontmatter> = {
+export interface Post<TFrontmatter> {
   serialized: MDXRemoteSerializeResult
   frontmatter: TFrontmatter
+}
+
+export interface PageProps {
+  params?: {
+    slug?: string[] | string
+  }
+  searchParams?: string[] | string
 }

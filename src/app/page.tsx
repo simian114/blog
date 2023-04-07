@@ -1,9 +1,10 @@
-import { HOME_PATH } from "@/constants/path"
-import { getInfoByCurrentPath } from "@/lib/server/post.server"
+import { getPostBySlugs } from "@/helpers/slug"
 import { MdxContent } from "./mdx-content"
 
 export default async function Home() {
-  const { frontmatter, serialized } = await getInfoByCurrentPath(HOME_PATH)
-  frontmatter
-  return <main>{serialized && <MdxContent source={serialized} />}</main>
+  const post = await getPostBySlugs("/")
+
+  return (
+    <main>{post.serialized && <MdxContent source={post.serialized} />}</main>
+  )
 }

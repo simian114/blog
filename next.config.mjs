@@ -4,6 +4,7 @@ import * as path from "path"
 import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
 import createMDX from "@next/mdx"
+import { withContentlayer } from "next-contentlayer"
 
 const __dirname = path.resolve()
 
@@ -45,4 +46,4 @@ const withMDX = createMDX({
   },
 })
 
-export default withMDX(nextConfig)
+export default withContentlayer(withMDX(nextConfig))

@@ -1,0 +1,23 @@
+# LIGHT / DARK THEME 을 구현해보자
+
+# theme
+
+theme 을 구현하기 위해 기존 next.js 프로젝트에서 사용하는 theme provider 를 살펴봤다.
+light / dark theme 을 구현해본적은 없지만, 어떻게 하면 되겠다 라는 생각은 가지고 있었다.
+따라서 theme provider 를 볼 때 가장 주의 깊게 본 것은 내가 생각치못한 무언가의 존재였다.
+
+그리고 발견한게 system 설정을 따라가는 옵션이었다.
+
+작동 순서는 아래와 같다.
+
+- Themeprovider 를 사용하는 페이지에 `처음` 접속한 유저는 해당 `theme` 을 설정한적이 없기에 localStorage / cookie 에 theme 에 관해 저장된 값이 없다.
+- 그럼에도 불구하고, 해당 사이트는 유저에게 유저가 선호하는 `theme` 을 보여준다.
+- 이렇게 될 수 있는 이유는 `media-query` 의 `prefers-color-scheme` 덕분이다. 해당 mql 은 시스템에 설정되어있는 `theme` 을 보고 theme 을 설정해주는것.
+
+따라서 나도 해당 기능을 구현하기로 했다. 고려했던 부분과 생각의 결과는 아래와 같다.
+
+- light / dark 마다의 색 지정
+  - -> 앞서 사용한 radix-color 는 한가지 color 에 대해 light / dark 모두를 제공한다. 따라서 문제가 안되었다. \
+- 유저가 설정한 theme 데이터를 어디에 저장할 것인가?
+  - cookie 에 저장. cookie 에 저장된 값은 유저가 블로그에 접속할 때 자동으로 같이 보내지게 된다.
+  - 따라서 서버에서는 유저가 보낸 cookie 르 보고 body 의 클래스를 지정할 수 있게 된다.
