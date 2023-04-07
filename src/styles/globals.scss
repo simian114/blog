@@ -26,6 +26,16 @@
 html {
   scroll-behavior: smooth;
   overflow-y: scroll;
+
+  scroll-padding-top: 5.625rem;
+
+  @include tablet {
+    scroll-padding-top: 4.625rem;
+  }
+
+  @include mobile {
+    scroll-padding-top: 3.1875rem;
+  }
 }
 
 body {

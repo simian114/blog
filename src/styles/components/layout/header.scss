@@ -30,7 +30,6 @@ header.header {
     &__menus {
       display: flex;
       align-items: center;
-
       > li {
         &.active {
           > a {
@@ -49,7 +48,6 @@ header.header {
           @include typography.medium;
           display: block;
           padding: 0.25rem 0.75rem;
-          // padding: 4px 12px;
           color: var(--text-low-color);
           border-radius: 0.5rem;
         }
