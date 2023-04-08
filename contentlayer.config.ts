@@ -56,7 +56,5 @@ export const Post = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "src/posts",
   documentTypes: [Post],
-  mdx: {
-    // remarkPlugins: [remarkFrontmatter],
-  },
+  mdx: {},
 })

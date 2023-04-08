@@ -1,5 +1,7 @@
 "use client"
 
+import Button from "@/components/button/Button"
+import ButtonLink from "@/components/button/ButtonLink"
 import MainTitle from "@/components/mdx/mainTitle/MainTitle"
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote"
 import Image, { ImageProps } from "next/image"
@@ -8,7 +10,6 @@ import AnchorText from "../components/mdx/AnchorText"
 type MdxContentProps = {
   source: MDXRemoteSerializeResult
 }
-// NOTE: mdx 스타일링하기
 
 /** Place your custom MDX components here */
 const MdxComponents = {
@@ -86,7 +87,6 @@ const MdxComponents = {
       </AnchorText>
     )
   },
-
   Image: (props: ImageProps) => {
     return (
       <div style={{ position: "relative" }}>
@@ -104,6 +104,8 @@ const MdxComponents = {
       {...props}
     />
   ),
+  Button,
+  ButtonLink,
 }
 
 export function MdxContent({ source }: MdxContentProps) {

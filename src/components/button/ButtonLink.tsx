@@ -13,7 +13,7 @@ export default function ButtonLink(props: ButtonLinkProps) {
   }  ${styles[`${design?.weight ? `${design.weight}-typo` : "regular-typo"}`]}
   `
   return (
-    <Link href={href} className={cn} {...rest}>
+    <Link href={href} className={cn} {...rest} prefetch>
       <span className={styles.shadow} />
       <span className={styles.front}>{children}</span>
     </Link>

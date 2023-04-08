@@ -1,18 +1,6 @@
 @use "@styles/css-variable";
 
 :root {
-  --gray1: var(--slate1);
-  --gray2: var(--slate2);
-  --gray3: var(--slate3);
-  --gray4: var(--slate4);
-  --gray5: var(--slate5);
-  --gray6: var(--slate6);
-  --gray7: var(--slate7);
-  --gray8: var(--slate8);
-  --gray9: var(--slate9);
-  --gray10: var(--slate10);
-  --gray11: var(--slate11);
-  --gray12: var(--slate12);
   @include css-variable.colors;
 }
 

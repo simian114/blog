@@ -4,19 +4,14 @@
 @import "@styles/theme/light.scss";
 @import "@styles/theme/dark.scss";
 
-/* components start */
-@import "@styles/components/layout/header.scss";
-@import "@styles/components/layout/footer.scss";
-/* components end */
+/* components */
+@import "@styles/components/index.scss";
 
-/* mdx start */
+/* mdx */
 @import "@styles/mdx.scss";
-/* mdx end */
 
-/* pages start */
-@import "@styles/page/not-found/not-found.scss";
-@import "@styles/page/main.scss";
-/* pages end */
+/* pages */
+@import "@styles/page/index.scss";
 
 * {
   box-sizing: border-box;
