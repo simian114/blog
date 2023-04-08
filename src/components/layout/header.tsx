@@ -8,6 +8,7 @@ import ThemeToggler from "../theme/themeToggler"
 import { usePathname } from "next/navigation"
 import { useDevice } from "@/store/deviceWidthProvider"
 import DisableScroll from "../client/DisableScroll"
+import ButtonLink from "../button/ButtonLink"
 
 interface Menu {
   id: string
@@ -68,6 +69,18 @@ export default function Nav(): ReactElement {
             ))}
           </ul>
           <div className="navigation__utils">
+            <ButtonLink
+              design={{
+                style: "default",
+                color: "secondary",
+                size: "xsmall",
+                weight: "bold",
+              }}
+              href="/resume"
+            >
+              RESUME
+            </ButtonLink>
+
             <ThemeToggler />
             <button
               className="navigation__utils__mobile-menu"

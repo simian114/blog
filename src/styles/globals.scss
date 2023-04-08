@@ -1,7 +1,8 @@
 @import "@styles/reset.css";
 @import "@styles/utils";
 @import "@styles/color";
-@import "@styles/root.scss";
+@import "@styles/theme/light.scss";
+@import "@styles/theme/dark.scss";
 
 /* components start */
 @import "@styles/components/layout/header.scss";
