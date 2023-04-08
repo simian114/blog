@@ -14,6 +14,10 @@ header.header {
   svg {
     width: 32px;
     height: 32px;
+    &:hover {
+      color: var(--text-high-primary-color);
+      color: var(--secondary9);
+    }
   }
   .navigation {
     position: sticky;
@@ -41,6 +45,7 @@ header.header {
           > a {
             height: 100%;
             background-color: var(--ui-el-hovered-bg-color);
+            color: var(--primary8);
           }
         }
         > a {

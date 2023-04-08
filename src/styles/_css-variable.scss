@@ -1,3 +1,19 @@
+/* 1 App background */
+/* 2 Subtle background */
+/* 3 UI element background */
+/* 4 Hovered UI element background */
+/* 5 Active / Selected UI element background */
+
+// NOTE: borders
+/* 6 Subtle borders and separators */
+/* 7 UI element border and focus rings */
+/* 8 Hovered UI element border */
+
+/* 9 Solid backgrounds */
+/* 10 Hovered solid backgrounds */
+
+/* 11 Low-contrast text */
+/* 12 High-contrast text */
 @mixin colors {
   --box-border-radius: 0.25rem;
 
@@ -30,9 +46,6 @@
   // text (contrast 생략)
   --text-low-color: var(--gray11);
   --text-high-color: var(--gray12);
-}
-
-:root {
   $palettes: "primary", "secondary", "tertiary";
   @each $palette in $palettes {
     --app-bg-#{$palette}-color: var(--#{$palette}1);
