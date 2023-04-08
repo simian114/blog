@@ -1,3 +1,5 @@
+"use client"
+
 import styles from "./button.module.scss"
 import { ButtonProps } from "./common"
 
@@ -13,7 +15,7 @@ export default function Button(props: ButtonProps) {
   `
   return (
     <button className={cn} {...rest}>
-      <span className="shadow">{children}</span>
+      <span className="shadow" />
       <span className="front">{children}</span>
     </button>
   )

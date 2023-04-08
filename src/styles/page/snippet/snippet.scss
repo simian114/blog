@@ -1,10 +1,6 @@
 @use "@styles/utils";
 
-.blog-layout {
-  //
-}
-
-.blog-main {
+.snippet-main {
   width: 100%;
   &__card-list {
     display: grid;
@@ -17,7 +13,7 @@
 @include utils.labtop {
 }
 @include utils.tablet {
-  .blog-main {
+  .snippet-main {
     &__card-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -26,7 +22,7 @@
 }
 
 @include utils.mobile {
-  .blog-main {
+  .snippet-main {
     &__card-list {
       display: grid;
       grid-template-columns: 1fr;

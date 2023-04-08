@@ -1,0 +1,48 @@
+@use "@styles/typography";
+
+.post-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.25s ease-in;
+  background-color: var(--ui-el-bg-color);
+  border: 1px solid var(--ui-static-border-color);
+  width: 100%;
+  height: 250px;
+  border-radius: 0.75rem;
+  padding: 2rem;
+
+  &__link {
+    flex-grow: 1;
+    &:hover {
+      > h3 {
+        color: var(--text-low-primary-color);
+      }
+    }
+  }
+  &__title {
+    color: var(--text-high-color);
+    @include typography.h3;
+  }
+  &__description {
+    color: var(--text-low-color);
+  }
+  &__published-at {
+    color: red;
+  }
+  &__link-button {
+    margin-top: auto;
+    align-self: flex-end;
+  }
+  &:hover {
+    background-color: var(--ui-el-hovered-bg-color);
+    border: 1px solid var(--ui-hovered-border-color);
+  }
+}
+
+.published-at {
+  color: var(--text-low-color);
+}
+.post-card-button {
+  margin-top: auto;
+  align-self: flex-end;
+}

@@ -1,9 +1,9 @@
-import { ComponentPropsWithoutRef, ElementType, ReactNode } from "react"
+import { ComponentPropsWithoutRef, ElementType } from "react"
 import styles from "./styles.module.scss"
 
 export type AnchorTextProps<C extends ElementType> = {
   as?: C
-  children: ReactNode
+  children: string
 } & ComponentPropsWithoutRef<C>
 
 export default function AnchorText<C extends ElementType = "span">(
