@@ -48,6 +48,11 @@ a {
   text-decoration: none;
 }
 
+*:focus-visible {
+  border-radius: 0.25rem;
+  outline: 2px solid var(--solid-hovered-bg-primary-color);
+}
+
 // mobile(default): 0 ~ 768
 #app {
   > section {
