@@ -1,8 +1,18 @@
 import {
   defineDocumentType,
+  defineNestedType,
   FieldDefs,
   makeSource,
 } from "contentlayer/source-files"
+import readingTime from "reading-time"
+
+const Tag = defineNestedType(() => ({
+  name: "Tag",
+  fields: {
+    content: { type: "json", required: true },
+    colorType: { type: "json", required: true },
+  },
+}))
 
 const fields: FieldDefs = {
   title: {
@@ -22,7 +32,7 @@ const fields: FieldDefs = {
   },
   tags: {
     type: "list",
-    of: { type: "string" },
+    of: Tag,
     required: false,
   },
   isPublished: {
@@ -30,8 +40,8 @@ const fields: FieldDefs = {
     default: false,
     required: false,
   },
-  thumbnaiil: {
-    type: "image",
+  thumbnail: {
+    type: "string",
     required: false,
   },
 }
@@ -41,11 +51,14 @@ export const Post = defineDocumentType(() => ({
   contentType: "mdx",
   fields,
   computedFields: {
-    // url: {
-    //   type: "string",
-    //   resolve: post => `/blog/${post._raw.flattenedPath}`,
-    //   // resolve: post => `/blog/${post._raw.flattenedPath}`,
-    // },
+    url: {
+      type: "string",
+      resolve: post => `/${post._raw.flattenedPath}`,
+    },
+    readingTime: {
+      type: "string",
+      resolve: post => Math.ceil(readingTime(post.body.raw).minutes),
+    },
     slug: {
       type: "string",
       resolve: post => `/${post._raw.flattenedPath}`,

@@ -46,7 +46,7 @@
   // text (contrast 생략)
   --text-low-color: var(--gray11);
   --text-high-color: var(--gray12);
-  $palettes: "primary", "secondary", "tertiary";
+  $palettes: "gray", "primary", "secondary", "tertiary";
   @each $palette in $palettes {
     --app-bg-#{$palette}-color: var(--#{$palette}1);
     --app-sub-bg-#{$palette}-color: var(--#{$palette}2);
