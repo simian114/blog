@@ -15,8 +15,8 @@ export default function Button(props: ButtonProps) {
   `
   return (
     <button className={cn} {...rest}>
-      <span className="shadow" />
-      <span className="front">{children}</span>
+      <span className={styles.shadow} />
+      <span className={styles.front}>{children}</span>
     </button>
   )
 }

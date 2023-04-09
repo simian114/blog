@@ -8,8 +8,12 @@ export default async function Blog() {
 
   return (
     <main className="blog-main">
-      {post.serialized && <MdxContent source={post.serialized} />}
+      <div className="blog-main__mdx-wrapper">
+        {post.serialized && <MdxContent source={post.serialized} />}
+      </div>
+
       <div className="blog-main__card-list">
+        <h2>최신 글</h2>
         {posts.map(post => (
           <PostCard key={post._id} post={post} />
         ))}
