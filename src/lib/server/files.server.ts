@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Post, PostFrontmatter } from "@/app/types"
+import { SerializedPost } from "@/app/types"
 import { lstat, readdir } from "fs/promises"
 import { extname, join, parse, resolve } from "path"
 import { readPost } from "./post.server"
@@ -27,7 +27,7 @@ export function flatten(xs: Array<any>) {
   }, [])
 }
 
-export interface FileTree extends Partial<Post<PostFrontmatter>> {
+export interface FileTree extends Partial<SerializedPost> {
   base: string
   path: string
   children?: Array<FileTree>

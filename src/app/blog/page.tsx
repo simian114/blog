@@ -1,5 +1,6 @@
 import PostCard from "@/components/postCard/PostCard"
-import { allBlogPosts, getPostBySlugs } from "@/helpers/slug"
+import { getPostBySlugs } from "@/helpers/slug"
+import { allBlogPosts } from "@/lib/server/post.server"
 import { MdxContent } from "../mdx-content"
 
 export default async function Blog() {

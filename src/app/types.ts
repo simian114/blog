@@ -1,17 +1,9 @@
+import { Post } from "contentlayer/generated"
 import { MDXRemoteSerializeResult } from "next-mdx-remote/dist/types"
 
-export type PostFrontmatter = {
-  title: string
-  description: string
-  date: Date
-  tags?: string[]
-  isPublished: boolean
-  thumbnail?: string
-}
-
-export interface Post<TFrontmatter> {
+export interface SerializedPost {
   serialized: MDXRemoteSerializeResult
-  frontmatter: TFrontmatter
+  frontmatter: Post
 }
 
 export interface PageProps {

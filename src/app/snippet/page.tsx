@@ -1,5 +1,6 @@
 import PostCard from "@/components/postCard/PostCard"
-import { allSnippetPosts, getPostBySlugs } from "@/helpers/slug"
+import { getPostBySlugs } from "@/helpers/slug"
+import { allSnippetPosts } from "@/lib/server/post.server"
 import { MdxContent } from "../mdx-content"
 
 export default async function Snippet() {
