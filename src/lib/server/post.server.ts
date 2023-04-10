@@ -5,11 +5,13 @@ import { serialize } from "next-mdx-remote/serialize"
 import { promises as fs } from "fs"
 import rehypeHighlight from "rehype-highlight"
 import langJavascript from "highlight.js/lib/languages/javascript"
+import langCSS from "highlight.js/lib/languages/css"
 import "highlight.js/styles/a11y-dark.css"
 import { notFound } from "next/navigation"
 
 const languages = {
   javascript: langJavascript,
+  css: langCSS,
 }
 
 export async function readPost(

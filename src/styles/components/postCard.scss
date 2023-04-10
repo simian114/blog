@@ -10,9 +10,6 @@
   max-width: 100%;
 
   &__meta {
-    &:hover {
-      z-index: 1;
-    }
     flex-basis: 100px;
     flex-shrink: 0;
     flex-grow: 0;
@@ -76,11 +73,16 @@
     flex-grow: 0;
     color: var(--text-high-color);
   }
-  &:hover {
-    background-color: var(--ui-el-active-bg-color);
-    background-color: var(--app-sub-bg-color);
-    background-color: var(--primary3);
-    background-color: var(--ui-el-bg-primary-color);
+  @include utils.pointing-hover {
+    background-color: var(--ui-el-hovered-bg-primary-color);
+    .post-card__content__title {
+      color: var(--text-low-primary-color);
+    }
+    .post-card__link {
+      text-decoration: underline;
+    }
+  }
+  &:active {
     background-color: var(--ui-el-hovered-bg-primary-color);
     .post-card__content__title {
       color: var(--text-low-primary-color);
@@ -91,7 +93,6 @@
   }
 
   &:focus-within {
-    outline: 2px solid var(--solid-bg-tertiary-color);
     outline: 2px solid var(--ui-el-selected-bg-primary-color);
     .post-card__content__link {
       outline: none;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Footer, Header } from "@/components/layout"
 import "@styles/globals.scss"
 import localFont from "next/font/local"
@@ -43,7 +44,8 @@ export default async function RootLayout(props: any) {
         <Providers>
           <div id="app">
             <Header />
-            <section className="inner">{props.children}</section>
+            <section>{props.children}</section>
+            {/* <section className="inner">{props.children}</section> */}
             <Footer />
           </div>
         </Providers>

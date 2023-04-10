@@ -58,6 +58,14 @@ $desktop: 1280;
   }
 }
 
+@mixin pointing-hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
 @mixin fade($type) {
   @if $type== "hide" {
     visibility: hidden;
@@ -67,5 +75,34 @@ $desktop: 1280;
     visibility: visible;
     opacity: 1;
     transition: visibility 1s, opacity 1s;
+  }
+}
+
+@mixin full-width {
+  margin: 0 auto;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  max-width: 90rem;
+
+  // 1025 ~ 1280 ->
+  @include labtop {
+    // width: 960px;
+    padding-left: 2rem;
+    // padding-right: 2rem;
+    // max-width: 80rem;
+    width: 100vw;
+  }
+
+  // 769 ~ 1024 ->
+  @include tablet {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    max-width: 64rem;
+  }
+
+  @include mobile {
+    max-width: 48rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }

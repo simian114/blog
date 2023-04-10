@@ -9,7 +9,6 @@ import { usePathname } from "next/navigation"
 import { useDevice } from "@/store/deviceWidthProvider"
 import DisableScroll from "../client/DisableScroll"
 import ButtonLink from "../button/ButtonLink"
-import Button from "../button/Button"
 
 interface Menu {
   id: string
@@ -38,6 +37,10 @@ export default function Nav(): ReactElement {
     setIsMobileMenuOpen(prev => !prev)
   }
 
+  function handleMenuClick() {
+    setIsMobileMenuOpen(false)
+  }
+
   return (
     <>
       <DisableScroll enable={open && isMobile} />
@@ -62,6 +65,7 @@ export default function Nav(): ReactElement {
                     ? "active"
                     : ""
                 }
+                onClick={handleMenuClick}
               >
                 <Link href={menu.href} key={menu.id} prefetch>
                   {menu.children}

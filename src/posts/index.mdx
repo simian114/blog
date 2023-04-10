@@ -3,21 +3,19 @@ title: main home
 date: "2022-12-11"
 ---
 
-<AnchorH1>Rocketman</AnchorH1>
+## Rocketman
 
 Frontend Developer at [Stunning](https://about.stunning.kr/), developing [LOUD](https://www.loud.kr) and [NOTEFOLIO](https://www.notefolio.net)
 
-<ButtonLink href="/blog">hello world</ButtonLink>
-
 ---
 
-<AnchorH1>낙서장....</AnchorH1>
+## 낙서장
 
 블로그 개발하면서 겪는 일 & 해결법 일단 모조리 넣는곳...
 
 ---
 
-<AnchorH2>color 색</AnchorH2>
+## color 색
 
 > [radix-color](https://www.radix-ui.com/docs/colors/getting-started/installation)
 
@@ -30,7 +28,7 @@ Frontend Developer at [Stunning](https://about.stunning.kr/), developing [LOUD](
 
 ---
 
-<AnchorH2>light / dark 테마</AnchorH2>
+## light / dark 테마
 
 - `theme` 을 `toggle` 할 때 마다 **`cookie`** 값을 변경해줌.
 - 사용자가 서버에 접속 했을 때 `cookie` 를 확인하고 `layout` 에서 `body` 의 `class` 명을 `light` / `dark` 로 지정
@@ -41,7 +39,7 @@ Frontend Developer at [Stunning](https://about.stunning.kr/), developing [LOUD](
 
 ---
 
-<AnchorH2>스타일링</AnchorH2>
+## 스타일링
 
 - `전통적인` 방법의 스타일링을 해본적이 없음. 따라서 이번에 해보기로함
   - 회사에서 사용하는 `css-in-js` 만 다룸...
@@ -49,7 +47,7 @@ Frontend Developer at [Stunning](https://about.stunning.kr/), developing [LOUD](
 
 ---
 
-<AnchorH2>module css이 내 생각과는 다르게 동작</AnchorH2>
+## module css이 내 생각과는 다르게 동작
 
 > 아직 부정확한 정보. 정확히 어떤 경우에 `css-module` 이 정상 동작하고 / 안하는지 분석이 필요함.
 
@@ -60,7 +58,7 @@ Frontend Developer at [Stunning](https://about.stunning.kr/), developing [LOUD](
 
 ---
 
-<AnchorH2>mdx를 이용한 블로그 만들기</AnchorH2>
+## mdx를 이용한 블로그 만들기
 
 > [MDX Docx](https://mdxjs.com/docs/)
 
@@ -70,3 +68,108 @@ Frontend Developer at [Stunning](https://about.stunning.kr/), developing [LOUD](
   - `code` / `pre` 과 같은 `code syntax` 가 필요한 부분은 [`highlight.js`](https://highlightjs.org/) 의 도움을 받음.
   - 스타일링 된 컴포넌트들은 [여기](/mdx-sketch) 에서 확인 가능
 - 추후에는 브라우저에서 실시간으로 mdx 파일 작성하고 저장하는게 만들 예정
+
+## 버튼 컴퍼넌트 멋지게 만들기
+
+- 3d 버튼을 만들어봄
+
+## 카드 컴포넌트에 link 를 어디에 넣어야할까?
+
+여러 선택지가있었다. card 를 link 로 감싸기, 또는 카드 내부의 타이틀 등에 link 를 달기
+
+```js
+/** card 전체를 Link 로 감싸기 */
+function Card() {
+  return (
+    <article>
+      <Link>{children}</Link>
+    </article>
+  )
+}
+
+// vs
+
+function Card() {
+  return (
+    <article>
+      <h3>
+        <Link href="post" />
+      </h3>
+      <Link href="profile">
+        <Avatar />
+      </Link>
+    </article>
+  )
+}
+```
+
+### 1. Card 전체를 Link 로 감싸기
+
+card 전체를 link 로 감싸게 되면 편하지만, 카드를 미세하게 컨트롤하는게 불가능해진다.
+예를 들면 Card 내부에 카드가 가리키는 포스트가 아닌 author 의 프로필 페이지로 가능 링크가 있는 경우다.
+이때는 anchor 태그 안에 anchor 태그가 있기 때문에 html 의 기본 규칙에 어긋나고, [참고: html spec](https://www.w3.org/TR/html401/struct/links.html#h-12.2.2)
+
+### 2. Card 내부 요소요소 마다 Link 가 필요하면 해당 요소에만 달아주기
+
+여기로 오면 더 심각한 문제가 생겨버린다. 카드 전체가 clickable 한 요소가 되어야만하는데 내부 요소에다가 `Link` 를 알아주면 기본적으로 해당 Card 는 클릭커블하지 않기때문에
+개발자가 직접 해당 카드에 `onClick`, `css hover & active` 등의 요소를 달아주어야만한다.....
+
+```js
+/* javascript */
+function handleOnCardClick() {
+  ...
+}
+
+function Card() {
+  return (
+    <article onClick={handleOnCardClick}>
+      <h3>
+        <Link href="post" />
+      </h3>
+      <Link href="profile">
+        <Avatar />
+      </Link>
+    </article>
+  )
+}
+```
+
+```css
+/* css */
+> article {
+  &:hover {
+    pointer: cursor...;
+  }
+}
+```
+
+---
+
+## tab 으로 탐색 가능한 사이트 만들기
+
+누군가에게는 tab 으로 페이지를 탐색한다는게 어색할수도있다.
+하지만 누군가는 좋은 사이트라면 키보드만을 사용해도 자연스러운 사용성을 제공해야 좋은 사이트라고 생각하는 사람이 있다.
+나같은 경우는 후자다.
+특히 이 블로그는 복잡한 동작이 없고 단순 콘텐츠만 제공하는정말 [Hypertext Markup Language](https://developer.mozilla.org/ko/docs/Learn/Getting_started_with_the_web/HTML_basics)
+의 의미에 부합하는 사이트이기 때문에 각 hypertext 와 linkable 만 신경써주면 아주 간단하게 키보드만으로 탐색을 가능하게 해주는 사이트가 될 수 있다.
+
+<br />
+tab 으로 element가 선택되면 해당 element 는 자동으로 `outline` 이 생긴다. 이는 tab
+선택을 하면 해당 element 는 focus 수도 클래스를 갖게 되고 css 는 기본으로 focus 된
+요소에 `outline` 을 주기 때문이다. 기본 outline 은 이쁘지 않기 때문에 focus에 대한
+수도 클래스의 기본 스타일링을 해준다. > 모든 요소가 tabable 한건 아니다. [여기서](https://allyjs.io/data-tables/focusable.html)
+tabable 한 요소를 확인할 수 있다.
+
+---
+
+## custom mdx component 제작
+
+`#` 가 앞에 붙으면 mdx 는 이를 자동으로 h1 태그로 변환해준다. 생각없이 h1 태그에 대한 스타일링만 해주고 끝내면 사용성에 불편을 초래한다.
+MDN, 각종 web spec 사이트를 보면 제목이 clickable 한걸 볼 수 있다. 그리고 클릭하면 url에 # 이 붙으는걸 볼 수있다.
+그리고 이 url 을 복사하고 다른 탭에서 열어보면 짜잔~ 해당 tag 로 이동한채 열리는걸 볼 수 있는데 이는 anchor tag 의 id attribute 가 가지는 기능이다.
+해당 기능에 대한 규칙은 [HTML specification a link](https://www.w3.org/TR/html401/struct/links.html#h-12.2.3) 에서 볼 수 있다.
+
+### Header + Anchor
+
+Markdown 의 문서의 h 태그들에 대해서도 이렇게 anchor 기능을 제공하면 사용자 experiance 를 높여 줄수있게된다.
+(anchor 태그를 사용하면 tab-able 해지기 때문에 keyboard 사용성도 자연스럽게 좋아진다.)
