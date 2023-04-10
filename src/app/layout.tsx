@@ -3,6 +3,7 @@ import { Footer, Header } from "@/components/layout"
 import "@styles/globals.scss"
 import localFont from "next/font/local"
 import { Providers } from "./providers"
+import { Analytics } from "@vercel/analytics/react"
 
 // export const dynamic = "force-static"
 
@@ -48,6 +49,7 @@ export default async function RootLayout(props: any) {
             <Footer />
           </div>
         </Providers>
+        <Analytics />
       </body>
     </html>
   )
