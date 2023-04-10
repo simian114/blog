@@ -5,10 +5,6 @@ export default async function Home() {
   const post = await getPostBySlugs("/")
 
   return (
-    <main>
-      <div className="inner">
-        {post.serialized && <MdxContent source={post.serialized} />}
-      </div>
-    </main>
+    <main>{post.serialized && <MdxContent source={post.serialized} />}</main>
   )
 }
