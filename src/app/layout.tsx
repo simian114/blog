@@ -44,8 +44,7 @@ export default async function RootLayout(props: any) {
         <Providers>
           <div id="app">
             <Header />
-            <section>{props.children}</section>
-            {/* <section className="inner">{props.children}</section> */}
+            <section className="inner">{props.children}</section>
             <Footer />
           </div>
         </Providers>
