@@ -1,11 +1,12 @@
 "use client"
 
 import Button from "@/components/button/Button"
-import ButtonLink from "@/components/button/ButtonLink"
 import MainTitle from "@/components/mdx/mainTitle/MainTitle"
+import { Post } from "contentlayer/generated"
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote"
 import Image, { ImageProps } from "next/image"
 import AnchorText from "../components/mdx/AnchorText"
+import { useMDXComponent } from "next-contentlayer/hooks"
 
 type MdxContentProps = {
   source: MDXRemoteSerializeResult

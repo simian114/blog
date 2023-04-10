@@ -1,14 +1,58 @@
 ---
-title: 블로그를 만들어 가는 여정...
+title: 블로그 만들기
+date: 2023-04-11
+isPublished: true
+publishedAt: "2022-12-11"
+description: nextjs 이용해 블로그를 만들어보자.
+tags:
+  - { content: "blog", colorType: "primary" }
+  - { content: "nextjs", colorType: "secondary" }
+  - { content: "mdx", colorType: "tertiary" }
 ---
 
-# 블로그를 만들어 가는 여정...
+# 블로그 만들기
 
-# 기술 스택은?
+블로그를 만들어 나가는 과정을 기록합니다.
 
-- next.js, css & scss 를 사용
+---
 
-# 왜?
+# 사용 기술
 
-next.js 13 버전에서 app directory 라는 기존과 많이 다른 버전을 내놓는다는 이야기를 들었다.
-따라서 이번이 next.js 를 사용해보기 좋은 기회라는 생각이 들었음
+- nextjs & react
+- scss
+- mdx
+
+---
+
+# nextjs 설치
+
+> [nextjs](https://beta.nextjs.org/docs/app-directory-roadmap)
+
+nextjs는 작년 큰 업데이트가 있었다. 어차피 처음이므로 손해볼거는 없다는 생각에 `beta` 버전을 사용하기로 헀다.
+
+---
+
+# 스타일링
+
+> [scss](https://sass-lang.com/)
+
+기존에는 스타일링이라고 하면 `styled-components` 와 같은 `css-in-js` 밖에 사용한 경험밖에 없기에
+이번을 기회로 삼아 다른 `scss` 를 사용하기로 했다.
+
+---
+
+# 콘텐츠 내용 보여주기
+
+> [mdx](https://mdxjs.com/)
+
+`markdown` 으로 관리된는 블로그를 만들어야지~ 생각은 있었는데 막상 nextjs 문서를 보니 공식적으로 markdown 을 지원한다하고
+심지어 [`mdx`](https://mdxjs.com/) 라는 `Markdown` 을 `component` 로 사용할 수 있게해주는 기술도 있다는걸 알게되서 바로 사용하기로 했다.
+
+---
+
+# 블로그 color
+
+> [radix color](https://www.radix-ui.com/colors)
+
+디자인에는 조예가 없으니 최소한 색이라도 잘 쓰자는 생각을했고 기존에 좋아하던 라이브러리인 `radix` 에서 자매품으로 내놓은 [radix-color](https://www.radix-ui.com/colors) 를 사용해보기로 랬다.
+막상 사용해보니 너무 좋다..

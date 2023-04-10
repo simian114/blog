@@ -1,6 +1,5 @@
 import { POST_PATH_PREFIX } from "@/constants/path"
-import { readPost } from "@/lib/server"
-import { allPosts } from "contentlayer/generated"
+import { allPulishedPost, readPost } from "@/lib/server"
 import { glob } from "glob"
 import { notFound } from "next/navigation"
 import path from "path"
@@ -11,6 +10,7 @@ export function getSlug(slugPath: string, root: string) {
   return slug.split("/")
 }
 
+// NOTE: allPosts 로 변경하기
 export function findAllPostSlugs(loc: string) {
   return glob(path.join(loc, "**/*.mdx")).then(paths => {
     return paths.map(p => getSlug(p, loc))
@@ -25,39 +25,12 @@ export function findAllPostSlugs(loc: string) {
 //   )
 // }
 
-export const allBlogPosts = allPosts.filter(
-  post =>
-    post._raw.sourceFilePath.includes("blog") &&
-    !post._raw.sourceFilePath.includes("/index.mdx")
-)
-
-export const allSnippetPosts = allPosts.filter(
-  post =>
-    post._raw.sourceFilePath.includes("snippet") &&
-    !post._raw.sourceFilePath.includes("/index.mdx")
-)
-
-// export const allBlogTopics = allBlogPosts.reduce((prev, cur) => {
-// }, new Set());
-
 export async function getPostBySlugs(prefix: string, slugs?: string[]) {
-  const layerPost = allPosts.find(
+  const layerPost = allPulishedPost.find(
     post => post.slug === `${prefix}${slugs ? `/${slugs.join("/")}` : ""}`
   )
   if (!layerPost) {
     notFound()
   }
   return await readPost(`${POST_PATH_PREFIX}/${layerPost?._id}`)
-  // return layerPost.body.raw
-}
-
-export function getTemp(prefix: string, slugs?: string[]) {
-  const layerPost = allPosts.find(
-    post => post.slug === `${prefix}${slugs ? `/${slugs.join("/")}` : ""}`
-  )
-  console.log(layerPost)
-  if (!layerPost) {
-    notFound()
-  }
-  return layerPost
 }

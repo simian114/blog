@@ -3,6 +3,7 @@
 import { Post } from "contentlayer/generated"
 import Link from "next/link"
 import Tag from "../tag/Tag"
+import dayjs from "dayjs"
 
 interface PostCardProps {
   post: Post
@@ -10,14 +11,15 @@ interface PostCardProps {
 
 export default function PostCard(props: PostCardProps) {
   const { post } = props
+
   return (
     <article className={"post-card"}>
       <div className="post-card__meta">
         <span className="post-card__meta__reading-time">
-          {post.readingTime}분
+          {post.readingTime}
         </span>
         <span className="post-card__meta__created-at">
-          {post.date || "날짜"}
+          {dayjs(post.date).format("YYYY-MM-DD")}
         </span>
       </div>
       <div className="post-card__content">

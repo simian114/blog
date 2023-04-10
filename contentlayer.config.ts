@@ -27,8 +27,13 @@ const fields: FieldDefs = {
   },
   date: {
     type: "date",
-    description: "the date ",
-    required: false,
+    description: "created at",
+    required: true,
+  },
+  publishedAt: {
+    type: "date",
+    description: "publshed dated",
+    required: true,
   },
   tags: {
     type: "list",
@@ -37,6 +42,7 @@ const fields: FieldDefs = {
   },
   isPublished: {
     type: "boolean",
+    description: "if false, content is not visible",
     default: false,
     required: false,
   },
@@ -45,6 +51,7 @@ const fields: FieldDefs = {
     required: false,
   },
 }
+
 export const Post = defineDocumentType(() => ({
   name: "Post",
   filePathPattern: `**/*.mdx`,

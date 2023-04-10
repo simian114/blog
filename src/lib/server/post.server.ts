@@ -1,6 +1,6 @@
 import { existsSync } from "fs"
 import { isDirectory } from "./files.server"
-import { PostFrontmatter, Post } from "@/app/types"
+import { SerializedPost } from "@/app/types"
 import { serialize } from "next-mdx-remote/serialize"
 import { promises as fs } from "fs"
 import rehypeHighlight from "rehype-highlight"
@@ -8,15 +8,33 @@ import langJavascript from "highlight.js/lib/languages/javascript"
 import langCSS from "highlight.js/lib/languages/css"
 import "highlight.js/styles/a11y-dark.css"
 import { notFound } from "next/navigation"
+import { allPosts, Post } from "contentlayer/generated"
 
 const languages = {
   javascript: langJavascript,
   css: langCSS,
 }
 
-export async function readPost(
-  filepath: string
-): Promise<Post<PostFrontmatter>> {
+/**
+ * sort & show only published
+ */
+export const allPulishedPost = allPosts
+  .filter(post => post.isPublished)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+export const allBlogPosts = allPulishedPost.filter(
+  post =>
+    post._raw.sourceFilePath.includes("blog") &&
+    !post._raw.sourceFilePath.includes("/index.mdx")
+)
+
+export const allSnippetPosts = allPulishedPost.filter(
+  post =>
+    post._raw.sourceFilePath.includes("snippet") &&
+    !post._raw.sourceFilePath.includes("/index.mdx")
+)
+
+export async function readPost(filepath: string): Promise<SerializedPost> {
   // Read the file from the filesystem
 
   const raw = await fs
@@ -41,7 +59,7 @@ export async function readPost(
   })
 
   // Typecast the frontmatter to the correct type
-  const frontmatter = serialized.frontmatter as PostFrontmatter
+  const frontmatter = serialized.frontmatter as Post
 
   // Return the serialized content and frontmatter
   return {
