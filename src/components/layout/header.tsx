@@ -38,6 +38,10 @@ export default function Nav(): ReactElement {
     setIsMobileMenuOpen(prev => !prev)
   }
 
+  function handleMenuClick() {
+    setIsMobileMenuOpen(false)
+  }
+
   return (
     <>
       <DisableScroll enable={open && isMobile} />
@@ -62,6 +66,7 @@ export default function Nav(): ReactElement {
                     ? "active"
                     : ""
                 }
+                onClick={handleMenuClick}
               >
                 <Link href={menu.href} key={menu.id} prefetch>
                   {menu.children}

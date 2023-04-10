@@ -4,6 +4,7 @@
 header.header {
   position: sticky;
   top: 0px;
+  z-index: 1;
   transition: background-color 0.25s linear;
   background: rgba(var(--app-bg-color), 0.35);
   backdrop-filter: blur(24px);
