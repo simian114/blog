@@ -1,5 +1,17 @@
+@use "@styles/utils";
+
 .anchor {
-  &:hover {
+  @include utils.pointing-hover {
+    text-decoration: underline;
+    text-decoration-color: var(--solid-hovered-bg-primary-color);
+    &::after {
+      display: inline;
+      content: "#";
+      margin-left: 4px;
+      color: var(--solid-hovered-bg-primary-color);
+    }
+  }
+  &:active {
     text-decoration: underline;
     text-decoration-color: var(--solid-hovered-bg-primary-color);
     &::after {

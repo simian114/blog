@@ -42,7 +42,14 @@ header.header {
             @include typography.bold;
           }
         }
-        &:hover {
+        @include utils.pointing-hover {
+          > a {
+            height: 100%;
+            background-color: var(--ui-el-hovered-bg-color);
+            color: var(--text-high-color);
+          }
+        }
+        &:active {
           > a {
             height: 100%;
             background-color: var(--ui-el-hovered-bg-color);

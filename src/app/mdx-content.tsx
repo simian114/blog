@@ -15,22 +15,34 @@ type MdxContentProps = {
 const MdxComponents = {
   /** h1 colored in yellow */
   h1: (props: React.HTMLProps<HTMLHeadingElement>) => (
-    <h1 className="mdx-h1" {...props} />
+    <AnchorText as="h1" className="mdx-h1">
+      {props.children as string}
+    </AnchorText>
   ),
   h2: (props: React.HTMLProps<HTMLHeadingElement>) => (
-    <h2 className="mdx-h2" {...props} />
+    <AnchorText as="h2" className="mdx-h2">
+      {props.children as string}
+    </AnchorText>
   ),
   h3: (props: React.HTMLProps<HTMLHeadingElement>) => (
-    <h3 className="mdx-h3" {...props} />
+    <AnchorText as="h3" className="mdx-h3">
+      {props.children as string}
+    </AnchorText>
   ),
   h4: (props: React.HTMLProps<HTMLHeadingElement>) => (
-    <h4 className="mdx-h4" {...props} />
+    <AnchorText as="h4" className="mdx-h4">
+      {props.children as string}
+    </AnchorText>
   ),
   h5: (props: React.HTMLProps<HTMLHeadingElement>) => (
-    <h5 className="mdx-h5" {...props} />
+    <AnchorText as="h5" className="mdx-h5">
+      {props.children as string}
+    </AnchorText>
   ),
   h6: (props: React.HTMLProps<HTMLHeadingElement>) => (
-    <h6 className="mdx-h6" {...props} />
+    <AnchorText as="h6" className="mdx-h6">
+      {props.children as string}
+    </AnchorText>
   ),
   ul: (props: React.HTMLProps<HTMLUListElement>) => (
     <ul className="mdx-ul" {...props} />
@@ -73,20 +85,6 @@ const MdxComponents = {
   ),
   /** Custom component */
   MainTitle,
-  AnchorH1: ({ children }: { children: string }) => {
-    return (
-      <AnchorText as="h1" className="mdx-h1">
-        {children}
-      </AnchorText>
-    )
-  },
-  AnchorH2: ({ children }: { children: string }) => {
-    return (
-      <AnchorText as="h2" className="mdx-h2">
-        {children}
-      </AnchorText>
-    )
-  },
   Image: (props: ImageProps) => {
     return (
       <div style={{ position: "relative" }}>
@@ -105,7 +103,7 @@ const MdxComponents = {
     />
   ),
   Button,
-  ButtonLink,
+  // ButtonLink,
 }
 
 export function MdxContent({ source }: MdxContentProps) {

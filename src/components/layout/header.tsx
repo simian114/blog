@@ -9,7 +9,6 @@ import { usePathname } from "next/navigation"
 import { useDevice } from "@/store/deviceWidthProvider"
 import DisableScroll from "../client/DisableScroll"
 import ButtonLink from "../button/ButtonLink"
-import Button from "../button/Button"
 
 interface Menu {
   id: string
