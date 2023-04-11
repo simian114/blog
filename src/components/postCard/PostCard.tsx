@@ -16,7 +16,7 @@ export default function PostCard(props: PostCardProps) {
     <article className={"post-card"}>
       <div className="post-card__meta">
         <span className="post-card__meta__reading-time">
-          {post.readingTime}
+          {post.readingTime}분
         </span>
         <span className="post-card__meta__created-at">
           {dayjs(post.date).format("YYYY-MM-DD")}

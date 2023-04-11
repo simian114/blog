@@ -87,21 +87,24 @@ header.header {
       padding-bottom: 0.5rem;
       padding-top: 0.5rem;
       &__menus {
+        padding-top: 3rem;
         transition: background-color 0.25s linear;
         display: flex;
         flex-direction: column;
         width: calc(100vw - 32px);
         height: calc(100vh - 51px);
-        max-height: 0;
         position: absolute;
         top: 51px;
         z-index: -1;
-        visibility: hidden;
+        opacity: 0;
+        background-color: var(--app-bg-color);
+        transition: opacity 0.25s ease-out;
         &[data-state="open"] {
           z-index: 50;
-          visibility: visible;
-          max-height: calc(100vh - 51px);
-          background: var(--app-bg-color);
+          opacity: 1;
+        }
+        &[data-state="close"] {
+          height: 0px;
         }
         > li {
           width: 100%;

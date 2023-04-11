@@ -1,6 +1,13 @@
 "use client"
 import Link from "next/link"
-import { ReactElement, ReactNode, useMemo, useRef, useState } from "react"
+import {
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import { RocketIcon } from "@radix-ui/react-icons"
 import ThemeToggler from "../theme/themeToggler"
 
@@ -37,9 +44,9 @@ export default function Nav(): ReactElement {
     setIsMobileMenuOpen(prev => !prev)
   }
 
-  function handleMenuClick() {
+  useEffect(() => {
     setIsMobileMenuOpen(false)
-  }
+  }, [pathname])
 
   return (
     <>
@@ -65,7 +72,6 @@ export default function Nav(): ReactElement {
                     ? "active"
                     : ""
                 }
-                onClick={handleMenuClick}
               >
                 <Link href={menu.href} key={menu.id} prefetch>
                   {menu.children}
