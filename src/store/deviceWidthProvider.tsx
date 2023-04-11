@@ -33,12 +33,6 @@ export const useDevice = () => {
 
   return ret
 }
-
-/**
- * media query 사용하는 로직으로 수정할것. 현재는 왜인지는 몰라도
- * 모바일로 접속했을 시 width 가 900px; 로 고정되서 모바일로 안바뀜
- *
- */
 export default function DeviceWidthProvider({
   children,
 }: {
@@ -46,21 +40,47 @@ export default function DeviceWidthProvider({
 }) {
   const [device, setDevice] = useState<Device | undefined>(undefined)
 
-  const onResizeDevice = () => {
-    return window.innerWidth <= 768
-      ? setDevice("mobile")
-      : window.innerWidth <= 1024
-      ? setDevice("tablet")
-      : window.innerWidth <= 1280
-      ? setDevice("labtop")
-      : setDevice("desktop")
-  }
-
   useEffect(() => {
-    onResizeDevice()
-    window.addEventListener("resize", onResizeDevice)
+    const mqls = [
+      window.matchMedia(`(max-width: ${768}px)`),
+      window.matchMedia(`(min-width: ${768 + 1}px) and (max-width: ${1024}px)`),
+      window.matchMedia(
+        `(min-width: ${1024 + 1}px) and (max-width: ${1280}px)`
+      ),
+      window.matchMedia(`(min-width: ${1280 + 1}px)`),
+    ]
+
+    function mediaQueryHandler(mql: MediaQueryListEvent) {
+      if (mqls[0].media === mql.media && mql.matches) {
+        setDevice("mobile")
+      } else if (mqls[1].media === mql.media && mql.matches) {
+        setDevice("tablet")
+      } else if (mqls[2].media === mql.media && mql.matches) {
+        setDevice("labtop")
+      } else if (mqls[3].media === mql.media && mql.matches) {
+        setDevice("desktop")
+      }
+    }
+
+    function initDevice() {
+      mqls.map((mql, idx) => {
+        if (mql.matches) {
+          if (idx === 0) {
+            setDevice("mobile")
+          } else if (idx === 1) {
+            setDevice("tablet")
+          } else if (idx === 2) {
+            setDevice("labtop")
+          } else if (idx === 3) {
+            setDevice("desktop")
+          }
+        }
+        mql.addListener(mediaQueryHandler)
+      })
+    }
+    initDevice()
     return () => {
-      window.removeEventListener("resize", onResizeDevice)
+      mqls?.forEach(mql => mql.removeListener(mediaQueryHandler))
     }
   }, [])
 
