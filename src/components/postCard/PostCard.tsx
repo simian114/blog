@@ -2,7 +2,7 @@
 
 import { Post } from "contentlayer/generated"
 import Link from "next/link"
-import Tag from "../tag/Tag"
+import Tag from "./tag/Tag"
 import dayjs from "dayjs"
 
 interface PostCardProps {
@@ -24,11 +24,7 @@ export default function PostCard(props: PostCardProps) {
       </div>
       <div className="post-card__content">
         <h3 className={"post-card__content__title"}>
-          <Link
-            prefetch
-            className={"post-card__content__link"}
-            href={props.post.slug}
-          >
+          <Link className={"post-card__content__link"} href={props.post.slug}>
             {props.post.title || "post title"}
           </Link>
         </h3>
