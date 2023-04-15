@@ -14,6 +14,14 @@ const Tag = defineNestedType(() => ({
   },
 }))
 
+const Heading = defineNestedType(() => ({
+  name: "Heading",
+  fields: {
+    title: { type: "string", required: true },
+    children: { type: "list", of: { type: "string" }, required: false },
+  },
+}))
+
 const fields: FieldDefs = {
   title: {
     type: "string",
@@ -50,6 +58,11 @@ const fields: FieldDefs = {
     type: "string",
     required: false,
   },
+  headings: {
+    type: "list",
+    of: Heading,
+    required: false,
+  },
 }
 
 export const Post = defineDocumentType(() => ({
@@ -69,6 +82,40 @@ export const Post = defineDocumentType(() => ({
     slug: {
       type: "string",
       resolve: post => `/${post._raw.flattenedPath}`,
+    },
+    headings: {
+      type: "list",
+      of: Heading,
+      resolve: async doc => {
+        // NOTE: h2, h3 만 heading 으로 가져옴
+        // NOTE: flag 와 content 는 아래에서 변수로 사용가능해짐
+        const headingRegex = /\n(?<header>#{2,3})\s+(?<title>.+)/g
+        const headings = Array.from(doc.body.raw.matchAll(headingRegex)).map(
+          ({ groups }) => {
+            const header = groups?.header
+            const title = groups?.title
+            return {
+              level: header?.length || -1,
+              title,
+            }
+          }
+        )
+        return headings.reduce((prev, cur) => {
+          if (cur.level === 2) {
+            prev.push({ title: cur.title || "", children: [] })
+            return prev
+          } else {
+            const lastIdx = prev.length - 1
+            if (lastIdx === -1) {
+              prev.push({ title: "", children: [] })
+              prev[0].children?.push(cur.title || "")
+              return prev
+            }
+            prev[lastIdx].children?.push(cur.title || "")
+            return prev
+          }
+        }, [] as Array<{ title: string; children?: Array<string> }>)
+      },
     },
   },
 }))

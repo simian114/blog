@@ -57,7 +57,7 @@ export default function Nav(): ReactElement {
         data-state={open ? "open" : "close"}
       >
         <nav className="navigation inner">
-          <Link className="navigation__home" href="/" prefetch>
+          <Link className="navigation__home" href="/">
             <RocketIcon />
           </Link>
           <ul
@@ -73,7 +73,7 @@ export default function Nav(): ReactElement {
                     : ""
                 }
               >
-                <Link href={menu.href} key={menu.id} prefetch>
+                <Link href={menu.href} key={menu.id}>
                   {menu.children}
                 </Link>
               </li>

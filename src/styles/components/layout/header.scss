@@ -98,12 +98,15 @@ header.header {
         z-index: -1;
         opacity: 0;
         background-color: var(--app-bg-color);
-        transition: opacity 0.25s ease-out;
+        transition-property: opacity, background-color;
+        transition-duration: 0.25s;
+        transition-timing-function: linear;
         &[data-state="open"] {
           z-index: 50;
           opacity: 1;
         }
         &[data-state="close"] {
+          display: none;
           height: 0px;
         }
         > li {

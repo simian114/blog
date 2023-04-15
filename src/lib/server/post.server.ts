@@ -20,7 +20,10 @@ const languages = {
  */
 export const allPulishedPost = allPosts
   .filter(post => post.isPublished)
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .sort(
+    (a, b) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  )
 
 export const allBlogPosts = allPulishedPost.filter(
   post =>
