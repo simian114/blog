@@ -90,14 +90,16 @@
     display: block;
     gap: unset;
   }
+  .detail-main {
+    &__title {
+      color: var(--text-high-color);
+      font-size: 2.5rem;
+      margin: auto;
+      margin-left: 0;
+      margin-bottom: 1.5rem;
+    }
+  }
   .sidebar-container {
     display: none;
-    // position: fixed;
-    // flex-shrink: unset;
-    // bottom: 2rem;
-    // right: 2rem;
-    // top: unset;
-    // height: 3rem;
-    // width: 3rem;
   }
 }

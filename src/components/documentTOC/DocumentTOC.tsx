@@ -1,5 +1,6 @@
 "use client"
 
+import { useDevice } from "@/store/deviceWidthProvider"
 import { Heading } from "contentlayer/generated"
 import { useEffect, useRef } from "react"
 
@@ -7,8 +8,12 @@ interface DocumentTOCProps {
   headings?: Heading[]
 }
 
+/**
+ * intersectionObserver 로 변경할것
+ */
 export default function DocumentTOC(props: DocumentTOCProps) {
   const tocRef = useRef<HTMLUListElement>(null)
+  const { isMobile } = useDevice()
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -18,11 +23,15 @@ export default function DocumentTOC(props: DocumentTOCProps) {
     function onScroll() {
       const scrollTop = window.scrollY
       if (!tocLinks || !mdxHeaders) return
-      tocLinks.forEach(link => {
-        link.classList.remove("active")
-      })
+
+      // NOTE: forEach 보다 for문이 성능 더 좋음..
+      for (let i = 0; i < tocLinks.length; i++) {
+        tocLinks[i]?.classList?.remove("active")
+      }
+
       for (let i = mdxHeaders.length - 1; i >= 0; i--) {
-        if (scrollTop > (mdxHeaders[i] as HTMLElement).offsetTop - 75) {
+        const offset = isMobile ? 16 : 48
+        if (scrollTop > (mdxHeaders[i] as HTMLElement).offsetTop - offset) {
           tocLinks[i]?.classList.add("active")
           break
         }
@@ -36,7 +45,7 @@ export default function DocumentTOC(props: DocumentTOCProps) {
       window.removeEventListener("scroll", onScroll)
       window.removeEventListener("resize", onScroll)
     }
-  }, [props.headings])
+  }, [props.headings, isMobile])
 
   return (
     <div className="document-toc-container">
@@ -51,7 +60,7 @@ export default function DocumentTOC(props: DocumentTOCProps) {
                 <a href={`#${heading.title}`} className="document-toc__link">
                   {heading.title}
                 </a>
-                {(heading.children?.length || 0) > 1 && (
+                {(heading.children?.length || 0) > 0 && (
                   <ul className="document-toc__nested-list">
                     {heading.children?.map(heading => {
                       return (
