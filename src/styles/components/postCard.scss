@@ -8,6 +8,7 @@
   padding: 1rem;
   display: flex;
   max-width: 100%;
+  cursor: pointer;
 
   &__meta {
     flex-basis: 100px;
@@ -47,14 +48,6 @@
     &__link {
       :focus {
         outline: none;
-      }
-      &:after {
-        content: " ";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 0;
       }
     }
     &__description {
