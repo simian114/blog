@@ -44,6 +44,7 @@
       svg {
         margin-right: 0.25rem;
       }
+      align-self: flex-end;
     }
     &__right {
       display: flex;
@@ -92,11 +93,19 @@
   }
   .detail-main {
     &__title {
-      color: var(--text-high-color);
       font-size: 2.5rem;
-      margin: auto;
-      margin-left: 0;
+      color: var(--text-high-color);
+      width: 100vw;
+      margin: 0;
+      min-width: calc(100vw - 32px);
+      padding-left: 1rem;
+      padding-right: 1rem;
       margin-bottom: 1.5rem;
+    }
+    &__info {
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
     }
   }
   .sidebar-container {
