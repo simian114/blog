@@ -57,7 +57,10 @@ export default function DocumentTOC(props: DocumentTOCProps) {
           {props.headings?.map(heading => {
             return (
               <li key={heading.title} className="document-toc__item">
-                <a href={`#${heading.title}`} className="document-toc__link">
+                <a
+                  href={`#${heading.title.replaceAll(" ", "-")}`}
+                  className="document-toc__link"
+                >
                   {heading.title}
                 </a>
                 {(heading.children?.length || 0) > 0 && (
@@ -66,7 +69,7 @@ export default function DocumentTOC(props: DocumentTOCProps) {
                       return (
                         <li key={heading} className="document-toc__nested-item">
                           <a
-                            href={`#${heading}`}
+                            href={`#${heading.replaceAll(" ", "-")}`}
                             className="document-toc__nested-link"
                           >
                             {heading}

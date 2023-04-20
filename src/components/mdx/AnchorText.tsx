@@ -12,9 +12,11 @@ export default function AnchorText<C extends ElementType = "span">(
   const { as = "span", children, className, ...rest } = props
   const Component = as
   const cn = `${className} ${styles.anchor}`
+  const target =
+    typeof children === "string" ? children.replaceAll(" ", "-") : ""
   return (
-    <Component {...rest} id={children as string} className={cn}>
-      <a href={`#${children}`}>{children}</a>
+    <Component {...rest} id={target} className={cn}>
+      <a href={`#${target}`}>{children}</a>
     </Component>
   )
 }
