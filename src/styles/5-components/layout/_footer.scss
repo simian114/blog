@@ -1,0 +1,33 @@
+@use "@styles" as *;
+
+.footer {
+  padding-bottom: 4rem;
+  &__spacer {
+    height: 2px;
+    background-color: var(--separator-color);
+    margin: 3rem auto;
+  }
+  &__contents {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    &__links {
+      display: flex;
+      > a:not(:last-child) {
+        margin-right: 0.375rem;
+      }
+      > a {
+        color: var(--text-high-color);
+      }
+    }
+    &__text {
+      > span {
+        color: var(--text-low-color);
+        > strong {
+          @include bold;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+@use "@styles" as *;
+
+.document-toc-container {
+  display: flex;
+  padding: 1rem 0.5rem 1rem 1rem;
+  background-color: var(--ui-el-bg-color);
+  border-radius: 1rem;
+  transition: background-color 0.25s linear;
+}
+
+.document-toc {
+  color: var(--text-low-color);
+  @include body2;
+  &__header {
+    @include bold;
+    @include body1;
+    color: var(--text-high-color);
+    margin-bottom: 0.5rem;
+  }
+  &__item {
+    margin-bottom: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    &:not(:last-child) {
+      margin-bottom: 0.25rem;
+    }
+
+    // &:has(.active) {
+    //   color: var(--secondary11);
+    //   @include medium;
+    // }
+  }
+  &__link {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  &__nested-list {
+    margin-left: 0.75rem;
+    //
+  }
+  &__nested-item {
+    display: flex;
+    flex-direction: column;
+    color: var(--text-low-color);
+  }
+  &__nested-link {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+  &__link,
+  &__nested-link {
+    @include pointing-hover {
+      &:hover {
+        color: var(--secondary10);
+      }
+    }
+  }
+
+  .active {
+    // @include medium;
+    color: var(--secondary11);
+  }
+}

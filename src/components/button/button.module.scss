@@ -1,4 +1,4 @@
-@use "@styles/typography";
+@use "@styles" as *;
 
 .default {
   position: relative;
@@ -82,7 +82,7 @@ $palettes: "primary", "secondary", "tertiary";
     padding: 1.25rem 2.5rem;
     border-radius: 0.75rem;
   }
-  @include typography.subtitle2;
+  @include subtitle2;
 }
 
 .large {
@@ -90,7 +90,7 @@ $palettes: "primary", "secondary", "tertiary";
     padding: 1rem 2rem;
     border-radius: 0.75rem;
   }
-  @include typography.body1;
+  @include body1;
 }
 
 .medium {
@@ -98,7 +98,7 @@ $palettes: "primary", "secondary", "tertiary";
     padding: 0.875rem 1.5rem;
     border-radius: 0.75rem;
   }
-  @include typography.body1;
+  @include body1;
 }
 
 .small {
@@ -106,7 +106,7 @@ $palettes: "primary", "secondary", "tertiary";
     padding: 0.75rem 1.25rem;
     border-radius: 0.75rem;
   }
-  @include typography.caption1;
+  @include caption1;
 }
 
 .xsmall {
@@ -114,17 +114,17 @@ $palettes: "primary", "secondary", "tertiary";
     padding: 0.625rem 1rem;
     border-radius: 0.75rem;
   }
-  @include typography.caption1;
+  @include caption1;
 }
 
 .regular-typo {
-  @include typography.regular;
+  @include regular;
 }
 
 .medium-typo {
-  @include typography.medium;
+  @include medium;
 }
 
 .bold-typo {
-  @include typography.bold;
+  @include bold;
 }

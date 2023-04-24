@@ -1,0 +1,14 @@
+@import "./typography-data";
+
+/// Returns the font size for a given range.
+///
+/// @param {Number} $range - The font style.
+/// @return {Number} The font-size for the text-style.
+@function rds-font-size($range) {
+  $fetched-font-size: map-get($rds-font-size-data, $range);
+  @if type-of($fetched-font-size) != null {
+    @return $fetched-font-size;
+  } @else {
+    @error 'Font size range `#{$range}` not found. Available font sizes: #{$rds-font-size-data}';
+  }
+}

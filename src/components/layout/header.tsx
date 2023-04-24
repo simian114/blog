@@ -28,6 +28,7 @@ const menus: Menu[] = [
   { id: "snippet", children: "snippet", href: "/snippet" },
   { id: "archives", children: "archives", href: "/archives" },
   { id: "mdx-sketch", children: "mdx-sketch", href: "/mdx-sketch" },
+  { id: "design-system", children: "design-system", href: "/design-system" },
 ]
 
 export default function Nav(): ReactElement {
