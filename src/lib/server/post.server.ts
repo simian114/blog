@@ -37,6 +37,12 @@ export const allSnippetPosts = allPulishedPost.filter(
     !post._raw.sourceFilePath.includes("/index.mdx")
 )
 
+export const allDesignSystemPosts = allPulishedPost.filter(
+  post =>
+    post._raw.sourceFilePath.includes("design-system") &&
+    !post._raw.sourceFilePath.includes("/index.mdx")
+)
+
 export async function readPost(filepath: string): Promise<SerializedPost> {
   // Read the file from the filesystem
 

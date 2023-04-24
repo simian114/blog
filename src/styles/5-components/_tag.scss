@@ -1,0 +1,15 @@
+@use "@styles" as *;
+
+.tag {
+  padding: 0.25rem 0.5rem;
+  @include caption1;
+  @include medium;
+  border-radius: 0.25rem;
+  $palettes: "gray", "primary", "secondary", "tertiary";
+  @each $palette in $palettes {
+    &.tag-#{$palette} {
+      color: var(--text-low-#{$palette}-color);
+      background-color: var(--ui-el-active-bg-#{$palette}-color);
+    }
+  }
+}

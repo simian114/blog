@@ -7,6 +7,7 @@ const BLOG_PATH = POST_PATH_PREFIX + "/blog"
 const SNIPPET_PATH = POST_PATH_PREFIX + "/snippet"
 const ARCHIVES_PATH = POST_PATH_PREFIX + "/archives"
 const MDX_SKETCH_PATH = POST_PATH_PREFIX + "/mdx-sketch"
+const DESIGN_SYSTEM_PATH = POST_PATH_PREFIX + "/design-system"
 
 export {
   POST_PATH_PREFIX,
@@ -15,4 +16,5 @@ export {
   SNIPPET_PATH,
   ARCHIVES_PATH,
   MDX_SKETCH_PATH,
+  DESIGN_SYSTEM_PATH,
 }

@@ -1,0 +1,22 @@
+@use "sass:math";
+
+$nds-default-browser-font-size: 16;
+
+/// Returns value as rem for a gicen px or rem value
+/// @param {Number} $value - pixel value to be converted
+/// @return {Number} converted value in rem
+///
+@function rds-rem($value) {
+  // sass unit function return unit (px, rem..);
+  $unit: unit($value);
+
+  @if $value == 0 {
+    @return 0;
+  } @else if $unit == "rem" {
+    @return $value;
+  } @else if $unit == "px" {
+    @return math.div($value, 16px) * 1rem;
+  } @else {
+    @error "Value must be in px or rem";
+  }
+}

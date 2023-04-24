@@ -1,17 +1,18 @@
-@import "@styles/reset.css";
-@import "@styles/utils";
-@import "@styles/color";
-@import "@styles/theme/light.scss";
-@import "@styles/theme/dark.scss";
+@use "@styles" as *;
 
-/* components */
-@import "@styles/components/index.scss";
+@import "@styles/1-base/reset.css";
 
 /* mdx */
-@import "@styles/mdx.scss";
+@import "@styles/0-plugins";
+
+/* theme */
+@import "@styles/2-theme";
 
 /* pages */
-@import "@styles/page/index.scss";
+@import "@styles/4-page";
+
+/* components */
+@import "@styles/5-components";
 
 * {
   box-sizing: border-box;

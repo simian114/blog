@@ -1,0 +1,17 @@
+@use "@styles/1-base/functions" as *;
+
+$rds-font-size-data: (
+  h1: rds-rem(32px),
+  h2: rds-rem(28px),
+  h3: rds-rem(22px),
+  h4: rds-rem(18px),
+  h5: rds-rem(16px),
+  h6: rds-rem(16px),
+  subtitle1: rds-rem(18px),
+  subtitle2: rds-rem(16px),
+  subtitle3: rds-rem(16px),
+  body1: rds-rem(16px),
+  body2: rds-rem(16px),
+  caption1: rds-rem(12px),
+  caption2: rds-rem(10px),
+) !default;

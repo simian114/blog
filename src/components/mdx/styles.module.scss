@@ -1,7 +1,7 @@
-@use "@styles/utils";
+@use "@styles" as *;
 
 .anchor {
-  @include utils.pointing-hover {
+  @include pointing-hover {
     text-decoration: underline;
     text-decoration-color: var(--solid-hovered-bg-primary-color);
     &::after {
