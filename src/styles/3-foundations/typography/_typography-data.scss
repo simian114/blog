@@ -15,3 +15,42 @@ $rds-font-size-data: (
   caption1: rds-rem(12px),
   caption2: rds-rem(10px),
 ) !default;
+
+$rds-line-height-data: (
+  h1: 1.5,
+  h2: 1.5,
+  h3: 1.5,
+  h4: 1.5,
+  h5: 1.5,
+  h6: 1.5,
+  subtitle1: 1.5,
+  subtitle2: 1.5,
+  subtitle3: 1.5,
+  body1: 1.5,
+  body2: 1.5,
+  caption1: 1.5,
+  caption2: 1.5,
+) !default;
+
+$rds-letter-spacing-data: (
+  h1: rds-rem(-0.5px),
+  h2: rds-rem(-0.5px),
+  h3: rds-rem(-0.5px),
+  h4: rds-rem(-0.5px),
+  h5: rds-rem(-0.5px),
+  h6: rds-rem(-0.5px),
+  subtitle1: rds-rem(-0.5px),
+  subtitle2: rds-rem(-0.5px),
+  subtitle3: rds-rem(-0.5px),
+  body1: rds-rem(-0.25px),
+  body2: rds-rem(-0.25px),
+  caption1: rds-rem(-0.25px),
+  caption2: rds-rem(-0.25px),
+) !default;
+
+// Data for each Type Style defined in the Style Sheet.
+$rds-font-weight-data: (
+  bold: 700,
+  medium: 500,
+  regular: 400,
+) !default;
