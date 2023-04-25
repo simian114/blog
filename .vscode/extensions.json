@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "glenn2223.live-sass",
+    "syler.sass-indented",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "unifiedjs.vscode-mdx",
+    "xyc.vscode-mdx-preview"
+  ]
+}
