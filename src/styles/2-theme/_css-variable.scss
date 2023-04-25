@@ -46,31 +46,26 @@
   // text (contrast 생략)
   --text-low-color: var(--gray11);
   --text-high-color: var(--gray12);
+
   $palettes: "gray", "primary", "secondary", "tertiary";
   @each $palette in $palettes {
     --app-bg-#{$palette}-color: var(--#{$palette}1);
     --app-sub-bg-#{$palette}-color: var(--#{$palette}2);
 
-    // NOTE: ui -- components
     --ui-el-bg-#{$palette}-color: var(--#{$palette}3);
     --ui-el-hovered-bg-#{$palette}-color: var(--#{$palette}4);
     --ui-el-active-bg-#{$palette}-color: var(--#{$palette}5);
     --ui-el-selected-bg-#{$palette}-color: var(--#{$palette}5);
 
-    // borders & separators
-    // 정적인 컴포넌트의 border
     --separator-#{$palette}-color: var(--#{$palette}6);
     --ui-static-border-#{$palette}-color: var(--#{$palette}6);
-    // interactive 한 컴포넌트의 border
     --ui-interactive-border-#{$palette}-color: var(--#{$palette}7);
     --ui-focused-border-#{$palette}-color: var(--#{$palette}7);
     --ui-hovered-border-#{$palette}-color: var(--#{$palette}8);
 
-    // solid backgrounds (app, header, comopnent 모든곳에 사용)
     --solid-bg-#{$palette}-color: var(--#{$palette}9);
     --solid-hovered-bg-#{$palette}-color: var(--#{$palette}10);
 
-    // text (contrast 생략)
     --text-low-#{$palette}-color: var(--#{$palette}11);
     --text-high-#{$palette}-color: var(--#{$palette}12);
   }
