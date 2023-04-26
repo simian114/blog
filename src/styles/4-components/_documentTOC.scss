@@ -10,10 +10,10 @@
 
 .document-toc {
   color: var(--text-low-color);
-  @include body2;
+  @include rds-body2;
   &__header {
     @include bold;
-    @include body1;
+    @include rds-body1;
     color: var(--text-high-color);
     margin-bottom: 0.5rem;
   }

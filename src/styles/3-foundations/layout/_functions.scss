@@ -1,0 +1,7 @@
+@use "./data" as *;
+
+/// fallback 을 대비한 cell 의 width. 주의할건 여기로 떨어진다는 건 grid 의 height (row) 속성은 전부 안된다는 의미
+@function rds-grid-round-width($i) {
+  $width: floor(100 * $i * 100 / $rds-grid-columns) / 100;
+  @return #{$width}#{"%"};
+}

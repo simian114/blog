@@ -2,14 +2,13 @@
 @import "./detail-mobile-controller.scss";
 
 .detail-main-wrapper {
-  display: flex;
   position: relative;
   height: 100%;
-  gap: 2rem;
+  @include rds-grid(16px);
+  @include rds-grid-layout((9), (3));
 }
 
 .detail-main {
-  flex-grow: 1;
   color: var(--text-high-color);
   &__title-wrapper {
     display: flex;
@@ -22,7 +21,7 @@
     padding-top: 1.5rem;
   }
   &__title {
-    @include h1;
+    @include rds-h1;
     color: var(--text-high-color);
     font-size: 2.5rem;
     margin: auto;
@@ -39,7 +38,7 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      @include caption1;
+      @include rds-caption1;
       svg {
         margin-right: 0.25rem;
       }
@@ -61,12 +60,11 @@
 }
 
 .sidebar-container {
-  flex-basis: 250px;
-  flex-shrink: 0;
   position: sticky;
   height: calc(100vh - 6rem);
   overflow: auto;
   top: 6rem;
+  min-width: 225px;
   > nav {
     padding-top: 3rem;
     margin-left: auto;

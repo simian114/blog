@@ -2,7 +2,7 @@
 
 .tag {
   padding: 0.25rem 0.5rem;
-  @include caption1;
+  @include rds-caption1;
   @include medium;
   border-radius: 0.25rem;
   $palettes: "gray", "primary", "secondary", "tertiary";
