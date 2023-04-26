@@ -26,7 +26,7 @@
   > p {
     margin-top: 2rem;
     @include bold;
-    @include h1;
+    @include rds-h1;
     color: var(--text-low-color);
   }
 }

@@ -56,7 +56,7 @@ header.header {
           }
         }
         > a {
-          @include h3;
+          @include rds-h3;
           @include medium;
           display: block;
           padding: 0.25rem 0.75rem;

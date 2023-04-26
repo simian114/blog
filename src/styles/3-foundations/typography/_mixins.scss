@@ -15,7 +15,7 @@
 }
 
 /** 32px */
-@mixin h1($weight: bold) {
+@mixin rds-h1($weight: bold) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(h1);
   line-height: rds-line-height(h1);
@@ -23,7 +23,7 @@
 }
 
 /** 28px */
-@mixin h2($weight: bold) {
+@mixin rds-h2($weight: bold) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(h2);
   line-height: rds-line-height(h2);
@@ -31,7 +31,7 @@
 }
 
 /** 22px */
-@mixin h3($weight: bold) {
+@mixin rds-h3($weight: bold) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(h3);
   line-height: rds-line-height(h3);
@@ -39,7 +39,7 @@
 }
 
 /** 18px */
-@mixin h4($weight: bold) {
+@mixin rds-h4($weight: bold) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(h4);
   line-height: rds-line-height(h4);
@@ -47,7 +47,7 @@
 }
 
 /** 16px */
-@mixin h5($weight: bold) {
+@mixin rds-h5($weight: bold) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(h5);
   line-height: rds-line-height(h5);
@@ -55,7 +55,7 @@
 }
 
 /** 15px */
-@mixin h6($weight: bold) {
+@mixin rds-h6($weight: bold) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(h6);
   line-height: rds-line-height(h6);
@@ -63,7 +63,7 @@
 }
 
 /** 18px */
-@mixin subtitle1($weight: medium) {
+@mixin rds-subtitle1($weight: medium) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(subtitle1);
   line-height: rds-line-height(subtitle1);
@@ -71,7 +71,7 @@
 }
 
 /** 16px */
-@mixin subtitle2($weight: medium) {
+@mixin rds-subtitle2($weight: medium) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(subtitle2);
   line-height: rds-line-height(subtitle2);
@@ -79,7 +79,7 @@
 }
 
 /** 15px */
-@mixin subtitle3($weight: medium) {
+@mixin rds-subtitle3($weight: medium) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(subtitle3);
   line-height: rds-line-height(subtitle3);
@@ -87,7 +87,7 @@
 }
 
 /** 16px */
-@mixin body1($weight: regular) {
+@mixin rds-body1($weight: regular) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(body1);
   line-height: rds-line-height(body1);
@@ -95,7 +95,7 @@
 }
 
 /** 14px */
-@mixin body2($weight: regular) {
+@mixin rds-body2($weight: regular) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(body2);
   line-height: rds-line-height(body2);
@@ -103,7 +103,7 @@
 }
 
 /** 12px */
-@mixin caption1($weight: regular) {
+@mixin rds-caption1($weight: regular) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(caption1);
   line-height: rds-line-height(caption1);
@@ -111,7 +111,7 @@
 }
 
 /** 10px */
-@mixin caption2($weight: regular) {
+@mixin rds-caption2($weight: regular) {
   font-weight: rds-font-weight($weight);
   font-size: rds-font-size(caption2);
   line-height: rds-line-height(caption2);

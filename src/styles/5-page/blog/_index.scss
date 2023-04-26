@@ -12,7 +12,7 @@
   &__card-list {
     > h2 {
       margin-left: 1rem;
-      @include h2;
+      @include rds-h2;
       color: var(--text-high-color);
     }
     flex-basis: 450px;

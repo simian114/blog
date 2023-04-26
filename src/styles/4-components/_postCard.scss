@@ -19,12 +19,12 @@
       margin-top: 0.25rem;
     }
     &__reading-time {
-      @include body1;
+      @include rds-body1;
       @include medium;
       color: var(--text-high-color);
     }
     &__created-at {
-      @include caption1;
+      @include rds-caption1;
       color: var(--text-low-color);
       margin-top: 8px;
     }
@@ -32,7 +32,7 @@
   &__content {
     flex-grow: 1;
     &__title {
-      @include h3;
+      @include rds-h3;
       color: var(--text-high-color);
       display: flex;
       @supports (-webkit-line-clamp: 2) {
@@ -50,7 +50,7 @@
       }
     }
     &__description {
-      // @include body1;
+      // @include rds-body1;
       color: var(--text-low-color);
     }
     &__tag-container {

@@ -22,7 +22,7 @@
     padding-top: 1.5rem;
   }
   &__title {
-    @include h1;
+    @include rds-h1;
     color: var(--text-high-color);
     font-size: 2.5rem;
     margin: auto;
@@ -39,7 +39,7 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      @include caption1;
+      @include rds-caption1;
       svg {
         margin-right: 0.25rem;
       }

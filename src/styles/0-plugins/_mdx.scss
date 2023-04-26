@@ -3,23 +3,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap");
 
 .mdx-h1 {
-  @include h1;
+  @include rds-h1;
 }
 
 .mdx-h2 {
-  @include h2;
+  @include rds-h2;
 }
 .mdx-h3 {
-  @include h3;
+  @include rds-h3;
 }
 .mdx-h4 {
-  @include h4;
+  @include rds-h4;
 }
 .mdx-h5 {
-  @include h5;
+  @include rds-h5;
 }
 .mdx-h6 {
-  @include h6;
+  @include rds-h6;
 }
 
 .mdx-h1,
@@ -38,7 +38,7 @@
 .mdx-strong,
 .mdx-p {
   color: var(--text-low-color);
-  @include body1;
+  @include rds-body1;
 }
 
 .mdx-img {
