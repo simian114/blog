@@ -1,6 +1,6 @@
 // @import "./functions";
 @use "./functions" as *;
-@use "./typography-data" as *;
+@use "./data" as *;
 
 @mixin bold {
   font-weight: 700;

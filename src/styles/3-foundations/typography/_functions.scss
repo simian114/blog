@@ -1,9 +1,7 @@
-@import "./typography-data";
+@import "./data";
 
-/// Returns the font size for a given range.
-///
-/// @param {Number} $range - The font style.
-/// @return {Number} The font-size for the text-style.
+/// @param {Number} $range - The font style. (h1, h2, body1...)
+/// @return {Number} font-size
 @function rds-font-size($range) {
   $fetched-font-size: map-get($rds-font-size-data, $range);
   @if type-of($fetched-font-size) != null {
@@ -13,10 +11,8 @@
   }
 }
 
-/// Returns the font size for a given range.
-///
-/// @param {Number} $range - The font style.
-/// @return {Number} The font-size for the text-style.
+/// @param {Number} $range - The font style. (h1, h2, body1...)
+/// @return {Number} line height
 @function rds-line-height($range) {
   $fetched-line-height: map-get($rds-line-height-data, $range);
   @if type-of($fetched-line-height) != null {
@@ -26,10 +22,8 @@
   }
 }
 
-/// Returns the font size for a given range.
-///
-/// @param {Number} $range - The font style.
-/// @return {Number} The font-size for the text-style.
+/// @param {Number} $range - The font style. (h1, h2, body1...)
+/// @return {Number} letter spacing
 @function rds-letter-spacing($range) {
   $fetched-letter-spacing: map-get($rds-letter-spacing-data, $range);
   @if type-of($fetched-letter-spacing) != null {
@@ -39,7 +33,6 @@
   }
 }
 
-///
 @function rds-font-weight($weight: regular) {
   $fetched-font-weight: map-get($rds-font-weight-data, $weight);
   @if type-of($fetched-font-weight) != null {
