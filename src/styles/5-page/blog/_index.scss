@@ -2,8 +2,8 @@
 
 .blog-main {
   width: 100%;
-  display: flex;
-  column-gap: 2rem;
+  @include rds-grid(32px);
+  @include rds-grid-layout((5), (7));
   &__mdx-wrapper {
     flex-basis: 450px;
     flex-shrink: 1;
@@ -16,7 +16,6 @@
       color: var(--text-high-color);
     }
     flex-basis: 450px;
-    margin-top: 1rem;
     flex-shrink: 1;
     flex-grow: 1;
     display: flex;
@@ -28,15 +27,16 @@
 
 @include mobile {
   .blog-main {
-    flex-direction: column;
+    @include rds-grid(0, 48px);
+    @include rds-grid-layout((12), (12));
     &__mdx-wrapper {
       margin-bottom: 2rem;
       flex-basis: unset;
     }
     &__card-list {
-      margin-left: -16px;
+      margin-left: -16px !important;
       max-width: inherit;
-      width: 100vw;
+      min-width: 100vw;
     }
   }
 }
