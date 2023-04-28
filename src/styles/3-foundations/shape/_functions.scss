@@ -1,3 +1,5 @@
+@use "./data" as *;
+
 /// Returns the shape value for a given shape name and group.
 ///
 /// @param {String} $size - The shape's size.

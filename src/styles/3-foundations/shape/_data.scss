@@ -8,37 +8,37 @@ $rds-shape-radius-xlarge: rds-rem(24px);
 $rds-shape-data: (
   circle: (
     default: 50%,
-    smaller-screen: null,
-    larger-screen: null,
+    small: 50%,
+    large: 50%,
   ),
 
   squared: (
     default: 0,
-    smaller-screen: null,
-    larger-screen: null,
+    small: null,
+    large: null,
   ),
 
   primary: (
     default: $rds-shape-radius-small,
-    smaller-screen: $rds-shape-radius-small,
-    larger-screen: $rds-shape-radius-medium,
+    small: $rds-shape-radius-small,
+    large: $rds-shape-radius-medium,
   ),
 
   secondary: (
     default: $rds-shape-radius-medium,
-    smaller-screen: $rds-shape-radius-small,
-    larger-screen: $rds-shape-radius-large,
+    small: $rds-shape-radius-small,
+    large: $rds-shape-radius-large,
   ),
 
   tertiary: (
     default: $rds-shape-radius-large,
-    smaller-screen: $rds-shape-radius-medium,
-    larger-screen: $rds-shape-radius-xlarge,
+    small: $rds-shape-radius-medium,
+    large: $rds-shape-radius-xlarge,
   ),
 
   quaternary: (
     default: $rds-shape-radius-xlarge,
-    smaller-screen: $rds-shape-radius-large,
-    larger-screen: $rds-shape-radius-xlarge,
+    small: $rds-shape-radius-large,
+    large: $rds-shape-radius-xlarge,
   ),
 ) !default;

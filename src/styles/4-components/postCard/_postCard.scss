@@ -1,8 +1,10 @@
 @use "@styles" as *;
 
+$postcard-shape: rds-shape(secondary);
+
 .post-card {
   position: relative;
-  border-radius: 0.75rem;
+  border-radius: $postcard-shape;
   padding: rds-space(space-16);
   max-width: 100%;
   cursor: pointer;

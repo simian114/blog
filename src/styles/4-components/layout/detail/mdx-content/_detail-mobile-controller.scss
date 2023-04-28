@@ -11,7 +11,7 @@
     padding: rds-space(space-12);
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
+    border-radius: rds-shape(circle);
     background-color: var(--secondary9);
     &:focus {
       background-color: var(--secondary10);

@@ -64,7 +64,6 @@
   height: calc(100vh - 6rem);
   overflow: auto;
   top: rds-space(space-96);
-  min-width: 225px;
   > nav {
     padding-top: rds-space(space-48);
     margin-left: auto;
@@ -80,6 +79,10 @@
   .detail-main-wrapper {
     gap: unset;
     gap: rds-space(space-16);
+  }
+  .sidebar-container {
+    min-width: 250px;
+    max-width: 250px;
   }
 }
 

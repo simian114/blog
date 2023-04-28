@@ -3,8 +3,8 @@
 .document-toc-container {
   display: flex;
   padding: rds-space(space-16);
+  border-radius: rds-shape(quaternary);
   background-color: var(--ui-el-bg-color);
-  border-radius: 1rem;
   transition: background-color 0.25s linear;
 }
 

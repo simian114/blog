@@ -50,7 +50,7 @@ a {
 }
 
 *:focus-visible {
-  border-radius: rds-space(space-04);
+  border-radius: rds-shape(primary);
   outline: 2px solid var(--solid-hovered-bg-primary-color);
 }
 

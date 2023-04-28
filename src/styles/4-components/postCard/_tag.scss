@@ -4,7 +4,7 @@
   padding: rds-space(space-04) rds-space(space-08);
   @include rds-caption1;
   @include medium;
-  border-radius: 0.25rem;
+  border-radius: rds-shape(primary);
   $palettes: "gray", "primary", "secondary", "tertiary";
   @each $palette in $palettes {
     &.tag-#{$palette} {
