@@ -3,11 +3,11 @@ import { CalendarIcon, LapTimerIcon } from "@radix-ui/react-icons"
 import dayjs from "dayjs"
 import { notFound } from "next/navigation"
 import { ReactNode } from "react"
-import DocumentTOC from "../documentTOC/DocumentTOC"
-import Tag from "../postCard/tag/Tag"
-import MobileController from "./mobileController/MobileController"
+import DocumentTOC from "../../../documentTOC/DocumentTOC"
+import Tag from "../../../postCard/tag/Tag"
+import MobileController from "../../mobileController/MobileController"
 
-export default function DetailLayout({
+export default function DetailDefaultLayout({
   slug,
   children,
 }: {

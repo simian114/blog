@@ -8,12 +8,12 @@ export default async function Blog() {
   const post = await getPostBySlugs("/blog")
 
   return (
-    <main className="blog-main">
-      <div className="blog-main__mdx-wrapper">
+    <main className="index-main">
+      <div className="index-main__mdx-wrapper">
         {post.serialized && <MdxContent source={post.serialized} />}
       </div>
 
-      <div className="blog-main__card-list">
+      <div className="index-main__card-list">
         <h2>최신 글</h2>
         {posts.map(post => (
           <PostCard key={post._id} post={post} />

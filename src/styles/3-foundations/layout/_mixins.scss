@@ -1,8 +1,10 @@
 @use "./data" as *;
 @use "./functions" as *;
+@use "../space/data" as *;
+@use "@styles/1-base/functions" as *;
 
 /// spacing 을 이용한 gap 구현
-@mixin rds-grid($colimn-gap: rds-rem(16px), $row-gap: rds-rem(16px)) {
+@mixin rds-grid($colimn-gap: rds-rem(16px), $row-gap: $colimn-gap) {
   @supports (grid-area: auto) {
     display: grid;
     grid-column-gap: $colimn-gap;

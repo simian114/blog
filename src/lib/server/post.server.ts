@@ -25,6 +25,14 @@ export const allPulishedPost = allPosts
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   )
 
+export function getAllPostsBySlug(slug: string) {
+  return allPulishedPost.filter(
+    post =>
+      post._raw.sourceFilePath.includes(slug) &&
+      !post._raw.sourceFilePath.includes("/index.mdx")
+  )
+}
+
 export const allBlogPosts = allPulishedPost.filter(
   post =>
     post._raw.sourceFilePath.includes("blog") &&

@@ -2,14 +2,28 @@
 
 import Button from "@/components/button/Button"
 import MainTitle from "@/components/mdx/mainTitle/MainTitle"
-import { Post } from "contentlayer/generated"
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote"
 import Image, { ImageProps } from "next/image"
 import AnchorText from "../components/mdx/AnchorText"
-import { useMDXComponent } from "next-contentlayer/hooks"
+import { useEffect, useState } from "react"
 
 type MdxContentProps = {
   source: MDXRemoteSerializeResult
+}
+
+const Temp = () => {
+  const [count, setCount] = useState(0)
+  useEffect(() => {
+    setInterval(() => {
+      setCount(prev => prev + 1)
+    }, 1000)
+  }, [])
+  return (
+    <div>
+      <Button> hello world</Button>
+      count: {count}
+    </div>
+  )
 }
 
 /** Place your custom MDX components here */
@@ -104,6 +118,7 @@ const MdxComponents = {
     />
   ),
   Button,
+  Temp,
   // ButtonLink,
 }
 
