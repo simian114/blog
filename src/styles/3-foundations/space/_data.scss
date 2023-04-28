@@ -1,3 +1,5 @@
+@use "../../1-base/functions" as *;
+
 $rds-space-01: rds-rem(1px); // 1px
 $rds-space-02: rds-rem(2px); // 2px
 $rds-space-04: rds-rem(4px); // 4px
@@ -41,20 +43,20 @@ $rds-container-inset: (
     // 4px 8px
     default: $rds-space-08,
     // 8px
-    open: $rds-space-12 $rds-space-08 // 12px 8px,,,,,,,
+    open: $rds-space-12 $rds-space-08 // 12px 8px,,,,,,,,,
   ),
   m: (
     dense: $rds-space-08 $rds-space-16,
     // 8px 16px
     default: $rds-space-16,
     // 16px
-    open: $rds-space-24 $rds-space-16 // 24px 16px,,,,,,,
+    open: $rds-space-24 $rds-space-16 // 24px 16px,,,,,,,,,
   ),
   l: (
     dense: $rds-space-12 $rds-space-24,
     // 12px 24px
     default: $rds-space-24,
     // 24px
-    open: $rds-space-32 $rds-space-24 // 32px 24px,,,,,,,
+    open: $rds-space-32 $rds-space-24 // 32px 24px,,,,,,,,,
   ),
 ) !default;

@@ -50,7 +50,7 @@ a {
 }
 
 *:focus-visible {
-  border-radius: 0.25rem;
+  border-radius: rds-space(space-04);
   outline: 2px solid var(--solid-hovered-bg-primary-color);
 }
 
@@ -64,28 +64,28 @@ a {
 
 .inner {
   margin: 0 auto;
-  padding-left: 5rem;
-  padding-right: 5rem;
+  padding-left: rds-space(space-80);
+  padding-right: rds-space(space-80);
   max-width: 90rem;
 
   // 1025 ~ 1280 ->
   @include labtop {
     // width: 960px;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: rds-space(space-32);
+    padding-right: rds-space(space-32);
     max-width: 80rem;
   }
 
   // 769 ~ 1024 ->
   @include tablet {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: rds-space(space-24);
+    padding-right: rds-space(space-24);
     max-width: 64rem;
   }
 
   @include mobile {
     max-width: 48rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: rds-space(space-16);
+    padding-right: rds-space(space-16);
   }
 }

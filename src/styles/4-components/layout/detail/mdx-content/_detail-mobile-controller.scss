@@ -8,7 +8,7 @@
 
   &__button {
     display: flex;
-    padding: 0.75rem;
+    padding: rds-space(space-12);
     justify-content: center;
     align-items: center;
     border-radius: 50%;
@@ -28,7 +28,7 @@
   &__content {
     width: fit-content;
     width: 250px;
-    margin-right: 1rem;
+    margin-right: rds-space(space-16);
   }
 }
 

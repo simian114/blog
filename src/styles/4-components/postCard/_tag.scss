@@ -1,7 +1,7 @@
 @use "@styles" as *;
 
 .tag {
-  padding: 0.25rem 0.5rem;
+  padding: rds-space(space-04) rds-space(space-08);
   @include rds-caption1;
   @include medium;
   border-radius: 0.25rem;

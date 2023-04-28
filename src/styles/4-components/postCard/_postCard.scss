@@ -2,9 +2,8 @@
 
 .post-card {
   position: relative;
-  padding: 30px;
   border-radius: 0.75rem;
-  padding: 1rem;
+  padding: rds-space(space-16);
   max-width: 100%;
   cursor: pointer;
   @include rds-grid();
@@ -15,7 +14,7 @@
     display: flex;
     flex-direction: column;
     > span:first-child {
-      margin-top: 0.25rem;
+      margin-top: rds-space(space-04);
     }
     &__reading-time {
       @include rds-body1;
@@ -25,7 +24,7 @@
     &__created-at {
       @include rds-caption1;
       color: var(--text-low-color);
-      margin-top: 8px;
+      margin-top: rds-space(space-08);
     }
   }
   &__content {
@@ -52,9 +51,9 @@
       color: var(--text-low-color);
     }
     &__tag-container {
-      margin-top: 0.5rem;
+      margin-top: rds-space(space-08);
       display: flex;
-      gap: 0.5rem;
+      gap: rds-space(space-08);
     }
   }
   &__link {
