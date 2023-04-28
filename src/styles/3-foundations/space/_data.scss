@@ -1,0 +1,62 @@
+@use "../../1-base/functions" as *;
+
+$rds-space-01: rds-rem(1px); // 1px
+$rds-space-02: rds-rem(2px); // 2px
+$rds-space-04: rds-rem(4px); // 4px
+$rds-space-08: rds-rem(8px); // 8px
+$rds-space-12: rds-rem(12px); // 12px
+$rds-space-16: rds-rem(16px); // 16px
+$rds-space-20: rds-rem(20px); // 20px
+$rds-space-24: rds-rem(24px); // 24px
+$rds-space-32: rds-rem(32px); // 32px
+$rds-space-40: rds-rem(40px); // 40px
+$rds-space-48: rds-rem(48px); // 48px
+$rds-space-64: rds-rem(64px); // 64px
+$rds-space-80: rds-rem(80px); // 80px
+$rds-space-96: rds-rem(96px); // 96px
+$rds-space-128: rds-rem(128px); // 128px
+$rds-space-160: rds-rem(160px); // 160px
+
+$rds-spacing-data: (
+  none: 0,
+  space-01: $rds-space-01,
+  space-02: $rds-space-02,
+  space-04: $rds-space-04,
+  space-08: $rds-space-08,
+  space-12: $rds-space-12,
+  space-16: $rds-space-16,
+  space-20: $rds-space-20,
+  space-24: $rds-space-24,
+  space-32: $rds-space-32,
+  space-40: $rds-space-40,
+  space-48: $rds-space-48,
+  space-64: $rds-space-64,
+  space-80: $rds-space-80,
+  space-96: $rds-space-96,
+  space-128: $rds-space-128,
+  space-160: $rds-space-160,
+) !default;
+
+$rds-container-inset: (
+  s: (
+    dense: $rds-space-04 $rds-space-08,
+    // 4px 8px
+    default: $rds-space-08,
+    // 8px
+    open: $rds-space-12 $rds-space-08 // 12px 8px,,,,,,,,,
+  ),
+  m: (
+    dense: $rds-space-08 $rds-space-16,
+    // 8px 16px
+    default: $rds-space-16,
+    // 16px
+    open: $rds-space-24 $rds-space-16 // 24px 16px,,,,,,,,,
+  ),
+  l: (
+    dense: $rds-space-12 $rds-space-24,
+    // 12px 24px
+    default: $rds-space-24,
+    // 24px
+    open: $rds-space-32 $rds-space-24 // 32px 24px,,,,,,,,,
+  ),
+) !default;

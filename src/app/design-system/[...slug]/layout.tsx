@@ -1,4 +1,4 @@
-import DetailLayout from "@/components/layout/detailLayout"
+import DetailDefaultLayout from "@/components/layout/detail/default/_default"
 import { ReactNode } from "react"
 
 export default async function DesignSystemDetail({
@@ -10,5 +10,5 @@ export default async function DesignSystemDetail({
 }) {
   const { slug } = params
 
-  return <DetailLayout slug={slug}>{children}</DetailLayout>
+  return <DetailDefaultLayout slug={slug}>{children}</DetailDefaultLayout>
 }

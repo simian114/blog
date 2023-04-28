@@ -1,0 +1,44 @@
+@use "../../1-base/functions" as *;
+
+$rds-shape-radius-small: rds-rem(4px);
+$rds-shape-radius-medium: rds-rem(8px);
+$rds-shape-radius-large: rds-rem(16px);
+$rds-shape-radius-xlarge: rds-rem(24px);
+
+$rds-shape-data: (
+  circle: (
+    default: 50%,
+    small: 50%,
+    large: 50%,
+  ),
+
+  squared: (
+    default: 0,
+    small: null,
+    large: null,
+  ),
+
+  primary: (
+    default: $rds-shape-radius-small,
+    small: $rds-shape-radius-small,
+    large: $rds-shape-radius-medium,
+  ),
+
+  secondary: (
+    default: $rds-shape-radius-medium,
+    small: $rds-shape-radius-small,
+    large: $rds-shape-radius-large,
+  ),
+
+  tertiary: (
+    default: $rds-shape-radius-large,
+    small: $rds-shape-radius-medium,
+    large: $rds-shape-radius-xlarge,
+  ),
+
+  quaternary: (
+    default: $rds-shape-radius-xlarge,
+    small: $rds-shape-radius-large,
+    large: $rds-shape-radius-xlarge,
+  ),
+) !default;

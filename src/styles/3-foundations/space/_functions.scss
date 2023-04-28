@@ -1,0 +1,16 @@
+@use "./data" as *;
+
+/// Returns the spacing value for a given variant.
+///
+/// @param {String} $space - how much space do you need.
+/// @return {Number} The spacing for the variant in px.
+
+@function rds-space($space: space-08) {
+  $fetched-value: map-get($rds-spacing-data, $space);
+
+  @if type-of($fetched-value) == number {
+    @return $fetched-value;
+  } @else {
+    @error 'Spacing variant `#{$space}` not found. Available variants: #{$rds-spacing-data}';
+  }
+}

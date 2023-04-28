@@ -15,17 +15,17 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-bottom: 2rem;
+    margin-bottom: rds-space(space-32);
     border-bottom: 2px solid var(--separator-color);
-    padding-bottom: 1.5rem;
-    padding-top: 1.5rem;
+    padding-bottom: rds-space(space-24);
+    padding-top: rds-space(space-24);
   }
   &__title {
     @include rds-h1;
     color: var(--text-high-color);
     font-size: 2.5rem;
     margin: auto;
-    margin-bottom: 1.5rem;
+    margin-bottom: rds-space(space-24);
     max-width: 80vw;
   }
   &__info {
@@ -37,10 +37,10 @@
     &__left {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: rds-space(space-16);
       @include rds-caption1;
       svg {
-        margin-right: 0.25rem;
+        margin-right: rds-space(space-04);
       }
       align-self: flex-end;
     }
@@ -63,12 +63,11 @@
   position: sticky;
   height: calc(100vh - 6rem);
   overflow: auto;
-  top: 6rem;
-  min-width: 225px;
+  top: rds-space(space-96);
   > nav {
-    padding-top: 3rem;
+    padding-top: rds-space(space-48);
     margin-left: auto;
-    padding-bottom: 2rem;
+    padding-bottom: rds-space(space-32);
   }
 }
 
@@ -79,7 +78,11 @@
 @include tablet {
   .detail-main-wrapper {
     gap: unset;
-    gap: 1rem;
+    gap: rds-space(space-16);
+  }
+  .sidebar-container {
+    min-width: 250px;
+    max-width: 250px;
   }
 }
 
@@ -95,9 +98,9 @@
       width: 100vw;
       margin: 0;
       min-width: calc(100vw - 32px);
-      padding-left: 1rem;
-      padding-right: 1rem;
-      margin-bottom: 1.5rem;
+      padding-left: rds-space(space-16);
+      padding-right: rds-space(space-16);
+      margin-bottom: rds-space(space-24);
     }
     &__info {
       flex-direction: column;

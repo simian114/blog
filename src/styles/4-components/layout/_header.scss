@@ -23,13 +23,13 @@ header.header {
     position: sticky;
     top: 0px;
     color: var(--text-high-color);
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: rds-space(space-24);
+    padding-bottom: rds-space(space-24);
     display: flex;
     align-items: center;
 
     &__home {
-      margin-right: 0.75rem;
+      margin-right: rds-space(space-12);
     }
     &__menus {
       display: flex;
@@ -59,9 +59,9 @@ header.header {
           @include rds-h3;
           @include medium;
           display: block;
-          padding: 0.25rem 0.75rem;
+          padding: 0.25rem rds-space(space-12);
           color: var(--text-low-color);
-          border-radius: 0.5rem;
+          border-radius: rds-space(space-08);
         }
       }
     }
@@ -69,7 +69,7 @@ header.header {
       display: flex;
       margin-left: auto;
       align-items: center;
-      column-gap: 0.75rem;
+      column-gap: rds-space(space-12);
       &__mobile-menu {
         display: none;
       }
@@ -77,16 +77,16 @@ header.header {
   }
   @include tablet {
     .navigation {
-      padding-bottom: 1rem;
-      padding-top: 1rem;
+      padding-bottom: rds-space(space-16);
+      padding-top: rds-space(space-16);
     }
   }
   @include mobile {
     .navigation {
-      padding-bottom: 0.5rem;
-      padding-top: 0.5rem;
+      padding-bottom: rds-space(space-08);
+      padding-top: rds-space(space-08);
       &__menus {
-        padding-top: 3rem;
+        padding-top: rds-space(space-48);
         transition: background-color 0.25s linear;
         display: flex;
         flex-direction: column;

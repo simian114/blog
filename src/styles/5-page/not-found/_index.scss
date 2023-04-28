@@ -20,7 +20,7 @@
     aspect-ratio: 1;
 
     > img {
-      border-radius: 50%;
+      border-radius: rds-shape(circle);
     }
   }
   > p {
