@@ -27,7 +27,7 @@ const menus: Menu[] = [
   { id: "blog", children: "blog", href: "/blog" },
   { id: "snippet", children: "snippet", href: "/snippet" },
   { id: "archives", children: "archives", href: "/archives" },
-  { id: "mdx-sketch", children: "mdx-sketch", href: "/mdx-sketch" },
+  { id: "mdx", children: "mdx", href: "/mdx" },
   { id: "design-system", children: "design-system", href: "/design-system" },
 ]
 
