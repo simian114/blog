@@ -1,0 +1,18 @@
+@use "../../3-foundations/typography" as *;
+@use "../../3-foundations/typography/data" as *;
+@use "../../3-foundations/typography/functions" as f;
+
+@each $variant in $rds-font-variant-data {
+  .rds-typography-#{$variant} {
+    font-size: f.rds-font-size($variant);
+    line-height: f.rds-line-height($variant);
+    letter-spacing: f.rds-letter-spacing($variant);
+    font-weight: f.rds-font-weight-by-variant($variant);
+  }
+}
+
+@each $variant in $rds-font-weight-variant-data {
+  .rds-typography-#{$variant} {
+    font-weight: map-get($rds-font-weight-data, $variant);
+  }
+}

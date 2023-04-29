@@ -1,63 +1,18 @@
 @use "@styles/2-theme/css-variable";
+@use "./colors" as *;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --gray1: var(--slateDark1);
-    --gray2: var(--slateDark2);
-    --gray3: var(--slateDark3);
-    --gray4: var(--slateDark4);
-    --gray5: var(--slateDark5);
-    --gray6: var(--slateDark6);
-    --gray7: var(--slateDark7);
-    --gray8: var(--slateDark8);
-    --gray9: var(--slateDark9);
-    --gray10: var(--slateDark10);
-    --gray11: var(--slateDark11);
-    --gray12: var(--slateDark12);
-
-    --primary1: var(--cyanDark1);
-    --primary2: var(--cyanDark2);
-    --primary3: var(--cyanDark3);
-    --primary4: var(--cyanDark4);
-    --primary5: var(--cyanDark5);
-    --primary6: var(--cyanDark6);
-    --primary7: var(--cyanDark7);
-    --primary8: var(--cyanDark8);
-    --primary9: var(--cyanDark9);
-    --primary10: var(--cyanDark10);
-    --primary11: var(--cyanDark11);
-    --primary12: var(--cyanDark12);
-
-    --secondary1: var(--crimsonDark1);
-    --secondary2: var(--crimsonDark2);
-    --secondary3: var(--crimsonDark3);
-    --secondary4: var(--crimsonDark4);
-    --secondary5: var(--crimsonDark5);
-    --secondary6: var(--crimsonDark6);
-    --secondary7: var(--crimsonDark7);
-    --secondary8: var(--crimsonDark8);
-    --secondary9: var(--crimsonDark9);
-    --secondary10: var(--crimsonDark10);
-    --secondary11: var(--crimsonDark11);
-    --secondary12: var(--crimsonDark12);
-
-    --tertiary1: var(--yellowDark1);
-    --tertiary2: var(--yellowDark2);
-    --tertiary3: var(--yellowDark3);
-    --tertiary4: var(--yellowDark4);
-    --tertiary5: var(--yellowDark5);
-    --tertiary6: var(--yellowDark6);
-    --tertiary7: var(--yellowDark7);
-    --tertiary8: var(--yellowDark8);
-    --tertiary9: var(--yellowDark9);
-    --tertiary10: var(--yellowDark110);
-    --tertiary11: var(--yellowDark111);
-    --tertiary12: var(--yellowDark112);
-    @include css-variable.colors;
-  }
-}
-
-.dark-theme {
+@mixin dark {
+  @include slateDark; // gray
+  @include cyanDark; // primary
+  @include crimsonDark; // secondary
+  @include yellowDark; // tertiary
+  @include blueDark;
+  @include brownDark;
+  @include greenDark;
+  @include orangeDark;
+  @include pinkDark;
+  @include purpleDark;
+  @include redDark;
   --gray1: var(--slateDark1);
   --gray2: var(--slateDark2);
   --gray3: var(--slateDark3);
@@ -110,4 +65,14 @@
   --tertiary11: var(--yellowDark11);
   --tertiary12: var(--yellowDark12);
   @include css-variable.colors;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include dark;
+  }
+}
+
+.dark-theme {
+  @include dark;
 }

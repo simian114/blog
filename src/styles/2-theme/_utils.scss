@@ -1,0 +1,27 @@
+$colors: (
+  gray,
+  primary,
+  secondary,
+  tertiary,
+  slate,
+  cyan,
+  crimson,
+  yellow,
+  blue,
+  brown,
+  green,
+  orange,
+  pink,
+  purple,
+  red
+);
+
+$levels: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+
+@each $color in $colors {
+  @each $level in $levels {
+    .rds-color-#{$color}-#{$level} {
+      color: var(--#{$color}#{$level});
+    }
+  }
+}

@@ -1,6 +1,6 @@
 @use "@styles" as *;
 
-@import "@styles/1-base/reset.css";
+@include reset;
 
 /* mdx */
 @import "@styles/0-plugins";

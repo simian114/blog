@@ -5,6 +5,7 @@ import Link from "next/link"
 import Tag from "./tag/Tag"
 import dayjs from "dayjs"
 import { useEffect, useRef } from "react"
+import Typography from "../typography/Typography"
 
 interface PostCardProps {
   post: Post
@@ -43,37 +44,56 @@ export default function PostCard(props: PostCardProps) {
   }, [])
 
   return (
-    <article className={"post-card"} ref={articleRef}>
-      <div className="post-card__meta">
-        <span className="post-card__meta__reading-time">
-          {post.readingTime}분
-        </span>
-        <span className="post-card__meta__created-at">
-          {dayjs(post.date).format("YYYY-MM-DD")}
-        </span>
-      </div>
-      <div className="post-card__content">
-        <h3 className={"post-card__content__title"}>
-          <Link className={"post-card__content__link"} href={props.post.slug}>
-            {props.post.title || "post title"}
-          </Link>
-        </h3>
-        <p className="post-card__content__description">
-          {post.description || "설명이 비어있습니다."}
-        </p>
-        {!!post.tags?.length && (
-          <div className="post-card__content__tag-container">
-            {post.tags.map(tag => (
-              <Tag colorType={tag.colorType} key={tag.content}>
-                {tag.content}
-              </Tag>
-            ))}
-          </div>
-        )}
-      </div>
-      <Link tabIndex={-1} className="post-card__link" href={post.slug}>
-        Read More
-      </Link>
-    </article>
+    <>
+      <article className={"post-card"} ref={articleRef}>
+        <div className="post-card__meta">
+          <Typography
+            as="span"
+            variants="body1"
+            className="post-card__meta__reading-time"
+          >
+            {post.readingTime}분
+          </Typography>
+          <Typography
+            className="post-card__meta__created-at"
+            variants="caption1"
+          >
+            {dayjs(post.date).format("YYYY-MM-DD")}
+          </Typography>
+        </div>
+        <div className="post-card__content">
+          <Typography
+            className={"post-card__content__title"}
+            as="h3"
+            variants="h3"
+          >
+            <Link href={props.post.slug}>
+              {props.post.title || "post title"}
+            </Link>
+          </Typography>
+          <Typography
+            as="p"
+            color="cyan"
+            className="post-card__content__description"
+          >
+            {post.description || "설명이 비어있습니다."}
+          </Typography>
+          {!!post.tags?.length && (
+            <div className="post-card__content__tag-container">
+              {post.tags.map(tag => (
+                <Tag colorType={tag.colorType} key={tag.content}>
+                  {tag.content}
+                </Tag>
+              ))}
+            </div>
+          )}
+        </div>
+        <Link tabIndex={-1} className="post-card__link" href={post.slug}>
+          <Typography as="span" variants="body1">
+            Read More
+          </Typography>
+        </Link>
+      </article>
+    </>
   )
 }
