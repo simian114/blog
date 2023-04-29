@@ -1,0 +1,78 @@
+@use "../../3-foundations/typography" as *;
+
+@mixin bold {
+  font-weight: 700;
+}
+
+@mixin medium {
+  font-weight: 500;
+}
+
+@mixin regular {
+  font-weight: 400;
+}
+
+/** 32px */
+.rds-typography-h1 {
+  @include rds-h1;
+}
+
+/** 28px */
+.rds-typography-h2 {
+  @include rds-h2;
+}
+
+/** 22px */
+.rds-typography-h3 {
+  @include rds-h3;
+}
+
+/** 18px */
+.rds-typography-h4 {
+  @include rds-h4;
+}
+
+/** 16px */
+.rds-typography-h5 {
+  @include rds-h5;
+}
+
+/** 15px */
+.rds-typography-h6 {
+  @include rds-h6;
+}
+
+/** 18px */
+.rds-typography-subtitle1 {
+  @include rds-subtitle1;
+}
+
+/** 16px */
+.rds-typography-subtitle2 {
+  @include rds-subtitle2;
+}
+
+/** 15px */
+.rds-typography-subtitle3 {
+  @include rds-subtitle3;
+}
+
+/** 16px */
+.rds-typography-body1 {
+  @include rds-body1;
+}
+
+/** 14px */
+.rds-typography-body2 {
+  @include rds-body2;
+}
+
+/** 12px */
+.rds-typography-caption1 {
+  @include rds-caption1;
+}
+
+/** 10px */
+.rds-typography-caption2 {
+  @include rds-caption2;
+}
