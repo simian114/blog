@@ -41,3 +41,12 @@
     @error 'Font weight `#{$weight}` not found. Available font weights: #{$rds-font-weight-data}';
   }
 }
+
+@function rds-font-weight-by-variant($variant: body1) {
+  $fetched-font-weight: map-get($rds-font-weight-by-variant, $variant);
+  @if type-of($fetched-font-weight) != null {
+    @return $fetched-font-weight;
+  } @else {
+    @error 'Font weight `#{$variant}` not found. Available font weights: #{$rds-font-weight-by-variant}';
+  }
+}

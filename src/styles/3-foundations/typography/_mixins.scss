@@ -15,104 +15,104 @@
 }
 
 /** 32px */
-@mixin rds-h1($weight: bold) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-h1 {
   font-size: rds-font-size(h1);
   line-height: rds-line-height(h1);
   letter-spacing: rds-letter-spacing(h1);
+  font-weight: rds-font-weight-by-variant(h1);
 }
 
 /** 28px */
-@mixin rds-h2($weight: bold) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-h2 {
+  font-weight: rds-font-weight-by-variant(h2);
   font-size: rds-font-size(h2);
   line-height: rds-line-height(h2);
   letter-spacing: rds-letter-spacing(h2);
 }
 
 /** 22px */
-@mixin rds-h3($weight: bold) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-h3 {
+  font-weight: rds-font-weight-by-variant(h3);
   font-size: rds-font-size(h3);
   line-height: rds-line-height(h3);
   letter-spacing: rds-letter-spacing(h3);
 }
 
 /** 18px */
-@mixin rds-h4($weight: bold) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-h4 {
+  font-weight: rds-font-weight-by-variant(h4);
   font-size: rds-font-size(h4);
   line-height: rds-line-height(h4);
   letter-spacing: rds-letter-spacing(h4);
 }
 
 /** 16px */
-@mixin rds-h5($weight: bold) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-h5 {
+  font-weight: rds-font-weight-by-variant(h5);
   font-size: rds-font-size(h5);
   line-height: rds-line-height(h5);
   letter-spacing: rds-letter-spacing(h5);
 }
 
 /** 15px */
-@mixin rds-h6($weight: bold) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-h6 {
+  font-weight: rds-font-weight-by-variant(h6);
   font-size: rds-font-size(h6);
   line-height: rds-line-height(h6);
   letter-spacing: rds-letter-spacing(h6);
 }
 
 /** 18px */
-@mixin rds-subtitle1($weight: medium) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-subtitle1 {
+  font-weight: rds-font-weight-by-variant(subtitle1);
   font-size: rds-font-size(subtitle1);
   line-height: rds-line-height(subtitle1);
   letter-spacing: rds-letter-spacing(subtitle1);
 }
 
 /** 16px */
-@mixin rds-subtitle2($weight: medium) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-subtitle2 {
+  font-weight: rds-font-weight-by-variant(subtitle2);
   font-size: rds-font-size(subtitle2);
   line-height: rds-line-height(subtitle2);
   letter-spacing: rds-letter-spacing(subtitle2);
 }
 
 /** 15px */
-@mixin rds-subtitle3($weight: medium) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-subtitle3 {
+  font-weight: rds-font-weight-by-variant(subtitle3);
   font-size: rds-font-size(subtitle3);
   line-height: rds-line-height(subtitle3);
   letter-spacing: rds-letter-spacing(subtitle3);
 }
 
 /** 16px */
-@mixin rds-body1($weight: regular) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-body1 {
+  font-weight: rds-font-weight-by-variant(body1);
   font-size: rds-font-size(body1);
   line-height: rds-line-height(body1);
   letter-spacing: rds-letter-spacing(body1);
 }
 
 /** 14px */
-@mixin rds-body2($weight: regular) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-body2 {
+  font-weight: rds-font-weight-by-variant(body2);
   font-size: rds-font-size(body2);
   line-height: rds-line-height(body2);
   letter-spacing: rds-letter-spacing(body2);
 }
 
 /** 12px */
-@mixin rds-caption1($weight: regular) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-caption1 {
+  font-weight: rds-font-weight-by-variant(caption1);
   font-size: rds-font-size(caption1);
   line-height: rds-line-height(caption1);
   letter-spacing: rds-letter-spacing(caption1);
 }
 
 /** 10px */
-@mixin rds-caption2($weight: regular) {
-  font-weight: rds-font-weight($weight);
+@mixin rds-caption2 {
+  font-weight: rds-font-weight-by-variant(caption2);
   font-size: rds-font-size(caption2);
   line-height: rds-line-height(caption2);
   letter-spacing: rds-letter-spacing(caption2);
