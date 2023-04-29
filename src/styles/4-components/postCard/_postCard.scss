@@ -24,14 +24,12 @@ $postcard-shape: rds-shape(secondary);
       color: var(--text-high-color);
     }
     &__created-at {
-      @include rds-caption1;
       color: var(--text-low-color);
       margin-top: rds-space(space-08);
     }
   }
   &__content {
     &__title {
-      @include rds-h3;
       color: var(--text-high-color);
       display: flex;
       @supports (-webkit-line-clamp: 2) {
@@ -49,7 +47,6 @@ $postcard-shape: rds-shape(secondary);
       }
     }
     &__description {
-      // @include rds-body1;
       color: var(--text-low-color);
     }
     &__tag-container {
