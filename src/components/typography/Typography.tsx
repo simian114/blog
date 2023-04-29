@@ -1,5 +1,8 @@
 import { ElementType } from "react"
-import { Polymorphic, PolymorphicProps } from "../polymorphic/Polymorphic"
+import {
+  Polymorphic,
+  PolymorphicComponentProp,
+} from "../polymorphic/Polymorphic"
 
 export type TypographyVariants =
   | "h1"
@@ -16,18 +19,66 @@ export type TypographyVariants =
   | "caption1"
   | "caption2"
 
-type TypographyProps<C extends ElementType> = {
-  variants?: TypographyVariants
-} & PolymorphicProps<C>
+export type TypographyWeight = "bold" | "medium" | "regular"
 
-function getRDSClassName(variants: TypographyVariants) {
-  return `rds-typography-${variants}`
+export type ColorType =
+  | "gray"
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "red"
+  | "pink"
+  | "purple"
+  | "blue"
+  | "green"
+  | "orange"
+  | "brown"
+  | "cyan"
+  | "yellow"
+  | "crimson"
+
+export type ColorLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+
+export interface Color {
+  colorType: ColorType
+  colorLevel: ColorLevel
+}
+
+interface TypographyBasicProps extends Partial<Color> {
+  variants?: TypographyVariants
+  weight?: TypographyWeight
+}
+
+type TypographyProps<C extends ElementType> = PolymorphicComponentProp<
+  C,
+  TypographyBasicProps
+>
+
+function getRDSColorClass(props: Color): string {
+  return `rds-color-${props.colorType}-${props.colorLevel}`
+}
+
+function getRDSClassName(props: TypographyBasicProps): string {
+  const weight = props.weight ? `rds-typography-${props.weight}` : ""
+  return `rds-typography-${props.variants} ${weight}`
 }
 
 const Typography = <C extends ElementType>(props: TypographyProps<C>) => {
-  const { variants = "body1", className, ...rest } = props
+  const {
+    variants = "body1",
+    colorLevel = 11,
+    colorType,
+    weight,
+    className,
+    ...rest
+  } = props
 
-  const cn = `${getRDSClassName(variants)} ${className}`
+  const cn = `${getRDSClassName({
+    variants,
+    weight,
+  })} ${colorType ? getRDSColorClass({ colorType, colorLevel }) : ""} ${
+    className ? className : ""
+  }`
 
   return <Polymorphic {...rest} className={cn} />
 }
