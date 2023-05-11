@@ -1,6 +1,10 @@
+import CategoryList from "@/components/layout/index/default/common/CategoryList"
 import PostCard from "@/components/postCard/PostCard"
 import { getPostBySlugs } from "@/helpers/slug"
-import { allSnippetPosts } from "@/lib/server/post.server"
+import {
+  allSnippetPosts,
+  snippetPostsByCategory,
+} from "@/lib/server/post.server"
 import { MdxContent } from "../mdx-content"
 
 export default async function Snippet() {
@@ -9,16 +13,22 @@ export default async function Snippet() {
 
   return (
     <main className="index-main">
-      <div className="index-main__mdx-wrapper">
+      <section className="index-main__mdx-wrapper">
         {post.serialized && <MdxContent source={post.serialized} />}
-      </div>
-
-      <div className="index-main__card-list">
+      </section>
+      <CategoryList
+        page="snippet"
+        categoryPosts={snippetPostsByCategory}
+        className="index-main__category-list"
+      />
+      <section className="index-main__card-list">
         <h2>최신 글</h2>
-        {posts.map(post => (
-          <PostCard key={post._id} post={post} />
-        ))}
-      </div>
+        <div className="post-container">
+          {posts.map(post => (
+            <PostCard key={post._id} post={post} />
+          ))}
+        </div>
+      </section>
     </main>
   )
 }

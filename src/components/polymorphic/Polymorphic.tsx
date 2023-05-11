@@ -1,7 +1,8 @@
-import { ElementType } from "react"
+import { ElementType, forwardRef, Ref } from "react"
 
 type AsProp<C extends React.ElementType> = {
   as?: C
+  ref?: Ref<HTMLElement>
 }
 
 type PropsToOmit<C extends React.ElementType, P> = keyof (AsProp<C> & P)
@@ -12,11 +13,18 @@ export type PolymorphicComponentProp<
 > = React.PropsWithChildren<Props & AsProp<C>> &
   Omit<React.ComponentPropsWithoutRef<C>, PropsToOmit<C, Props>>
 
-export const Polymorphic = <C extends ElementType>(
-  props: PolymorphicComponentProp<C>
+const Polymorphic = <C extends ElementType>(
+  props: PolymorphicComponentProp<C>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ref?: Ref<HTMLElement>
 ) => {
   const { as, ...rest } = props
   const Component = as || "span"
 
-  return <Component {...rest} />
+  return <Component {...rest} ref={ref} />
 }
+
+Polymorphic.displayName = "Polymorphic"
+
+export default forwardRef(Polymorphic) as typeof Polymorphic
+// export default forwardRef<zz>(Polymorphic) as typeof Polymorphic

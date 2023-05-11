@@ -1,0 +1,114 @@
+@use "@styles" as *;
+
+$category-list-height: rds-rem(480px);
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-high-color);
+  &__left {
+    overflow: hidden;
+  }
+  &__categories {
+    max-height: $category-list-height;
+    display: flex;
+    overflow: auto;
+    min-height: 100%;
+    margin-top: rds-space(space-16);
+    padding-top: rds-space(space-16);
+    padding-bottom: rds-space(space-16);
+    @include thin-scrollbar;
+    > li {
+      &:not(:first-child) {
+        margin-left: rds-space(space-08);
+      }
+      &:first-child {
+        > button {
+          margin-left: -8px;
+        }
+      }
+      > button {
+        padding-left: rds-space(space-08);
+        padding-right: rds-space(space-08);
+        cursor: pointer;
+        width: max-content;
+      }
+
+      &.active {
+        .category-list__name {
+          color: var(--text-low-primary-color);
+        }
+      }
+      &:hover {
+        .category-list__name {
+          color: var(--text-low-primary-color);
+        }
+        > button {
+          text-decoration: underline;
+          color: var(--text-low-primary-color);
+        }
+      }
+    }
+  }
+
+  &__right {
+    color: var(--text-high-color);
+    overflow: hidden;
+    margin-top: rds-space(space-32);
+  }
+  &__posts {
+    max-height: $category-list-height;
+    padding-bottom: rds-space(space-16);
+    padding-top: rds-space(space-16);
+
+    overflow: auto;
+    margin-top: rds-space(space-16);
+    padding-top: rds-space(space-16);
+    padding-bottom: rds-space(space-16);
+    @include thin-scrollbar;
+    display: flex;
+    flex-wrap: wrap;
+    gap: rds-space(space-16);
+    > li {
+      width: calc((100% - rds-space(space-16)) / 2);
+    }
+  }
+}
+
+@include tablet {
+  .category-list {
+    &__left {
+      overflow: visible;
+    }
+    &__categories {
+      flex-direction: row;
+      overflow: auto;
+      width: 100vw;
+      margin-top: 0px;
+      min-height: unset;
+      > li:first-child {
+        // margin-left: 16px;
+      }
+
+      > li {
+        > button {
+          width: max-content;
+        }
+        &:not(:first-child) {
+          > button {
+            margin-top: 0px;
+          }
+        }
+      }
+    }
+    &__right {
+      margin-top: rds-space(space-16);
+      overflow: visible;
+    }
+    &__posts {
+      > li {
+        width: 100%;
+      }
+    }
+  }
+}

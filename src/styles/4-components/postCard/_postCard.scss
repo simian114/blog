@@ -8,8 +8,9 @@ $postcard-shape: rds-shape(secondary);
   padding: rds-space(space-16);
   max-width: 100%;
   cursor: pointer;
+  border: 1px solid var(--ui-static-border-color);
   @include rds-grid();
-  @include rds-grid-layout((2), (8), (2));
+  @include rds-grid-layout((2), (10));
 
   &__meta {
     min-width: 92px;
@@ -32,6 +33,11 @@ $postcard-shape: rds-shape(secondary);
     &__title {
       color: var(--text-high-color);
       display: flex;
+      > a {
+        &:focus {
+          outline: none;
+        }
+      }
       @supports (-webkit-line-clamp: 2) {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -39,11 +45,6 @@ $postcard-shape: rds-shape(secondary);
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
-      }
-    }
-    &__link {
-      :focus {
-        outline: none;
       }
     }
     &__description {
@@ -55,12 +56,9 @@ $postcard-shape: rds-shape(secondary);
       gap: rds-space(space-08);
     }
   }
-  &__link {
-    min-width: 92px;
-    color: var(--text-high-color);
-  }
   @include pointing-hover {
     background-color: var(--ui-el-hovered-bg-primary-color);
+    border-color: var(--ui-interactive-border-primary-color);
     .post-card__content__title {
       color: var(--text-low-primary-color);
     }
@@ -91,14 +89,21 @@ $postcard-shape: rds-shape(secondary);
     }
   }
   @include tablet {
-    &__link {
-      display: none;
-    }
   }
   @include mobile {
     @include rds-grid-layout((2), (10));
-    &__link {
-      display: none;
+
+    &__content {
+      &__title {
+        @supports (-webkit-line-clamp: 1) {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: initial;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
+      }
     }
   }
 }

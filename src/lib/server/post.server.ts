@@ -114,3 +114,90 @@ async function getInfoByCurrentPath(path: string) {
 }
 
 export { getInfoByCurrentPath }
+
+export type TreeNode = {
+  title: string
+  date: string
+  urlPath: string
+  children: TreeNode[]
+}
+
+export const blogCategories = Array.from(
+  new Set(
+    allPulishedPost
+      .filter(
+        post =>
+          post._raw.sourceFileDir.startsWith("blog/") &&
+          !post._raw.sourceFilePath.includes("/index.mdx") &&
+          post._raw.sourceFileDir.split("/").length === 2
+      )
+      .map(post => post._raw.sourceFileDir.split("/")[1])
+  )
+)
+
+export const snippetCategories = Array.from(
+  new Set(
+    allPulishedPost
+      .filter(
+        post =>
+          post._raw.sourceFileDir.startsWith("snippet/") &&
+          !post._raw.sourceFilePath.includes("/index.mdx") &&
+          post._raw.sourceFileDir.split("/").length === 2
+      )
+      .map(post => post._raw.sourceFileDir.split("/")[1])
+  )
+)
+
+export const designSystemCategories = Array.from(
+  new Set(
+    allPulishedPost
+      .filter(
+        post =>
+          post._raw.sourceFileDir.startsWith("design-system/") &&
+          !post._raw.sourceFilePath.includes("/index.mdx") &&
+          post._raw.sourceFileDir.split("/").length === 2
+      )
+      .map(post => post._raw.sourceFileDir.split("/")[1])
+  )
+)
+
+function getAllBlogPostsByCategory(category: string) {
+  return allBlogPosts.filter(post =>
+    post._raw.sourceFileDir.startsWith(`blog/${category}`)
+  )
+}
+
+function getAllSnippetPostsByCategory(category: string) {
+  return allSnippetPosts.filter(post =>
+    post._raw.sourceFileDir.startsWith(`snippet/${category}`)
+  )
+}
+
+function getAllDesignSystemPostsByCategory(category: string) {
+  return allSnippetPosts.filter(post =>
+    post._raw.sourceFileDir.startsWith(`snippet/${category}`)
+  )
+}
+
+export interface CateogoryPost {
+  category: string
+  posts: Post[]
+}
+
+export const blogPostsByCategory = blogCategories.reduce((prev, cur) => {
+  return [...prev, { category: cur, posts: getAllBlogPostsByCategory(cur) }]
+}, [] as CateogoryPost[])
+
+export const snippetPostsByCategory = snippetCategories.reduce((prev, cur) => {
+  return [...prev, { category: cur, posts: getAllSnippetPostsByCategory(cur) }]
+}, [] as CateogoryPost[])
+
+export const designSystemPostsByCategory = designSystemCategories.reduce(
+  (prev, cur) => {
+    return [
+      ...prev,
+      { category: cur, posts: getAllDesignSystemPostsByCategory(cur) },
+    ]
+  },
+  [] as CateogoryPost[]
+)
