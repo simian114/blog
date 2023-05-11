@@ -59,6 +59,10 @@
     }
     &__card-list {
       margin-top: rds-space(space-16);
+      .post-container {
+        width: 100vw;
+        margin-left: -16px;
+      }
     }
   }
 }
