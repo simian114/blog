@@ -88,11 +88,6 @@ export default function PostCard(props: PostCardProps) {
             </div>
           )}
         </div>
-        <Link tabIndex={-1} className="post-card__link" href={post.slug}>
-          <Typography as="span" variants="body1">
-            Read More
-          </Typography>
-        </Link>
       </article>
     </>
   )

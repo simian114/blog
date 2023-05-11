@@ -1,21 +1,34 @@
+import CategoryList from "@/components/layout/index/default/common/CategoryList"
 import PostCard from "@/components/postCard/PostCard"
 import { getPostBySlugs } from "@/helpers/slug"
-import { allDesignSystemPosts } from "@/lib/server"
+import {
+  allDesignSystemPosts,
+  designSystemPostsByCategory,
+} from "@/lib/server/post.server"
 import { MdxContent } from "../mdx-content"
 
 export default async function DesignSystem() {
   const posts = allDesignSystemPosts
-  const post = await getPostBySlugs("/design-system")
+  const post = await getPostBySlugs("/snippet")
 
   return (
-    <main className="design-system-main">
-      {post.serialized && <MdxContent source={post.serialized} />}
-      <h2 className="design-system-main__title">최신 글</h2>
-      <div className="design-system-main__card-list">
-        {posts.map(post => (
-          <PostCard key={post._id} post={post} />
-        ))}
-      </div>
+    <main className="index-main">
+      <section className="index-main__mdx-wrapper">
+        {post.serialized && <MdxContent source={post.serialized} />}
+      </section>
+      <CategoryList
+        page="design-system"
+        categoryPosts={designSystemPostsByCategory}
+        className="index-main__category-list"
+      />
+      <section className="index-main__card-list">
+        <h2>최신 글</h2>
+        <div className="post-container">
+          {posts.map(post => (
+            <PostCard key={post._id} post={post} />
+          ))}
+        </div>
+      </section>
     </main>
   )
 }

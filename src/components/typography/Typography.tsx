@@ -1,6 +1,5 @@
-import { ElementType } from "react"
-import {
-  Polymorphic,
+import { ElementType, forwardRef, Ref } from "react"
+import Polymorphic, {
   PolymorphicComponentProp,
 } from "../polymorphic/Polymorphic"
 
@@ -63,11 +62,14 @@ function getRDSClassName(props: TypographyBasicProps): string {
   return `rds-typography-${props.variants} ${weight}`
 }
 
-const Typography = <C extends ElementType>(props: TypographyProps<C>) => {
+const Typography = <C extends ElementType>(
+  props: TypographyProps<C>,
+  ref: Ref<HTMLElement>
+) => {
   const {
     variants = "body1",
     colorLevel = 11,
-    colorType,
+    colorType = "gray",
     weight,
     className,
     ...rest
@@ -80,7 +82,7 @@ const Typography = <C extends ElementType>(props: TypographyProps<C>) => {
     className ? className : ""
   }`
 
-  return <Polymorphic {...rest} className={cn} />
+  return <Polymorphic {...rest} className={cn} ref={ref} />
 }
 
-export default Typography
+export default forwardRef(Typography) as typeof Typography

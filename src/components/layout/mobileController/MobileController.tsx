@@ -11,9 +11,9 @@ interface MobileControllerProps {
 }
 
 const MobileController = (props: MobileControllerProps) => {
-  const { isMobile } = useDevice()
+  const { isMobile, isTablet } = useDevice()
 
-  if (!isMobile) {
+  if (!isMobile && !isTablet) {
     return null
   }
 

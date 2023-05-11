@@ -1,6 +1,7 @@
+import CategoryList from "@/components/layout/index/default/common/CategoryList"
 import PostCard from "@/components/postCard/PostCard"
 import { getPostBySlugs } from "@/helpers/slug"
-import { allBlogPosts } from "@/lib/server/post.server"
+import { allBlogPosts, blogPostsByCategory } from "@/lib/server/post.server"
 import { MdxContent } from "../mdx-content"
 
 export default async function Blog() {
@@ -9,16 +10,22 @@ export default async function Blog() {
 
   return (
     <main className="index-main">
-      <div className="index-main__mdx-wrapper">
+      <section className="index-main__mdx-wrapper">
         {post.serialized && <MdxContent source={post.serialized} />}
-      </div>
-
-      <div className="index-main__card-list">
-        <h2>최신 글</h2>
-        {posts.map(post => (
-          <PostCard key={post._id} post={post} />
-        ))}
-      </div>
+      </section>
+      <CategoryList
+        page="blog"
+        categoryPosts={blogPostsByCategory}
+        className="index-main__category-list"
+      />
+      <section className="index-main__card-list">
+        <h2>전체</h2>
+        <div className="post-container">
+          {posts.map(post => (
+            <PostCard key={post._id} post={post} />
+          ))}
+        </div>
+      </section>
     </main>
   )
 }

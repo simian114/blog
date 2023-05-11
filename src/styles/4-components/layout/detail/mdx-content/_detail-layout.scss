@@ -78,11 +78,10 @@
 @include tablet {
   .detail-main-wrapper {
     gap: unset;
-    gap: rds-space(space-16);
+    display: block;
   }
   .sidebar-container {
-    min-width: 250px;
-    max-width: 250px;
+    display: none;
   }
 }
 
