@@ -83,12 +83,8 @@ $category-list-height: rds-rem(480px);
     &__categories {
       flex-direction: row;
       overflow: auto;
-      width: 100vw;
       margin-top: 0px;
       min-height: unset;
-      > li:first-child {
-        // margin-left: 16px;
-      }
 
       > li {
         > button {
@@ -106,6 +102,18 @@ $category-list-height: rds-rem(480px);
       overflow: visible;
     }
     &__posts {
+      > li {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .category-list {
+    &__posts {
+      width: 100vw;
+      margin-left: -16px;
       > li {
         width: 100%;
       }

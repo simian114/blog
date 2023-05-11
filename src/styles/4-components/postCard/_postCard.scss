@@ -92,6 +92,9 @@ $postcard-shape: rds-shape(secondary);
   }
   @include mobile {
     @include rds-grid-layout((2), (10));
+    border-radius: 0px;
+    border-left: 0px;
+    border-right: 0px;
 
     &__content {
       &__title {
