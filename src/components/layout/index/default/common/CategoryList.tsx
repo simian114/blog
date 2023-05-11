@@ -3,13 +3,14 @@
 import PostCard from "@/components/postCard/PostCard"
 import Typography from "@/components/typography/Typography"
 import { CateogoryPost } from "@/lib/server"
-import { allPosts } from "contentlayer/generated"
+import { Post } from "contentlayer/generated"
 import { ReactElement, useMemo, useState } from "react"
 
 interface CategoryListProps {
   categoryPosts: CateogoryPost[]
   className: string
   page: string
+  allPosts: Post[]
 }
 
 export default function CategoryList(
@@ -21,13 +22,13 @@ export default function CategoryList(
   })
   const categoryIndexPost = useMemo(
     () =>
-      allPosts.find(post => {
+      props.allPosts.find(post => {
         return (
           post._raw.sourceFilePath ===
           `${props.page}/${currentCategory?.category}/index.mdx`
         )
       }),
-    [props.page, currentCategory]
+    [props.page, props.allPosts, currentCategory]
   )
 
   function handleClickCategory(category: string) {

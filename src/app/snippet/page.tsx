@@ -5,6 +5,7 @@ import {
   allSnippetPosts,
   snippetPostsByCategory,
 } from "@/lib/server/post.server"
+import { allPosts } from "contentlayer/generated"
 import { MdxContent } from "../mdx-content"
 
 export default async function Snippet() {
@@ -20,6 +21,7 @@ export default async function Snippet() {
         page="snippet"
         categoryPosts={snippetPostsByCategory}
         className="index-main__category-list"
+        allPosts={allPosts}
       />
       <section className="index-main__card-list">
         <h2>최신 글</h2>
