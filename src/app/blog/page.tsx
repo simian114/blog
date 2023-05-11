@@ -3,6 +3,7 @@ import PostCard from "@/components/postCard/PostCard"
 import { getPostBySlugs } from "@/helpers/slug"
 import { allBlogPosts, blogPostsByCategory } from "@/lib/server/post.server"
 import { MdxContent } from "../mdx-content"
+import { allPosts } from "contentlayer/generated"
 
 export default async function Blog() {
   const posts = allBlogPosts
@@ -16,6 +17,7 @@ export default async function Blog() {
       <CategoryList
         page="blog"
         categoryPosts={blogPostsByCategory}
+        allPosts={allPosts}
         className="index-main__category-list"
       />
       <section className="index-main__card-list">
