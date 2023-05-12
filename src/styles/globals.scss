@@ -89,3 +89,22 @@ a {
     padding-right: rds-space(space-16);
   }
 }
+
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+.skeleton-text {
+  width: 100%;
+  height: 1rem;
+  border-radius: 0.25rem;
+}

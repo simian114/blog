@@ -6,6 +6,7 @@ import { ReactNode } from "react"
 import DocumentTOC from "../../../documentTOC/DocumentTOC"
 import Tag from "../../../postCard/tag/Tag"
 import MobileController from "../../mobileController/MobileController"
+import ViewCounter from "./common/ViewCounter"
 
 export default function DetailDefaultLayout({
   slug,
@@ -35,6 +36,7 @@ export default function DetailDefaultLayout({
                 <LapTimerIcon />
                 <span>{post.readingTime}min</span>
               </div>
+              <ViewCounter slug={slug} />
             </div>
             <div className="detail-main__info__right">
               <div className="detail-main__tags">
