@@ -49,13 +49,19 @@
     }
   }
 
-  &__date {
+  &__date,
+  &__reading-time,
+  &__view-count {
     display: flex;
     align-items: center;
+    > span {
+      width: max-content;
+    }
   }
-  &__reading-time {
-    display: flex;
-    align-items: center;
+  &__view-count {
+    > .skeleton {
+      width: 24px;
+    }
   }
 }
 
