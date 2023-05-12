@@ -8,7 +8,7 @@ const fetcher = (slugs: string) =>
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_KV_REST_API_TOKEN}`,
     },
-    body: slugs,
+    body: `${process.env.NODE_ENV}/${slugs}`,
     method: "POST",
   })
     .then(res => res.json())
