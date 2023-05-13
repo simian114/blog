@@ -62,6 +62,10 @@
       .post-container {
         width: 100vw;
         margin-left: -16px;
+        gap: unset;
+        > .post-card {
+          margin-top: -1px;
+        }
       }
     }
   }

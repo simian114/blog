@@ -113,10 +113,14 @@ $category-list-height: rds-rem(480px);
       }
     }
     &__posts {
+      gap: unset;
       width: 100vw;
       margin-left: -16px;
       > li {
         width: 100%;
+        > .post-card {
+          margin-top: -1px;
+        }
       }
     }
   }
