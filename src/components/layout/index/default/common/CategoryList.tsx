@@ -55,6 +55,7 @@ export default function CategoryList(
           {props.categoryPosts.map(categoryPost => (
             <li key={categoryPost.category} className={`category-list__item`}>
               <Link
+                scroll={false}
                 className={`category-list__link ${
                   categoryPost.category === currentCategory ? "active" : ""
                 } ${
