@@ -19,7 +19,9 @@ interface UsePostViewCountProps {
 }
 
 function usePostViewCounter(props: UsePostViewCountProps) {
-  return useSWR(`${props.slug.join("/")}`, () => fetcher(props.slug.join("/")))
+  return useSWR(process.env.NODE_ENV ? null : `${props.slug.join("/")}`, () =>
+    fetcher(props.slug.join("/"))
+  )
 }
 
 interface ViewCounterProps {
