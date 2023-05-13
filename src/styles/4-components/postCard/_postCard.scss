@@ -89,8 +89,7 @@ $postcard-shape: rds-shape(secondary);
       text-decoration: underline;
     }
   }
-  @include tablet {
-  }
+
   @include mobile {
     @include rds-grid-layout((2), (10));
     border-radius: 0px;
