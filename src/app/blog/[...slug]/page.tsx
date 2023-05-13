@@ -13,5 +13,5 @@ export default async function BlogDetailndex({ params }: { params: any }) {
   const { slug } = params
   const post = await getPostBySlugs("/blog", slug)
 
-  return <>{post?.serialized && <MdxContent source={post?.serialized} />}</>
+  return <MdxContent post={post} />
 }

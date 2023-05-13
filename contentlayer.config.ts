@@ -5,6 +5,14 @@ import {
   makeSource,
 } from "contentlayer/source-files"
 import readingTime from "reading-time"
+import langCSS from "highlight.js/lib/languages/css"
+import langJavascript from "highlight.js/lib/languages/javascript"
+import rehypeHighlight from "rehype-highlight"
+
+const languages = {
+  javascript: langJavascript,
+  css: langCSS,
+}
 
 const Tag = defineNestedType(() => ({
   name: "Tag",
@@ -123,5 +131,7 @@ export const Post = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "src/posts",
   documentTypes: [Post],
-  mdx: {},
+  mdx: {
+    rehypePlugins: [() => rehypeHighlight({ languages, ignoreMissing: true })],
+  },
 })

@@ -12,7 +12,7 @@ export default async function Blog() {
   return (
     <main className="index-main">
       <section className="index-main__mdx-wrapper">
-        {post.serialized && <MdxContent source={post.serialized} />}
+        <MdxContent post={post} />
       </section>
       <CategoryList
         page="blog"
