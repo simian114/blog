@@ -4,61 +4,66 @@ import PostCard from "@/components/postCard/PostCard"
 import Typography from "@/components/typography/Typography"
 import { CateogoryPost } from "@/lib/server"
 import { Post } from "contentlayer/generated"
-import { ReactElement, useMemo, useState } from "react"
+import Link from "next/link"
+import { usePathname, useSearchParams } from "next/navigation"
+import { ReactElement, useMemo } from "react"
 
 interface CategoryListProps {
   categoryPosts: CateogoryPost[]
   className: string
   page: string
   allPosts: Post[]
+  title?: string
 }
 
 export default function CategoryList(
   props: CategoryListProps
 ): ReactElement | null {
-  const [currentCategory, setCurrentCategory] = useState(() => {
-    if (!props.categoryPosts.length) return undefined
-    return props.categoryPosts[0]
-  })
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const categoryPostMap = useMemo(() => {
+    return new Map(props.categoryPosts.map(obj => [obj.category, obj.posts]))
+  }, [props.categoryPosts])
+
+  const defaultCategory = categoryPostMap.entries().next().value
+
+  const currentCategory: string =
+    searchParams.get("category") || defaultCategory?.[0]
+
   const categoryIndexPost = useMemo(
     () =>
       props.allPosts.find(post => {
         return (
           post._raw.sourceFilePath ===
-          `${props.page}/${currentCategory?.category}/index.mdx`
+          `${props.page}/${currentCategory}/index.mdx`
         )
       }),
     [props.page, props.allPosts, currentCategory]
   )
-
-  function handleClickCategory(category: string) {
-    const categoryPost = props.categoryPosts.find(
-      item => item.category === category
-    )
-    setCurrentCategory(categoryPost)
-  }
-
-  const cn = `${props.className} category-list`
 
   if (!props.categoryPosts.length) {
     return null
   }
 
   return (
-    <section className={cn}>
+    <section className={`${props.className} category-list`}>
       <section className="category-list__left">
         <Typography as="h2" variants="h2" colorType="gray" colorLevel={12}>
-          카테고리
+          {props.title || "카테고리"}
         </Typography>
-        <ul className="category-list__categories">
-          {props.categoryPosts.map(tree => (
-            <li
-              key={tree.category}
-              className={`${
-                tree.category === currentCategory?.category ? "active" : ""
-              }`}
-            >
-              <button onClick={() => handleClickCategory(tree.category)}>
+        <ul className="category-list__container">
+          {props.categoryPosts.map(categoryPost => (
+            <li key={categoryPost.category} className={`category-list__item`}>
+              <Link
+                className={`category-list__link ${
+                  categoryPost.category === currentCategory ? "active" : ""
+                } ${
+                  categoryPost.category === currentCategory
+                    ? "category-list__link--active"
+                    : ""
+                }`}
+                href={{ pathname, search: `category=${categoryPost.category}` }}
+              >
                 <Typography
                   as="h3"
                   variants="h3"
@@ -66,9 +71,9 @@ export default function CategoryList(
                   colorLevel={11}
                   className="category-list__name"
                 >
-                  {tree.category}
+                  {categoryPost.category}
                 </Typography>
-              </button>
+              </Link>
             </li>
           ))}
         </ul>
@@ -86,7 +91,7 @@ export default function CategoryList(
           {categoryIndexPost?.description}
         </Typography>
         <ul className="category-list__posts">
-          {currentCategory?.posts.map(post => (
+          {categoryPostMap.get(currentCategory)?.map(post => (
             <li key={post._id}>
               <PostCard post={post} />
             </li>

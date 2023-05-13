@@ -9,46 +9,47 @@ $category-list-height: rds-rem(480px);
   &__left {
     overflow: hidden;
   }
-  &__categories {
+  &__container {
     max-height: $category-list-height;
     display: flex;
     overflow: auto;
     min-height: 100%;
-    margin-top: rds-space(space-16);
     padding-top: rds-space(space-16);
     padding-bottom: rds-space(space-16);
     @include thin-scrollbar;
-    > li {
-      &:not(:first-child) {
-        margin-left: rds-space(space-08);
-      }
-      &:first-child {
-        > button {
-          margin-left: -8px;
-        }
-      }
-      > button {
-        padding-left: rds-space(space-08);
-        padding-right: rds-space(space-08);
-        cursor: pointer;
-        width: max-content;
-      }
-
-      &.active {
-        .category-list__name {
-          color: var(--text-low-primary-color);
-        }
-      }
-      &:hover {
-        .category-list__name {
-          color: var(--text-low-primary-color);
-        }
-        > button {
-          text-decoration: underline;
-          color: var(--text-low-primary-color);
-        }
+  }
+  &__item {
+    display: block;
+    &:not(:first-child) {
+      margin-left: rds-space(space-08);
+    }
+    &:first-child {
+      > .category-list__link {
+        margin-left: -8px;
       }
     }
+    &:focus {
+      background-color: red;
+      color: red;
+    }
+  }
+  &__link {
+    display: block;
+    width: max-content;
+    padding-left: rds-space(space-08);
+    padding-right: rds-space(space-08);
+    cursor: pointer;
+    color: var(--text-low-color);
+    &--active {
+      color: var(--text-low-primary-color);
+    }
+    @include pointing-hover {
+      text-decoration: underline;
+      color: var(--text-low-primary-color);
+    }
+  }
+  &__name {
+    color: inherit;
   }
 
   &__right {
@@ -80,22 +81,11 @@ $category-list-height: rds-rem(480px);
     &__left {
       overflow: visible;
     }
-    &__categories {
+    &__container {
       flex-direction: row;
       overflow: auto;
       margin-top: 0px;
       min-height: unset;
-
-      > li {
-        > button {
-          width: max-content;
-        }
-        &:not(:first-child) {
-          > button {
-            margin-top: 0px;
-          }
-        }
-      }
     }
     &__right {
       margin-top: rds-space(space-16);
@@ -111,6 +101,17 @@ $category-list-height: rds-rem(480px);
 
 @include mobile {
   .category-list {
+    &__container {
+      width: calc(100vw);
+      margin-left: -16px;
+      margin-right: -16px;
+      padding-left: rds-space(space-16);
+      padding-right: rds-space(space-16);
+      &::-webkit-scrollbar-track {
+        margin-left: rds-space(space-16);
+        margin-right: rds-space(space-16);
+      }
+    }
     &__posts {
       width: 100vw;
       margin-left: -16px;
