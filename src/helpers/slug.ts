@@ -1,5 +1,5 @@
-import { POST_PATH_PREFIX } from "@/constants/path"
-import { allPulishedPost, readPost } from "@/lib/server"
+import { allPulishedPost } from "@/lib/server"
+import { Post } from "contentlayer/generated"
 import { glob } from "glob"
 import { notFound } from "next/navigation"
 import path from "path"
@@ -17,20 +17,12 @@ export function findAllPostSlugs(loc: string) {
   })
 }
 
-// function getPostBy(topic: string) {
-//   return allPosts.filter(
-//     post =>
-//       post._raw.sourceFilePath.includes(topic) &&
-//       !post._raw.sourceFilePath.includes("/index.mdx")
-//   )
-// }
-
-export async function getPostBySlugs(prefix: string, slugs?: string[]) {
+export function getPostBySlugs(prefix: string, slugs?: string[]): Post {
   const layerPost = allPulishedPost.find(
     post => post.slug === `${prefix}${slugs ? `/${slugs.join("/")}` : ""}`
   )
   if (!layerPost) {
     notFound()
   }
-  return await readPost(`${POST_PATH_PREFIX}/${layerPost?._id}`)
+  return layerPost
 }

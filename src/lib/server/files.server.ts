@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SerializedPost } from "@/app/types"
-import { lstat, readdir } from "fs/promises"
-import { extname, join, parse, resolve } from "path"
-import { readPost } from "./post.server"
+import { lstat } from "fs/promises"
+import { extname } from "path"
 
 export function isFile(path: string) {
   return !!extname(path)
@@ -25,52 +23,4 @@ export function flatten(xs: Array<any>) {
     }
     return acc
   }, [])
-}
-
-export interface FileTree extends Partial<SerializedPost> {
-  base: string
-  path: string
-  children?: Array<FileTree>
-}
-
-export async function getFilesTree(dir: string): Promise<Array<FileTree>> {
-  return await Promise.all(
-    (
-      await readdir(dir, { withFileTypes: true })
-    )
-      .filter(child => !child.name.startsWith(".")) // skip hidden
-      .map(async child => {
-        const base = parse(child.name).base
-        const path = resolve(dir, child.name)
-        return child.isDirectory()
-          ? { base, path, children: await getFilesTree(join(dir, child.name)) }
-          : { base, path }
-      })
-  )
-}
-
-export async function getAllPostsAsTree(dir: string): Promise<Array<FileTree>> {
-  return await Promise.all(
-    (
-      await readdir(dir, { withFileTypes: true })
-    )
-      .filter(child => !child.name.startsWith(".")) // skip hidden
-      .map(async child => {
-        const base = parse(child.name).base
-        const path = resolve(dir, child.name)
-
-        if (child.isDirectory()) {
-          return {
-            base,
-            path,
-            children: await getFilesTree(join(dir, child.name)),
-          }
-        }
-        if (base.endsWith(".mdx")) {
-          const { frontmatter, serialized } = await readPost(path)
-          return { base, path, frontmatter, serialized }
-        }
-        return { base, path }
-      })
-  )
 }

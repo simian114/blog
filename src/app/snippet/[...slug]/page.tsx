@@ -16,6 +16,8 @@ export default async function ArchiveDetail({
   const post = await getPostBySlugs("/snippet", slug)
 
   return (
-    <main>{post?.serialized && <MdxContent source={post?.serialized} />}</main>
+    <main>
+      <MdxContent post={post} />
+    </main>
   )
 }

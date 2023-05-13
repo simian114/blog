@@ -5,6 +5,8 @@ export default async function Resume() {
   const post = await getPostBySlugs("/resume")
 
   return (
-    <main>{post.serialized && <MdxContent source={post.serialized} />}</main>
+    <main>
+      <MdxContent post={post} />
+    </main>
   )
 }

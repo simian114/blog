@@ -2,13 +2,14 @@
 
 import Button from "@/components/button/Button"
 import MainTitle from "@/components/mdx/mainTitle/MainTitle"
-import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote"
 import Image, { ImageProps } from "next/image"
 import AnchorText from "../components/mdx/AnchorText"
 import { useEffect, useState } from "react"
+import { Post } from "contentlayer/generated"
+import { useMDXComponent } from "next-contentlayer/hooks"
 
 type MdxContentProps = {
-  source: MDXRemoteSerializeResult
+  post: Post
 }
 
 const Temp = () => {
@@ -26,8 +27,17 @@ const Temp = () => {
   )
 }
 
+export function MdxContent({ post }: MdxContentProps) {
+  const MDXContent = useMDXComponent(post.body.code)
+  return (
+    <div className="mdx-container">
+      <MDXContent components={MdxComponents} />
+    </div>
+  )
+}
+
 /** Place your custom MDX components here */
-const MdxComponents = {
+export const MdxComponents = {
   /** h1 colored in yellow */
   h1: (props: React.HTMLProps<HTMLHeadingElement>) => (
     <AnchorText as="h1" className="mdx-h1">
@@ -120,12 +130,4 @@ const MdxComponents = {
   Button,
   Temp,
   // ButtonLink,
-}
-
-export function MdxContent({ source }: MdxContentProps) {
-  return (
-    <div className="">
-      <MDXRemote {...source} components={MdxComponents} />
-    </div>
-  )
 }

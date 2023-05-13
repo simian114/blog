@@ -5,6 +5,8 @@ export default async function MdxStyle() {
   const post = await getPostBySlugs("/mdx")
 
   return (
-    <main>{post.serialized && <MdxContent source={post.serialized} />}</main>
+    <main>
+      <MdxContent post={post} />
+    </main>
   )
 }
