@@ -1,7 +1,7 @@
 "use client"
 import useSWR from "swr"
 import { ReactElement } from "react"
-import { EyeOpenIcon } from "@radix-ui/react-icons"
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons"
 
 const fetcher = (slugs: string) =>
   fetch(`${process.env.NEXT_PUBLIC_KV_REST_API_URL}/incr`, {
@@ -19,8 +19,9 @@ interface UsePostViewCountProps {
 }
 
 function usePostViewCounter(props: UsePostViewCountProps) {
-  return useSWR(process.env.NODE_ENV ? null : `${props.slug.join("/")}`, () =>
-    fetcher(props.slug.join("/"))
+  return useSWR(
+    process.env.NODE_ENV === "development" ? null : `${props.slug.join("/")}`,
+    () => fetcher(props.slug.join("/"))
   )
 }
 
@@ -33,7 +34,7 @@ export default function ViewCounter(props: ViewCounterProps): ReactElement {
 
   return (
     <div className={`detail-main__view-count `}>
-      <EyeOpenIcon />
+      {isLoading ? <EyeClosedIcon /> : <EyeOpenIcon />}
 
       <span className={`${isLoading ? "skeleton skeleton-text" : ""}`}>
         {!isLoading && (data || 0)}
