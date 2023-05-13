@@ -53,6 +53,7 @@ $postcard-shape: rds-shape(secondary);
     &__tag-container {
       margin-top: rds-space(space-08);
       display: flex;
+      flex-wrap: wrap;
       gap: rds-space(space-08);
     }
   }
