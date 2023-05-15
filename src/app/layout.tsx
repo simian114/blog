@@ -33,7 +33,7 @@ export const metadata = {
   title: `RocketMan's blog!`,
   description: `Hello world, it's me!`,
   other: {
-    // ["view-transition"]: "same-origin",
+    ["google-site-verification"]: "7TQcAdD6UTznqrsliaYKwBgt8_ooHnzAfkP_M3n0RMA",
   },
 }
 
