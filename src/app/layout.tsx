@@ -5,6 +5,7 @@ import localFont from "next/font/local"
 import { Providers } from "./providers"
 import { Analytics } from "@vercel/analytics/react"
 import "highlight.js/styles/a11y-dark.css"
+import { defaultMeta, openGraphImage } from "./shared-metadata"
 
 // Font files can be colocated inside of `app`
 const myFont = localFont({
@@ -30,8 +31,12 @@ const myFont = localFont({
 
 // NOTE: https://beta.nextjs.org/docs/api-reference/metadata#optional-metadata
 export const metadata = {
-  title: `RocketMan's blog!`,
-  description: `Hello world, it's me!`,
+  ...defaultMeta,
+  openGraph: {
+    ...defaultMeta,
+    ...openGraphImage,
+    images: "/images/og-image.png",
+  },
   other: {
     ["google-site-verification"]: "7TQcAdD6UTznqrsliaYKwBgt8_ooHnzAfkP_M3n0RMA",
   },
