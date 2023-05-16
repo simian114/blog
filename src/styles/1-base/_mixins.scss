@@ -6,6 +6,13 @@
   }
 }
 
+@mixin textEllipsis($line) {
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 @mixin cover-background {
   background-repeat: no-repeat;
   background-size: cover;
