@@ -1,11 +1,13 @@
 @use "@styles" as *;
 
+$palettes: "gray", "primary", "secondary", "tertiary";
+
 .tag {
   padding: rds-space(space-04) rds-space(space-08);
   @include rds-caption1;
   @include medium;
   border-radius: rds-shape(primary);
-  $palettes: "gray", "primary", "secondary", "tertiary";
+  height: fit-content;
   @each $palette in $palettes {
     &.tag-#{$palette} {
       color: var(--text-low-#{$palette}-color);
