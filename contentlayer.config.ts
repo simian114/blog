@@ -91,6 +91,18 @@ export const Post = defineDocumentType(() => ({
       type: "string",
       resolve: post => `/${post._raw.flattenedPath}`,
     },
+    category: {
+      type: "string",
+      resolve: post => {
+        if (post._raw.sourceFilePath.includes("index.mdx")) {
+          return ""
+        }
+        if (post._raw.sourceFileDir.split("/").length !== 2) {
+          return ""
+        }
+        return post._raw.sourceFileDir.split("/")[1]
+      },
+    },
     headings: {
       type: "list",
       of: Heading,
