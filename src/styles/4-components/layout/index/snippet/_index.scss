@@ -6,9 +6,7 @@
     flex-basis: 450px;
     flex-shrink: 1;
   }
-  &__table {
-    //
-  }
+
   &__card-list {
     display: none;
     //
@@ -37,9 +35,10 @@
       &--item {
         border-radius: 4px;
         border: 1px solid transparent;
-        &:hover {
+        @include pointing-hover {
           background-color: var(--ui-el-hovered-bg-primary-color);
         }
+
         &:focus-within {
           background-color: var(--ui-el-hovered-bg-primary-color);
           border-color: var(--ui-focused-border-primary-color);
@@ -81,7 +80,9 @@
       &--tags {
         position: relative;
         overflow: auto;
+        overflow-y: unset;
         @include thin-scrollbar;
+
         &::-webkit-scrollbar-track {
           margin-left: rds-space(space-08);
           margin-right: rds-space(space-08);
