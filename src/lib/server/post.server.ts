@@ -36,11 +36,34 @@ export const allDesignSystemPosts = allPulishedPost.filter(
     !post._raw.sourceFilePath.includes("/index.mdx")
 )
 
+export const allRoutes = Array.from(
+  new Set(
+    allPulishedPost
+      .filter(post => !post._raw.sourceFilePath.includes("index.mdx"))
+      .map(post => post._id.split("/")?.[0])
+  )
+)
+
 export type TreeNode = {
   title: string
   date: string
   urlPath: string
   children: TreeNode[]
+}
+
+export const getCategoriesByRoute = (route: string) => {
+  return Array.from(
+    new Set(
+      allPulishedPost
+        .filter(
+          post =>
+            post._raw.sourceFileDir.startsWith(`${route}/`) &&
+            !post._raw.sourceFilePath.includes("/index.mdx") &&
+            post._raw.sourceFileDir.split("/").length === 2
+        )
+        .map(post => post._raw.sourceFileDir.split("/")[1])
+    )
+  )
 }
 
 export const blogCategories = Array.from(

@@ -34,35 +34,76 @@ header.header {
     &__menus {
       display: flex;
       align-items: center;
-      > li {
-        &.active {
-          > a {
-            color: var(--text-high-color);
-            @include bold;
-          }
-        }
-        @include pointing-hover {
-          > a {
-            height: 100%;
-            background-color: var(--ui-el-hovered-bg-color);
-            color: var(--text-high-color);
-          }
-        }
-        &:active {
-          > a {
-            height: 100%;
-            background-color: var(--ui-el-hovered-bg-color);
-            color: var(--text-high-color);
-          }
-        }
-        > a {
-          @include rds-h3;
-          @include medium;
-          display: block;
-          padding: 0.25rem rds-space(space-12);
-          color: var(--text-low-color);
-          border-radius: rds-space(space-08);
-        }
+    }
+    &__menu-item {
+      display: flex;
+      align-items: center;
+    }
+    &__menu-link {
+      color: var(--text-high-color);
+      @include bold;
+      @include rds-h3;
+      @include medium;
+      display: block;
+      padding: 0.25rem rds-space(space-08);
+      color: var(--text-low-color);
+      border-radius: rds-space(space-08);
+      &.active {
+        color: var(--text-high-color);
+        @include bold;
+      }
+      @include pointing-hover {
+        height: 100%;
+        background-color: var(--ui-el-hovered-bg-color);
+        color: var(--text-high-color);
+      }
+      &:active {
+        height: 100%;
+        background-color: var(--ui-el-hovered-bg-color);
+        color: var(--text-high-color);
+      }
+    }
+    &__icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 4px;
+    }
+    &__icon {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.5s ease;
+      &--open {
+        transform: rotate(-180deg);
+      }
+    }
+
+    &__content {
+      background-color: var(--gray1);
+      display: flex;
+      flex-direction: column;
+      animation-duration: 400ms;
+      animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, opacity;
+      border-radius: 8px;
+      padding: rds-space(space-12) rds-space(space-16);
+
+      box-shadow: 0px 10px 38px -10px var(--secondary9),
+        0px 10px 20px -15px var(--secondary9);
+      animation-duration: 400ms;
+      &[data-side="top"] {
+        animation-name: slideDownAndFade;
+      }
+      &[data-side="bottom"] {
+        animation-name: slideUpAndFade;
+      }
+    }
+    &__content-item {
+      padding: 4px rds-space(space-16);
+      color: var(--text-low-color);
+      @include medium;
+      &:hover {
+        color: var(--text-high-color);
       }
     }
     &__utils {
@@ -108,11 +149,11 @@ header.header {
           display: none;
           height: 0px;
         }
-        > li {
-          width: 100%;
-          justify-content: center;
-          text-align: center;
-        }
+      }
+      &__menu-item {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
       }
       &__utils {
         &__mobile-menu {
@@ -206,4 +247,62 @@ header.header {
   transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
   transform: rotate(-45deg);
   transition-delay: 100ms;
+}
+
+.navigation__arrow {
+  width: 10px;
+  height: 5px;
+  fill: var(--gray1);
+}
+
+.navigation__content {
+  z-index: 1000;
+  background-color: var(--gray1);
+  display: flex;
+  flex-direction: column;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+  border-radius: 8px;
+  padding: rds-space(space-12) rds-space(space-16);
+
+  box-shadow: 0px 10px 38px -10px var(--secondary9),
+    0px 10px 20px -15px var(--secondary9);
+  animation-duration: 400ms;
+  &[data-side="top"] {
+    animation-name: slideDownAndFade;
+  }
+  &[data-side="bottom"] {
+    animation-name: slideUpAndFade;
+  }
+}
+.navigation__content-item {
+  padding: 4px rds-space(space-16);
+  color: var(--text-low-color);
+  @include medium;
+  &:hover {
+    color: var(--text-high-color);
+  }
+}
+
+@keyframes slideUpAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDownAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

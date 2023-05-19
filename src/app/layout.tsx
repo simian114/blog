@@ -6,6 +6,8 @@ import { Providers } from "./providers"
 import { Analytics } from "@vercel/analytics/react"
 import "highlight.js/styles/a11y-dark.css"
 import { defaultMeta, openGraphImage } from "./shared-metadata"
+import { allRoutes, getCategoriesByRoute } from "@/lib/server"
+import { ReactNode } from "react"
 
 // Font files can be colocated inside of `app`
 const myFont = localFont({
@@ -42,13 +44,42 @@ export const metadata = {
   },
 }
 
+export interface Menu {
+  id: string
+  href: string
+  children: ReactNode
+  categories?: string[]
+}
+
+const defaultMenus: Menu[] = [
+  { id: "archives", children: "archives", href: "/archives" },
+  { id: "mdx", children: "mdx", href: "/mdx" },
+]
+//
+
+function makeMenuByRoutes(routes: string[]) {
+  return [
+    ...routes.map(
+      route =>
+        ({
+          id: route,
+          children: route,
+          href: `/${route}`,
+          categories: getCategoriesByRoute(route),
+        } as Menu)
+    ),
+    ...defaultMenus,
+  ]
+}
+
 export default async function RootLayout(props: any) {
+  const menus = makeMenuByRoutes(allRoutes)
   return (
     <html lang="en" className={myFont.className} suppressHydrationWarning>
       <body>
         <Providers>
           <div id="app">
-            <Header />
+            <Header menus={menus} />
             <section className="inner">{props.children}</section>
             <Footer />
           </div>
