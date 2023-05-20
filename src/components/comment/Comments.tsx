@@ -1,24 +1,10 @@
 "use client"
 
 import Giscus from "@giscus/react"
-import { useMemo } from "react"
-import { useCookies } from "react-cookie"
-import { Theme } from "../theme/themeProvider"
-
-const MEDIA = "(prefers-color-scheme: dark)"
+import { useThemeStateContext } from "../theme/themeProvider"
 
 export default function Comments() {
-  const [cookies] = useCookies(["theme"])
-
-  const theme = useMemo(() => {
-    if (typeof window === "undefined") {
-      return ""
-    }
-    if (cookies.theme as Theme) {
-      return cookies.theme
-    }
-    return window.matchMedia(MEDIA).matches ? "dark" : "light"
-  }, [cookies.theme])
+  const { theme } = useThemeStateContext()
 
   return (
     <Giscus
