@@ -7,7 +7,7 @@ import {
   CaretUpIcon,
   RocketIcon,
 } from "@radix-ui/react-icons"
-import ThemeToggler from "../theme/themeToggler"
+import ThemeToggler from "../theme/_toggler"
 
 // NOTE: clinet-side only
 import { usePathname } from "next/navigation"
