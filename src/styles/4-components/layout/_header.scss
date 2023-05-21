@@ -11,14 +11,6 @@ header.header {
     backdrop-filter: blur(0px);
     background: var(--app-bg-color);
   }
-  svg {
-    width: 32px;
-    height: 32px;
-    &:hover {
-      color: var(--text-high-primary-color);
-      color: var(--secondary9);
-    }
-  }
   .navigation {
     position: sticky;
     top: 0px;
@@ -30,6 +22,30 @@ header.header {
 
     &__home {
       margin-right: rds-space(space-12);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: rds-shape(primary);
+      @include pointing-hover {
+        &:hover {
+          background-color: var(--ui-el-hovered-bg-color);
+          > svg {
+            color: var(--text-high-primary-color);
+            color: var(--secondary9);
+          }
+        }
+      }
+
+      > svg {
+        width: 32px;
+        height: 32px;
+        &:active {
+          color: var(--text-high-primary-color);
+          color: var(--secondary9);
+        }
+      }
     }
     &__menus {
       display: flex;
@@ -41,7 +57,6 @@ header.header {
     }
     &__menu-link {
       color: var(--text-high-color);
-      @include bold;
       @include rds-h3;
       @include medium;
       display: block;
@@ -50,7 +65,6 @@ header.header {
       border-radius: rds-space(space-08);
       &.active {
         color: var(--text-high-color);
-        @include bold;
       }
       @include pointing-hover {
         height: 100%;
@@ -68,10 +82,15 @@ header.header {
       align-items: center;
       justify-content: center;
       margin-right: 4px;
+      width: 32px;
+      height: 32px;
+      border-radius: rds-shape(primary);
+      @include pointing-hover {
+        outline: none;
+        background-color: var(--ui-el-hovered-bg-color);
+      }
     }
     &__icon {
-      width: 24px;
-      height: 24px;
       transition: transform 0.5s ease;
       &--open {
         transform: rotate(-180deg);
@@ -85,25 +104,16 @@ header.header {
       animation-duration: 400ms;
       animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform, opacity;
-      border-radius: 8px;
+      border-radius: rds-shape(primary);
       padding: rds-space(space-12) rds-space(space-16);
 
       box-shadow: 0px 10px 38px -10px var(--secondary9),
         0px 10px 20px -15px var(--secondary9);
-      animation-duration: 400ms;
       &[data-side="top"] {
         animation-name: slideDownAndFade;
       }
       &[data-side="bottom"] {
         animation-name: slideUpAndFade;
-      }
-    }
-    &__content-item {
-      padding: 4px rds-space(space-16);
-      color: var(--text-low-color);
-      @include medium;
-      &:hover {
-        color: var(--text-high-color);
       }
     }
     &__utils {
@@ -252,19 +262,19 @@ header.header {
 .navigation__arrow {
   width: 10px;
   height: 5px;
-  fill: var(--gray1);
+  fill: var(--ui-el-bg-color);
 }
 
 .navigation__content {
   z-index: 1000;
-  background-color: var(--gray1);
+  background-color: var(--ui-el-bg-color);
   display: flex;
   flex-direction: column;
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
-  border-radius: 8px;
-  padding: rds-space(space-12) rds-space(space-16);
+  border-radius: rds-shape(primary);
+  padding: rds-space(space-12) rds-space(space-08);
 
   box-shadow: 0px 10px 38px -10px var(--secondary9),
     0px 10px 20px -15px var(--secondary9);
@@ -277,11 +287,13 @@ header.header {
   }
 }
 .navigation__content-item {
-  padding: 4px rds-space(space-16);
+  padding: rds-space(space-04) rds-space(space-16);
   color: var(--text-low-color);
   @include medium;
-  &:hover {
+  @include pointing-hover {
     color: var(--text-high-color);
+    outline: none;
+    background-color: var(--ui-el-hovered-bg-color);
   }
 }
 
