@@ -1,0 +1,89 @@
+@use "@styles" as *;
+
+.theme-trigger {
+  display: flex;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  border-radius: 4px;
+
+  &__icon {
+    width: 24px !important;
+    height: 24px !important;
+    &--light,
+    &--dark {
+      fill: var(--solid-bg-tertiary-color);
+      color: var(--solid-bg-tertiary-color);
+    }
+    &--system {
+      color: var(--gray11);
+    }
+
+    &--loading {
+      animation-name: spin;
+      animation-duration: 1200ms;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+  }
+  @include pointing-hover {
+    outline: none;
+    background-color: var(--ui-el-hovered-bg-color);
+  }
+}
+
+.theme-content {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: rds-space(space-04);
+  min-width: 8rem;
+  border-radius: rds-shape(primary);
+  background-color: var(--ui-el-bg-color);
+  box-shadow: 0px 10px 38px -10px var(--secondary9),
+    0px 10px 20px -15px var(--secondary9);
+
+  &__item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 6px rds-space(space-08);
+    color: var(--text-low-color);
+    border-radius: rds-shape(primary);
+    > svg {
+      margin-right: rds-space(space-08);
+    }
+    &--dark,
+    &--light {
+      > svg {
+        color: var(--solid-bg-tertiary-color);
+        fill: var(--solid-bg-tertiary-color);
+      }
+    }
+    &--system {
+      > svg {
+        color: var(--gray11);
+      }
+    }
+
+    @include pointing-hover {
+      outline: none;
+      background-color: var(--ui-el-hovered-bg-color);
+    }
+  }
+  &__arrow {
+    width: 10px;
+    height: 5px;
+    fill: var(--ui-el-bg-color);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
