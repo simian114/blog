@@ -11,7 +11,7 @@ import { useDevice } from "@/store/deviceWidthProvider"
 import DisableScroll from "../../client/DisableScroll"
 import ButtonLink from "../../button/ButtonLink"
 import { Menu } from "@/app/layout"
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
+import * as Popover from "@radix-ui/react-popover"
 import HeaderMobileMenu from "./_mobileMenu"
 import { ChevronDown } from "lucide-react"
 interface HeaderProps {
@@ -68,7 +68,7 @@ export default function Header(props: HeaderProps): ReactElement {
           >
             {props.menus.map(menu => (
               <li key={menu.id} className={`navigation__menu-item`}>
-                <DropdownMenu.Root
+                <Popover.Root
                   onOpenChange={open =>
                     handleOpenChange({ route: menu.id, open })
                   }
@@ -86,7 +86,7 @@ export default function Header(props: HeaderProps): ReactElement {
                   </Link>
                   {!isMobile && !!menu.categories?.length && (
                     <>
-                      <DropdownMenu.Trigger asChild>
+                      <Popover.Trigger asChild>
                         <button className="navigation__icon-wrapper">
                           <ChevronDown
                             className={`navigation__icon navigation__icon--${
@@ -96,31 +96,29 @@ export default function Header(props: HeaderProps): ReactElement {
                             height={16}
                           />
                         </button>
-                      </DropdownMenu.Trigger>
-                      <DropdownMenu.Portal>
-                        <DropdownMenu.Content
+                      </Popover.Trigger>
+                      <Popover.Portal>
+                        <Popover.Content
                           className="navigation__content"
                           asChild
                         >
                           <ul>
                             {menu.categories.map(item => (
-                              <DropdownMenu.Item
+                              <Link
                                 className="navigation__content-item"
-                                asChild
+                                href={`/${menu.id}?category=${item}`}
                                 key={item}
                               >
-                                <Link href={`/${menu.id}?category=${item}`}>
-                                  {item}
-                                </Link>
-                              </DropdownMenu.Item>
+                                {item}
+                              </Link>
                             ))}
-                            <DropdownMenu.Arrow className="navigation__arrow DropdownMenuArrow" />
+                            <Popover.Arrow className="navigation__arrow " />
                           </ul>
-                        </DropdownMenu.Content>
-                      </DropdownMenu.Portal>
+                        </Popover.Content>
+                      </Popover.Portal>
                     </>
                   )}
-                </DropdownMenu.Root>
+                </Popover.Root>
               </li>
             ))}
           </ul>
