@@ -1,17 +1,21 @@
 "use client"
 
-import { ReactElement, useEffect, useState } from "react"
+import { ReactElement, useEffect, useRef, useState } from "react"
 import { useThemeActionContext, useThemeStateContext } from "./themeProvider"
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
+import * as Popover from "@radix-ui/react-popover"
 import { ContrastIcon, Loader2Icon, MoonIcon, SunIcon } from "lucide-react"
 
 export default function ThemeSelector(): ReactElement {
   const { theme } = useThemeStateContext()
   const actions = useThemeActionContext()
   const [isMounted, setIsMounted] = useState(false)
+  const targetRef = useRef<HTMLElement>()
 
   useEffect(() => {
     setIsMounted(true)
+    const header = document.querySelector("header.header")
+    if (!header) return
+    targetRef.current = header as unknown as HTMLElement
   }, [])
 
   if (!isMounted) {
@@ -27,47 +31,41 @@ export default function ThemeSelector(): ReactElement {
 
   return (
     <>
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
+      <Popover.Root>
+        <Popover.Trigger asChild>
           <button className={`theme-trigger theme-trigger--${theme}`}>
             <IconComponent
               className={`theme-trigger__icon theme-trigger__icon--${theme}`}
             />
           </button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Portal>
-          <DropdownMenu.Content className="theme-content">
-            <DropdownMenu.Item asChild>
-              <button
-                onClick={actions.light}
-                className="theme-content__item theme-content__item--light"
-              >
-                <SunIcon width={16} height={16} />
-                <span>Light</span>
-              </button>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item asChild>
-              <button
-                onClick={actions.dark}
-                className="theme-content__item theme-content__item--dark"
-              >
-                <MoonIcon width={16} height={16} color="yellow" fill="yellow" />
-                <span>Dark</span>
-              </button>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item asChild>
-              <button
-                onClick={actions.system}
-                className="theme-content__item theme-content__item--system"
-              >
-                <ContrastIcon width={16} height={16} />
-                <span>System</span>
-              </button>
-            </DropdownMenu.Item>
-            <DropdownMenu.Arrow className="theme-content__arrow" />
-          </DropdownMenu.Content>
-        </DropdownMenu.Portal>
-      </DropdownMenu.Root>
+        </Popover.Trigger>
+        <Popover.Portal>
+          <Popover.Content className="theme-content">
+            <button
+              onClick={actions.light}
+              className="theme-content__item theme-content__item--light"
+            >
+              <SunIcon width={16} height={16} />
+              <span>Light</span>
+            </button>
+            <button
+              onClick={actions.dark}
+              className="theme-content__item theme-content__item--dark"
+            >
+              <MoonIcon width={16} height={16} color="yellow" fill="yellow" />
+              <span>Dark</span>
+            </button>
+            <button
+              onClick={actions.system}
+              className="theme-content__item theme-content__item--system"
+            >
+              <ContrastIcon width={16} height={16} />
+              <span>System</span>
+            </button>
+            <Popover.Arrow className="theme-content__arrow" />
+          </Popover.Content>
+        </Popover.Portal>
+      </Popover.Root>
     </>
   )
 }
