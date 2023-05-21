@@ -1,27 +1,26 @@
 "use client"
+
 import Link from "next/link"
 import { ReactElement, useEffect, useMemo, useRef, useState } from "react"
-import {
-  ArrowDownIcon,
-  CaretDownIcon,
-  CaretUpIcon,
-  RocketIcon,
-} from "@radix-ui/react-icons"
-import ThemeToggler from "../theme/_toggler"
+import { RocketIcon } from "@radix-ui/react-icons"
+import ThemeSelector from "../../theme/_selector"
 
 // NOTE: clinet-side only
 import { usePathname } from "next/navigation"
 import { useDevice } from "@/store/deviceWidthProvider"
-import DisableScroll from "../client/DisableScroll"
-import ButtonLink from "../button/ButtonLink"
+import DisableScroll from "../../client/DisableScroll"
+import ButtonLink from "../../button/ButtonLink"
 import { Menu } from "@/app/layout"
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
+import HeaderMobileMenu from "./_mobileMenu"
+import { ChevronDown } from "lucide-react"
 interface HeaderProps {
   menus: Menu[]
 }
 
 // NOTE: pc / mobile 분리하기
-export default function Nav(props: HeaderProps): ReactElement {
+
+export default function Header(props: HeaderProps): ReactElement {
   const pathname = usePathname()
   const headerRef = useRef<HTMLHeadElement>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -32,19 +31,19 @@ export default function Nav(props: HeaderProps): ReactElement {
     [isMobile, isMobileMenuOpen]
   )
 
-  const [temp, setTemp] = useState(() => {
+  const [routeMenuOpen, setTemp] = useState(() => {
     return props.menus.reduce((prev, cur) => {
       if (!cur.categories?.length) return prev
       return { ...prev, [cur.id]: false }
     }, {} as { [key: string]: boolean })
   })
 
-  function toggleMobileMeun() {
+  function toggleMobileMenu() {
     setIsMobileMenuOpen(prev => !prev)
   }
 
   function handleOpenChange({ route, open }: { route: string; open: boolean }) {
-    setTemp({ ...temp, [route]: open })
+    setTemp({ ...routeMenuOpen, [route]: open })
   }
 
   useEffect(() => {
@@ -89,9 +88,9 @@ export default function Nav(props: HeaderProps): ReactElement {
                     <>
                       <DropdownMenu.Trigger asChild>
                         <button className="navigation__icon-wrapper">
-                          <CaretDownIcon
+                          <ChevronDown
                             className={`navigation__icon navigation__icon--${
-                              temp[menu.id] ? "open" : "close"
+                              routeMenuOpen[menu.id] ? "open" : "close"
                             }`}
                             width={16}
                             height={16}
@@ -138,17 +137,8 @@ export default function Nav(props: HeaderProps): ReactElement {
               RESUME
             </ButtonLink>
 
-            <ThemeToggler />
-            <button
-              className="navigation__utils__mobile-menu"
-              onClick={toggleMobileMeun}
-            >
-              <div className={`mobile-menu ${open ? "open" : ""}`}>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </button>
+            <ThemeSelector />
+            <HeaderMobileMenu open={open} toggleMobileMenu={toggleMobileMenu} />
           </div>
         </nav>
       </header>
