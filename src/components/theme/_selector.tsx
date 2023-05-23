@@ -5,6 +5,7 @@ import { useThemeActionContext, useThemeStateContext } from "./themeProvider"
 import * as Popover from "@radix-ui/react-popover"
 import { ContrastIcon, Loader2Icon, MoonIcon, SunIcon } from "lucide-react"
 import Button, { ButtonDesignProps, ButtonProps } from "../button/Button"
+import IconButton from "../button/IconButton"
 
 const buttonCommonDesignProps: Partial<ButtonDesignProps> = {
   size: "xsmall",
@@ -42,12 +43,12 @@ export default function ThemeSelector(): ReactElement {
   return (
     <>
       <Popover.Root>
-        <Popover.Trigger asChild>
-          <button className={`theme-trigger theme-trigger--${theme}`}>
+        <Popover.Trigger>
+          <IconButton design={{ size: "medium" }}>
             <IconComponent
               className={`theme-trigger__icon theme-trigger__icon--${theme}`}
             />
-          </button>
+          </IconButton>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content className="theme-content">

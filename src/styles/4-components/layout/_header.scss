@@ -21,26 +21,14 @@ header.header {
     align-items: center;
 
     &__home {
-      margin-right: rds-space(space-12);
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: rds-shape(primary);
       @include pointing-hover {
-        &:hover {
-          background-color: var(--ui-el-hovered-bg-color);
-          > svg {
-            color: var(--text-high-primary-color);
-            color: var(--secondary9);
-          }
+        > svg {
+          color: var(--text-high-primary-color);
+          color: var(--secondary9);
         }
       }
 
       > svg {
-        width: 32px;
-        height: 32px;
         &:active {
           color: var(--text-high-primary-color);
           color: var(--secondary9);

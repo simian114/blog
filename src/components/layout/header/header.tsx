@@ -15,6 +15,7 @@ import HeaderMobileMenu from "./_mobileMenu"
 import { ChevronDown } from "lucide-react"
 import MagicButtonLink from "@/components/magicButton/ButtonLink"
 import ButtonLink from "@/components/button/ButtonLink"
+import IconButtonLink from "@/components/button/IconButtonLink"
 interface HeaderProps {
   menus: Menu[]
 }
@@ -60,9 +61,13 @@ export default function Header(props: HeaderProps): ReactElement {
         data-state={open ? "open" : "close"}
       >
         <nav className="navigation inner">
-          <Link className="navigation__home" href="/">
+          <IconButtonLink
+            design={{ size: "large" }}
+            href="/"
+            className="navigation__home"
+          >
             <RocketIcon />
-          </Link>
+          </IconButtonLink>
           <ul
             className="navigation__menus"
             data-state={open ? "open" : "close"}
