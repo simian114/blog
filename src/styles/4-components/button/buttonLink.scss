@@ -1,0 +1,82 @@
+// $rds-button-size
+@use "@styles" as *;
+
+.rds-btn-link {
+  // type
+  display: flex;
+  align-items: center;
+  border-radius: rds-shape(primary);
+  width: fit-content;
+  // border-radius: rds-shape(primary);
+  color: var(--text-high-primary-color);
+  &--primary {
+    background-color: var(--solid-bg-primary-color);
+    border: 1px solid var(--solid-hovered-bg-primary-color);
+
+    @include pointing-hover {
+      outline: none;
+      background-color: var(--solid-hovered-bg-primary-color);
+    }
+    &:focus-visible {
+      border: 1px solid var(--ui-focused-border-color);
+      background-color: var(--solid-hovered-bg-primary-color);
+      outline: none;
+    }
+    &:active {
+      //
+    }
+  }
+  // NOTE: 구현해야함
+  &--secondary {
+    background-color: transparent;
+    color: var(--text-low-color);
+    @include pointing-hover {
+      background-color: var(--ui-el-hovered-bg-color);
+      color: var(--text-high-color);
+    }
+    &:active {
+      background-color: var(--ui-el-hovered-bg-color);
+      color: var(--text-high-color);
+    }
+  }
+
+  // size
+  &--xsmall {
+    padding: rds-space(space-04) rds-space(space-08);
+    // @include rds-body1;
+  }
+  &--small {
+    padding: rds-space(space-06) rds-space(space-08);
+    // @include rds-body1;
+  }
+  &--medium {
+    padding: rds-space(space-06) rds-space(space-16);
+    // @include rds-body1;
+  }
+  &--large {
+    padding: rds-space(space-06) rds-space(space-16);
+    // @include rds-body1;
+  }
+  &--xlarge {
+    padding: rds-space(space-08) rds-space(space-16);
+    // @include rds-body1;
+  }
+
+  // icon
+  &--icon-left {
+    > svg {
+      margin-right: rds-space(space-08);
+    }
+  }
+  &--icon-right {
+    > svg {
+      margin-left: rds-space(space-08);
+    }
+  }
+
+  //
+  &--fluid {
+    width: 100%;
+    justify-content: center;
+  }
+}
