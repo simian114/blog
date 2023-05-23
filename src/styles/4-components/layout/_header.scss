@@ -56,24 +56,7 @@ header.header {
       align-items: center;
     }
     &__menu-link {
-      color: var(--text-high-color);
-      @include rds-h3;
-      @include medium;
-      display: block;
-      padding: 0.25rem rds-space(space-08);
-      color: var(--text-low-color);
-      border-radius: rds-space(space-08);
       &.active {
-        color: var(--text-high-color);
-      }
-      @include pointing-hover {
-        height: 100%;
-        background-color: var(--ui-el-hovered-bg-color);
-        color: var(--text-high-color);
-      }
-      &:active {
-        height: 100%;
-        background-color: var(--ui-el-hovered-bg-color);
         color: var(--text-high-color);
       }
     }
@@ -287,14 +270,8 @@ header.header {
   }
 }
 .navigation__content-item {
-  padding: rds-space(space-04) rds-space(space-16);
-  color: var(--text-low-color);
-  @include medium;
-  @include pointing-hover {
-    color: var(--text-high-color);
-    outline: none;
-    background-color: var(--ui-el-hovered-bg-color);
-  }
+  //
+  //
 }
 
 @keyframes slideUpAndFade {

@@ -4,6 +4,16 @@ import { ReactElement, useEffect, useRef, useState } from "react"
 import { useThemeActionContext, useThemeStateContext } from "./themeProvider"
 import * as Popover from "@radix-ui/react-popover"
 import { ContrastIcon, Loader2Icon, MoonIcon, SunIcon } from "lucide-react"
+import Button, { ButtonDesignProps, ButtonProps } from "../button/Button"
+
+const buttonCommonDesignProps: Partial<ButtonDesignProps> = {
+  size: "xsmall",
+  type: "secondary",
+  fluid: true,
+}
+const buttonCommonProps: Partial<ButtonProps> = {
+  style: { justifyContent: "flex-start" },
+}
 
 export default function ThemeSelector(): ReactElement {
   const { theme } = useThemeStateContext()
@@ -41,27 +51,48 @@ export default function ThemeSelector(): ReactElement {
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content className="theme-content">
-            <button
-              onClick={actions.light}
+            <Button
               className="theme-content__item theme-content__item--light"
+              onClick={actions.light}
+              {...buttonCommonProps}
+              design={{
+                ...buttonCommonDesignProps,
+                icon: {
+                  position: "left",
+                  asset: <SunIcon width={16} height={16} />,
+                },
+              }}
             >
-              <SunIcon width={16} height={16} />
-              <span>Light</span>
-            </button>
-            <button
-              onClick={actions.dark}
+              Light
+            </Button>
+            <Button
               className="theme-content__item theme-content__item--dark"
+              onClick={actions.dark}
+              {...buttonCommonProps}
+              design={{
+                ...buttonCommonDesignProps,
+                icon: {
+                  position: "left",
+                  asset: <MoonIcon width={16} height={16} />,
+                },
+              }}
             >
-              <MoonIcon width={16} height={16} color="yellow" fill="yellow" />
-              <span>Dark</span>
-            </button>
-            <button
-              onClick={actions.system}
+              Dark
+            </Button>
+            <Button
               className="theme-content__item theme-content__item--system"
+              onClick={actions.system}
+              {...buttonCommonProps}
+              design={{
+                ...buttonCommonDesignProps,
+                icon: {
+                  position: "left",
+                  asset: <ContrastIcon width={16} height={16} />,
+                },
+              }}
             >
-              <ContrastIcon width={16} height={16} />
-              <span>System</span>
-            </button>
+              System
+            </Button>
             <Popover.Arrow className="theme-content__arrow" />
           </Popover.Content>
         </Popover.Portal>
