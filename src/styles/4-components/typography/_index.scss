@@ -13,6 +13,6 @@
 
 @each $variant in $rds-font-weight-variant-data {
   .rds-typography-#{$variant} {
-    font-weight: map-get($rds-font-weight-data, $variant);
+    font-weight: map-get($rds-font-weight-data, $variant) !important;
   }
 }
