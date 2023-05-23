@@ -9,11 +9,12 @@ import ThemeSelector from "../../theme/_selector"
 import { usePathname } from "next/navigation"
 import { useDevice } from "@/store/deviceWidthProvider"
 import DisableScroll from "../../client/DisableScroll"
-import ButtonLink from "../../button/ButtonLink"
 import { Menu } from "@/app/layout"
 import * as Popover from "@radix-ui/react-popover"
 import HeaderMobileMenu from "./_mobileMenu"
 import { ChevronDown } from "lucide-react"
+import MagicButtonLink from "@/components/magicButton/ButtonLink"
+import ButtonLink from "@/components/button/ButtonLink"
 interface HeaderProps {
   menus: Menu[]
 }
@@ -31,7 +32,7 @@ export default function Header(props: HeaderProps): ReactElement {
     [isMobile, isMobileMenuOpen]
   )
 
-  const [routeMenuOpen, setTemp] = useState(() => {
+  const [routeMenuOpen, setRouteMenuOpen] = useState(() => {
     return props.menus.reduce((prev, cur) => {
       if (!cur.categories?.length) return prev
       return { ...prev, [cur.id]: false }
@@ -43,7 +44,7 @@ export default function Header(props: HeaderProps): ReactElement {
   }
 
   function handleOpenChange({ route, open }: { route: string; open: boolean }) {
-    setTemp({ ...routeMenuOpen, [route]: open })
+    setRouteMenuOpen({ ...routeMenuOpen, [route]: open })
   }
 
   useEffect(() => {
@@ -73,17 +74,25 @@ export default function Header(props: HeaderProps): ReactElement {
                     handleOpenChange({ route: menu.id, open })
                   }
                 >
-                  <Link
+                  <ButtonLink
+                    design={{
+                      type: "secondary",
+                      fluid: isMobile,
+                      typography: {
+                        weight: "medium",
+                        variants: "h3",
+                      },
+                    }}
+                    href={menu.href}
+                    key={menu.id}
                     className={`navigation__menu-link ${
                       pathname !== "/" && pathname.startsWith(menu.href)
                         ? "active"
                         : ""
                     }`}
-                    href={menu.href}
-                    key={menu.id}
                   >
                     {menu.children}
-                  </Link>
+                  </ButtonLink>
                   {!isMobile && !!menu.categories?.length && (
                     <>
                       <Popover.Trigger asChild>
@@ -104,13 +113,18 @@ export default function Header(props: HeaderProps): ReactElement {
                         >
                           <ul>
                             {menu.categories.map(item => (
-                              <Link
-                                className="navigation__content-item"
-                                href={`/${menu.id}?category=${item}`}
+                              <ButtonLink
                                 key={item}
+                                href={`/${menu.id}?category=${item}`}
+                                design={{
+                                  type: "secondary",
+                                  fluid: true,
+                                  typography: { weight: "medium" },
+                                }}
+                                style={{ justifyContent: "flex-start" }}
                               >
                                 {item}
-                              </Link>
+                              </ButtonLink>
                             ))}
                             <Popover.Arrow className="navigation__arrow " />
                           </ul>
@@ -123,7 +137,7 @@ export default function Header(props: HeaderProps): ReactElement {
             ))}
           </ul>
           <div className="navigation__utils">
-            <ButtonLink
+            <MagicButtonLink
               design={{
                 style: "default",
                 color: "secondary",
@@ -133,7 +147,7 @@ export default function Header(props: HeaderProps): ReactElement {
               href="/resume"
             >
               RESUME
-            </ButtonLink>
+            </MagicButtonLink>
 
             <ThemeSelector />
             <HeaderMobileMenu open={open} toggleMobileMenu={toggleMobileMenu} />

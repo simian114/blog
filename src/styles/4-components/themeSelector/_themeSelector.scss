@@ -43,17 +43,8 @@
   background-color: var(--ui-el-bg-color);
   box-shadow: 0px 10px 38px -10px var(--secondary9),
     0px 10px 20px -15px var(--secondary9);
-
+  @include rds-body1;
   &__item {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 6px rds-space(space-08);
-    color: var(--text-low-color);
-    border-radius: rds-shape(primary);
-    > svg {
-      margin-right: rds-space(space-08);
-    }
     &--dark,
     &--light {
       > svg {
