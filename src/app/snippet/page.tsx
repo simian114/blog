@@ -1,8 +1,10 @@
+import Link from "next/link"
+
 import Tag from "@/components/postCard/tag/Tag"
 import Typography from "@/components/typography/Typography"
 import { getPostBySlugs } from "@/helpers/slug"
 import { allSnippetPosts } from "@/lib/server/post.server"
-import Link from "next/link"
+
 import { MdxContent } from "../mdx-content"
 
 export default async function Snippet() {

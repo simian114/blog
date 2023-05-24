@@ -1,5 +1,5 @@
-import { LinkProps } from "next/link"
 import { HTMLAttributes, ReactNode } from "react"
+import { LinkProps } from "next/link"
 
 export interface ButtonLinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps>,

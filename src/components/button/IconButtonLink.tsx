@@ -1,6 +1,7 @@
-import Link, { LinkProps } from "next/link"
 import { ComponentPropsWithoutRef, ReactElement } from "react"
-import { IconButtonDesignProps, ICON_BUTTON_PREFIX } from "./IconButton"
+import Link, { LinkProps } from "next/link"
+
+import { ICON_BUTTON_PREFIX, IconButtonDesignProps } from "./IconButton"
 
 interface IconButtonProps
   extends LinkProps,

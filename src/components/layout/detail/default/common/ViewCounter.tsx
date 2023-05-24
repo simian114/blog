@@ -1,7 +1,7 @@
 "use client"
-import useSWR from "swr"
 import { ReactElement } from "react"
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons"
+import useSWR from "swr"
 
 const fetcher = (slugs: string) =>
   fetch(`${process.env.NEXT_PUBLIC_KV_REST_API_URL}/incr`, {

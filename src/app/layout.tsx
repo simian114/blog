@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Footer, Header } from "@/components/layout"
-import "@styles/globals.scss"
-import localFont from "next/font/local"
-import { Providers } from "./providers"
-import { Analytics } from "@vercel/analytics/react"
-import "highlight.js/styles/a11y-dark.css"
-import { defaultMeta, openGraphImage } from "./shared-metadata"
-import { allRoutes, getCategoriesByRoute } from "@/lib/server"
 import { ReactNode } from "react"
+import { Analytics } from "@vercel/analytics/react"
+import localFont from "next/font/local"
+
+import { Footer, Header } from "@/components/layout"
+import { allRoutes, getCategoriesByRoute } from "@/lib/server"
+
+import { Providers } from "./providers"
+import { defaultMeta, openGraphImage } from "./shared-metadata"
+
+import "@styles/globals.scss"
+import "highlight.js/styles/a11y-dark.css"
 
 // Font files can be colocated inside of `app`
 const myFont = localFont({

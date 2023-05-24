@@ -1,8 +1,9 @@
-import { allPulishedPost } from "@/lib/server"
 import { Post } from "contentlayer/generated"
 import { glob } from "glob"
 import { notFound } from "next/navigation"
 import path from "path"
+
+import { allPulishedPost } from "@/lib/server"
 
 export function getSlug(slugPath: string, root: string) {
   const replacedPath = slugPath.replace(`${root}/`, "")

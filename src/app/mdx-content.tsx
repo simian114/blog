@@ -1,12 +1,14 @@
 "use client"
 
-import Button from "@/components/button/Button"
-import MainTitle from "@/components/mdx/mainTitle/MainTitle"
-import Image, { ImageProps } from "next/image"
-import AnchorText from "../components/mdx/AnchorText"
 import { useEffect, useState } from "react"
 import { Post } from "contentlayer/generated"
+import Image, { ImageProps } from "next/image"
 import { useMDXComponent } from "next-contentlayer/hooks"
+
+import Button from "@/components/button/Button"
+import MainTitle from "@/components/mdx/mainTitle/MainTitle"
+
+import AnchorText from "../components/mdx/AnchorText"
 
 type MdxContentProps = {
   post: Post

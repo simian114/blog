@@ -1,11 +1,13 @@
 "use client"
 
 import { ReactElement, useEffect, useRef, useState } from "react"
-import { useThemeActionContext, useThemeStateContext } from "./themeProvider"
 import * as Popover from "@radix-ui/react-popover"
 import { ContrastIcon, Loader2Icon, MoonIcon, SunIcon } from "lucide-react"
+
 import Button, { ButtonDesignProps, ButtonProps } from "../button/Button"
 import IconButton from "../button/IconButton"
+
+import { useThemeActionContext, useThemeStateContext } from "./themeProvider"
 
 const buttonCommonDesignProps: Partial<ButtonDesignProps> = {
   size: "xsmall",

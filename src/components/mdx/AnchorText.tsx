@@ -1,4 +1,5 @@
 import { ComponentPropsWithoutRef, ElementType } from "react"
+
 import styles from "./styles.module.scss"
 
 export type AnchorTextProps<C extends ElementType> = {

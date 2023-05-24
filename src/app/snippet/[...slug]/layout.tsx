@@ -1,8 +1,9 @@
+import { ReactNode } from "react"
+import { Metadata } from "next"
+
 import { defaultMeta, openGraphImage } from "@/app/shared-metadata"
 import DetailDefaultLayout from "@/components/layout/detail/default/_default"
 import { allPulishedPost } from "@/lib/server"
-import { Metadata } from "next"
-import { ReactNode } from "react"
 
 export function generateMetadata({
   params,

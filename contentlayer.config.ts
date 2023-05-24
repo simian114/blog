@@ -4,10 +4,11 @@ import {
   FieldDefs,
   makeSource,
 } from "contentlayer/source-files"
-import readingTime from "reading-time"
-import langCSS from "highlight.js/lib/languages/css"
 import langJavascript from "highlight.js/lib/languages/javascript"
+import readingTime from "reading-time"
 import rehypeHighlight from "rehype-highlight"
+
+import langCSS from "highlight.js/lib/languages/css"
 
 const languages = {
   javascript: langJavascript,

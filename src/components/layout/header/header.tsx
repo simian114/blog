@@ -1,21 +1,22 @@
 "use client"
 
-import Link from "next/link"
 import { ReactElement, useEffect, useMemo, useRef, useState } from "react"
 import { RocketIcon } from "@radix-ui/react-icons"
-import ThemeSelector from "../../theme/_selector"
-
+import * as Popover from "@radix-ui/react-popover"
+import { ChevronDown } from "lucide-react"
 // NOTE: clinet-side only
 import { usePathname } from "next/navigation"
-import { useDevice } from "@/store/deviceWidthProvider"
-import DisableScroll from "../../client/DisableScroll"
+
 import { Menu } from "@/app/layout"
-import * as Popover from "@radix-ui/react-popover"
-import HeaderMobileMenu from "./_mobileMenu"
-import { ChevronDown } from "lucide-react"
-import MagicButtonLink from "@/components/magicButton/ButtonLink"
 import ButtonLink from "@/components/button/ButtonLink"
 import IconButtonLink from "@/components/button/IconButtonLink"
+import MagicButtonLink from "@/components/magicButton/ButtonLink"
+import { useDevice } from "@/store/deviceWidthProvider"
+
+import DisableScroll from "../../client/DisableScroll"
+import ThemeSelector from "../../theme/_selector"
+
+import HeaderMobileMenu from "./_mobileMenu"
 interface HeaderProps {
   menus: Menu[]
 }

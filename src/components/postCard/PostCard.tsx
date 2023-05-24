@@ -1,11 +1,13 @@
 "use client"
 
-import { Post } from "contentlayer/generated"
-import Link from "next/link"
-import Tag from "./tag/Tag"
-import dayjs from "dayjs"
 import { useEffect, useRef } from "react"
+import { Post } from "contentlayer/generated"
+import dayjs from "dayjs"
+import Link from "next/link"
+
 import Typography from "../typography/Typography"
+
+import Tag from "./tag/Tag"
 
 interface PostCardProps {
   post: Post

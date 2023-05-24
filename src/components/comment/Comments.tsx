@@ -1,6 +1,7 @@
 "use client"
 
 import Giscus from "@giscus/react"
+
 import { useThemeStateContext } from "../theme/themeProvider"
 
 export default function Comments() {

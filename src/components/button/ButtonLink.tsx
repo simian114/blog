@@ -1,5 +1,6 @@
-import Link, { LinkProps } from "next/link"
 import { ComponentPropsWithoutRef } from "react"
+import Link, { LinkProps } from "next/link"
+
 import { ButtonDesignProps, getRDSButtonTypographyClassName } from "./Button"
 
 interface ButtonLinkProps

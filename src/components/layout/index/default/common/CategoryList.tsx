@@ -1,12 +1,13 @@
 "use client"
 
-import PostCard from "@/components/postCard/PostCard"
-import Typography from "@/components/typography/Typography"
-import { CateogoryPost } from "@/lib/server"
+import { ReactElement, useMemo } from "react"
 import { Post } from "contentlayer/generated"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
-import { ReactElement, useMemo } from "react"
+
+import PostCard from "@/components/postCard/PostCard"
+import Typography from "@/components/typography/Typography"
+import { CateogoryPost } from "@/lib/server"
 
 interface CategoryListProps {
   categoryPosts: CateogoryPost[]

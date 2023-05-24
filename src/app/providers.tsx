@@ -1,8 +1,9 @@
 "use client"
 
+import { ReactElement } from "react"
+
 import { ThemeProvider } from "@/components/theme"
 import DeviceWidthProvider from "@/store/deviceWidthProvider"
-import { ReactElement } from "react"
 // import { ThemeProvider } from "../components/theme"
 // import { ThemeProviderProps } from "../components/theme/themeProvider"
 

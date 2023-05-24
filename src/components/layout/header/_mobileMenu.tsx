@@ -1,7 +1,8 @@
 "use client"
+import { ReactElement } from "react"
+
 import DisableScroll from "@/components/client/DisableScroll"
 import { useDevice } from "@/store/deviceWidthProvider"
-import { ReactElement } from "react"
 
 interface HeaderMobileMenuProps {
   toggleMobileMenu: () => void

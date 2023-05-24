@@ -1,4 +1,5 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react"
+
 import { TypographyVariants, TypographyWeight } from "../typography/Typography"
 
 // NOTE: primary 는 색, secondary 는 border 컬러 circle 는 원형

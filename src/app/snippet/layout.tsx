@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+
 import { openGraphImage } from "../shared-metadata"
 
 export const metadata = {

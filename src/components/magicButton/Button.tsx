@@ -1,7 +1,8 @@
 "use client"
 
-import styles from "./button.module.scss"
 import { ButtonProps } from "./common"
+
+import styles from "./button.module.scss"
 
 export default function Button(props: ButtonProps) {
   const { design, className, children, ...rest } = props

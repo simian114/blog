@@ -1,7 +1,5 @@
 "use client"
 
-import { getCookie, setCookie } from "@/lib/client/cookie"
-import { isMachesMediaQuery } from "@/lib/client/mediaQuery.client"
 import {
   createContext,
   ReactElement,
@@ -10,6 +8,10 @@ import {
   useMemo,
   useState,
 } from "react"
+
+import { getCookie, setCookie } from "@/lib/client/cookie"
+import { isMachesMediaQuery } from "@/lib/client/mediaQuery.client"
+
 import ThemeScript from "./_script"
 
 export type Theme = "" | "light" | "dark" | "system"

@@ -1,6 +1,7 @@
+import { ReactNode } from "react"
+
 import PostCard from "@/components/postCard/PostCard"
 import { getAllPostsBySlug } from "@/lib/server/post.server"
-import { ReactNode } from "react"
 
 interface IndexDefaultLayoutProps {
   slug: string

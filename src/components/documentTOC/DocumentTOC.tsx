@@ -1,8 +1,9 @@
 "use client"
 
-import { useDevice } from "@/store/deviceWidthProvider"
-import { Heading } from "contentlayer/generated"
 import { useEffect, useRef } from "react"
+import { Heading } from "contentlayer/generated"
+
+import { useDevice } from "@/store/deviceWidthProvider"
 
 interface DocumentTOCProps {
   headings?: Heading[]

@@ -1,6 +1,8 @@
 import Link from "next/link"
-import styles from "./button.module.scss"
+
 import { ButtonLinkProps } from "./common"
+
+import styles from "./button.module.scss"
 
 export default function ButtonLink(props: ButtonLinkProps) {
   const { href, design, className, children, ...rest } = props

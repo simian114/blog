@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
 
 /**
  * response.header 에 Accept-CH 와 Sec-CH-Perfers-Color-Scheme 를 설정함으로써

@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next"
+
 import { allPulishedPost } from "@/lib/server"
 
 export default function sitemap(): MetadataRoute.Sitemap {
