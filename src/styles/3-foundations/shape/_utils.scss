@@ -1,0 +1,24 @@
+@use "./functions" as f;
+
+$prefix: "rds-shape";
+
+.rds-shape {
+  &--primary {
+    border-radius: f.rds-shape(primary);
+  }
+  &--secondary {
+    border-radius: f.rds-shape(secondary);
+  }
+  &--tertiary {
+    border-radius: f.rds-shape(tertiary);
+  }
+  &--quaternary {
+    border-radius: f.rds-shape(quaternary);
+  }
+  &--squared {
+    border-radius: f.rds-shape(squared);
+  }
+  &--circle {
+    border-radius: f.rds-shape(circle);
+  }
+}
