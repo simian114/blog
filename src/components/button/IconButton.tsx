@@ -1,7 +1,8 @@
+import { ComponentPropsWithoutRef, forwardRef, ReactElement, Ref } from "react"
+
 import getRDSBaseClassName from "@/helpers/rds/base/getRDSBaseClassName"
 import getRDSIconButtonClassName from "@/helpers/rds/button/getRDSIconButtonClassName"
 import { RDSBaseProps } from "@/types/rds.t"
-import { ComponentPropsWithoutRef, forwardRef, ReactElement, Ref } from "react"
 
 export type IconButtonSizeType = "small" | "medium" | "large"
 

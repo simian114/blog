@@ -1,7 +1,8 @@
 import { RDSBaseProps } from "@/types/rds.t"
-import { getRDSTypographyClassName } from "./getRDSTypographyClassName"
+
 import getRDSFluidClassName from "./getRDSFluidClassName"
 import getRDSShapeClassName from "./getRDSShapeClassName"
+import { getRDSTypographyClassName } from "./getRDSTypographyClassName"
 
 function getRDSBaseClassName(params?: RDSBaseProps) {
   return `${getRDSShapeClassName(params?.shape)} ${getRDSFluidClassName(
