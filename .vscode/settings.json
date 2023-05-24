@@ -3,7 +3,8 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": true,
+    "source.removeUnusedImports": true
   },
   "liveSassCompile.settings.showOutputWindowOn": "Debug"
 }
