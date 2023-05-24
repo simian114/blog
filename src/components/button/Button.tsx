@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactNode } from "react"
+import { ComponentPropsWithoutRef, forwardRef, ReactNode, Ref } from "react"
 
 import getRDSBaseClassName from "@/helpers/rds/base/getRDSBaseClassName"
 import getRDSButtonClassName from "@/helpers/rds/button/getRDSButtonClassName"
@@ -28,7 +28,7 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   baseDesign?: RDSBaseProps
 }
 
-function Button(props: ButtonProps) {
+function Button(props: ButtonProps, ref: Ref<HTMLButtonElement>) {
   const { design, baseDesign, className, ...rest } = props
   const type = design?.type || "primary"
   const size = design?.size || "medium"
@@ -47,6 +47,7 @@ function Button(props: ButtonProps) {
   return icon ? (
     <button
       {...rest}
+      ref={ref}
       className={`${
         className ? className : ""
       } ${rdsButtonClassName}  ${rdsBaseClassName}`}
@@ -59,6 +60,7 @@ function Button(props: ButtonProps) {
     </button>
   ) : (
     <button
+      ref={ref}
       className={`${
         className ? className : ""
       } ${rdsButtonClassName}  ${rdsBaseClassName}`}
@@ -67,4 +69,4 @@ function Button(props: ButtonProps) {
   )
 }
 
-export default Button
+export default forwardRef<HTMLButtonElement, ButtonProps>(Button)

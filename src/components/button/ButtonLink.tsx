@@ -1,4 +1,5 @@
 import { ComponentPropsWithoutRef } from "react"
+import { forwardRef, ReactElement, Ref } from "react"
 import Link, { LinkProps } from "next/link"
 
 import getRDSBaseClassName from "@/helpers/rds/base/getRDSBaseClassName"
@@ -14,7 +15,10 @@ interface ButtonLinkProps
   baseDesign?: RDSBaseProps
 }
 
-function ButtonLink(props: ButtonLinkProps) {
+function ButtonLink(
+  props: ButtonLinkProps,
+  ref: Ref<HTMLAnchorElement>
+): ReactElement {
   const { design, baseDesign, className, ...rest } = props
   const type = design?.type || "primary"
   const size = design?.size || "medium"
@@ -33,6 +37,7 @@ function ButtonLink(props: ButtonLinkProps) {
   return icon ? (
     <Link
       {...rest}
+      ref={ref}
       className={`${
         className ? className : ""
       } ${rdsButtonClassName} ${rdsBaseClassName}`}
@@ -45,6 +50,7 @@ function ButtonLink(props: ButtonLinkProps) {
     </Link>
   ) : (
     <Link
+      ref={ref}
       className={`${
         className ? className : ""
       } ${rdsButtonClassName}  ${rdsBaseClassName}`}
@@ -53,4 +59,4 @@ function ButtonLink(props: ButtonLinkProps) {
   )
 }
 
-export default ButtonLink
+export default forwardRef<HTMLAnchorElement, ButtonLinkProps>(ButtonLink)
