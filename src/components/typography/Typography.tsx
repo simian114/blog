@@ -1,5 +1,6 @@
-import { getRDSTypographyClassName } from "@/helpers/rds/base/getRDSTypographyClassName"
 import { ElementType, forwardRef, Ref } from "react"
+
+import { getRDSTypographyClassName } from "@/helpers/rds/base/getRDSTypographyClassName"
 
 import Polymorphic, {
   PolymorphicComponentProp,
