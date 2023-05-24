@@ -5,6 +5,7 @@
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "unifiedjs.vscode-mdx",
-    "xyc.vscode-mdx-preview"
+    "xyc.vscode-mdx-preview",
+    "github.copilot-nightly"
   ]
 }
