@@ -1,7 +1,7 @@
 import getRDSBaseClassName from "@/helpers/rds/base/getRDSBaseClassName"
 import getRDSIconButtonClassName from "@/helpers/rds/button/getRDSIconButtonClassName"
 import { RDSBaseProps } from "@/types/rds.t"
-import { ComponentPropsWithoutRef, forwardRef } from "react"
+import { ComponentPropsWithoutRef, forwardRef, ReactElement, Ref } from "react"
 
 export type IconButtonSizeType = "small" | "medium" | "large"
 
@@ -17,8 +17,8 @@ interface IconButtonProps extends ComponentPropsWithoutRef<"button"> {
 // NOTE: icon 자체는 children 으로 넘기기
 function IconButton(
   props: IconButtonProps,
-  ref: React.Ref<HTMLButtonElement>
-): React.ReactElement {
+  ref: Ref<HTMLButtonElement>
+): ReactElement {
   const { design, baseDesign, className, ...rest } = props
   const cn = getRDSIconButtonClassName(design)
   const rdsBaseClassName = getRDSBaseClassName(baseDesign)

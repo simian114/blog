@@ -1,4 +1,5 @@
 import { ComponentPropsWithoutRef, ReactElement } from "react"
+import { forwardRef, Ref } from "react"
 import Link, { LinkProps } from "next/link"
 
 import getRDSBaseClassName from "@/helpers/rds/base/getRDSBaseClassName"
@@ -15,7 +16,10 @@ interface IconButtonProps
 }
 
 // NOTE: icon 자체는 children 으로 넘기기
-function IconButtonLink(props: IconButtonProps): ReactElement {
+function IconButtonLink(
+  props: IconButtonProps,
+  ref: Ref<HTMLAnchorElement>
+): ReactElement {
   const { design, baseDesign, className, ...rest } = props
   const cn = getRDSIconButtonClassName(design)
   const rdsBaseClassName = getRDSBaseClassName(baseDesign)
@@ -23,9 +27,10 @@ function IconButtonLink(props: IconButtonProps): ReactElement {
   return (
     <Link
       {...rest}
+      ref={ref}
       className={`${className ? className : ""} ${cn} ${rdsBaseClassName}`}
     />
   )
 }
 
-export default IconButtonLink
+export default forwardRef<HTMLAnchorElement, IconButtonProps>(IconButtonLink)
