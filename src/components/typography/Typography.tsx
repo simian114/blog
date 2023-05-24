@@ -1,3 +1,4 @@
+import { getRDSTypographyClassName } from "@/helpers/rds/base/getRDSTypographyClassName"
 import { ElementType, forwardRef, Ref } from "react"
 
 import Polymorphic, {
@@ -44,10 +45,12 @@ export interface Color {
   colorLevel: ColorLevel
 }
 
-interface TypographyBasicProps extends Partial<Color> {
-  variants?: TypographyVariants
+export interface RDSTypographyProps {
   weight?: TypographyWeight
+  variants?: TypographyVariants
 }
+
+interface TypographyBasicProps extends RDSTypographyProps, Partial<Color> {}
 
 type TypographyProps<C extends ElementType> = PolymorphicComponentProp<
   C,
@@ -56,11 +59,6 @@ type TypographyProps<C extends ElementType> = PolymorphicComponentProp<
 
 function getRDSColorClass(props: Color): string {
   return `rds-color-${props.colorType}-${props.colorLevel}`
-}
-
-function getRDSClassName(props: TypographyBasicProps): string {
-  const weight = props.weight ? `rds-typography-${props.weight}` : ""
-  return `rds-typography-${props.variants} ${weight}`
 }
 
 const Typography = <C extends ElementType>(
@@ -76,7 +74,7 @@ const Typography = <C extends ElementType>(
     ...rest
   } = props
 
-  const cn = `${getRDSClassName({
+  const cn = `${getRDSTypographyClassName({
     variants,
     weight,
   })} ${colorType ? getRDSColorClass({ colorType, colorLevel }) : ""} ${

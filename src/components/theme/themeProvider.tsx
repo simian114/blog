@@ -16,16 +16,17 @@ import ThemeScript from "./_script"
 
 export type Theme = "" | "light" | "dark" | "system"
 
+export const THEME: { [key in Theme]: Theme } = {
+  "": "",
+  light: "light",
+  dark: "dark",
+  system: "system",
+}
+
 export const MEDIA_COLOR_SCHEME = "(prefers-color-scheme: dark)"
 
 interface ThemeStateProviderContextProps {
   theme: Theme
-}
-
-interface ThemeActionProviderContextProps {
-  light: () => void
-  dark: () => void
-  system: () => void
 }
 
 export interface ThemeProviderProps {
@@ -38,7 +39,7 @@ const ThemeStateProviderContext = createContext<
 >(undefined)
 
 const ThemeActionProviderContext = createContext<
-  undefined | ThemeActionProviderContextProps
+  undefined | { [key in Theme]: () => void }
 >(undefined)
 
 export function useThemeStateContext() {
@@ -80,8 +81,10 @@ function ThemeProvider(props: ThemeProviderProps): ReactElement {
     return window.matchMedia(MEDIA_COLOR_SCHEME).matches ? "dark" : "light"
   })
 
-  const actions = useMemo(
+  const actions: { [key in Theme]: () => void } = useMemo(
     () => ({
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      "": () => {},
       light: () => {
         document.body.classList.remove("dark-theme")
         document.body.classList.add("light-theme")

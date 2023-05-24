@@ -1,44 +1,41 @@
 import { ComponentPropsWithoutRef } from "react"
 import Link, { LinkProps } from "next/link"
 
-import { ButtonDesignProps, getRDSButtonTypographyClassName } from "./Button"
+import getRDSBaseClassName from "@/helpers/rds/base/getRDSBaseClassName"
+import getRDSButtonLinkClassName from "@/helpers/rds/button/getRDSButtonLinkClassName"
+import { RDSBaseProps } from "@/types/rds.t"
+
+import { ButtonDesignProps } from "./Button"
 
 interface ButtonLinkProps
   extends LinkProps,
     Omit<ComponentPropsWithoutRef<"a">, keyof LinkProps> {
   design?: ButtonDesignProps
-}
-
-function getRDSButtonLinkClassName(
-  design: Required<Omit<ButtonDesignProps, "typography">>
-) {
-  const prefix = "rds-btn-link"
-  const fluid = design.fluid ? `${prefix}--fluid` : ""
-  const icon = design.icon.asset
-    ? `${prefix}--icon-${design.icon.position}`
-    : ""
-  return `${prefix} ${prefix}--${design.type} ${prefix}--${design.size} ${prefix}--color-${design.color} ${fluid} ${icon}`
+  baseDesign?: RDSBaseProps
 }
 
 function ButtonLink(props: ButtonLinkProps) {
-  const { design, className, ...rest } = props
+  const { design, baseDesign, className, ...rest } = props
   const type = design?.type || "primary"
   const size = design?.size || "medium"
   const color = design?.color || "primary"
-  const fluid = design?.fluid || false
   const icon = design?.icon || { position: "left", asset: null }
-  const typographyCN = getRDSButtonTypographyClassName(design?.typography)
-  const cn = getRDSButtonLinkClassName({
+
+  const rdsButtonClassName = getRDSButtonLinkClassName({
     type,
     size,
     color,
-    fluid,
     icon,
   })
+
+  const rdsBaseClassName = getRDSBaseClassName(baseDesign)
+
   return icon ? (
     <Link
       {...rest}
-      className={`${cn} ${typographyCN} ${className ? className : ""}`}
+      className={`${
+        className ? className : ""
+      } ${rdsButtonClassName} ${rdsBaseClassName}`}
     >
       <>
         {icon.position === "left" && <>{icon.asset}</>}
@@ -47,7 +44,12 @@ function ButtonLink(props: ButtonLinkProps) {
       </>
     </Link>
   ) : (
-    <Link {...rest} />
+    <Link
+      className={`${
+        className ? className : ""
+      } ${rdsButtonClassName}  ${rdsBaseClassName}`}
+      {...rest}
+    />
   )
 }
 

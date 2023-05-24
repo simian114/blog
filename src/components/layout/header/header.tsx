@@ -83,6 +83,8 @@ export default function Header(props: HeaderProps): ReactElement {
                   <ButtonLink
                     design={{
                       type: "secondary",
+                    }}
+                    baseDesign={{
                       fluid: isMobile,
                       typography: {
                         weight: "medium",
@@ -124,6 +126,8 @@ export default function Header(props: HeaderProps): ReactElement {
                                 href={`/${menu.id}?category=${item}`}
                                 design={{
                                   type: "secondary",
+                                }}
+                                baseDesign={{
                                   fluid: true,
                                   typography: { weight: "medium" },
                                 }}
