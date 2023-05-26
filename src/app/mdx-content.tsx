@@ -1,9 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Post } from "contentlayer/generated"
 import Image, { ImageProps } from "next/image"
 import { useMDXComponent } from "next-contentlayer/hooks"
+import { useEffect, useState } from "react"
+import { Post } from "contentlayer/generated"
 
 import Button from "@/components/button/Button"
 import MainTitle from "@/components/mdx/mainTitle/MainTitle"

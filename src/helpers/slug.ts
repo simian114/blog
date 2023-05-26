@@ -1,6 +1,6 @@
+import { notFound } from "next/navigation"
 import { Post } from "contentlayer/generated"
 import { glob } from "glob"
-import { notFound } from "next/navigation"
 import path from "path"
 
 import { allPulishedPost } from "@/lib/server"

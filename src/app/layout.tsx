@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import localFont from "next/font/local"
 import { ReactNode } from "react"
 import { Analytics } from "@vercel/analytics/react"
-import localFont from "next/font/local"
 
 import { Footer, Header } from "@/components/layout"
 import { allRoutes, getCategoriesByRoute } from "@/lib/server"

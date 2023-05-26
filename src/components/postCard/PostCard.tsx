@@ -1,9 +1,9 @@
 "use client"
 
+import Link from "next/link"
 import { useEffect, useRef } from "react"
 import { Post } from "contentlayer/generated"
 import dayjs from "dayjs"
-import Link from "next/link"
 
 import Typography from "../typography/Typography"
 

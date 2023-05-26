@@ -1,6 +1,6 @@
+import Link, { LinkProps } from "next/link"
 import { ComponentPropsWithoutRef, ReactElement } from "react"
 import { forwardRef, Ref } from "react"
-import Link, { LinkProps } from "next/link"
 
 import getRDSBaseClassName from "@/helpers/rds/base/getRDSBaseClassName"
 import getRDSIconButtonClassName from "@/helpers/rds/button/getRDSIconButtonClassName"

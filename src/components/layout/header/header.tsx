@@ -1,11 +1,11 @@
 "use client"
 
+// NOTE: clinet-side only
+import { usePathname } from "next/navigation"
 import { ReactElement, useEffect, useMemo, useRef, useState } from "react"
 import { RocketIcon } from "@radix-ui/react-icons"
 import * as Popover from "@radix-ui/react-popover"
 import { ChevronDown } from "lucide-react"
-// NOTE: clinet-side only
-import { usePathname } from "next/navigation"
 
 import { Menu } from "@/app/layout"
 import ButtonLink from "@/components/button/ButtonLink"
