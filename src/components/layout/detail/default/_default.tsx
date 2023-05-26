@@ -4,7 +4,7 @@ import { CalendarIcon, LapTimerIcon } from "@radix-ui/react-icons"
 import dayjs from "dayjs"
 
 import Comments from "@/components/comment/Comments"
-import { allPulishedPost } from "@/lib/server"
+import { allPublishedPost } from "@/lib/server"
 
 import DocumentTOC from "../../../documentTOC/DocumentTOC"
 import Tag from "../../../postCard/tag/Tag"
@@ -19,7 +19,7 @@ export default function DetailDefaultLayout({
   slug: string[]
   children: ReactNode
 }) {
-  const post = allPulishedPost.find(post => post.slug.endsWith(slug.join("/")))
+  const post = allPublishedPost.find(post => post.slug.endsWith(slug.join("/")))
 
   if (!post) {
     notFound()
