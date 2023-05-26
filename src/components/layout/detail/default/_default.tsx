@@ -1,7 +1,7 @@
+import { notFound } from "next/navigation"
 import { ReactNode } from "react"
 import { CalendarIcon, LapTimerIcon } from "@radix-ui/react-icons"
 import dayjs from "dayjs"
-import { notFound } from "next/navigation"
 
 import Comments from "@/components/comment/Comments"
 import { allPulishedPost } from "@/lib/server"

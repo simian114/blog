@@ -1,5 +1,5 @@
-import { GitHubLogoIcon, RocketIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
+import { GitHubLogoIcon, RocketIcon } from "@radix-ui/react-icons"
 
 const LINKS = [
   {

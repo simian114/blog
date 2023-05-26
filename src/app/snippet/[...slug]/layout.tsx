@@ -1,5 +1,5 @@
-import { ReactNode } from "react"
 import { Metadata } from "next"
+import { ReactNode } from "react"
 
 import { defaultMeta, openGraphImage } from "@/app/shared-metadata"
 import DetailDefaultLayout from "@/components/layout/detail/default/_default"
