@@ -3,7 +3,7 @@ import { Post } from "contentlayer/generated"
 import { glob } from "glob"
 import path from "path"
 
-import { allPulishedPost } from "@/lib/server"
+import { allPublishedPost } from "@/lib/server"
 
 export function getSlug(slugPath: string, root: string) {
   const replacedPath = slugPath.replace(`${root}/`, "")
@@ -19,7 +19,7 @@ export function findAllPostSlugs(loc: string) {
 }
 
 export function getPostBySlugs(prefix: string, slugs?: string[]): Post {
-  const layerPost = allPulishedPost.find(
+  const layerPost = allPublishedPost.find(
     post => post.slug === `${prefix}${slugs ? `/${slugs.join("/")}` : ""}`
   )
   if (!layerPost) {

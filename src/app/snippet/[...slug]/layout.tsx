@@ -3,14 +3,14 @@ import { ReactNode } from "react"
 
 import { defaultMeta, openGraphImage } from "@/app/shared-metadata"
 import DetailDefaultLayout from "@/components/layout/detail/default/_default"
-import { allPulishedPost } from "@/lib/server"
+import { allPublishedPost } from "@/lib/server"
 
 export function generateMetadata({
   params,
 }: {
   params: { slug: string[] }
 }): Metadata {
-  const post = allPulishedPost.find(post =>
+  const post = allPublishedPost.find(post =>
     post.slug.endsWith(params.slug.join("/"))
   )
 

@@ -3,7 +3,7 @@ import { allPosts, Post } from "contentlayer/generated"
 /**
  * sort & show only published
  */
-export const allPulishedPost = allPosts
+export const allPublishedPost = allPosts
   .filter(post => post.isPublished)
   .sort(
     (a, b) =>
@@ -11,26 +11,26 @@ export const allPulishedPost = allPosts
   )
 
 export function getAllPostsBySlug(slug: string) {
-  return allPulishedPost.filter(
+  return allPublishedPost.filter(
     post =>
       post._raw.sourceFilePath.includes(slug) &&
       !post._raw.sourceFilePath.includes("/index.mdx")
   )
 }
 
-export const allBlogPosts = allPulishedPost.filter(
+export const allBlogPosts = allPublishedPost.filter(
   post =>
     post._raw.sourceFilePath.includes("blog") &&
     !post._raw.sourceFilePath.includes("/index.mdx")
 )
 
-export const allSnippetPosts = allPulishedPost.filter(
+export const allSnippetPosts = allPublishedPost.filter(
   post =>
     post._raw.sourceFilePath.includes("snippet") &&
     !post._raw.sourceFilePath.includes("/index.mdx")
 )
 
-export const allDesignSystemPosts = allPulishedPost.filter(
+export const allDesignSystemPosts = allPublishedPost.filter(
   post =>
     post._raw.sourceFilePath.includes("design-system") &&
     !post._raw.sourceFilePath.includes("/index.mdx")
@@ -38,7 +38,7 @@ export const allDesignSystemPosts = allPulishedPost.filter(
 
 export const allRoutes = Array.from(
   new Set(
-    allPulishedPost
+    allPublishedPost
       .filter(post => !post._raw.sourceFilePath.includes("index.mdx"))
       .map(post => post._id.split("/")?.[0])
   )
@@ -54,7 +54,7 @@ export type TreeNode = {
 export const getCategoriesByRoute = (route: string) => {
   return Array.from(
     new Set(
-      allPulishedPost
+      allPublishedPost
         .filter(
           post =>
             post._raw.sourceFileDir.startsWith(`${route}/`) &&
@@ -68,7 +68,7 @@ export const getCategoriesByRoute = (route: string) => {
 
 export const blogCategories = Array.from(
   new Set(
-    allPulishedPost
+    allPublishedPost
       .filter(
         post =>
           post._raw.sourceFileDir.startsWith("blog/") &&
@@ -81,7 +81,7 @@ export const blogCategories = Array.from(
 
 export const snippetCategories = Array.from(
   new Set(
-    allPulishedPost
+    allPublishedPost
       .filter(
         post =>
           post._raw.sourceFileDir.startsWith("snippet/") &&
@@ -94,7 +94,7 @@ export const snippetCategories = Array.from(
 
 export const designSystemCategories = Array.from(
   new Set(
-    allPulishedPost
+    allPublishedPost
       .filter(
         post =>
           post._raw.sourceFileDir.startsWith("design-system/") &&
