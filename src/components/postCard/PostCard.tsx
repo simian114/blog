@@ -18,8 +18,10 @@ export default function PostCard(props: PostCardProps) {
   const articleRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    if (!articleRef.current) return
-    const link = articleRef.current.querySelector("h3 a")
+    const currentRef = articleRef.current
+    if (!currentRef) return
+
+    const link = currentRef.querySelector("h3 a") as HTMLAnchorElement
     if (!link) return
 
     let down = +new Date()
@@ -32,56 +34,52 @@ export default function PostCard(props: PostCardProps) {
     function handleMouseUp() {
       up = +new Date()
       if (up - down < 200) {
-        link && (link as unknown as HTMLElement).click()
+        link.click()
       }
     }
 
-    articleRef.current.addEventListener("mousedown", handleMouseDown)
-    articleRef.current.addEventListener("mouseup", handleMouseUp)
+    currentRef.addEventListener("mousedown", handleMouseDown)
+    currentRef.addEventListener("mouseup", handleMouseUp)
+
     return () => {
-      if (!articleRef.current) return
-      articleRef.current.removeEventListener("mousedown", handleMouseDown)
-      articleRef.current.removeEventListener("mouseup", handleMouseUp)
+      currentRef.removeEventListener("mousedown", handleMouseDown)
+      currentRef.removeEventListener("mouseup", handleMouseUp)
     }
   }, [])
 
   return (
     <>
-      <article className={"post-card"} ref={articleRef}>
+      <article className="post-card" ref={articleRef}>
         <div className="post-card__meta">
           <Typography
             as="span"
             variants="body1"
-            className="post-card__meta__reading-time"
+            className="post-card__reading-time"
           >
             {post.readingTime}분
           </Typography>
-          <Typography
-            className="post-card__meta__created-at"
-            variants="caption1"
-          >
+
+          <Typography className="post-card__created-at" variants="caption1">
             {dayjs(post.date).format("YYYY-MM-DD")}
           </Typography>
         </div>
         <div className="post-card__content">
           <Typography
-            className={"post-card__content__title"}
+            className={"post-card__title"}
             as="h3"
             variants="h3"
+            colorType="gray"
+            colorLevel={12}
           >
             <Link href={props.post.slug}>
               {props.post.title || "post title"}
             </Link>
           </Typography>
-          <Typography
-            as="p"
-            color="cyan"
-            className="post-card__content__description"
-          >
+          <Typography as="p" color="cyan" className="post-card__description">
             {post.description || "설명이 비어있습니다."}
           </Typography>
           {!!post.tags?.length && (
-            <div className="post-card__content__tag-container">
+            <div className="post-card__tag-container">
               {post.tags.map(tag => (
                 <Tag colorType={tag.colorType} key={tag.content}>
                   {tag.content}
