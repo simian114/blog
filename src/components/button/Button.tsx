@@ -5,7 +5,7 @@ import getRDSButtonClassName from "@/helpers/rds/button/getRDSButtonClassName"
 import { RDSBaseProps } from "@/types/rds.t"
 
 // NOTE: primary 는 색, secondary 는 border 컬러 circle 는 원형
-type BUTOTN_TYPE = "primary" | "secondary" | "tertiary"
+type BUTTON_TYPE = "primary" | "secondary" | "tertiary"
 type BUTTON_SIZE = "xsmall" | "small" | "medium" | "large" | "xlarge"
 type BUTTON_COLOR = "primary" | "secondary" | "tertiary" | "gray"
 
@@ -17,7 +17,7 @@ export interface ButtonIconProps {
 }
 
 export interface ButtonDesignProps {
-  type?: BUTOTN_TYPE
+  type?: BUTTON_TYPE
   size?: BUTTON_SIZE
   color?: BUTTON_COLOR
   icon?: ButtonIconProps
