@@ -1,9 +1,9 @@
 "use client"
 
-import { ReactElement, useMemo } from "react"
-import { Post } from "contentlayer/generated"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
+import { ReactElement, useMemo } from "react"
+import { Post } from "contentlayer/generated"
 
 import PostCard from "@/components/postCard/PostCard"
 import Typography from "@/components/typography/Typography"
