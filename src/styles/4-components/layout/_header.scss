@@ -112,7 +112,9 @@ header.header {
         transition: background-color 0.25s linear;
         display: flex;
         flex-direction: column;
-        width: calc(100vw - 32px);
+        // width: calc(100vw - 32px);
+        width: calc(100vw);
+        margin-left: -16px;
         height: calc(100vh - 51px);
         position: absolute;
         top: 51px;

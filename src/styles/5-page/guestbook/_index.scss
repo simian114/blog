@@ -1,0 +1,98 @@
+@use "@styles" as *;
+
+.guestbook-page {
+  width: 625px;
+  max-width: 100%;
+  position: relative;
+  min-height: 100vh;
+
+  &__form {
+    margin-top: rds-space(space-16);
+  }
+
+  &__comment-container {
+    margin-top: rds-space(space-16);
+  }
+  &__comment-wrapper {
+    &:not(:last-child) {
+      margin-bottom: rds-space(space-16);
+    }
+  }
+}
+
+.guest-form {
+  position: fixed;
+  bottom: rds-space(space-32);
+  width: 625px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: var(--gray3);
+  padding: rds-space(space-08) rds-space(space-16);
+  border-radius: rds-shape(primary);
+  box-shadow: 0px 10px 38px -10px var(--secondary9),
+    0px 10px 20px -15px var(--secondary9);
+  &__label {
+    background-color: var(--gray5);
+    border-radius: rds-shape(primary);
+    margin-right: rds-space(space-16);
+    > input {
+      @include rds-body1;
+      padding: 6px;
+      color: var(--text-low-color);
+      width: 100%;
+    }
+  }
+  &__nickname-container {
+    > input {
+      width: 120px;
+      @include rds-body1;
+      color: var(--text-low-color);
+    }
+  }
+  &__comment-container {
+    width: 100%;
+  }
+  &__btn {
+    min-width: max-content;
+    flex-shrink: 10;
+    margin-left: auto;
+  }
+}
+
+@include mobile {
+  .guestbook-page {
+    width: 100%;
+  }
+  .guest-form {
+    bottom: 0px;
+    left: 0px;
+    flex-wrap: wrap;
+    padding: rds-space(space-04) rds-space(space-04);
+    > *:nth-child(2) {
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+    &__label {
+      width: 100%;
+      margin-right: unset;
+      flex-shrink: 0;
+      > input {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    &__nickname-container {
+      > input {
+        width: 100%;
+      }
+    }
+    &__comment-container {
+      width: 100%;
+    }
+    &__btn {
+      margin-left: unset;
+      justify-content: center;
+    }
+  }
+}
