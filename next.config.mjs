@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 
-import * as path from "path"
-import remarkGfm from "remark-gfm"
-import rehypeHighlight from "rehype-highlight"
-import createMDX from "@next/mdx"
 import { withContentlayer } from "next-contentlayer"
+import createMDX from "@next/mdx"
+import * as path from "path"
+import rehypeHighlight from "rehype-highlight"
+import remarkGfm from "remark-gfm"
 
 const __dirname = path.resolve()
 
@@ -12,6 +12,7 @@ const nextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   experimental: {
     appDir: true,
+    serverActions: true,
   },
   images: {
     domains: ["images.unsplash.com"],
