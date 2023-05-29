@@ -6,6 +6,8 @@
     "dbaeumer.vscode-eslint",
     "unifiedjs.vscode-mdx",
     "xyc.vscode-mdx-preview",
-    "github.copilot-nightly"
+    "github.copilot-nightly",
+    "prisma.prisma",
+    "willluke.nextjs"
   ]
 }

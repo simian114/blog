@@ -6,5 +6,7 @@
     "source.fixAll": true,
     "source.removeUnusedImports": true
   },
-  "liveSassCompile.settings.showOutputWindowOn": "Debug"
+  "liveSassCompile.settings.showOutputWindowOn": "Debug",
+  "WillLuke.nextjs.addTypesOnSave": true,
+  "WillLuke.nextjs.hasPrompted": true
 }
