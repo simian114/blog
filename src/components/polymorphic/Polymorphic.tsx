@@ -15,7 +15,6 @@ export type PolymorphicComponentProp<
 
 const Polymorphic = <C extends ElementType>(
   props: PolymorphicComponentProp<C>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ref?: Ref<HTMLElement>
 ) => {
   const { as, ...rest } = props
