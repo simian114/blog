@@ -9,9 +9,16 @@
   width: fit-content;
   // border-radius: rds-shape(primary);
   color: var(--text-high-primary-color);
+  min-width: max-content;
+
+  &--disabled {
+    background-color: var(--red10) !important;
+  }
+
   &--primary {
     background-color: var(--solid-bg-primary-color);
     border: 1px solid var(--solid-hovered-bg-primary-color);
+    //
 
     @include pointing-hover {
       outline: none;
@@ -25,6 +32,10 @@
     &:active {
       //
     }
+    &:disabled {
+      background-color: var(--solid-bg-color) !important;
+      border-color: var(--solid-bg-color) !important;
+    }
   }
   // NOTE: 구현해야함
   &--secondary {
@@ -35,6 +46,10 @@
     }
     &:active {
       background-color: var(--ui-el-hovered-bg-color);
+    }
+    &:disabled {
+      background-color: var(--solid-bg-color) !important;
+      border-color: var(--solid-bg-color) !important;
     }
   }
 
