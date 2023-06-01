@@ -1,32 +1,17 @@
-"use client"
-
-import { useRef } from "react"
-
-import Button from "@/components/button/Button"
-
-interface FormProps {
-  createGuestBook: (data: FormData) => Promise<void>
-}
+import { createGuestBook } from "./actions"
+import { SubmitButton } from "./submitButton"
 
 const COMMENT_MAX_LENGTH = 100
 const NICKNAME_MAX_LENGTH = 20
 
-export default function Form(props: FormProps) {
-  const formRef = useRef<HTMLFormElement>(null)
+export default function Form() {
   async function handleAction(data: FormData) {
-    if (!formRef.current) return
-    formRef.current.nickname.value = ""
-    formRef.current.comment.value = ""
-    await props.createGuestBook(data)
+    "use server"
+    await createGuestBook(data)
   }
 
   return (
-    <form
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      action={handleAction as any}
-      className="guestbook-page__form guest-form"
-      ref={formRef}
-    >
+    <form action={handleAction} className="guestbook-page__form guest-form">
       <label
         className="guest-form__label guest-form__nickname-container"
         htmlFor="nickname"
@@ -53,14 +38,7 @@ export default function Form(props: FormProps) {
           required
         />
       </label>
-      <Button
-        className="guest-form__btn"
-        type="submit"
-        design={{ size: "large" }}
-        baseDesign={{ fluid: true }}
-      >
-        전송
-      </Button>
+      <SubmitButton />
     </form>
   )
 }
