@@ -10,6 +10,15 @@
   //   bottom: rds-space(space-32);
   // }
 
+  &__skeleton-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: rds-space(space-16);
+    > * + * {
+      margin-top: rds-space(space-16);
+    }
+  }
+
   &__form {
     margin-top: rds-space(space-16);
   }

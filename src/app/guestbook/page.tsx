@@ -1,28 +1,56 @@
-import { cache } from "react"
-import { guestbooks } from "@prisma/client"
+import { Suspense } from "react"
 
+import Skeleton from "@/components/skeleton/Skeleton"
 import Typography from "@/components/typography/Typography"
 
-const getData = cache(async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/guestbook`)
-  return (await res.json()) as guestbooks[]
-})
+import CommentList from "./commentList"
+import Form from "./form"
 
 async function GuestBook() {
-  const books = await getData()
   return (
-    <ul className="guestbook-page__comment-container">
-      {books.map((book, index) => (
-        <li key={index} className="guestbook-page__comment-wrapper">
-          <div className="guestbook-page__comment">
-            <Typography>{book?.nickname}: </Typography>
-            <Typography weight="medium" colorLevel={12}>
-              {book.content}
-            </Typography>
-          </div>
-        </li>
-      ))}
-    </ul>
+    <>
+      <Typography variants="h1" as="h1" colorLevel={12}>
+        방명록
+      </Typography>
+      <div className="guestbook-page__form-container ">
+        <Form />
+      </div>
+      <Suspense fallback={<SkeletonContainer />}>
+        {/* @ts-expect-error Async Server Component */}
+        <CommentList />
+      </Suspense>
+    </>
+  )
+}
+
+function SkeletonContainer() {
+  return (
+    <div className="guestbook-page__skeleton-container">
+      <Skeleton
+        design={{
+          type: "text",
+          variant: "body1",
+        }}
+      />
+      <Skeleton
+        design={{
+          type: "text",
+          variant: "body1",
+        }}
+      />
+      <Skeleton
+        design={{
+          type: "text",
+          variant: "body1",
+        }}
+      />
+      <Skeleton
+        design={{
+          type: "text",
+          variant: "body1",
+        }}
+      />
+    </div>
   )
 }
 
