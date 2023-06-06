@@ -1,3 +1,5 @@
+import { revalidateTag } from "next/cache"
+
 import { createGuestBook } from "./actions"
 import { SubmitButton } from "./submitButton"
 
@@ -8,6 +10,7 @@ export default function Form() {
   async function handleAction(data: FormData) {
     "use server"
     await createGuestBook(data)
+    revalidateTag("guestbook")
   }
 
   return (
