@@ -60,16 +60,18 @@ function getRDSColorClass(props: Color): string {
   return `rds-color-${props.colorType}-${props.colorLevel}`
 }
 
-const Typography = <C extends ElementType>({
-  as,
-  variants = "body1",
-  colorLevel = 11,
-  colorType = "gray",
-  weight,
-  className,
-  ref,
-  ...rest
-}: TypographyProps<C> & { ref?: Ref<HTMLElement> }) => {
+const Typography = <C extends ElementType>(
+  {
+    as,
+    variants = "body1",
+    colorLevel = 11,
+    colorType = "gray",
+    weight,
+    className,
+    ...rest
+  }: TypographyProps<C>,
+  ref: Ref<HTMLElement>
+) => {
   const cn = `${getRDSTypographyClassName({
     variants,
     weight,
