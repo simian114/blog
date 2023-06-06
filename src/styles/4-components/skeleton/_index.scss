@@ -1,0 +1,49 @@
+@use "@styles" as *;
+@use "@styles/3-foundations/typography/data" as *;
+@use "@styles/3-foundations/typography/functions" as f;
+
+.rds-skeleton {
+  width: 100%;
+  position: relative;
+  color: transparent;
+  background-color: var(--gray4);
+  overflow: hidden;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      var(--primary11) 10%,
+      var(--secondary11) 60%,
+      var(--tertiary11)
+    );
+    animation: shimmer 2s infinite;
+    content: "";
+  }
+
+  &--primary {
+    border-radius: rds-shape(primary);
+  }
+  &--avatar {
+    border-radius: rds-shape(circle);
+  }
+  &--text {
+    border-radius: rds-shape(primary);
+    @each $variant in $rds-font-variant-data {
+      &-#{$variant} {
+        height: f.rds-font-size($variant);
+      }
+    }
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
