@@ -36,7 +36,8 @@
     border-radius: rds-shape(primary);
     @each $variant in $rds-font-variant-data {
       &-#{$variant} {
-        height: f.rds-font-size($variant);
+        font-size: f.rds-font-size($variant);
+        line-height: f.rds-line-height($variant);
       }
     }
   }
