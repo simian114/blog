@@ -11,7 +11,7 @@ export default function PendingSkeleton() {
   }
 
   return (
-    <div style={{ marginTop: "16px" }}>
+    <div className="guestbook-page__comment-wrapper">
       <Skeleton design={{ type: "text", variant: "body1" }} />
     </div>
   )

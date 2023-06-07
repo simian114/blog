@@ -18,8 +18,8 @@ export default async function CommentList() {
 
   return (
     <>
-      <PendingSkeleton />
       <ul className="guestbook-page__comment-container">
+        <PendingSkeleton />
         {books.map((book, index) => (
           <li key={index} className="guestbook-page__comment-wrapper">
             <div className="guestbook-page__comment">
