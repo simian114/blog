@@ -1,20 +1,11 @@
-import { revalidateTag } from "next/cache"
-
-import { createGuestBook } from "./actions"
 import { SubmitButton } from "./submitButton"
 
 const COMMENT_MAX_LENGTH = 100
 const NICKNAME_MAX_LENGTH = 20
 
-export default function Form() {
-  async function handleAction(data: FormData) {
-    "use server"
-    await createGuestBook(data)
-    revalidateTag("guestbook")
-  }
-
+export default function CommentInputs() {
   return (
-    <form action={handleAction} className="guestbook-page__form guest-form">
+    <>
       <label
         className="guest-form__label guest-form__nickname-container"
         htmlFor="nickname"
@@ -42,6 +33,6 @@ export default function Form() {
         />
       </label>
       <SubmitButton />
-    </form>
+    </>
   )
 }
