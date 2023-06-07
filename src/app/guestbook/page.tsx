@@ -1,56 +1,33 @@
-import { Suspense } from "react"
+import { revalidateTag } from "next/cache"
 
-import Skeleton from "@/components/skeleton/Skeleton"
 import Typography from "@/components/typography/Typography"
 
-import CommentList from "./commentList"
-import Form from "./form"
+import CommentInputs from "./_commentInputs"
+import CommentList from "./_commentList"
+import { createGuestBook } from "./actions"
 
 async function GuestBook() {
+  async function handleAction(data: FormData) {
+    "use server"
+    await createGuestBook(data)
+    revalidateTag("guestbook")
+  }
+
   return (
     <>
       <Typography variants="h1" as="h1" colorLevel={12}>
         방명록
       </Typography>
-      <div className="guestbook-page__form-container ">
-        <Form />
-      </div>
-      <Suspense fallback={<SkeletonContainer />}>
+      <form action={handleAction}>
+        <div className="guestbook-page__form-container ">
+          <div className="guestbook-page__form guest-form">
+            <CommentInputs />
+          </div>
+        </div>
         {/* @ts-expect-error Async Server Component */}
         <CommentList />
-      </Suspense>
+      </form>
     </>
-  )
-}
-
-function SkeletonContainer() {
-  return (
-    <div className="guestbook-page__skeleton-container">
-      <Skeleton
-        design={{
-          type: "text",
-          variant: "body1",
-        }}
-      />
-      <Skeleton
-        design={{
-          type: "text",
-          variant: "body1",
-        }}
-      />
-      <Skeleton
-        design={{
-          type: "text",
-          variant: "body1",
-        }}
-      />
-      <Skeleton
-        design={{
-          type: "text",
-          variant: "body1",
-        }}
-      />
-    </div>
   )
 }
 
