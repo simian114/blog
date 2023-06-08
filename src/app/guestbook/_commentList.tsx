@@ -1,16 +1,14 @@
-import { PrismaClient } from "@prisma/client"
+import { guestbooks } from "@prisma/client"
 
 import Typography from "@/components/typography/Typography"
 
 import PendingSkeleton from "./_pendingSkeleton"
 
-const prisma = new PrismaClient()
+async function getData() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/guestbook`)
+  const data = await res.json()
 
-const getData = async () => {
-  const books = await prisma.guestbooks.findMany({
-    orderBy: { createdAt: "desc" },
-  })
-  return books
+  return data
 }
 
 export default async function CommentList() {
@@ -20,7 +18,7 @@ export default async function CommentList() {
     <>
       <ul className="guestbook-page__comment-container">
         <PendingSkeleton />
-        {books.map((book, index) => (
+        {(books as guestbooks[]).map((book, index) => (
           <li key={index} className="guestbook-page__comment-wrapper">
             <div className="guestbook-page__comment">
               <Typography>{book?.nickname}: </Typography>
