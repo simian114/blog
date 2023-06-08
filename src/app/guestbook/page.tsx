@@ -10,7 +10,7 @@ async function GuestBook() {
   async function handleAction(data: FormData) {
     "use server"
     await createGuestBook(data)
-    revalidateTag("guestbook")
+    revalidateTag("/guestbook")
   }
 
   return (
