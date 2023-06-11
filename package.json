@@ -36,7 +36,7 @@
     "highlight.js": "^11.7.0",
     "lucide-react": "^0.220.0",
     "mdx-bundler": "^9.2.1",
-    "next": "^13.4.4",
+    "next": "^13.4.5",
     "next-contentlayer": "^0.3.1",
     "next-sitemap": "^4.0.5",
     "prisma": "^4.14.1",
