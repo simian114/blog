@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MdxContent } from "@/app/mdx-content"
-import { BLOG_PATH } from "@/constants/path"
-import { findAllPostSlugs, getPostBySlugs } from "@/helpers/slug"
+import { getPostBySlugs } from "@/helpers/slug"
+import { allBlogPosts } from "@/lib/server"
+
+export const dynamicParams = false
 
 export async function generateStaticParams() {
-  const slugs = await findAllPostSlugs(BLOG_PATH)
-  return slugs.map(slug => ({ slug }))
+  const blogPosts = allBlogPosts
+  return blogPosts.map(post => ({
+    slug: post.slug.replace("/blog", "").slice(1).split("/"),
+  }))
 }
 
 // contentlayer 로 모든 데이터 파싱

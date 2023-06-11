@@ -1,10 +1,14 @@
 import { MdxContent } from "@/app/mdx-content"
-import { SNIPPET_PATH } from "@/constants/path"
-import { findAllPostSlugs, getPostBySlugs } from "@/helpers/slug"
+import { getPostBySlugs } from "@/helpers/slug"
+import { allSnippetPosts } from "@/lib/server"
+
+export const dynamicParams = false
 
 export async function generateStaticParams() {
-  const slugs = await findAllPostSlugs(SNIPPET_PATH)
-  return slugs.map(slug => ({ slug }))
+  const snippetPosts = allSnippetPosts
+  return snippetPosts.map(post => ({
+    slug: post.slug.replace("/snippet", "").slice(1).split("/"),
+  }))
 }
 
 export default async function ArchiveDetail({
