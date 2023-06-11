@@ -17,6 +17,11 @@ interface CategoryListProps {
   title?: string
 }
 
+/**
+ * client side hook 을 사용했기 때문에 해당 컴포넌트를 사용하는 곳에서는 Suspense 로 필히 감싸야함
+ * 만약 감싸지 않으면 페이지 전체가 client-side-rendering 이 되어버림
+ * Link: https://nextjs.org/docs/messages/deopted-into-client-rendering
+ */
 export default function CategoryList(
   props: CategoryListProps
 ): ReactElement | null {
