@@ -55,7 +55,6 @@ export interface Menu {
 }
 
 const defaultMenus: Menu[] = [
-  { id: "archives", children: "archives", href: "/archives" },
   { id: "mdx", children: "mdx", href: "/mdx" },
   { id: "guestbook", children: "guestbook", href: "/guestbook" },
 ]
