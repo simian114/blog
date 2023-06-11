@@ -46,7 +46,7 @@ export default function DetailDefaultLayout({
               <div className="detail-main__info__right">
                 <div className="detail-main__tags">
                   {!!post.tags?.length && (
-                    <div className="post-card__content__tag-container">
+                    <div className="post-card__tag-container">
                       {post.tags.map(tag => (
                         <Tag colorType={tag.colorType} key={tag.content}>
                           {tag.content}
