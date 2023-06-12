@@ -4,14 +4,10 @@ import { ReactElement, SVGProps, useEffect, useRef, useState } from "react"
 import * as Popover from "@radix-ui/react-popover"
 import { ContrastIcon, Loader2Icon, MoonIcon, SunIcon } from "lucide-react"
 
+import { Theme, useSetTheme, useTheme } from "@/store/theme"
+
 import Button, { ButtonDesignProps, ButtonProps } from "../button/Button"
 import IconButton from "../button/IconButton"
-
-import {
-  Theme,
-  useThemeActionContext,
-  useThemeStateContext,
-} from "./themeProvider"
 
 const buttonCommonDesignProps: Partial<ButtonDesignProps> = {
   size: "xsmall",
@@ -25,8 +21,8 @@ const buttonCommonProps: Partial<ButtonProps> = {
 const themes = ["light", "dark", "system"] as Theme[]
 
 export default function ThemeSelector(): ReactElement {
-  const { theme } = useThemeStateContext()
-  const actions = useThemeActionContext()
+  const [theme] = useTheme()
+  const actions = useSetTheme()
   const [isMounted, setIsMounted] = useState(false)
   const targetRef = useRef<HTMLElement>()
 
@@ -74,7 +70,7 @@ export default function ThemeSelector(): ReactElement {
                 <Button
                   key={theme}
                   className={`theme-content__item theme-content__item--${theme}`}
-                  onClick={actions[theme]}
+                  onClick={() => actions(theme)}
                   {...buttonCommonProps}
                   design={{
                     ...buttonCommonDesignProps,

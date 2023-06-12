@@ -1,23 +1,20 @@
 "use client"
 
 import { ReactElement } from "react"
+import { Provider as JotaiProvider } from "jotai"
 
-import { ThemeProvider } from "@/components/theme"
+import ThemeScript from "@/components/theme/_script"
 import DeviceWidthProvider from "@/store/deviceWidthProvider"
-// import { ThemeProvider } from "../components/theme"
-// import { ThemeProviderProps } from "../components/theme/themeProvider"
 
 interface ProvidersProps {
-  // themeProvider: ThemeProviderProps
   children: JSX.Element[] | JSX.Element
 }
 
 export function Providers(props: ProvidersProps): ReactElement {
   return (
-    <>
-      <DeviceWidthProvider>
-        <ThemeProvider>{props.children}</ThemeProvider>
-      </DeviceWidthProvider>
-    </>
+    <JotaiProvider>
+      <ThemeScript />
+      <DeviceWidthProvider>{props.children}</DeviceWidthProvider>
+    </JotaiProvider>
   )
 }
