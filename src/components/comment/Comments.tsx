@@ -2,10 +2,10 @@
 
 import Giscus from "@giscus/react"
 
-import { useThemeStateContext } from "../theme/themeProvider"
+import { useTheme } from "@/store/theme"
 
 export default function Comments() {
-  const { theme } = useThemeStateContext()
+  const [theme] = useTheme()
 
   return (
     <Giscus
