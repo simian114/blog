@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import localFont from "next/font/local"
-import { ReactNode } from "react"
 import { Analytics } from "@vercel/analytics/react"
 
 import { Footer, Header } from "@/components/layout"
-import { allRoutes, getCategoriesByRoute } from "@/lib/server"
 
 import { Providers } from "./providers"
 import { defaultMeta, openGraphImage } from "./shared-metadata"
+import { Route } from "./types"
 
 import "@styles/globals.scss"
 import "highlight.js/styles/a11y-dark.css"
@@ -47,36 +46,18 @@ export const metadata = {
   },
 }
 
-export interface Menu {
-  id: string
-  href: string
-  children: ReactNode
-  categories?: string[]
-}
-
-const defaultMenus: Menu[] = [
-  { id: "mdx", children: "mdx", href: "/mdx" },
-  { id: "guestbook", children: "guestbook", href: "/guestbook" },
-]
-//
-
-function makeMenuByRoutes(routes: string[]) {
-  return [
-    ...routes.map(
-      route =>
-        ({
-          id: route,
-          children: route,
-          href: `/${route}`,
-          categories: getCategoriesByRoute(route),
-        } as Menu)
-    ),
-    ...defaultMenus,
-  ]
+async function getData(): Promise<Route[]> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/route`)
+    return await res.json()
+  } catch (error) {
+    return []
+  }
 }
 
 export default async function RootLayout(props: any) {
-  const menus = makeMenuByRoutes(allRoutes)
+  const menus = await getData()
+
   return (
     <html lang="en" className={myFont.className} suppressHydrationWarning>
       <body>
