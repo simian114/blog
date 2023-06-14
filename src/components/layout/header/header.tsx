@@ -7,7 +7,7 @@ import { RocketIcon } from "@radix-ui/react-icons"
 import * as Popover from "@radix-ui/react-popover"
 import { ChevronDown } from "lucide-react"
 
-import { Menu } from "@/app/layout"
+import { Route } from "@/app/types"
 import ButtonLink from "@/components/button/ButtonLink"
 import IconButtonLink from "@/components/button/IconButtonLink"
 import MagicButtonLink from "@/components/magicButton/ButtonLink"
@@ -18,7 +18,7 @@ import ThemeSelector from "../../theme/_selector"
 
 import HeaderMobileMenu from "./_mobileMenu"
 interface HeaderProps {
-  menus: Menu[]
+  menus: Route[]
 }
 
 // NOTE: pc / mobile 분리하기
