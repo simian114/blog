@@ -4,9 +4,9 @@ import { Analytics } from "@vercel/analytics/react"
 
 import { Footer, Header } from "@/components/layout"
 
-import { Providers } from "./providers"
-import { defaultMeta, openGraphImage } from "./shared-metadata"
-import { Route } from "./types"
+import { Providers } from "../providers"
+import { defaultMeta, openGraphImage } from "../shared-metadata"
+import { Route } from "../types"
 
 import "@styles/globals.scss"
 import "highlight.js/styles/a11y-dark.css"
@@ -15,17 +15,17 @@ import "highlight.js/styles/a11y-dark.css"
 const myFont = localFont({
   src: [
     {
-      path: "../../public/fonts/Pretendard-Regular.subset.woff",
+      path: "../../../public/fonts/Pretendard-Regular.subset.woff",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/fonts/Pretendard-Medium.subset.woff",
+      path: "../../../public/fonts/Pretendard-Medium.subset.woff",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../../public/fonts/Pretendard-Bold.subset.woff",
+      path: "../../../public/fonts/Pretendard-Bold.subset.woff",
       weight: "700",
       style: "normal",
     },
