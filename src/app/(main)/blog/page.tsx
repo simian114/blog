@@ -6,7 +6,7 @@ import PostCard from "@/components/postCard/PostCard"
 import { getPostBySlugs } from "@/helpers/slug"
 import { allBlogPosts, blogPostsByCategory } from "@/lib/server/post.server"
 
-import { MdxContent } from "../mdx-content"
+import { MdxContent } from "../../mdx-content"
 
 export default async function Blog() {
   const posts = allBlogPosts
