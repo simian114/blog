@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 import { Heading } from "contentlayer/generated"
 
-import { useDevice } from "@/store/deviceWidthProvider"
+import { useDevice } from "@/components/providers/deviceWidthProvider"
 
 interface DocumentTOCProps {
   headings?: Heading[]

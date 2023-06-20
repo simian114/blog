@@ -1,6 +1,6 @@
 import { MdxContent } from "@/app/mdx-content"
+import { allSnippetPosts } from "@/constants/post"
 import { getPostBySlugs } from "@/helpers/slug"
-import { allSnippetPosts } from "@/lib/server"
 
 export const dynamicParams = false
 

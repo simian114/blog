@@ -3,8 +3,8 @@ import Link from "next/link"
 import { MdxContent } from "@/app/mdx-content"
 import Tag from "@/components/postCard/tag/Tag"
 import Typography from "@/components/typography/Typography"
+import { allSnippetPosts } from "@/constants/post"
 import { getPostBySlugs } from "@/helpers/slug"
-import { allSnippetPosts } from "@/lib/server/post.server"
 
 export default async function Snippet() {
   const posts = allSnippetPosts

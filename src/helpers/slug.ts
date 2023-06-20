@@ -3,7 +3,7 @@ import { Post } from "contentlayer/generated"
 import { glob } from "glob"
 import path from "path"
 
-import { allPublishedPost } from "@/lib/server"
+import { allPublishedPost } from "@/constants/post"
 
 export function getSlug(slugPath: string, root: string) {
   const replacedPath = slugPath.replace(`${root}/`, "")

@@ -11,10 +11,9 @@ import { Route } from "@/app/types"
 import ButtonLink from "@/components/button/ButtonLink"
 import IconButtonLink from "@/components/button/IconButtonLink"
 import MagicButtonLink from "@/components/magicButton/ButtonLink"
-import { useDevice } from "@/store/deviceWidthProvider"
-
-import DisableScroll from "../../client/DisableScroll"
-import ThemeSelector from "../../theme/_selector"
+import { useDevice } from "@/components/providers/deviceWidthProvider"
+import { ThemeSelector } from "@/components/theme"
+import DisableScroll from "@/components/util/DisableScroll"
 
 import HeaderMobileMenu from "./_mobileMenu"
 interface HeaderProps {

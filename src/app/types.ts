@@ -1,15 +1,14 @@
 import { ReactNode } from "react"
-
-export interface PageProps {
-  params?: {
-    slug?: string[] | string
-  }
-  searchParams?: string[] | string
-}
+import { Post } from "contentlayer/generated"
 
 export interface Route {
   id: string
   href: string
   children: ReactNode
   categories?: string[]
+}
+
+export interface CateogoryPost {
+  category: string
+  posts: Post[]
 }

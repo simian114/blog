@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MdxContent } from "@/app/mdx-content"
+import { allBlogPosts } from "@/constants/post"
 import { getPostBySlugs } from "@/helpers/slug"
-import { allBlogPosts } from "@/lib/server"
 
 export const dynamicParams = false
 

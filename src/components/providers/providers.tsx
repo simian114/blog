@@ -3,8 +3,8 @@
 import { ReactElement } from "react"
 import { Provider as JotaiProvider } from "jotai"
 
+import DeviceWidthProvider from "@/components/providers/deviceWidthProvider"
 import ThemeScript from "@/components/theme/_script"
-import DeviceWidthProvider from "@/store/deviceWidthProvider"
 
 interface ProvidersProps {
   children: JSX.Element[] | JSX.Element

@@ -1,4 +1,6 @@
-import { allPosts, Post } from "contentlayer/generated"
+import { allPosts } from "contentlayer/generated"
+
+import { CateogoryPost } from "@/app/types"
 
 /**
  * sort & show only published
@@ -43,13 +45,6 @@ export const allRoutes = Array.from(
       .map(post => post._id.split("/")?.[0])
   )
 )
-
-export type TreeNode = {
-  title: string
-  date: string
-  urlPath: string
-  children: TreeNode[]
-}
 
 export const getCategoriesByRoute = (route: string) => {
   return Array.from(
@@ -121,11 +116,6 @@ function getAllDesignSystemPostsByCategory(category: string) {
   return allSnippetPosts.filter(post =>
     post._raw.sourceFileDir.startsWith(`snippet/${category}`)
   )
-}
-
-export interface CateogoryPost {
-  category: string
-  posts: Post[]
 }
 
 export const blogPostsByCategory = blogCategories.reduce((prev, cur) => {

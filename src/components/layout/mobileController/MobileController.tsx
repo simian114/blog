@@ -5,7 +5,7 @@ import * as Popover from "@radix-ui/react-popover"
 import { Heading } from "contentlayer/generated"
 
 import DocumentTOC from "@/components/documentTOC/DocumentTOC"
-import { useDevice } from "@/store/deviceWidthProvider"
+import { useDevice } from "@/components/providers/deviceWidthProvider"
 
 interface MobileControllerProps {
   headings?: Heading[]
