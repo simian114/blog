@@ -27,6 +27,7 @@ const nextConfig = {
       "@posts": path.resolve(__dirname, "src/posts"),
       "@lib": path.resolve(__dirname, "src/lib"),
       "@types": path.resolve(__dirname, "src/types"),
+      "@constants": path.resolve(__dirname, "src/constants"),
     }
 
     config.module.rules.push({

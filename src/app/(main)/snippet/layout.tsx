@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 
-import { openGraphImage } from "@/app/shared-metadata"
+import { openGraphImage } from "@/constants/metadata"
 
 export const metadata = {
   title: `Recketman | snippet`,

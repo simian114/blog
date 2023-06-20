@@ -2,11 +2,10 @@
 import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/react"
 
+import { Route } from "@/app/types"
 import { Footer, Header } from "@/components/layout"
-
-import { Providers } from "../providers"
-import { defaultMeta, openGraphImage } from "../shared-metadata"
-import { Route } from "../types"
+import { Providers } from "@/components/providers/providers"
+import { defaultMeta, openGraphImage } from "@/constants/metadata"
 
 import "@styles/globals.scss"
 import "highlight.js/styles/a11y-dark.css"

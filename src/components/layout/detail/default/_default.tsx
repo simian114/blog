@@ -4,12 +4,15 @@ import { CalendarIcon, LapTimerIcon } from "@radix-ui/react-icons"
 import dayjs from "dayjs"
 
 import Comments from "@/components/comment/Comments"
-import { allPublishedPost } from "@/lib/server"
+import DocumentTOC from "@/components/documentTOC/DocumentTOC"
+import Tag from "@/components/postCard/tag/Tag"
+import { allPublishedPost } from "@/constants/post"
 
-import DocumentTOC from "../../../documentTOC/DocumentTOC"
-import Tag from "../../../postCard/tag/Tag"
 import MobileController from "../../mobileController/MobileController"
 
+// import DocumentTOC from "../../../documentTOC/DocumentTOC"
+// import Tag from "../../../postCard/tag/Tag"
+// import MobileController from "../../mobileController/MobileController"
 import ViewCounter from "./common/ViewCounter"
 
 export default function DetailDefaultLayout({

@@ -1,5 +1,5 @@
 import { Route } from "@/app/types"
-import { allRoutes, getCategoriesByRoute } from "@/lib/server"
+import { allRoutes, getCategoriesByRoute } from "@/constants/post"
 
 const defaultMenus: Route[] = [
   { id: "mdx", children: "mdx", href: "/mdx" },

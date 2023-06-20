@@ -6,9 +6,8 @@ import { useEffect, useState } from "react"
 import { Post } from "contentlayer/generated"
 
 import Button from "@/components/button/Button"
+import AnchorText from "@/components/mdx/AnchorText"
 import MainTitle from "@/components/mdx/mainTitle/MainTitle"
-
-import AnchorText from "../components/mdx/AnchorText"
 
 type MdxContentProps = {
   post: Post

@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next"
 
-import { allPublishedPost } from "@/lib/server"
+import { allPublishedPost } from "@/constants/post"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return allPublishedPost.map(post => ({

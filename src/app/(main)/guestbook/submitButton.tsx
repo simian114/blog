@@ -2,7 +2,7 @@
 import { experimental_useFormStatus as useFormState } from "react-dom"
 
 import Button from "@/components/button/Button"
-import { useDevice } from "@/store/deviceWidthProvider"
+import { useDevice } from "@/components/providers/deviceWidthProvider"
 
 export function SubmitButton() {
   const { isMobile } = useDevice()
