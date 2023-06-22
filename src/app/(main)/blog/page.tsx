@@ -8,7 +8,11 @@ import { getPostBySlugs } from "@/helpers/slug"
 
 import { MdxContent } from "../../mdx-content"
 
-export default async function Blog() {
+export default async function Blog({
+  searchParams,
+}: {
+  searchParams: { category?: string }
+}) {
   const posts = allBlogPosts
   const post = getPostBySlugs("/blog")
 
@@ -24,6 +28,7 @@ export default async function Blog() {
           categoryPosts={blogPostsByCategory}
           allPosts={allPosts}
           className="index-main__category-list"
+          searchParams={searchParams}
         />
       </Suspense>
       <section className="index-main__card-list">
