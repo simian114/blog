@@ -6,7 +6,9 @@
     "dev": "concurrently \"contentlayer dev\" \"next dev\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@giscus/react": "^2.2.8",
@@ -51,14 +53,24 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.22",
+    "@storybook/addon-interactions": "^7.0.22",
+    "@storybook/addon-links": "^7.0.22",
+    "@storybook/blocks": "^7.0.22",
+    "@storybook/nextjs": "^7.0.22",
+    "@storybook/react": "^7.0.22",
+    "@storybook/testing-library": "^0.0.14-next.2",
     "@svgr/webpack": "^6.5.1",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "concurrently": "^8.0.1",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-storybook": "^0.6.12",
     "prettier": "^2.8.4",
     "reading-time": "^1.5.0",
-    "sass": "^1.58.3"
+    "sass": "^1.58.3",
+    "storybook": "^7.0.22",
+    "storybook-addon-pseudo-states": "^2.1.0"
   }
 }
