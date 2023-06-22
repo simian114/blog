@@ -56,22 +56,18 @@
   // size
   &--xsmall {
     padding: rds-space(space-04) rds-space(space-08);
-    // @include rds-body1;
   }
   &--small {
     padding: rds-space(space-06) rds-space(space-08);
-    // @include rds-body1;
   }
   &--medium {
     padding: rds-space(space-06) rds-space(space-16);
-    // @include rds-body1;
   }
   &--large {
-    padding: rds-space(space-06) rds-space(space-16);
-    // @include rds-body1;
+    padding: rds-space(space-08) rds-space(space-16);
   }
   &--xlarge {
-    padding: rds-space(space-08) rds-space(space-16);
+    padding: rds-space(space-08) rds-space(space-24);
     // @include rds-body1;
   }
 
