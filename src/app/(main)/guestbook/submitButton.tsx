@@ -11,7 +11,7 @@ export function SubmitButton() {
   return (
     <Button
       type="submit"
-      design={{ size: "large" }}
+      design={{ size: "medium" }}
       baseDesign={{ fluid: isMobile }}
       disabled={pending}
       style={{ justifyContent: "center" }}
