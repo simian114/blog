@@ -1,7 +1,4 @@
-"use client"
-
 import Link from "next/link"
-import { usePathname, useSearchParams } from "next/navigation"
 import { ReactElement, useMemo } from "react"
 import { Post } from "contentlayer/generated"
 
@@ -15,6 +12,7 @@ interface CategoryListProps {
   page: string
   allPosts: Post[]
   title?: string
+  searchParams: { category?: string }
 }
 
 /**
@@ -25,8 +23,6 @@ interface CategoryListProps {
 export default function CategoryList(
   props: CategoryListProps
 ): ReactElement | null {
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
   const categoryPostMap = useMemo(() => {
     return new Map(props.categoryPosts.map(obj => [obj.category, obj.posts]))
   }, [props.categoryPosts])
@@ -34,7 +30,7 @@ export default function CategoryList(
   const defaultCategory = categoryPostMap.entries().next().value
 
   const currentCategory: string =
-    searchParams.get("category") || defaultCategory?.[0]
+    props.searchParams["category"] || defaultCategory?.[0]
 
   const categoryIndexPost = useMemo(
     () =>
@@ -69,7 +65,7 @@ export default function CategoryList(
                     ? "category-list__link--active"
                     : ""
                 }`}
-                href={{ pathname, search: `category=${categoryPost.category}` }}
+                href={{ search: `category=${categoryPost.category}` }}
               >
                 <Typography
                   as="h3"
