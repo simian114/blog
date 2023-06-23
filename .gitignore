@@ -37,3 +37,6 @@ next-env.d.ts
 
 # contentlayer
 .contentlayer/*
+
+# storybook
+/storybook-static
