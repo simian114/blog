@@ -1,14 +1,14 @@
 "use server"
 
 import { revalidateTag } from "next/dist/server/web/spec-extension/revalidate-tag"
-import { CategoryZ } from "@prisma/client"
+import { Category, Prisma } from "@prisma/client"
 
 import prisma from "@/lib/prisma"
 
-type CreateRouteDTO = Pick<CategoryZ, "title" | "description" | "open">
+type CreateRouteDTO = Prisma.CategoryCreateInput
 
-export async function newCategory(data: CreateRouteDTO): Promise<CategoryZ> {
-  const category = await prisma.categoryZ.create({
+export async function newCategory(data: CreateRouteDTO): Promise<Category> {
+  const category = await prisma.category.create({
     data,
   })
   revalidateTag("/admin/categories")

@@ -9,21 +9,6 @@ import PostList from "@/components/layout/index/default/common/PostList"
 import { MdxComponents } from "@/components/mdx/mdxComponents"
 import prisma from "@/lib/prisma"
 
-//
-//  include: {
-//    route: true
-//    posts: {
-//      include: {
-//        category: true
-//        info: true
-//        tags: {
-//          include: {
-//            tag: true
-//          }
-//        }
-//      }
-//    }
-//  }
 async function getData(slug: string[]) {
   const routes = await prisma.route.findMany({
     where: { open: true },
@@ -56,7 +41,10 @@ export async function generateStaticParams() {
     where: { published: true },
     include: { info: true },
   })
-  return posts.map(post => ({ slug: post.info?.slug || [] }))
+  const filtered = posts.filter(
+    post => !!post?.info?.slug && !!post?.info?.slug.length
+  )
+  return filtered.map(post => ({ slug: post.info?.slug }))
 }
 
 export default async function BasePage({
