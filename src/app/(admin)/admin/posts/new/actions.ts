@@ -14,14 +14,17 @@ interface UpdatePostDTO {
 
 export async function createPost(data: CreatePostDTO) {
   if (!data.categoryId) {
+    const { info, ...rest } = data
     const post = await prisma.post.create({
       data: {
-        ...data,
+        ...rest,
         info: {
-          create: {
-            readingTime: 0,
-            url: `/${data.title}`,
-          },
+          create: info?.url
+            ? {
+                readingTime: 0,
+                url: info?.url || "",
+              }
+            : undefined,
         },
       },
     })
