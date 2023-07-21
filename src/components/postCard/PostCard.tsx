@@ -2,14 +2,18 @@
 
 import Link from "next/link"
 import { useEffect, useRef } from "react"
-import { Post } from "contentlayer/generated"
+import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 
 import Typography from "../typography/Typography"
 
 import Tag from "./tag/Tag"
 
-interface PostCardProps {
+export type Post = Prisma.PostGetPayload<{
+  include: { tags: { include: { tag: true } }; category: true; info: true }
+}>
+
+export interface PostCardProps {
   post: Post
 }
 
@@ -56,11 +60,11 @@ export default function PostCard(props: PostCardProps) {
             variants="body1"
             className="post-card__reading-time"
           >
-            {post.readingTime}분
+            {post?.info?.readingTime}분
           </Typography>
 
           <Typography className="post-card__created-at" variants="caption1">
-            {dayjs(post.date).format("YYYY-MM-DD")}
+            {dayjs(post.createdAt).format("YYYY-MM-DD")}
           </Typography>
         </div>
         <div className="post-card__content">
@@ -71,7 +75,8 @@ export default function PostCard(props: PostCardProps) {
             colorType="gray"
             colorLevel={12}
           >
-            <Link href={props.post.slug}>
+            <Link href={post.info?.url || ""}>
+              {/* <Link href={props.post.slug}> */}
               {props.post.title || "post title"}
             </Link>
           </Typography>
@@ -81,9 +86,7 @@ export default function PostCard(props: PostCardProps) {
           {!!post.tags?.length && (
             <div className="post-card__tag-container">
               {post.tags.map(tag => (
-                <Tag colorType={tag.colorType} key={tag.content}>
-                  {tag.content}
-                </Tag>
+                <Tag key={tag.tagId} tag={tag.tag} />
               ))}
             </div>
           )}

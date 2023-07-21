@@ -24,7 +24,6 @@ async function GuestBook() {
             <CommentInputs />
           </div>
         </div>
-        {/* @ts-expect-error Async Server Component */}
         <CommentList />
       </form>
     </>

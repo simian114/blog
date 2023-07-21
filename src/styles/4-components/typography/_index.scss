@@ -2,6 +2,10 @@
 @use "../../3-foundations/typography/data" as *;
 @use "../../3-foundations/typography/functions" as f;
 
+.rds-typography {
+  min-width: max-content;
+}
+
 @each $variant in $rds-font-variant-data {
   .rds-typography-#{$variant} {
     font-size: f.rds-font-size($variant);

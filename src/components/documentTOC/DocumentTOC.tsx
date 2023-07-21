@@ -1,12 +1,11 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { Heading } from "contentlayer/generated"
 
 import { useDevice } from "@/components/providers/deviceWidthProvider"
 
 interface DocumentTOCProps {
-  headings?: Heading[]
+  headings?: Array<{ title: string; children?: Array<string> }>
 }
 
 /**

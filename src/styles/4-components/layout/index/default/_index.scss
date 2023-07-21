@@ -6,11 +6,6 @@
     flex-basis: 450px;
     flex-shrink: 1;
   }
-  &__category-list {
-    margin-top: rds-space(space-32);
-    display: flex;
-    flex-direction: column;
-  }
 
   &__card-list {
     margin-top: rds-space(space-32);

@@ -7,20 +7,18 @@ import { RocketIcon } from "@radix-ui/react-icons"
 import * as Popover from "@radix-ui/react-popover"
 import { ChevronDown } from "lucide-react"
 
-import { Route } from "@/app/types"
 import ButtonLink from "@/components/button/ButtonLink"
 import IconButtonLink from "@/components/button/IconButtonLink"
 import MagicButtonLink from "@/components/magicButton/ButtonLink"
 import { useDevice } from "@/components/providers/deviceWidthProvider"
 import { ThemeSelector } from "@/components/theme"
 import DisableScroll from "@/components/util/DisableScroll"
+import { RouteWithCategories } from "@/types/prisma"
 
 import HeaderMobileMenu from "./_mobileMenu"
 interface HeaderProps {
-  menus: Route[]
+  routes: RouteWithCategories<"id" | "title">[]
 }
-
-// NOTE: pc / mobile 분리하기
 
 export default function Header(props: HeaderProps): ReactElement {
   const pathname = usePathname()
@@ -34,9 +32,9 @@ export default function Header(props: HeaderProps): ReactElement {
   )
 
   const [routeMenuOpen, setRouteMenuOpen] = useState(() => {
-    return props.menus.reduce((prev, cur) => {
+    return props.routes.reduce((prev, cur) => {
       if (!cur.categories?.length) return prev
-      return { ...prev, [cur.id]: false }
+      return { ...prev, [cur.title]: false }
     }, {} as { [key: string]: boolean })
   })
 
@@ -72,11 +70,11 @@ export default function Header(props: HeaderProps): ReactElement {
             className="navigation__menus"
             data-state={open ? "open" : "close"}
           >
-            {props.menus.map(menu => (
-              <li key={menu.id} className={`navigation__menu-item`}>
+            {props.routes.map(route => (
+              <li key={route.id} className={`navigation__menu-item`}>
                 <Popover.Root
                   onOpenChange={open =>
-                    handleOpenChange({ route: menu.id, open })
+                    handleOpenChange({ route: route.title, open })
                   }
                 >
                   <ButtonLink
@@ -90,23 +88,23 @@ export default function Header(props: HeaderProps): ReactElement {
                         variants: "h3",
                       },
                     }}
-                    href={menu.href}
-                    key={menu.id}
+                    href={`/${route.title}`}
+                    key={route.id}
                     className={`navigation__menu-link ${
-                      pathname !== "/" && pathname.startsWith(menu.href)
+                      pathname !== "/" && pathname.startsWith(`/${route.title}`)
                         ? "active"
                         : ""
                     }`}
                   >
-                    {menu.children}
+                    {route.title}
                   </ButtonLink>
-                  {!isMobile && !!menu.categories?.length && (
+                  {!isMobile && !!route.categories?.length && (
                     <>
                       <Popover.Trigger asChild>
                         <button className="navigation__icon-wrapper">
                           <ChevronDown
                             className={`navigation__icon navigation__icon--${
-                              routeMenuOpen[menu.id] ? "open" : "close"
+                              routeMenuOpen[route.title] ? "open" : "close"
                             }`}
                             width={16}
                             height={16}
@@ -119,10 +117,10 @@ export default function Header(props: HeaderProps): ReactElement {
                           asChild
                         >
                           <ul>
-                            {menu.categories.map(item => (
+                            {route.categories.map(category => (
                               <ButtonLink
-                                key={item}
-                                href={`/${menu.id}?category=${item}`}
+                                key={category.id}
+                                href={`/${route.title}/${category.title}`}
                                 design={{
                                   type: "secondary",
                                 }}
@@ -132,7 +130,7 @@ export default function Header(props: HeaderProps): ReactElement {
                                 }}
                                 style={{ justifyContent: "flex-start" }}
                               >
-                                {item}
+                                {category.title}
                               </ButtonLink>
                             ))}
                             <Popover.Arrow className="navigation__arrow " />
@@ -157,7 +155,6 @@ export default function Header(props: HeaderProps): ReactElement {
             >
               RESUME
             </MagicButtonLink>
-
             <ThemeSelector />
             <HeaderMobileMenu open={open} toggleMobileMenu={toggleMobileMenu} />
           </div>
