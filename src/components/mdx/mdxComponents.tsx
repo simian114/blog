@@ -1,27 +1,6 @@
-"use client"
+import AnchorText from "./AnchorText"
 
-import Image, { ImageProps } from "next/image"
-import { useMDXComponent } from "next-contentlayer/hooks"
-import { Post } from "contentlayer/generated"
-
-import AnchorText from "@/components/mdx/AnchorText"
-import MainTitle from "@/components/mdx/mainTitle/MainTitle"
-
-type MdxContentProps = {
-  post: Post
-}
-
-export function MdxContent({ post }: MdxContentProps) {
-  const MDXContent = useMDXComponent(post.body.code)
-  return (
-    <div className="mdx-container">
-      <MDXContent components={MdxComponents} />
-    </div>
-  )
-}
-
-/** Place your custom MDX components here */
-export const MdxComponents = {
+const MdxComponents = {
   /** h1 colored in yellow */
   h1: (props: React.HTMLProps<HTMLHeadingElement>) => (
     <AnchorText as="h1" className="mdx-h1">
@@ -80,9 +59,10 @@ export const MdxComponents = {
   code: (props: React.HTMLProps<HTMLElement>) => (
     <code className="mdx-code" {...props} />
   ),
-  pre: (props: React.HTMLProps<HTMLPreElement>) => (
-    <pre className="mdx-pre" {...props} />
-  ),
+  // TODO: codesand 로 사용하기
+  pre: (props: React.HTMLProps<HTMLPreElement>) => {
+    return <pre className="mdx-pre" {...props} />
+  },
   img: (props: React.HTMLProps<HTMLImageElement>) => (
     <img className="mdx-img" {...props} />
   ),
@@ -92,23 +72,6 @@ export const MdxComponents = {
   hr: (props: React.HTMLProps<HTMLHRElement>) => (
     <hr className="mdx-hr" {...props} />
   ),
-  /** Custom component */
-  MainTitle,
-  Image: (props: ImageProps) => {
-    return (
-      <div style={{ position: "relative" }}>
-        <Image {...props} fill style={{ objectFit: "cover" }} alt="" />
-      </div>
-    )
-  },
-  Card: (props: React.HTMLProps<HTMLDivElement>) => (
-    <div
-      style={{
-        background: "#333",
-        borderRadius: "0.25rem",
-        padding: "0.5rem 1rem",
-      }}
-      {...props}
-    />
-  ),
 }
+
+export { MdxComponents }

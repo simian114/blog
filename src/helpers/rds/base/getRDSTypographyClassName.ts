@@ -15,5 +15,5 @@ export function getRDSTypographyClassName(typography?: {
   const variants = typography?.variants
     ? `${RDS_TYPOGRAPHY_PREFIX}-${typography?.variants}`
     : ""
-  return `${weight} ${variants}`
+  return `${RDS_TYPOGRAPHY_PREFIX} ${weight} ${variants}`
 }

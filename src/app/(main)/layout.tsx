@@ -2,10 +2,10 @@
 import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/react"
 
-import { Route } from "@/app/types"
 import { Footer, Header } from "@/components/layout"
 import { Providers } from "@/components/providers/providers"
 import { defaultMeta, openGraphImage } from "@/constants/metadata"
+import prisma from "@/lib/prisma"
 
 import "@styles/globals.scss"
 import "highlight.js/styles/a11y-dark.css"
@@ -45,24 +45,32 @@ export const metadata = {
   },
 }
 
-async function getData(): Promise<Route[]> {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/route`)
-    return await res.json()
-  } catch (error) {
-    return []
-  }
+async function getRoutes() {
+  const routes = await prisma.route.findMany({
+    include: {
+      categories: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
+    },
+    orderBy: {
+      id: "asc",
+    },
+  })
+  return routes
 }
 
 export default async function RootLayout(props: any) {
-  const menus = await getData()
+  const routes = await getRoutes()
 
   return (
     <html lang="en" className={myFont.className} suppressHydrationWarning>
       <body>
         <Providers>
           <div id="app">
-            <Header menus={menus} />
+            <Header routes={routes} />
             <section className="inner">{props.children}</section>
             <Footer />
           </div>

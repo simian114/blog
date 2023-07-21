@@ -256,3 +256,228 @@
 //   background-color: rgba(0, 0, 0, 0.04);
 //   background-color: var(--bf-fill);
 // }
+
+.mdx {
+  h1 {
+    @include rds-h1;
+  }
+
+  h2 {
+    @include rds-h2;
+  }
+  h3 {
+    @include rds-h3;
+  }
+  h4 {
+    @include rds-h4;
+  }
+  h5 {
+    @include rds-h5;
+  }
+  h6 {
+    @include rds-h6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--text-high-color);
+  }
+
+  ol,
+  ul,
+  li,
+  em,
+  strong,
+  p {
+    color: var(--text-low-color);
+    @include rds-body1;
+  }
+
+  img {
+    border-style: none;
+    border: 0;
+    max-width: 100%;
+    border-radius: var(--box-border-radius);
+    vertical-align: middle;
+    margin: 2px 0;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  strong {
+    @include bold;
+  }
+
+  p {
+    margin: 0.75rem auto;
+  }
+
+  strong {
+    color: var(--text-high-color);
+  }
+
+  p,
+  a {
+    @include regular;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  a {
+    text-decoration: none;
+    @include bold;
+    color: var(--text-low-primary-color);
+  }
+
+  a:active,
+  a:hover {
+    outline-width: 0;
+    outline: 0;
+  }
+
+  a:active,
+  a:focus,
+  a:hover {
+    text-decoration: underline;
+    color: var(--text-low-primary-color);
+  }
+
+  ul,
+  ol {
+    margin: 0.75rem auto;
+    padding: 0 1.5rem;
+  }
+  ul {
+    list-style-type: disc;
+  }
+  ol {
+    list-style-type: decimal;
+  }
+  li {
+    margin: 0.5rem auto;
+  }
+
+  code,
+  pre {
+    font-family: "Fira Code", monospace;
+    font-size: 90%;
+    background-color: transparent;
+  }
+
+  code {
+    padding: 0.2em 0;
+    margin: 0;
+    background-color: var(--ui-el-bg-primary-color);
+    border-radius: var(--box-border-radius);
+    color: var(--text-low-primary-color);
+  }
+
+  pre {
+    margin: 0.75rem auto;
+    overflow: auto;
+  }
+
+  pre code {
+    background: transparent;
+  }
+
+  pre code::before,
+  pre code::after {
+    content: normal;
+  }
+
+  code::before,
+  code::after {
+    content: "\00a0";
+  }
+
+  a > em,
+  a > strong {
+    font-size: 0.875rem;
+    font-style: normal;
+    @include medium;
+    letter-spacing: 0.09em;
+    line-height: 2.25rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    display: inline-block;
+    padding: 0 8px;
+    margin: 4px;
+    min-width: 64px;
+    height: 36px;
+    border-radius: var(--box-border-radius);
+    transition: all 0.3s;
+    color: var(--text-low-primary-color);
+  }
+
+  a > em {
+    background-color: transparent;
+  }
+
+  a > strong {
+    background-color: var(--ui-el-bg-primary-color);
+  }
+
+  a > em:hover {
+    box-shadow: inset 0 0 0 99em rgba(0, 0, 0, 0.06);
+  }
+
+  a > strong:hover {
+    background-color: var(--ui-el-hovered-bg-primary-color);
+    box-shadow: inset 0 0 0 99em rgba(255, 255, 255, 0.24);
+  }
+
+  blockquote {
+    quotes: "\201C""\201D""\2018""\2019";
+    border-left: 0.25rem solid var(--solid-bg-tertiary-color);
+    color: #d4d4d4;
+    padding-left: 1em;
+    > .p {
+      line-height: 2rem;
+      font-style: italic;
+      color: var(--text-high-color);
+      @include bold;
+    }
+  }
+
+  .vblockquote > p:not(:only-child),
+  .vblockquote > h5,
+  .vblockquote > h6 {
+    width: 300px;
+  }
+
+  blockquote > p:only-child > a > em {
+    text-align: left;
+  }
+
+  blockquote img {
+    max-height: 200px;
+    cursor: pointer;
+  }
+
+  blockquote img:active {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 95%;
+    max-height: 95%;
+    border: 100vh solid #fff;
+  }
+
+  hr {
+    height: 2px;
+    background-color: var(--separator-color);
+    border: none;
+    margin: 0;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+    margin: 3rem auto;
+  }
+}

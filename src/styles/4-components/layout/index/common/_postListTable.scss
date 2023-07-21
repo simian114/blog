@@ -1,0 +1,151 @@
+@use "@styles" as *;
+
+.postlist-table {
+  width: 100%;
+  color: white;
+  &__thead {
+    width: 100%;
+    border-bottom: 3px solid var(--separator-color);
+  }
+  &__th {
+    padding: rds-space(space-08) rds-space(space-08);
+    @include bold;
+  }
+
+  &__tbody {
+    width: 100%;
+  }
+  &__tr {
+    width: 100%;
+    @include rds-grid(0);
+    @include rds-grid-layout((3), (5), (2), (2));
+    width: 100%;
+    position: relative;
+    &--item {
+      border-radius: 4px;
+      border: 1px solid transparent;
+      @include pointing-hover {
+        background-color: var(--ui-el-hovered-bg-primary-color);
+      }
+
+      &:focus-within {
+        background-color: var(--ui-el-hovered-bg-primary-color);
+        border-color: var(--ui-focused-border-primary-color);
+      }
+    }
+  }
+  &__td {
+    padding: rds-space(space-12) rds-space(space-08);
+    display: flex;
+    &--name {
+      > a {
+        > span {
+          @include textEllipsis(1);
+          min-width: unset;
+        }
+        &:focus {
+          outline: none;
+        }
+        &:after {
+          position: absolute;
+          content: " ";
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+    &--description {
+      > span {
+        position: relative;
+        @include textEllipsis(2);
+      }
+    }
+    &--category {
+      > span {
+        position: relative;
+      }
+    }
+    &--tags {
+      position: relative;
+      overflow: auto;
+      overflow-y: unset;
+      @include thin-scrollbar;
+
+      &::-webkit-scrollbar-track {
+        margin-left: rds-space(space-08);
+        margin-right: rds-space(space-08);
+      }
+      > .tag:not(:last-child) {
+        margin-right: rds-space(space-08);
+      }
+    }
+  }
+}
+
+@include tablet {
+  .postlist-table {
+    width: 100%;
+    color: white;
+    &__thead {
+      width: 100%;
+      border-bottom: 3px solid var(--separator-color);
+    }
+    &__th {
+      &--tags {
+        display: none;
+      }
+    }
+    &__tr {
+      @include rds-grid(0);
+      @include rds-grid-layout((4), (6), (2));
+    }
+    &__td {
+      &--description {
+        > span {
+          position: static;
+          @include textEllipsis(1);
+        }
+      }
+      &--category {
+        > span {
+          position: static;
+        }
+      }
+      &--tags {
+        display: none;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .postlist-table {
+    &__th {
+      &--category {
+        display: none;
+      }
+
+      &--tags {
+        display: none;
+      }
+    }
+
+    &__tr {
+      @include rds-grid(0);
+      @include rds-grid-layout((6), (6));
+    }
+    &__td {
+      &--category {
+        display: none;
+        > span {
+          position: static;
+        }
+      }
+      &--tags {
+        display: none;
+      }
+    }
+  }
+}
