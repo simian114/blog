@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-import { withContentlayer } from "next-contentlayer"
 import createMDX from "@next/mdx"
 import * as path from "path"
 import rehypeHighlight from "rehype-highlight"
@@ -13,6 +12,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
     serverActions: true,
+    mdxRs: true,
   },
   images: {
     domains: ["images.unsplash.com"],
@@ -48,4 +48,4 @@ const withMDX = createMDX({
   },
 })
 
-export default withContentlayer(withMDX(nextConfig))
+export default withMDX(nextConfig)
