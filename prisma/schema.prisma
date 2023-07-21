@@ -16,3 +16,141 @@ model guestbooks {
   ip        String   @db.VarChar(16)
   nickname  String   @db.VarChar(40)
 }
+
+// NOTE: Route
+// Blog Snippet Mdx guestbook admin...
+
+model Routee {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String   @db.VarChar(20)
+  description String   @db.VarChar(100)
+  open        Boolean  @default(false) // NOTE: nav 에 나오는지 여부 결정
+  categoryIDs Int[]
+}
+
+model CategoryZ {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  // 
+  title       String   @db.VarChar(20)
+  description String   @db.VarChar(100)
+  open        Boolean  @default(false)
+  // 
+}
+
+// A Category can have zero or more Post
+// A Post must always have an Category
+// A Post can have zero or more Tag
+// A Tag must always have an Post
+
+model Route {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title       String
+  description String?
+  open        Boolean
+  url         String
+
+  layoutType RouteLayoutType
+
+  categories Category[]
+}
+
+enum RouteLayoutType {
+  CARD
+  TABLE
+  CUSTOM
+}
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String   @db.VarChar(25)
+  url         String
+  description String?
+
+  // NOTE: Relation
+  route   Route? @relation(fields: [routeId], references: [id])
+  routeId Int?
+
+  posts Post[]
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  // 
+  title       String
+  content     String?
+  description String?
+  published   Boolean  @default(false)
+
+  // NOTE: relations
+  tags       TagsOnPosts[]
+  category   Category?     @relation(fields: [categoryId], references: [id])
+  categoryId Int?
+  info       PostInfo?
+}
+
+model PostInfo {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  readingTime Int
+  url         String   @unique
+  slug        String[]
+
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int  @unique
+}
+
+model Tag {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  // 
+  title       String
+  description String?
+  color       TagColor
+
+  // NOTE: Relation
+  posts TagsOnPosts[]
+}
+
+enum TagColor {
+  GRAY
+  PRIMARY
+  SECONDARY
+  TERTIARY
+  CYAN
+  CRIMSON
+  YELLOW
+  BLUE
+  BROWN
+  GREEN
+  ORANGE
+  PINK
+  PURPLE
+  RED
+}
+
+model TagsOnPosts {
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     Int
+  tag        Tag      @relation(fields: [tagId], references: [id])
+  tagId      Int
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([postId, tagId])
+}
+
+// TODO: Curation
