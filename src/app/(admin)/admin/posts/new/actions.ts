@@ -30,7 +30,10 @@ export async function createPost(data: CreatePostDTO) {
       },
     })
     revalidatePath("[...slug]")
-    info?.url && revalidatePath(info?.url)
+    info?.url &&
+      (process.env.NODE_ENV === "production"
+        ? revalidatePath(`${process.env.URL}/${info?.url}`)
+        : revalidatePath(info?.url))
     return post
   }
   const category = await prisma.category.findUnique({
