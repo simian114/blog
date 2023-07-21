@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-
+import { withContentlayer } from "next-contentlayer"
 import createMDX from "@next/mdx"
 import * as path from "path"
 import rehypeHighlight from "rehype-highlight"
@@ -48,4 +48,4 @@ const withMDX = createMDX({
   },
 })
 
-export default withMDX(nextConfig)
+export default withContentlayer(withMDX(nextConfig))
