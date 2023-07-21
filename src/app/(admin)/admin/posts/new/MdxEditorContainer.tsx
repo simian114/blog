@@ -22,7 +22,6 @@ interface MdxEditorContainerProps {
 
 export default function MdxEditorContainer(props: MdxEditorContainerProps) {
   const [markdown, setMarkdown] = useState("# hello world!")
-  console.log(markdown)
 
   return (
     <div className="flex flex-col gap-8">

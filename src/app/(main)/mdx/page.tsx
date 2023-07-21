@@ -5,6 +5,8 @@ import remarkGfm from "remark-gfm"
 import { MdxComponents } from "@/components/mdx/mdxComponents"
 import prisma from "@/lib/prisma"
 
+export const revalidate = 60 // revalidate this page every 60 seconds
+
 async function getData() {
   const post = await prisma.post.findFirst({
     where: { info: { url: "/mdx" } },

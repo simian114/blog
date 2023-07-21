@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { Post } from "@prisma/client"
 import readingTime from "reading-time"
 
@@ -28,6 +29,8 @@ export async function createPost(data: CreatePostDTO) {
         },
       },
     })
+    revalidatePath("[...slug]")
+    info?.url && revalidatePath(info?.url)
     return post
   }
   const category = await prisma.category.findUnique({
