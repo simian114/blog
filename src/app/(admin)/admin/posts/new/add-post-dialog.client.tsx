@@ -41,8 +41,9 @@ const formSchema = z.object({
   title: z.string().min(1).max(100),
   content: z.string().min(1),
   published: z.boolean(),
-  categoryId: z.number(),
+  categoryId: z.number().optional(),
   description: z.string(),
+  url: z.string().optional(),
 })
 
 interface AddPostDialogProps {
@@ -64,9 +65,11 @@ export function AddPostDialog(props: AddPostDialogProps) {
     },
   })
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { url, ...rest } = values
     await createPost({
-      ...(values as unknown as CreatePostDTO),
+      ...(rest as unknown as CreatePostDTO),
       content: props.content,
+      info: { url },
     })
     wait().then(() => setOpen(false))
   }
@@ -106,6 +109,19 @@ export function AddPostDialog(props: AddPostDialogProps) {
                       <FormLabel>요약</FormLabel>
                       <FormControl>
                         <Input placeholder="콘텐츠를 요약해주세요" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="url"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>url(라우트/카테고리 설정안할때만..)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="url" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

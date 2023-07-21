@@ -18,29 +18,6 @@ model guestbooks {
 }
 
 // NOTE: Route
-// Blog Snippet Mdx guestbook admin...
-
-model Routee {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String   @db.VarChar(20)
-  description String   @db.VarChar(100)
-  open        Boolean  @default(false) // NOTE: nav 에 나오는지 여부 결정
-  categoryIDs Int[]
-}
-
-model CategoryZ {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  // 
-  title       String   @db.VarChar(20)
-  description String   @db.VarChar(100)
-  open        Boolean  @default(false)
-  // 
-}
-
 // A Category can have zero or more Post
 // A Post must always have an Category
 // A Post can have zero or more Tag
@@ -59,6 +36,9 @@ model Route {
   layoutType RouteLayoutType
 
   categories Category[]
+
+  // NOTE: route 페이지에서 post 보여줄 경우 대비
+  post Post?
 }
 
 enum RouteLayoutType {
@@ -97,6 +77,9 @@ model Post {
   category   Category?     @relation(fields: [categoryId], references: [id])
   categoryId Int?
   info       PostInfo?
+
+  route   Route? @relation(fields: [routeId], references: [id])
+  routeId Int?   @unique
 }
 
 model PostInfo {

@@ -32,6 +32,7 @@ const formSchema = z.object({
   title: z.string().min(1).max(20),
   description: z.string().min(1).max(20),
   open: z.boolean(),
+  url: z.string(),
 })
 
 export function AddDialog() {

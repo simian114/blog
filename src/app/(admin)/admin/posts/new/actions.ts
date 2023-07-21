@@ -5,7 +5,7 @@ import readingTime from "reading-time"
 
 import prisma from "@/lib/prisma"
 
-export type CreatePostDTO = Omit<Post, "id">
+export type CreatePostDTO = Omit<Post, "id"> & { info?: { url?: string } }
 
 interface UpdatePostDTO {
   id: Post["id"]
@@ -13,11 +13,16 @@ interface UpdatePostDTO {
 }
 
 export async function createPost(data: CreatePostDTO) {
-  console.log({ data })
   if (!data.categoryId) {
     const post = await prisma.post.create({
       data: {
         ...data,
+        info: {
+          create: {
+            readingTime: 0,
+            url: `/${data.title}`,
+          },
+        },
       },
     })
     return post
