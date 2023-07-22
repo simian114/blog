@@ -5,6 +5,7 @@ import { Post, Tag } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
 
+import ButtonLink from "@/components/button/ButtonLink"
 import Typography from "@/components/typography/Typography"
 
 export const columns: ColumnDef<Post>[] = [
@@ -79,9 +80,16 @@ export const columns: ColumnDef<Post>[] = [
       )
     },
   },
-
   {
     accessorKey: "category.title",
     header: "Category",
+  },
+  {
+    accessorKey: "id",
+    header: "actions",
+    cell({ row }) {
+      const id = row.getValue<number>("id")
+      return <ButtonLink href={`/admin/posts/${id}`}>수정</ButtonLink>
+    },
   },
 ]
