@@ -6,18 +6,18 @@ import { Tag } from "@prisma/client"
 import Button from "@/components/button/Button"
 
 import { AddPostDialog } from "./add-post-dialog.client"
-import { CateogoryWithRoute } from "./page"
+import { RouteWithCategories } from "./page"
 
 import "@mdxeditor/editor/style.css"
 
 const MDXEditor = dynamic(
   () => import("@mdxeditor/editor").then(mod => mod.MDXEditor),
-  { ssr: false, loading: () => <div> client loading</div> }
+  { ssr: false, loading: () => <></> }
 )
 
 interface MdxEditorContainerProps {
-  categories: CateogoryWithRoute[]
   tags: Tag[]
+  routes: RouteWithCategories[]
 }
 
 export default function MdxEditorContainer(props: MdxEditorContainerProps) {
@@ -28,8 +28,8 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
       <div className="flex flex-row-reverse gap-4">
         <AddPostDialog
           content={markdown}
-          allCategories={props.categories}
           allTags={props.tags}
+          allRoutes={props.routes}
         />
         <Button design={{ type: "secondary" }} className="self-end">
           임시 저장

@@ -1,30 +1,29 @@
-import { Category, Route } from "@prisma/client"
+import { Category, Prisma, Route } from "@prisma/client"
 
 import prisma from "@/lib/prisma"
 
 import MdxEditorContainer from "./MdxEditorContainer"
 
 async function getData() {
-  const categories = await prisma.category.findMany({
-    include: {
-      route: true,
-    },
-  })
   const tags = await prisma.tag.findMany({
     include: {
       posts: true,
     },
   })
-  return { categories, tags }
+  const routes = await prisma.route.findMany({ include: { categories: true } })
+  return { tags, routes }
 }
 
 export type CateogoryWithRoute = Category & { route: Route | null }
+export type RouteWithCategories = Prisma.RouteGetPayload<{
+  include: { categories: true }
+}>
 
 export default async function NewPostPage() {
-  const { categories, tags } = await getData()
+  const { tags, routes } = await getData()
   return (
     <div className="h-full">
-      <MdxEditorContainer categories={categories} tags={tags} />
+      <MdxEditorContainer tags={tags} routes={routes} />
     </div>
   )
 }

@@ -20,9 +20,6 @@ export async function editPost(props: EditPostProps) {
   const info = await prisma.postInfo.findUnique({
     where: { postId: updated.id },
   })
-  console.log("------------ updated -----------")
-  console.log(updated)
-  console.log("--------------------------------")
 
   if (!info) return
 
