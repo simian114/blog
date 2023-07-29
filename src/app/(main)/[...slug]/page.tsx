@@ -49,6 +49,22 @@ export async function generateStaticParams() {
   return filtered.map(post => ({ slug: post.info?.slug }))
 }
 
+/**
+ *
+ * slug lenght 에 따라 분기처리됨
+ *  - length
+ *    - 1: route 경로
+ *    - 2: category 로의 필터링
+ *    - 3: post 의 detail 페이지
+ *    - 1, 2의 경우 동일한 layout 을 보여줌. 다른점은 length 가 2인 경우는 해당 카테고리로 필터링이 된 post 가 렌더링됨
+ *  - Route 의 layoutType 이 Custom 인 경우는 여기에 들어오지 않음.
+ *
+ *  TODO
+ *    - post list 에 페이지 네이션 / 무한스크롤 구현하기.
+ *    - https://www.youtube.com/watch?v=qAgwDGCrzgE&t=255s
+ *
+ */
+
 export default async function BasePage({
   params,
 }: {
