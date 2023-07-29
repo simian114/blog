@@ -39,11 +39,6 @@ export const adminConfig: AdminConfig = {
       title: "Admin",
       items: [
         {
-          title: "Posts",
-          href: "/admin/posts",
-          items: [],
-        },
-        {
           title: "Routes",
           href: "/admin/routes",
           items: [],
@@ -54,18 +49,13 @@ export const adminConfig: AdminConfig = {
           items: [],
         },
         {
+          title: "Posts",
+          href: "/admin/posts",
+          items: [],
+        },
+        {
           title: "Tags",
           href: "/admin/tags",
-          items: [],
-        },
-        {
-          title: "Routeeeeees",
-          href: "/admin/routees",
-          items: [],
-        },
-        {
-          title: "GuestBooks",
-          href: "/admin/guestbooks",
           items: [],
         },
       ],
