@@ -40,3 +40,7 @@ next-env.d.ts
 
 # storybook
 /storybook-static
+
+# dark / light theme
+src/styles/2-theme/_light.scss
+src/styles/2-theme/_dark.scss
