@@ -4,6 +4,8 @@ import * as path from "path"
 import rehypeHighlight from "rehype-highlight"
 import remarkGfm from "remark-gfm"
 
+import createColors from "./build-config.js"
+
 const __dirname = path.resolve()
 
 const nextConfig = {
@@ -47,4 +49,13 @@ const withMDX = createMDX({
   },
 })
 
-export default withMDX(nextConfig)
+const withColors = createColors({
+  colors: {
+    primary: "cyan",
+    secondary: "crimson",
+    tertiary: "yellow",
+    gray: "slate",
+  },
+})
+
+export default withColors(withMDX(nextConfig))
