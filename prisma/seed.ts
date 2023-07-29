@@ -3,39 +3,37 @@ const prisma = new PrismaClient()
 
 async function main() {
   const routeTitles = [
-    { title: "blog", type: RouteLayoutType.CARD },
-    { title: "snippet", type: RouteLayoutType.TABLE },
-    { title: "mdx", type: RouteLayoutType.CUSTOM },
-    { title: "guestbook", type: RouteLayoutType.CUSTOM },
+    { title: "blog", type: RouteLayoutType.CARD, priority: 1 },
+    { title: "snippet", type: RouteLayoutType.TABLE, priority: 2 },
+    { title: "mdx", type: RouteLayoutType.CUSTOM, priority: 3 },
+    { title: "guestbook", type: RouteLayoutType.CUSTOM, priority: 4 },
   ]
 
   const routes = await Promise.all(
-    routeTitles.map((route, index) =>
+    routeTitles.map(route =>
       prisma.route.create({
         data: {
-          id: index + 1,
           open: true,
           title: route.title,
           url: route.title,
           description: route.title,
           layoutType: route.type,
+          priority: route.priority,
         },
       })
     )
   )
 
-  //
   const categoryTitles = [
-    { title: "React", routeId: 1 },
-    { title: "Next.js", routeId: 1 },
-    { title: "scss", routeId: 1 },
-    { title: "css", routeId: 1 },
-    { title: "React", routeId: 2 },
-    { title: "Next.js", routeId: 2 },
-    { title: "scss", routeId: 2 },
-    { title: "css", routeId: 2 },
+    { title: "React", route: "blog" },
+    { title: "Next.js", route: "blog" },
+    { title: "scss", route: "blog" },
+    { title: "css", route: "blog" },
+    { title: "React", route: "snippet" },
+    { title: "Next.js", route: "snippet" },
+    { title: "scss", route: "snippet" },
+    { title: "css", route: "snippet" },
   ]
-  //
 
   await Promise.all(
     categoryTitles.map(category =>
@@ -43,7 +41,8 @@ async function main() {
         data: {
           title: category.title,
           url: category.title,
-          routeId: category.routeId,
+          routeId:
+            routes.find(route => route.title === category.route)?.id || 1,
           description: `${category.title} 입니다.`,
         },
       })
