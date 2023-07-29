@@ -1,6 +1,7 @@
 "use client"
 
-import { ReactElement } from "react"
+import { ReactElement, useState } from "react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Provider as JotaiProvider } from "jotai"
 
 import DeviceWidthProvider from "@/components/providers/deviceWidthProvider"
@@ -11,10 +12,15 @@ interface ProvidersProps {
 }
 
 export function Providers(props: ProvidersProps): ReactElement {
+  const [queryClient] = useState(() => new QueryClient())
   return (
     <JotaiProvider>
       <ThemeScript />
-      <DeviceWidthProvider>{props.children}</DeviceWidthProvider>
+      <DeviceWidthProvider>
+        <QueryClientProvider client={queryClient}>
+          {props.children}
+        </QueryClientProvider>
+      </DeviceWidthProvider>
     </JotaiProvider>
   )
 }

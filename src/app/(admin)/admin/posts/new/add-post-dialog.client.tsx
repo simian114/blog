@@ -1,8 +1,8 @@
 "use client"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Tag } from "@prisma/client"
+import { RouteLayoutType, Tag } from "@prisma/client"
 import { z } from "zod"
 
 import Button from "@/components/button/Button"
@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/select"
 
 import { createPost, CreatePostDTO } from "./actions"
-import { CateogoryWithRoute } from "./page"
+import { RouteWithCategories } from "./page"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -47,13 +47,25 @@ const formSchema = z.object({
 })
 
 interface AddPostDialogProps {
-  allCategories: CateogoryWithRoute[]
+  allRoutes: RouteWithCategories[]
   allTags: Tag[]
   content: string
 }
 
 export function AddPostDialog(props: AddPostDialogProps) {
   const [open, setOpen] = useState(false)
+  const routes = useMemo(() => props.allRoutes, [props.allRoutes])
+  const [selectedRouteID, setSelectedRouteID] = useState(
+    routes?.[0]?.id?.toString()
+  )
+  const selectedRoute = useMemo(
+    () =>
+      routes.find(
+        route => route.id.toString() === selectedRouteID,
+        [selectedRouteID]
+      ),
+    [routes, selectedRouteID]
+  )
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,6 +76,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
       description: "",
     },
   })
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { url, ...rest } = values
     await createPost({
@@ -74,14 +87,16 @@ export function AddPostDialog(props: AddPostDialogProps) {
     wait().then(() => setOpen(false))
   }
 
+  // NOTE: custom
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>저장</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="border-solid">
         <DialogHeader>
-          <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+          <DialogTitle>정보</DialogTitle>
           <DialogDescription>
             <Form {...form}>
               <form
@@ -95,7 +110,11 @@ export function AddPostDialog(props: AddPostDialogProps) {
                     <FormItem>
                       <FormLabel>제목</FormLabel>
                       <FormControl>
-                        <Input placeholder="제목을 입력해주세요" {...field} />
+                        <Input
+                          className="border-solid"
+                          placeholder="제목을 입력해주세요"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -108,25 +127,17 @@ export function AddPostDialog(props: AddPostDialogProps) {
                     <FormItem>
                       <FormLabel>요약</FormLabel>
                       <FormControl>
-                        <Input placeholder="콘텐츠를 요약해주세요" {...field} />
+                        <Input
+                          className="border-solid"
+                          placeholder="콘텐츠를 요약해주세요"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="url"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>url(라우트/카테고리 설정안할때만..)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="url" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
                 <FormField
                   control={form.control}
                   name="published"
@@ -144,45 +155,91 @@ export function AddPostDialog(props: AddPostDialogProps) {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="categoryId"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>라우트 / 카테고리 설정</FormLabel>
-                      <Select
-                        onValueChange={v => field.onChange(Number(v) || 0)}
-                        defaultValue={field.value?.toString() || ""}
-                      >
+                <Select
+                  defaultValue={`${selectedRouteID}`}
+                  onValueChange={setSelectedRouteID}
+                >
+                  <SelectTrigger className="border-solid">
+                    <SelectValue placeholder="Select a verified email to display" />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    {routes.map(route => {
+                      return (
+                        <SelectItem key={route.id} value={route.id.toString()}>
+                          <div className="flex flex-row gap-4">
+                            <span>{route?.title}</span>{" "}
+                            <span>type: {route?.layoutType}</span>
+                          </div>
+                        </SelectItem>
+                      )
+                    })}
+                  </SelectContent>
+                </Select>
+
+                {selectedRoute?.layoutType !== RouteLayoutType.CUSTOM ? (
+                  <FormField
+                    control={form.control}
+                    name="categoryId"
+                    render={({ field }) => {
+                      return (
+                        <FormItem className="flex flex-col">
+                          <FormLabel>카테고리</FormLabel>
+                          <Select
+                            onValueChange={v => field.onChange(Number(v) || 0)}
+                            defaultValue={
+                              field.value?.toString() ||
+                              selectedRoute?.categories?.[0]?.id.toString()
+                            }
+                          >
+                            <FormControl>
+                              <SelectTrigger className="border-solid">
+                                <SelectValue placeholder="Select a verified email to display" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {selectedRoute?.categories.map(category => {
+                                return (
+                                  <SelectItem
+                                    key={category.id}
+                                    value={category.id.toString()}
+                                  >
+                                    <div className="flex flex-row gap-4">
+                                      <span>
+                                        {category?.title}{" "}
+                                        {category?.id?.toString()}
+                                      </span>
+                                    </div>
+                                  </SelectItem>
+                                )
+                              })}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )
+                    }}
+                  />
+                ) : (
+                  <FormField
+                    control={form.control}
+                    name="url"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>url</FormLabel>
                         <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select a verified email to display" />
-                          </SelectTrigger>
+                          <Input
+                            className="border-solid"
+                            placeholder="url"
+                            {...field}
+                          />
                         </FormControl>
-                        <SelectContent>
-                          {props.allCategories.map(category => {
-                            return (
-                              <SelectItem
-                                key={category.id}
-                                value={category.id.toString()}
-                              >
-                                <div className="flex flex-row gap-4">
-                                  <span>route: </span>{" "}
-                                  <span>{category.route?.title}</span>
-                                </div>
-                                <div className="flex flex-row gap-4">
-                                  <span>category: </span>{" "}
-                                  <span>{category?.title}</span>
-                                </div>
-                              </SelectItem>
-                            )
-                          })}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
                 {/* NOTE: */}
                 <Button type="submit">submit</Button>
               </form>

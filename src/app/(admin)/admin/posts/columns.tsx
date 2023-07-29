@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Post, Tag } from "@prisma/client"
+import { Category, Post, Tag } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
 
@@ -81,8 +81,12 @@ export const columns: ColumnDef<Post>[] = [
     },
   },
   {
-    accessorKey: "category.title",
+    accessorKey: "category",
     header: "Category",
+    cell({ row }) {
+      const category = row.getValue<Category>("category")
+      return <span>{category?.title}</span>
+    },
   },
   {
     accessorKey: "id",
