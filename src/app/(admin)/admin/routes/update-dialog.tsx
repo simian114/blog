@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { RouteLayoutType } from "@prisma/client"
+import { Route } from "@prisma/client"
 import { z } from "zod"
 
 import Button from "@/components/button/Button"
@@ -25,58 +25,56 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 
-import { newRoute } from "./actions"
+import { updateRoute } from "./actions"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
 const formSchema = z.object({
-  title: z.string().min(1).max(20),
-  description: z.string().min(1).max(20),
-  open: z.boolean(),
-  url: z.string(),
-  layoutType: z.enum([
-    RouteLayoutType.CARD,
-    RouteLayoutType.TABLE,
-    RouteLayoutType.CUSTOM,
-  ]),
+  title: z.optional(z.string().min(1).max(20)),
+  description: z.optional(z.string().min(1).max(20)),
+  open: z.optional(z.boolean()),
+  url: z.optional(z.string()),
   priority: z.number(),
 })
 
-export function AddRouteDialog() {
+interface UpdateRouteDialogProps {
+  route: Route
+}
+
+export function UpdateRouteDialog(props: UpdateRouteDialogProps) {
   const [open, setOpen] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      url: "",
-      layoutType: RouteLayoutType.CARD,
-      priority: 255,
+      title: props.route.title,
+      description: props.route.description || undefined,
+      priority: props.route.priority,
+      open: props.route.open,
+      url: props.route.title,
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await newRoute({ ...values, url: values.title })
+    await updateRoute({
+      id: props.route.id,
+      data: {
+        ...values,
+        url: values.title,
+      },
+    })
     wait().then(() => setOpen(false))
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>추가</Button>
+        <Button>수정</Button>
       </DialogTrigger>
       <DialogContent className="border-solid">
         <DialogHeader>
-          <DialogTitle>라우트 추가</DialogTitle>
+          <DialogTitle>라우트 수정</DialogTitle>
           <DialogDescription>
             <Form {...form}>
               <form
@@ -120,40 +118,6 @@ export function AddRouteDialog() {
                     </FormItem>
                   )}
                 />
-
-                <FormField
-                  control={form.control}
-                  name="layoutType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Layout type</FormLabel>
-                      <Select
-                        onValueChange={v =>
-                          field.onChange(v as RouteLayoutType)
-                        }
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger className="border-solid">
-                            <SelectValue placeholder="Select a verified email to display" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {Object.values(RouteLayoutType).map(layoutType => {
-                            return (
-                              <SelectItem key={layoutType} value={layoutType}>
-                                <div className="flex flex-row gap-4">
-                                  <span>{layoutType}</span>
-                                </div>
-                              </SelectItem>
-                            )
-                          })}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
                 <FormField
                   control={form.control}
                   name="open"
@@ -183,6 +147,9 @@ export function AddRouteDialog() {
                           className="border-solid"
                           placeholder="Route Description"
                           {...field}
+                          onChange={v => {
+                            field.onChange(Number(v.target.value))
+                          }}
                         />
                       </FormControl>
                       <FormMessage />
