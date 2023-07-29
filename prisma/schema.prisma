@@ -24,14 +24,17 @@ model guestbooks {
 // A Tag must always have an Post
 
 model Route {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   title       String
   description String?
   open        Boolean
   url         String
+
+  priority Int @default(autoincrement())
 
   layoutType RouteLayoutType
 
@@ -48,10 +51,11 @@ enum RouteLayoutType {
 }
 
 model Category {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String   @db.VarChar(25)
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  title       String    @db.VarChar(25)
   url         String
   description String?
 
@@ -63,14 +67,15 @@ model Category {
 }
 
 model Post {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
   // 
   title       String
   content     String?
   description String?
-  published   Boolean  @default(false)
+  published   Boolean   @default(false)
 
   // NOTE: relations
   tags       TagsOnPosts[]
@@ -83,9 +88,10 @@ model Post {
 }
 
 model PostInfo {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   readingTime Int
   url         String   @unique
@@ -96,9 +102,10 @@ model PostInfo {
 }
 
 model Tag {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
   // 
   title       String
   description String?
