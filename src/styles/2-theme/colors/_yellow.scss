@@ -12,23 +12,9 @@
   --yellow10: hsl(50, 100%, 48.5%);
   --yellow11: hsl(42, 100%, 29%);
   --yellow12: hsl(40, 55%, 13.5%);
-  // Dark
-  --yellowDark1: hsl(45, 100%, 5.5%);
-  --yellowDark2: hsl(46, 100%, 6.7%);
-  --yellowDark3: hsl(45, 100%, 8.7%);
-  --yellowDark4: hsl(45, 100%, 10.4%);
-  --yellowDark5: hsl(47, 100%, 12.1%);
-  --yellowDark6: hsl(49, 100%, 14.3%);
-  --yellowDark7: hsl(49, 90.3%, 18.4%);
-  --yellowDark8: hsl(50, 100%, 22%);
-  --yellowDark9: hsl(53, 92%, 50%);
-  --yellowDark10: hsl(54, 100%, 68%);
-  --yellowDark11: hsl(48, 100%, 47%);
-  --yellowDark12: hsl(53, 100%, 91%);
 }
 
 @mixin yellowDark {
-  // Dark
   --yellow1: hsl(45, 100%, 5.5%);
   --yellow2: hsl(46, 100%, 6.7%);
   --yellow3: hsl(45, 100%, 8.7%);
