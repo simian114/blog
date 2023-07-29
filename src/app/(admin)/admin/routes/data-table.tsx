@@ -22,7 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { AddDialog } from "./add-dialog"
+import { AddRouteDialog } from "./add-dialog"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -57,7 +57,7 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <AddDialog />
+        <AddRouteDialog />
       </div>
       <div className="rounded-md border">
         <Table>

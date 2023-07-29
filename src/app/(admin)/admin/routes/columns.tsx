@@ -1,20 +1,25 @@
 "use client"
 
 import Link from "next/link"
-import { Category, Route } from "@prisma/client"
+import { Category, Prisma } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
 
-import { RouteCategoryDialog } from "./category-dialog"
+import { DeleteRouteDialog } from "./delete-dialog"
+import { UpdateRouteCategoryDialog } from "./update-category-dialog"
+import { UpdateRouteDialog } from "./update-dialog"
+import { UpdateRouteLayoutDialog } from "./update-layout-type-dialog"
 
-export const columns = (allCategories: Category[]): ColumnDef<Route>[] => [
+export const columns: ColumnDef<
+  Prisma.RouteGetPayload<{ include: { categories: true; post: true } }>
+>[] = [
   {
     accessorKey: "id",
     header: "id",
   },
   {
     accessorKey: "title",
-    header: "Title",
+    header: "name",
     cell({ row }) {
       return (
         <Link
@@ -27,24 +32,13 @@ export const columns = (allCategories: Category[]): ColumnDef<Route>[] => [
     },
   },
   {
+    id: "url",
+    accessorKey: "url",
+    header: "url",
+  },
+  {
     accessorKey: "open",
     header: "노출",
-  },
-  {
-    accessorKey: "createdAt",
-    header: "생성일",
-    cell({ row }) {
-      const createdAt = row.getValue<string>("createdAt")
-      return <div>{dayjs(createdAt).format("YYYY-MM-DD")}</div>
-    },
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "수정일",
-    cell({ row }) {
-      const updatedAt = row.getValue<string>("updatedAt")
-      return <div>{dayjs(updatedAt).format("YYYY-MM-DD")}</div>
-    },
   },
   {
     accessorKey: "categories",
@@ -59,16 +53,42 @@ export const columns = (allCategories: Category[]): ColumnDef<Route>[] => [
     },
   },
   {
-    accessorKey: "id",
-    header: "카테고리 추가",
+    id: "layoutType",
+    header: "레이아웃 타입",
     cell({ row }) {
-      const categories = row.getValue<number[]>("categoryIDs")
+      return <div>{row.original?.layoutType}</div>
+    },
+  },
+  {
+    id: "priority",
+    accessorKey: "priority",
+    header: "우선순위",
+  },
+  {
+    id: "deletedAt",
+    accessorKey: "deletedAt",
+    header: "삭제",
+    cell({ row }) {
+      if (!row.original.deletedAt) {
+        return <></>
+      }
+      return <span>{dayjs(row.original.deletedAt).format("YYYY.MM.DD")}</span>
+    },
+  },
+  {
+    id: "actions",
+    header: "actions",
+    cell: ({ row }) => {
       return (
-        <RouteCategoryDialog
-          currentRouteID={row.getValue<number>("id")}
-          allCategories={allCategories}
-          currentCategories={categories}
-        />
+        <div className="flex gap-4">
+          <UpdateRouteDialog route={row.original} />
+          <DeleteRouteDialog route={row.original} />
+          <UpdateRouteCategoryDialog
+            route={row.original}
+            currentRouteID={row.getValue<number>("id")}
+          />
+          <UpdateRouteLayoutDialog route={row.original} />
+        </div>
       )
     },
   },

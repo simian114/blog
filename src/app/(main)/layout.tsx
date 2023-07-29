@@ -56,7 +56,11 @@ async function getRoutes() {
       },
     },
     orderBy: {
-      id: "asc",
+      priority: "asc",
+    },
+    where: {
+      deletedAt: null,
+      open: true,
     },
   })
   return routes

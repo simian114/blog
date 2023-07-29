@@ -1,16 +1,19 @@
 "use client"
-import { Category, Route } from "@prisma/client"
+
+import { Prisma } from "@prisma/client"
 
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 
 interface RouteTableWrapperProps {
-  allCategories: Category[]
-  allRoutes: Route[]
+  allRoutes: Prisma.RouteGetPayload<{
+    include: {
+      categories: true
+      post: true
+    }
+  }>[]
 }
 
 export function RouteTableWrapper(props: RouteTableWrapperProps) {
-  return (
-    <DataTable columns={columns(props.allCategories)} data={props.allRoutes} />
-  )
+  return <DataTable columns={columns} data={props.allRoutes} />
 }
