@@ -4,6 +4,7 @@ import { HTMLAttributes } from "react"
 import { Post } from "@/components/postCard/PostCard"
 import Tag from "@/components/postCard/tag/Tag"
 import Typography from "@/components/typography/Typography"
+import { getURL } from "@/helpers/model/post"
 
 interface PostListTableProps extends HTMLAttributes<HTMLUListElement> {
   posts: Post[]
@@ -35,7 +36,7 @@ export default function PostListTable(props: PostListTableProps) {
             className="postlist-table__tr postlist-table__tr--item"
           >
             <td className="postlist-table__td postlist-table__td--name">
-              <Link href={post.info?.url || ""}>
+              <Link href={getURL(post)}>
                 <Typography colorLevel={10} colorType="primary" weight="bold">
                   {post.title}
                 </Typography>

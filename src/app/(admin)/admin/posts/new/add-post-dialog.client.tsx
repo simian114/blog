@@ -2,7 +2,8 @@
 import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { RouteLayoutType, Tag } from "@prisma/client"
+import { Tag } from "@prisma/client"
+import readingTime from "reading-time"
 import { z } from "zod"
 
 import Button from "@/components/button/Button"
@@ -32,7 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { createPost, CreatePostDTO } from "./actions"
+import { createPost } from "./actions"
 import { RouteWithCategories } from "./page"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
@@ -41,9 +42,9 @@ const formSchema = z.object({
   title: z.string().min(1).max(100),
   content: z.string().min(1),
   published: z.boolean(),
+  routeId: z.number(),
   categoryId: z.number().optional(),
   description: z.string(),
-  url: z.string().optional(),
 })
 
 interface AddPostDialogProps {
@@ -55,17 +56,6 @@ interface AddPostDialogProps {
 export function AddPostDialog(props: AddPostDialogProps) {
   const [open, setOpen] = useState(false)
   const routes = useMemo(() => props.allRoutes, [props.allRoutes])
-  const [selectedRouteID, setSelectedRouteID] = useState(
-    routes?.[0]?.id?.toString()
-  )
-  const selectedRoute = useMemo(
-    () =>
-      routes.find(
-        route => route.id.toString() === selectedRouteID,
-        [selectedRouteID]
-      ),
-    [routes, selectedRouteID]
-  )
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -74,20 +64,24 @@ export function AddPostDialog(props: AddPostDialogProps) {
       content: props.content,
       published: false,
       description: "",
+      routeId: props.allRoutes?.[0].id,
+      categoryId: props.allRoutes?.[0]?.categories?.[0]?.id,
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { url, ...rest } = values
+    const time = readingTime(props.content).minutes
+    const { categoryId, routeId, ...rest } = values
+
     await createPost({
-      ...(rest as unknown as CreatePostDTO),
+      ...rest,
+      readingTime: time,
       content: props.content,
-      info: { url },
+      category: { connect: { id: categoryId } },
+      route: { connect: { id: routeId } },
     })
     wait().then(() => setOpen(false))
   }
-
-  // NOTE: custom
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -155,90 +149,99 @@ export function AddPostDialog(props: AddPostDialogProps) {
                     </FormItem>
                   )}
                 />
-                <Select
-                  defaultValue={`${selectedRouteID}`}
-                  onValueChange={setSelectedRouteID}
-                >
-                  <SelectTrigger className="border-solid">
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
 
-                  <SelectContent>
-                    {routes.map(route => {
-                      return (
-                        <SelectItem key={route.id} value={route.id.toString()}>
-                          <div className="flex flex-row gap-4">
-                            <span>{route?.title}</span>{" "}
-                            <span>type: {route?.layoutType}</span>
-                          </div>
-                        </SelectItem>
-                      )
-                    })}
-                  </SelectContent>
-                </Select>
-
-                {selectedRoute?.layoutType !== RouteLayoutType.CUSTOM ? (
-                  <FormField
-                    control={form.control}
-                    name="categoryId"
-                    render={({ field }) => {
-                      return (
-                        <FormItem className="flex flex-col">
-                          <FormLabel>카테고리</FormLabel>
-                          <Select
-                            onValueChange={v => field.onChange(Number(v) || 0)}
-                            defaultValue={
-                              field.value?.toString() ||
-                              selectedRoute?.categories?.[0]?.id.toString()
-                            }
-                          >
-                            <FormControl>
-                              <SelectTrigger className="border-solid">
-                                <SelectValue placeholder="Select a verified email to display" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {selectedRoute?.categories.map(category => {
-                                return (
-                                  <SelectItem
-                                    key={category.id}
-                                    value={category.id.toString()}
-                                  >
-                                    <div className="flex flex-row gap-4">
-                                      <span>
-                                        {category?.title}{" "}
-                                        {category?.id?.toString()}
-                                      </span>
-                                    </div>
-                                  </SelectItem>
-                                )
-                              })}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )
-                    }}
-                  />
-                ) : (
-                  <FormField
-                    control={form.control}
-                    name="url"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>url</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="border-solid"
-                            placeholder="url"
-                            {...field}
-                          />
-                        </FormControl>
+                <FormField
+                  control={form.control}
+                  name="routeId"
+                  render={({ field }) => {
+                    return (
+                      <FormItem className="flex flex-col">
+                        <FormLabel>route</FormLabel>
+                        <Select
+                          onValueChange={v => {
+                            field.onChange(Number(v) || 0)
+                            form.trigger("categoryId")
+                            form.trigger("routeId")
+                          }}
+                          defaultValue={
+                            field.value?.toString() ||
+                            props.allRoutes?.[0]?.id.toString()
+                          }
+                        >
+                          <FormControl>
+                            <SelectTrigger className="border-solid">
+                              <SelectValue placeholder="Select a verified email to display" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {routes.map(route => {
+                              return (
+                                <SelectItem
+                                  key={route.id}
+                                  value={route.id.toString()}
+                                >
+                                  <div className="flex flex-row gap-4">
+                                    <span>{route?.title}</span>{" "}
+                                    <span>type: {route?.layoutType}</span>
+                                  </div>
+                                </SelectItem>
+                              )
+                            })}
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
-                    )}
-                  />
-                )}
+                    )
+                  }}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="categoryId"
+                  render={({ field }) => {
+                    const routeID = form.getValues("routeId")
+                    const categoriesByRoute =
+                      props.allRoutes.find(route => route.id === routeID)
+                        ?.categories || []
+
+                    return (
+                      <FormItem className="flex flex-col">
+                        <FormLabel>카테고리</FormLabel>
+                        <Select
+                          onValueChange={v => field.onChange(Number(v) || 0)}
+                          defaultValue={
+                            field.value?.toString() ||
+                            categoriesByRoute?.[0]?.id.toString()
+                          }
+                        >
+                          <FormControl>
+                            <SelectTrigger className="border-solid">
+                              <SelectValue placeholder="Select a verified email to display" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {categoriesByRoute.map(category => {
+                              return (
+                                <SelectItem
+                                  key={category.id}
+                                  value={category.id.toString()}
+                                >
+                                  <div className="flex flex-row gap-4">
+                                    <span>
+                                      {category?.title}{" "}
+                                      {category?.id?.toString()}
+                                    </span>
+                                  </div>
+                                </SelectItem>
+                              )
+                            })}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )
+                  }}
+                />
 
                 {/* NOTE: */}
                 <Button type="submit">submit</Button>

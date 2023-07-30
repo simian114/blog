@@ -5,12 +5,14 @@ import { useEffect, useRef } from "react"
 import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 
+import { getURL } from "@/helpers/model/post"
+
 import Typography from "../typography/Typography"
 
 import Tag from "./tag/Tag"
 
 export type Post = Prisma.PostGetPayload<{
-  include: { tags: { include: { tag: true } }; category: true; info: true }
+  include: { tags: { include: { tag: true } }; category: true; route: true }
 }>
 
 export interface PostCardProps {
@@ -60,7 +62,7 @@ export default function PostCard(props: PostCardProps) {
             variants="body1"
             className="post-card__reading-time"
           >
-            {post?.info?.readingTime}분
+            {post?.readingTime}분
           </Typography>
 
           <Typography className="post-card__created-at" variants="caption1">
@@ -75,8 +77,7 @@ export default function PostCard(props: PostCardProps) {
             colorType="gray"
             colorLevel={12}
           >
-            <Link href={post.info?.url || ""}>
-              {/* <Link href={props.post.slug}> */}
+            <Link href={`${getURL(post)}`}>
               {props.post.title || "post title"}
             </Link>
           </Typography>

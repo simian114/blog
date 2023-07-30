@@ -49,7 +49,7 @@ export const columns: ColumnDef<Post>[] = [
     },
   },
   {
-    accessorKey: "info.url",
+    accessorKey: "url",
     header: "url",
     cell({ getValue }) {
       return (
@@ -60,7 +60,7 @@ export const columns: ColumnDef<Post>[] = [
     },
   },
   {
-    accessorKey: "info.readingTime",
+    accessorKey: "readingTime",
     header: "readingTime",
   },
   {
@@ -87,6 +87,10 @@ export const columns: ColumnDef<Post>[] = [
       const category = row.getValue<Category>("category")
       return <span>{category?.title}</span>
     },
+  },
+  {
+    accessorKey: "route.title",
+    header: "route",
   },
   {
     accessorKey: "id",

@@ -14,8 +14,8 @@ type CategoryWithPosts = Prisma.CategoryGetPayload<{
     route: true
     posts: {
       include: {
+        route: true
         category: true
-        info: true
         tags: { include: { tag: true } }
       }
     }
@@ -27,7 +27,7 @@ interface PostListProps {
   className: string
   type: RouteLayoutType
   currentCategory?: string
-  categoryWithPosts: CategoryWithPosts
+  categoryWithPosts?: CategoryWithPosts
 }
 
 /**
@@ -38,10 +38,10 @@ interface PostListProps {
  */
 export default function PostList(props: PostListProps): ReactElement | null {
   const allPosts = props.categories
-    .reduce((prev, cur) => {
+    ?.reduce((prev, cur) => {
       return [...prev, ...(cur.posts || [])]
     }, [] as Post[])
-    .sort((a, b) => a.id - b.id)
+    ?.sort((a, b) => a.id - b.id)
 
   if (!props.categories.length) {
     return null
@@ -145,7 +145,9 @@ export default function PostList(props: PostListProps): ReactElement | null {
         {props.type === RouteLayoutType.TABLE && (
           <PostListTable
             posts={
-              props.currentCategory ? props.categoryWithPosts.posts : allPosts
+              props.currentCategory
+                ? props.categoryWithPosts?.posts || []
+                : allPosts
             }
           />
         )}

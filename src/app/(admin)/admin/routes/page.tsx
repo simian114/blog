@@ -9,7 +9,6 @@ async function getRouteData() {
     },
     include: {
       categories: true,
-      representPost: true,
     },
   })
   return routes

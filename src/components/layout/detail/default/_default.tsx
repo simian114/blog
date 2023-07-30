@@ -7,6 +7,7 @@ import dayjs from "dayjs"
 import Comments from "@/components/comment/Comments"
 import DocumentTOC from "@/components/documentTOC/DocumentTOC"
 import Tag from "@/components/postCard/tag/Tag"
+import { getSlug } from "@/helpers/model/post"
 
 import MobileController from "../../mobileController/MobileController"
 
@@ -22,14 +23,11 @@ export default function DetailDefaultLayout({
   children: ReactNode
   post: Prisma.PostGetPayload<{
     include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
-      info: true
+      category: true
+      route: true
+      tags: { include: { tag: true } }
     }
-  }> | null
+  }>
 }) {
   if (!post) {
     notFound()
@@ -75,9 +73,9 @@ export default function DetailDefaultLayout({
                 </div>
                 <div className="detail-main__reading-time">
                   <LapTimerIcon />
-                  <span>{post.info?.readingTime}min</span>
+                  <span>{post.readingTime}min</span>
                 </div>
-                <ViewCounter slug={post.info?.slug || []} />
+                <ViewCounter slug={getSlug(post)} />
               </div>
               <div className="detail-main__info__right">
                 <div className="detail-main__tags">

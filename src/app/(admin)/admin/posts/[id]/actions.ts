@@ -1,6 +1,5 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
 import { Prisma } from "@prisma/client"
 
 import prisma from "@/lib/prisma"
@@ -17,11 +16,11 @@ export async function editPost(props: EditPostProps) {
     },
     data: props.data,
   })
-  const info = await prisma.postInfo.findUnique({
-    where: { postId: updated.id },
-  })
+  // const info = await prisma.postInfo.findUnique({
+  //   where: { postId: updated.id },
+  // })
 
-  if (!info) return
+  // if (!info) return
 
-  revalidatePath(info.url)
+  // revalidatePath(info.url)
 }

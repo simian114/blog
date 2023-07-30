@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm"
 import DetailDefaultLayout from "@/components/layout/detail/default/_default"
 import PostList from "@/components/layout/index/default/common/PostList"
 import { MdxComponents } from "@/components/mdx/mdxComponents"
+import { getSlug, getURL } from "@/helpers/model/post"
 import prisma from "@/lib/prisma"
 
 export const revalidate = 60 // revalidate this page every 60 seconds
@@ -20,8 +21,8 @@ async function getData(slug: string[]) {
           route: true,
           posts: {
             include: {
+              route: true,
               category: true,
-              info: true,
               tags: { include: { tag: true } },
             },
           },
@@ -29,10 +30,20 @@ async function getData(slug: string[]) {
       },
     },
   })
+  //
   const post =
     slug.length === 3
       ? await prisma.post.findFirst({
-          where: { info: { url: `/${slug.join("/")}` } },
+          where: {
+            route: { url: `/${slug[0]}` },
+            category: { url: `/${slug[1]}` },
+            title: decodeURI(slug[2]),
+          },
+          include: {
+            route: true,
+            category: true,
+            tags: { include: { tag: true } },
+          },
         })
       : null
   return { routes, post }
@@ -41,12 +52,10 @@ async function getData(slug: string[]) {
 export async function generateStaticParams() {
   const posts = await prisma.post.findMany({
     where: { published: true },
-    include: { info: true },
+    include: { route: true, category: true, tags: { include: { tag: true } } },
   })
-  const filtered = posts.filter(
-    post => !!post?.info?.slug && !!post?.info?.slug.length
-  )
-  return filtered.map(post => ({ slug: post.info?.slug }))
+  const filtered = posts.filter(post => getURL(post))
+  return filtered.map(post => ({ slug: getSlug(post) }))
 }
 
 /**
@@ -76,7 +85,7 @@ export default async function BasePage({
     const route = routes.find(route => route.title === params.slug[0])
     const category = params.slug?.[1] || ""
     const categoryWithPosts = route?.categories.find(
-      category => category.title === params.slug?.[1] || ""
+      category => category.url === `/${params.slug?.[1]}` || ""
     )
     if (!route) {
       return notFound()
@@ -87,10 +96,9 @@ export default async function BasePage({
           <PostList
             className="index-main__category-list"
             categories={route.categories}
-            // TODO: Route layout type
             type={route.layoutType}
             currentCategory={category}
-            categoryWithPosts={categoryWithPosts as any}
+            categoryWithPosts={categoryWithPosts}
           />
         </Suspense>
       </main>
@@ -110,10 +118,7 @@ export default async function BasePage({
       },
       components: MdxComponents,
     })
-    //
-    return (
-      <DetailDefaultLayout post={post as any}>{content}</DetailDefaultLayout>
-    )
+    return <DetailDefaultLayout post={post}>{content}</DetailDefaultLayout>
   } else {
     return notFound()
   }
