@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { Suspense } from "react"
+import { RouteLayoutType } from "@prisma/client"
 import rehypeHighlight from "rehype-highlight"
 import remarkGfm from "remark-gfm"
 
@@ -49,13 +50,37 @@ async function getData(slug: string[]) {
   return { routes, post }
 }
 
+// NOTE: category only
 export async function generateStaticParams() {
   const posts = await prisma.post.findMany({
     where: { published: true },
     include: { route: true, category: true, tags: { include: { tag: true } } },
   })
+  // NOTE: routes
+  const routes = (
+    await prisma.route.findMany({
+      where: { open: true, NOT: { layoutType: RouteLayoutType.CUSTOM } },
+    })
+  ).filter(route => route.url !== "/")
+
+  const categories = await prisma.category.findMany({
+    where: { route: { open: true } },
+    include: { route: true },
+  })
+
+  const routeSlug = routes.map(route => ({
+    slug: [route.url.replace("/", "")],
+  }))
+  const categorySlug = categories.map(category => ({
+    slug: [category.route?.url.replace("/", ""), category.url.replace("/", "")],
+  }))
+
   const filtered = posts.filter(post => getURL(post))
-  return filtered.map(post => ({ slug: getSlug(post) }))
+  return [
+    ...routeSlug,
+    ...categorySlug,
+    ...filtered.map(post => ({ slug: getSlug(post) })),
+  ]
 }
 
 /**
