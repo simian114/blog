@@ -11,7 +11,7 @@ import { UpdateRouteDialog } from "./update-dialog"
 import { UpdateRouteLayoutDialog } from "./update-layout-type-dialog"
 
 export const columns: ColumnDef<
-  Prisma.RouteGetPayload<{ include: { categories: true; post: true } }>
+  Prisma.RouteGetPayload<{ include: { categories: true; representPost: true } }>
 >[] = [
   {
     accessorKey: "id",

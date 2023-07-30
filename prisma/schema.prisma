@@ -41,7 +41,7 @@ model Route {
   categories Category[]
 
   // NOTE: route 페이지에서 post 보여줄 경우 대비
-  post Post?
+  representPost Post?
 }
 
 enum RouteLayoutType {

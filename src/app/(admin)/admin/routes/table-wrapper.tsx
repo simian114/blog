@@ -9,7 +9,7 @@ interface RouteTableWrapperProps {
   allRoutes: Prisma.RouteGetPayload<{
     include: {
       categories: true
-      post: true
+      representPost: true
     }
   }>[]
 }
