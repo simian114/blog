@@ -58,14 +58,13 @@ export function AddRouteDialog() {
     defaultValues: {
       title: "",
       description: "",
-      url: "",
       layoutType: RouteLayoutType.CARD,
       priority: 255,
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await newRoute({ ...values, url: values.title })
+    await newRoute({ ...values, url: `/${values.title}` })
     wait().then(() => setOpen(false))
   }
 

@@ -1,64 +1,26 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { Post } from "@prisma/client"
-import readingTime from "reading-time"
+import { Post, Prisma } from "@prisma/client"
 
+import { getURL } from "@/helpers/model/post"
 import prisma from "@/lib/prisma"
 
-export type CreatePostDTO = Omit<Post, "id"> & { info?: { url?: string } }
+export type CreatePostDTO = Prisma.PostCreateInput
 
 interface UpdatePostDTO {
   id: Post["id"]
   data: Omit<Post, "id">
 }
 
+// TODO: 임시저장은 나중에
 export async function createPost(data: CreatePostDTO) {
-  if (!data.categoryId) {
-    const { info, ...rest } = data
-    const post = await prisma.post.create({
-      data: {
-        ...rest,
-        info: {
-          create: info?.url
-            ? {
-                readingTime: 0,
-                url: info?.url || "",
-              }
-            : undefined,
-        },
-      },
-    })
-    revalidatePath("[...slug]")
-    info?.url &&
-      (process.env.NODE_ENV === "production"
-        ? revalidatePath(`${process.env.URL}/${info?.url}`)
-        : revalidatePath(info?.url))
-    return post
-  }
-  const category = await prisma.category.findUnique({
-    where: { id: data?.categoryId },
-    include: { route: true },
-  })
-  //
   const post = await prisma.post.create({
-    data: {
-      ...data,
-      info: {
-        create: {
-          readingTime: readingTime(data.content || "").minutes,
-          url: `/${category?.route?.title}/${
-            category?.title
-          }/${data.title.replaceAll(" ", "_")}`,
-          slug: [
-            category?.route?.title || "",
-            category?.title || "",
-            data.title.replaceAll(" ", "_"),
-          ],
-        },
-      },
-    },
+    data,
+    include: { category: true, route: true },
   })
+  getURL(post) && revalidatePath(getURL(post))
+
   return post
 }
 
@@ -68,6 +30,7 @@ export async function updatePost(dto: UpdatePostDTO) {
     where: {
       id: dto.id,
     },
+    include: { category: true, route: true },
   })
   return post
 }

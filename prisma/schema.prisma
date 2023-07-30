@@ -32,16 +32,16 @@ model Route {
   title       String
   description String?
   open        Boolean
-  url         String
+  url         String  @unique
 
   priority Int @default(autoincrement())
 
   layoutType RouteLayoutType
 
   categories Category[]
+  posts      Post[]
 
   // NOTE: route 페이지에서 post 보여줄 경우 대비
-  representPost Post?
 }
 
 enum RouteLayoutType {
@@ -77,28 +77,16 @@ model Post {
   description String?
   published   Boolean   @default(false)
 
+  // NOTE: like computed fields by route / category
+  readingTime Int
+
   // NOTE: relations
   tags       TagsOnPosts[]
   category   Category?     @relation(fields: [categoryId], references: [id])
   categoryId Int?
-  info       PostInfo?
 
   route   Route? @relation(fields: [routeId], references: [id])
-  routeId Int?   @unique
-}
-
-model PostInfo {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-
-  readingTime Int
-  url         String   @unique
-  slug        String[]
-
-  post   Post @relation(fields: [postId], references: [id])
-  postId Int  @unique
+  routeId Int?
 }
 
 model Tag {

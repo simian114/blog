@@ -6,7 +6,6 @@ import EditMDXEditor from "./EditMdxEditor"
 
 export type AllIncludedPost = Prisma.PostGetPayload<{
   include: {
-    info: true
     category: true
     route: true
     tags: {
@@ -23,7 +22,6 @@ async function getData(id: number): Promise<{ post: AllIncludedPost | null }> {
     include: {
       category: true,
       route: true,
-      info: true,
       tags: { include: { tag: true } },
     },
   })

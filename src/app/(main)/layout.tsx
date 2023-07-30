@@ -61,6 +61,9 @@ async function getRoutes() {
     where: {
       deletedAt: null,
       open: true,
+      NOT: {
+        url: "/",
+      },
     },
   })
   return routes

@@ -10,8 +10,8 @@ async function getAllPosts() {
     },
     include: {
       tags: true,
-      info: true,
       category: true,
+      route: true,
     },
   })
   return posts

@@ -9,7 +9,7 @@ export const revalidate = 60 // revalidate this page every 60 seconds
 
 async function getData() {
   const post = await prisma.post.findFirst({
-    where: { info: { url: "/resume" } },
+    where: { route: { url: "/resume" } },
   })
   return { post }
 }
