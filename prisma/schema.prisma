@@ -72,6 +72,7 @@ model Post {
   updatedAt   DateTime  @updatedAt
   deletedAt   DateTime?
   // 
+  url         String // NOTE: encoding 과정에서 - 는 공백으로 치환됨. 공백은 디코딩 과정에서 - 로 치환됨
   title       String
   content     String?
   description String?

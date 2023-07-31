@@ -7,7 +7,7 @@ import dayjs from "dayjs"
 import Comments from "@/components/comment/Comments"
 import DocumentTOC from "@/components/documentTOC/DocumentTOC"
 import Tag from "@/components/postCard/tag/Tag"
-import { getSlug } from "@/helpers/model/post"
+import { getPostSlug } from "@/helpers/model/post"
 
 import MobileController from "../../mobileController/MobileController"
 
@@ -75,7 +75,7 @@ export default function DetailDefaultLayout({
                   <LapTimerIcon />
                   <span>{post.readingTime}min</span>
                 </div>
-                <ViewCounter slug={getSlug(post)} />
+                <ViewCounter slug={getPostSlug(post)} />
               </div>
               <div className="detail-main__info__right">
                 <div className="detail-main__tags">
