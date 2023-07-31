@@ -61,7 +61,7 @@ export function UpdateRouteDialog(props: UpdateRouteDialogProps) {
       id: props.route.id,
       data: {
         ...values,
-        url: `/${values.title}`,
+        url: `${values.title}`,
       },
     })
     wait().then(() => setOpen(false))

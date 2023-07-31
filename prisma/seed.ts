@@ -3,20 +3,20 @@ const prisma = new PrismaClient()
 
 async function main() {
   const routeTitles = [
-    { title: "home", type: RouteLayoutType.CARD, priority: 1, url: "/" },
-    { title: "blog", type: RouteLayoutType.CARD, priority: 1, url: "/blog" },
+    { title: "home", type: RouteLayoutType.CARD, priority: 1, url: "" },
+    { title: "blog", type: RouteLayoutType.CARD, priority: 1, url: "blog" },
     {
       title: "snippet",
       type: RouteLayoutType.TABLE,
       priority: 2,
-      url: "/snippet",
+      url: "snippet",
     },
-    { title: "mdx", type: RouteLayoutType.CUSTOM, priority: 3, url: "/mdx" },
+    { title: "mdx", type: RouteLayoutType.CUSTOM, priority: 3, url: "mdx" },
     {
       title: "guestbook",
       type: RouteLayoutType.CUSTOM,
       priority: 4,
-      url: "/guestbook",
+      url: "guestbook",
     },
   ]
 
@@ -51,7 +51,7 @@ async function main() {
       prisma.category.create({
         data: {
           title: category.title,
-          url: `/${category.title}`,
+          url: `${category.title}`,
           routeId:
             routes.find(route => route.title === category.route)?.id || 1,
           description: `${category.title} 입니다.`,
@@ -71,11 +71,12 @@ async function main() {
   await prisma.post.create({
     data: {
       title: "main",
+      url: "",
       description: "main home",
       content: `# Hello world Home \n## This is h2 \n### h3h3\n ### h3h3 \n## h2h2 \n### h3h3h3`,
       published: true,
       readingTime: getRandomInt(1, 100),
-      route: { connect: { url: "/" } },
+      route: { connect: { url: "" } },
     },
   })
 
@@ -83,7 +84,8 @@ async function main() {
     cate.map((category, index) =>
       prisma.post.create({
         data: {
-          title: `post-${index} category ${category.title}`,
+          title: `post-${index} category-${category.title}`,
+          url: `post-${index}--category-${category.title}`,
           description: `post-${index}--category-${category.title}`,
           content: `# Hello world ${index} \n## This is h2 \n### h3h3\n ### h3h3 \n## h2h2 \n### h3h3h3`,
           published: true,

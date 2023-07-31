@@ -45,6 +45,7 @@ const formSchema = z.object({
   routeId: z.number(),
   categoryId: z.number().optional(),
   description: z.string(),
+  url: z.string().min(1).max(100),
 })
 
 interface AddPostDialogProps {
@@ -66,15 +67,17 @@ export function AddPostDialog(props: AddPostDialogProps) {
       description: "",
       routeId: props.allRoutes?.[0].id,
       categoryId: props.allRoutes?.[0]?.categories?.[0]?.id,
+      url: "",
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { categoryId, routeId, url, ...rest } = values
     const time = readingTime(props.content).minutes
-    const { categoryId, routeId, ...rest } = values
 
     await createPost({
       ...rest,
+      url: url.replaceAll(" ", "-"),
       readingTime: time,
       content: props.content,
       category: { connect: { id: categoryId } },
@@ -107,6 +110,23 @@ export function AddPostDialog(props: AddPostDialogProps) {
                         <Input
                           className="border-solid"
                           placeholder="제목을 입력해주세요"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="url"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>url</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="border-solid"
+                          placeholder="공백은 - 로 치환됩니다"
                           {...field}
                         />
                       </FormControl>

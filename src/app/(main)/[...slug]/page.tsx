@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm"
 import DetailDefaultLayout from "@/components/layout/detail/default/_default"
 import PostList from "@/components/layout/index/default/common/PostList"
 import { MdxComponents } from "@/components/mdx/mdxComponents"
-import { getSlug, getURL } from "@/helpers/model/post"
+import { getPostSlug, getPostURL } from "@/helpers/model/post"
 import prisma from "@/lib/prisma"
 
 export const revalidate = 60 // revalidate this page every 60 seconds
@@ -36,9 +36,9 @@ async function getData(slug: string[]) {
     slug.length === 3
       ? await prisma.post.findFirst({
           where: {
-            route: { url: `/${slug[0]}` },
-            category: { url: `/${slug[1]}` },
-            title: decodeURI(slug[2]),
+            route: { url: `${slug[0]}` },
+            category: { url: `${slug[1]}` },
+            url: slug[2],
           },
           include: {
             route: true,
@@ -61,7 +61,7 @@ export async function generateStaticParams() {
     await prisma.route.findMany({
       where: { open: true, NOT: { layoutType: RouteLayoutType.CUSTOM } },
     })
-  ).filter(route => route.url !== "/")
+  ).filter(route => route.url !== "")
 
   const categories = await prisma.category.findMany({
     where: { route: { open: true } },
@@ -69,17 +69,17 @@ export async function generateStaticParams() {
   })
 
   const routeSlug = routes.map(route => ({
-    slug: [route.url.replace("/", "")],
+    slug: [route.url],
   }))
   const categorySlug = categories.map(category => ({
-    slug: [category.route?.url.replace("/", ""), category.url.replace("/", "")],
+    slug: [category.route?.url, category.url],
   }))
 
-  const filtered = posts.filter(post => getURL(post))
+  const filtered = posts.filter(post => getPostURL(post))
   return [
     ...routeSlug,
     ...categorySlug,
-    ...filtered.map(post => ({ slug: getSlug(post) })),
+    ...filtered.map(post => ({ slug: getPostSlug(post) })),
   ]
 }
 
@@ -110,7 +110,7 @@ export default async function BasePage({
     const route = routes.find(route => route.title === params.slug[0])
     const category = params.slug?.[1] || ""
     const categoryWithPosts = route?.categories.find(
-      category => category.url === `/${params.slug?.[1]}` || ""
+      category => category.url === `${params.slug?.[1]}` || ""
     )
     if (!route) {
       return notFound()

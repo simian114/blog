@@ -16,11 +16,4 @@ export async function editPost(props: EditPostProps) {
     },
     data: props.data,
   })
-  // const info = await prisma.postInfo.findUnique({
-  //   where: { postId: updated.id },
-  // })
-
-  // if (!info) return
-
-  // revalidatePath(info.url)
 }

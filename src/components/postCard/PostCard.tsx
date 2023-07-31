@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react"
 import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 
-import { getURL } from "@/helpers/model/post"
+import { getPostURL } from "@/helpers/model/post"
 
 import Typography from "../typography/Typography"
 
@@ -77,7 +77,7 @@ export default function PostCard(props: PostCardProps) {
             colorType="gray"
             colorLevel={12}
           >
-            <Link href={`${getURL(post)}`}>
+            <Link href={`${getPostURL(post)}`}>
               {props.post.title || "post title"}
             </Link>
           </Typography>

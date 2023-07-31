@@ -64,7 +64,7 @@ export function AddRouteDialog() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await newRoute({ ...values, url: `/${values.title}` })
+    await newRoute({ ...values, url: `${values.title}` })
     wait().then(() => setOpen(false))
   }
 

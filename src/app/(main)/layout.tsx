@@ -62,7 +62,7 @@ async function getRoutes() {
       deletedAt: null,
       open: true,
       NOT: {
-        url: "/",
+        url: "",
       },
     },
   })
