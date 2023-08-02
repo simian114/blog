@@ -19,7 +19,7 @@ export function getPostURL(post: PostWithCategoryAndRoute) {
     return ""
   }
   // NOTE: category & route 있는 경우
-  return `${post.route.url}/${post.category.url}/${post.url}`
+  return `/${post.route.url}/${post.category.url}/${post.url}`
 }
 
 export function getPostSlug(post: PostWithCategoryAndRoute) {
