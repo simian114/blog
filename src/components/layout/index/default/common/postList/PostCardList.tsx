@@ -1,8 +1,6 @@
-import { HTMLAttributes } from "react"
-
 import PostCard, { Post } from "@/components/postCard/PostCard"
 
-interface PostCardListProps extends HTMLAttributes<HTMLUListElement> {
+interface PostCardListProps {
   posts: Post[]
 }
 

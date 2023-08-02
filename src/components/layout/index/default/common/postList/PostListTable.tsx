@@ -1,12 +1,11 @@
 import Link from "next/link"
-import { HTMLAttributes } from "react"
 
 import { Post } from "@/components/postCard/PostCard"
 import Tag from "@/components/postCard/tag/Tag"
 import Typography from "@/components/typography/Typography"
 import { getPostURL } from "@/helpers/model/post"
 
-interface PostListTableProps extends HTMLAttributes<HTMLUListElement> {
+interface PostListTableProps {
   posts: Post[]
 }
 

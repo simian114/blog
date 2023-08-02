@@ -1,12 +1,11 @@
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
-import { Suspense } from "react"
 import { RouteLayoutType } from "@prisma/client"
 import rehypeHighlight from "rehype-highlight"
 import remarkGfm from "remark-gfm"
 
 import DetailDefaultLayout from "@/components/layout/detail/default/_default"
-import PostList from "@/components/layout/index/default/common/PostList"
+import PostListWrapper from "@/components/layout/index/default/common/PostListWrapper"
 import { MdxComponents } from "@/components/mdx/mdxComponents"
 import { getPostSlug, getPostURL } from "@/helpers/model/post"
 import prisma from "@/lib/prisma"
@@ -20,13 +19,6 @@ async function getData(slug: string[]) {
       categories: {
         include: {
           route: true,
-          posts: {
-            include: {
-              route: true,
-              category: true,
-              tags: { include: { tag: true } },
-            },
-          },
         },
       },
     },
@@ -108,8 +100,7 @@ export default async function BasePage({
 
   if (params.slug.length === 1 || params.slug.length === 2) {
     const route = routes.find(route => route.title === params.slug[0])
-    const category = params.slug?.[1] || ""
-    const categoryWithPosts = route?.categories.find(
+    const category = route?.categories.find(
       category => category.url === `${params.slug?.[1]}` || ""
     )
     if (!route) {
@@ -117,15 +108,12 @@ export default async function BasePage({
     }
     return (
       <main className="index-main">
-        <Suspense fallback={<></>}>
-          <PostList
-            className="index-main__category-list"
-            categories={route.categories}
-            type={route.layoutType}
-            currentCategory={category}
-            categoryWithPosts={categoryWithPosts}
-          />
-        </Suspense>
+        <PostListWrapper
+          className="index-main__category-list"
+          type={route.layoutType}
+          currentRoute={route}
+          currentCategory={category}
+        />
       </main>
     )
   } else if (params.slug.length === 3) {
