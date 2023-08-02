@@ -23,5 +23,5 @@ export function getPostURL(post: PostWithCategoryAndRoute) {
 }
 
 export function getPostSlug(post: PostWithCategoryAndRoute) {
-  return getPostURL(post)?.split("/") || []
+  return getPostURL(post)?.replace("/", "")?.split("/") || []
 }
