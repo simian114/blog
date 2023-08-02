@@ -46,6 +46,7 @@ const withMDX = createMDX({
   options: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [rehypeHighlight],
+    format: "mdx",
   },
 })
 

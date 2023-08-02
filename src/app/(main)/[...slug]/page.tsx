@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { RouteLayoutType } from "@prisma/client"
-import rehypeHighlight from "rehype-highlight"
-import remarkGfm from "remark-gfm"
 
 import DetailDefaultLayout from "@/components/layout/detail/default/_default"
 import PostListWrapper from "@/components/layout/index/default/common/PostListWrapper"
@@ -122,13 +120,6 @@ export default async function BasePage({
     }
     const { content } = await compileMDX({
       source: post.content || "",
-      options: {
-        mdxOptions: {
-          remarkPlugins: [remarkGfm],
-          rehypePlugins: [rehypeHighlight],
-          format: "mdx",
-        },
-      },
       components: MdxComponents,
     })
     return <DetailDefaultLayout post={post}>{content}</DetailDefaultLayout>
