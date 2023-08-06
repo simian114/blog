@@ -1,0 +1,9 @@
+.tag-selector {
+  min-width: max-content;
+  display: flex;
+  &:hover {
+    .tag {
+      opacity: 0.8;
+    }
+  }
+}

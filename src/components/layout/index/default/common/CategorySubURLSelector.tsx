@@ -1,14 +1,11 @@
-import { Category, Route, RouteLayoutType } from "@prisma/client"
-
-import AnchorText from "@/components/mdx/AnchorText"
-import { getRDSTypographyClassName } from "@/helpers/rds/base/getRDSTypographyClassName"
+import { Category, Route, SubUrlPost } from "@prisma/client"
 
 import CategorySelector from "./categorySelector/CategorySelector"
 import PostList from "./postList/PostList"
 
 interface PostListWrapper {
   className: string
-  type: RouteLayoutType
+  type: SubUrlPost
   currentCategory?: Category
   currentRoute: Route
 }
@@ -17,18 +14,9 @@ interface PostListWrapper {
  * @todo route 에 있는 layout 에 따라 렌더링 다르게 만들기
  *
  */
-export default async function PostListWrapper(props: PostListWrapper) {
+export default async function CategorySubURLSelector(props: PostListWrapper) {
   return (
     <section className={`${props.className} post-list`}>
-      <AnchorText
-        className={getRDSTypographyClassName({
-          weight: "bold",
-          variants: "h2",
-        })}
-        as="h2"
-      >
-        {props.currentRoute.title}
-      </AnchorText>
       {/* NOTE: layout - category */}
       <CategorySelector
         currentRoute={props.currentRoute}

@@ -1,76 +1,14 @@
 import { notFound } from "next/navigation"
-import { compileMDX } from "next-mdx-remote/rsc"
-import { RouteLayoutType } from "@prisma/client"
 
-import DetailDefaultLayout from "@/components/layout/detail/default/_default"
-import PostListWrapper from "@/components/layout/index/default/common/PostListWrapper"
-import { MdxComponents } from "@/components/mdx/mdxComponents"
-import { getPostSlug, getPostURL } from "@/helpers/model/post"
-import prisma from "@/lib/prisma"
+import MainDetail from "./detail"
+import { getStaticParams } from "./getStaticParams"
+import MainList from "./list"
 
 export const revalidate = 60 // revalidate this page every 60 seconds
 
-async function getData(slug: string[]) {
-  const routes = await prisma.route.findMany({
-    where: { open: true },
-    include: {
-      categories: {
-        include: {
-          route: true,
-        },
-      },
-    },
-  })
-  //
-  const post =
-    slug.length === 3
-      ? await prisma.post.findFirst({
-          where: {
-            route: { url: `${slug[0]}` },
-            category: { url: `${slug[1]}` },
-            url: slug[2],
-          },
-          include: {
-            route: true,
-            category: true,
-            tags: { include: { tag: true } },
-          },
-        })
-      : null
-  return { routes, post }
-}
-
 // NOTE: category only
 export async function generateStaticParams() {
-  const posts = await prisma.post.findMany({
-    where: { published: true },
-    include: { route: true, category: true, tags: { include: { tag: true } } },
-  })
-  // NOTE: routes
-  const routes = (
-    await prisma.route.findMany({
-      where: { open: true, NOT: { layoutType: RouteLayoutType.CUSTOM } },
-    })
-  ).filter(route => route.url !== "")
-
-  const categories = await prisma.category.findMany({
-    where: { route: { open: true } },
-    include: { route: true },
-  })
-
-  const routeSlug = routes.map(route => ({
-    slug: [route.url],
-  }))
-  const categorySlug = categories.map(category => ({
-    slug: [category.route?.url, category.url],
-  }))
-
-  const filtered = posts.filter(post => getPostURL(post))
-  return [
-    ...routeSlug,
-    ...categorySlug,
-    ...filtered.map(post => ({ slug: getPostSlug(post) })),
-  ]
+  return await getStaticParams()
 }
 
 /**
@@ -88,42 +26,15 @@ export async function generateStaticParams() {
  *    - https://www.youtube.com/watch?v=qAgwDGCrzgE&t=255s
  *
  */
-
 export default async function BasePage({
   params,
 }: {
   params: { slug: string[] }
 }) {
-  const { routes, post } = await getData(params.slug)
-
   if (params.slug.length === 1 || params.slug.length === 2) {
-    const route = routes.find(route => route.title === params.slug[0])
-    const category = route?.categories.find(
-      category => category.url === `${params.slug?.[1]}` || ""
-    )
-    if (!route) {
-      return notFound()
-    }
-    return (
-      <main className="index-main">
-        <PostListWrapper
-          className="index-main__category-list"
-          type={route.layoutType}
-          currentRoute={route}
-          currentCategory={category}
-        />
-      </main>
-    )
+    return <MainList routeURL={params.slug[0]} subURL={params.slug?.[1]} />
   } else if (params.slug.length === 3) {
-    if (!post) {
-      return notFound()
-    }
-    const { content } = await compileMDX({
-      source: post.content || "",
-      components: MdxComponents,
-    })
-    return <DetailDefaultLayout post={post}>{content}</DetailDefaultLayout>
-  } else {
-    return notFound()
+    return <MainDetail slug={params.slug} />
   }
+  return notFound()
 }

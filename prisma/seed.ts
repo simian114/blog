@@ -1,38 +1,93 @@
-import { PrismaClient, RouteLayoutType, TagColor } from "@prisma/client"
+import {
+  LayoutType,
+  PrismaClient,
+  SubUrlPost,
+  SubUrlSelector,
+  // SubUrlPost,
+  TagColor,
+} from "@prisma/client"
 const prisma = new PrismaClient()
 
 async function main() {
   const routeTitles = [
-    { title: "home", type: RouteLayoutType.CARD, priority: 1, url: "" },
-    { title: "blog", type: RouteLayoutType.CARD, priority: 1, url: "blog" },
+    {
+      title: "home",
+      priority: 1,
+      url: "",
+      layouts: [],
+    },
+    {
+      title: "blog",
+      priority: 1,
+      url: "blog",
+      layouts: [
+        {
+          type: LayoutType.SUB_URL,
+          extendedData: {
+            selector: SubUrlSelector.CATEGORY,
+            post: SubUrlPost.CARD,
+          },
+        },
+      ],
+    },
     {
       title: "snippet",
-      type: RouteLayoutType.TABLE,
       priority: 2,
       url: "snippet",
+      layouts: [
+        {
+          type: LayoutType.SUB_URL,
+          extendedData: {
+            selector: SubUrlSelector.CATEGORY,
+            post: SubUrlPost.TABLE,
+          },
+        },
+      ],
     },
-    { title: "mdx", type: RouteLayoutType.CUSTOM, priority: 3, url: "mdx" },
+    {
+      title: "archives",
+      priority: 3,
+      url: "archives",
+      layouts: [
+        {
+          type: LayoutType.COMPONENT,
+          extendedData: {
+            name: "SimplePostList",
+          },
+        },
+        {
+          type: LayoutType.SUB_URL,
+          extendedData: {
+            selector: SubUrlSelector.TAG,
+            post: "table",
+          },
+        },
+      ],
+    },
+    { title: "mdx", priority: 4, url: "mdx", layouts: [] },
     {
       title: "guestbook",
-      type: RouteLayoutType.CUSTOM,
-      priority: 4,
+      priority: 5,
       url: "guestbook",
+      layouts: [],
     },
   ]
 
   const routes = await Promise.all(
-    routeTitles.map(route =>
-      prisma.route.create({
+    routeTitles.map(route => {
+      return prisma.route.create({
         data: {
           open: true,
           title: route.title,
           url: route.url,
           description: route.title,
-          layoutType: route.type,
           priority: route.priority,
+          layouts: {
+            create: route.layouts,
+          },
         },
       })
-    )
+    })
   )
 
   const categoryTitles = [
@@ -68,18 +123,6 @@ async function main() {
 
   const cate = [...cateogiresWithRoute, ...cateogiresWithRoute]
 
-  await prisma.post.create({
-    data: {
-      title: "main",
-      url: "",
-      description: "main home",
-      content: `# Hello world Home \n## This is h2 \n### h3h3\n ### h3h3 \n## h2h2 \n### h3h3h3`,
-      published: true,
-      readingTime: getRandomInt(1, 100),
-      route: { connect: { url: "" } },
-    },
-  })
-
   const posts = await Promise.all(
     cate.map((category, index) =>
       prisma.post.create({
@@ -106,12 +149,12 @@ async function main() {
   )
 
   const TagInfos = [
-    { title: "React", color: TagColor.PRIMARY },
-    { title: "Javascript", color: TagColor.SECONDARY },
-    { title: "Nextjs", color: TagColor.TERTIARY },
-    { title: "CSS", color: TagColor.GRAY },
-    { title: "SCSS", color: TagColor.PRIMARY },
-    { title: "Tailwind", color: TagColor.TERTIARY },
+    { title: "React", color: TagColor.PRIMARY, url: "React" },
+    { title: "Javascript", color: TagColor.SECONDARY, url: "Javascript" },
+    { title: "Next.js", color: TagColor.TERTIARY, url: "Next.js" },
+    { title: "CSS", color: TagColor.SECONDARY, url: "CSS" },
+    { title: "SCSS", color: TagColor.PRIMARY, url: "SCSS" },
+    { title: "Tailwind", color: TagColor.TERTIARY, url: "Tailwind" },
   ]
 
   const tags = await Promise.all(
@@ -120,12 +163,13 @@ async function main() {
         data: {
           title: info.title,
           color: info.color,
+          url: info.url,
         },
       })
     )
   )
 
-  const tagsOnPosts = await Promise.all(
+  await Promise.all(
     posts.map(post =>
       prisma.tagsOnPosts.create({
         data: {
