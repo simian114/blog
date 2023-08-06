@@ -1,3 +1,5 @@
+import { Prisma, SubUrlSelector } from "@prisma/client"
+
 import { getPostSlug, getPostURL } from "@/helpers/model/post"
 import prisma from "@/lib/prisma"
 
@@ -27,11 +29,34 @@ export async function getStaticParams() {
   const categorySlug = categories.map(category => ({
     slug: [category.route?.url, category.url],
   }))
+  // NOTE: route 에 의존 tag
+  const hasTagSelectorRoute = routes.find(
+    route =>
+      !!route.layouts.find(
+        layout =>
+          layout.type === "SUB_URL" &&
+          (layout.extendedData as Prisma.JsonObject).selector ===
+            SubUrlSelector.TAG
+      )
+  )
+  const tags = (
+    await prisma.tag.findMany({
+      include: {
+        posts: true,
+      },
+    })
+  ).filter(tag => !!tag.posts.length)
+
+  const tagSlug = tags.map(tag => ({
+    slug: [hasTagSelectorRoute?.url || "", tag.url],
+  }))
+  console.log(tagSlug)
 
   const filtered = posts.filter(post => getPostURL(post))
   return [
     ...routeSlug,
     ...categorySlug,
+    ...tagSlug,
     ...filtered.map(post => ({ slug: getPostSlug(post) })),
   ]
 }
