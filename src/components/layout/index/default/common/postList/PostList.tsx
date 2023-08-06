@@ -1,4 +1,4 @@
-import { RouteLayoutType } from "@prisma/client"
+import { SubUrlPost } from "@prisma/client"
 
 import Typography from "@/components/typography/Typography"
 import prisma from "@/lib/prisma"
@@ -9,7 +9,7 @@ export interface PostListProp {
   description: string
   categoryId?: number
   routeId: number
-  type: RouteLayoutType
+  type: SubUrlPost
 }
 
 async function getData({ routeId }: { routeId: number }) {

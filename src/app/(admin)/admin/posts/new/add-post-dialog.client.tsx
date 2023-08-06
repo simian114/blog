@@ -170,7 +170,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
                   )}
                 />
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="routeId"
                   render={({ field }) => {
@@ -213,7 +213,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
                       </FormItem>
                     )
                   }}
-                />
+                /> */}
 
                 <FormField
                   control={form.control}

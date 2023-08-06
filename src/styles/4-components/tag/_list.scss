@@ -1,0 +1,8 @@
+@use "@styles" as *;
+
+.tag-selector-list {
+  display: flex;
+  gap: rds-space(space-04);
+  flex-wrap: wrap;
+  padding: rds-space(space-16) 0;
+}

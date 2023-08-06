@@ -8,7 +8,6 @@ import dayjs from "dayjs"
 import { DeleteRouteDialog } from "./delete-dialog"
 import { UpdateRouteCategoryDialog } from "./update-category-dialog"
 import { UpdateRouteDialog } from "./update-dialog"
-import { UpdateRouteLayoutDialog } from "./update-layout-type-dialog"
 
 export const columns: ColumnDef<
   Prisma.RouteGetPayload<{ include: { categories: true } }>
@@ -52,13 +51,13 @@ export const columns: ColumnDef<
       )
     },
   },
-  {
-    id: "layoutType",
-    header: "레이아웃 타입",
-    cell({ row }) {
-      return <div>{row.original?.layoutType}</div>
-    },
-  },
+  // {
+  //   id: "layoutType",
+  //   header: "레이아웃 타입",
+  //   cell({ row }) {
+  //     return <div>{row.original?.layoutType}</div>
+  //   },
+  // },
   {
     id: "priority",
     accessorKey: "priority",
@@ -87,7 +86,7 @@ export const columns: ColumnDef<
             route={row.original}
             currentRouteID={row.getValue<number>("id")}
           />
-          <UpdateRouteLayoutDialog route={row.original} />
+          {/* <UpdateRouteLayoutDialog route={row.original} /> */}
         </div>
       )
     },

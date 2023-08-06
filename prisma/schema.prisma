@@ -1,6 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["jsonProtocol"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -8,20 +7,21 @@ datasource db {
   url      = env("POSTGRES_PRISMA_URL")
 }
 
-model guestbooks {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  content   String   @db.VarChar(1000)
-  ip        String   @db.VarChar(16)
-  nickname  String   @db.VarChar(40)
-}
-
 // NOTE: Route
 // A Category can have zero or more Post
 // A Post must always have an Category
 // A Post can have zero or more Tag
 // A Tag must always have an Post
+
+model Layout {
+  id   Int        @id @default(autoincrement())
+  type LayoutType
+
+  extendedData Json?
+
+  Route   Route? @relation(fields: [routeId], references: [id])
+  routeId Int?
+}
 
 model Route {
   id        Int       @id @default(autoincrement())
@@ -36,18 +36,15 @@ model Route {
 
   priority Int @default(autoincrement())
 
-  layoutType RouteLayoutType
+  // layoutType RouteLayoutType
 
   categories Category[]
   posts      Post[]
 
   // NOTE: route 페이지에서 post 보여줄 경우 대비
-}
 
-enum RouteLayoutType {
-  CARD
-  TABLE
-  CUSTOM
+  // NOTE: layoutType. if Layout array is empty then custom
+  layouts Layout[]
 }
 
 model Category {
@@ -99,9 +96,49 @@ model Tag {
   title       String
   description String?
   color       TagColor
+  url         String    @unique
 
   // NOTE: Relation
   posts TagsOnPosts[]
+}
+
+model TagsOnPosts {
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     Int
+  tag        Tag      @relation(fields: [tagId], references: [id])
+  tagId      Int
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([postId, tagId])
+}
+
+model guestbooks {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  content   String   @db.VarChar(1000)
+  ip        String   @db.VarChar(16)
+  nickname  String   @db.VarChar(40)
+}
+
+// NOTE: ENUMS
+
+// NOTE: CURATION 은 나중에... 대표 포스트 선정 등에 사용할 예정. 아직 설계못함
+enum LayoutType {
+  SUB_URL
+  COMPONENT
+  CURATION
+}
+
+enum SubUrlSelector {
+  CATEGORY
+  TAG
+}
+
+enum SubUrlPost {
+  CARD
+  TABLE
 }
 
 enum TagColor {
@@ -121,15 +158,11 @@ enum TagColor {
   RED
 }
 
-model TagsOnPosts {
-  post       Post     @relation(fields: [postId], references: [id])
-  postId     Int
-  tag        Tag      @relation(fields: [tagId], references: [id])
-  tagId      Int
-  assignedAt DateTime @default(now())
-  assignedBy String
-
-  @@id([postId, tagId])
+// NOTE: json 에서 사용할 type. 자동생성되지 않음
+model Temp {
+  id             Int            @id
+  subUrlSelector SubUrlSelector
+  subUrlPost     SubUrlPost
 }
 
 // TODO: Curation

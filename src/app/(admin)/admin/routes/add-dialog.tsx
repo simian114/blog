@@ -2,7 +2,6 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { RouteLayoutType } from "@prisma/client"
 import { z } from "zod"
 
 import Button from "@/components/button/Button"
@@ -25,13 +24,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 
 import { newRoute } from "./actions"
 
@@ -42,11 +34,7 @@ const formSchema = z.object({
   description: z.string().min(1).max(20),
   open: z.boolean(),
   url: z.string(),
-  layoutType: z.enum([
-    RouteLayoutType.CARD,
-    RouteLayoutType.TABLE,
-    RouteLayoutType.CUSTOM,
-  ]),
+
   priority: z.number(),
 })
 
@@ -58,13 +46,19 @@ export function AddRouteDialog() {
     defaultValues: {
       title: "",
       description: "",
-      layoutType: RouteLayoutType.CARD,
       priority: 255,
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await newRoute({ ...values, url: `${values.title}` })
+    await newRoute({
+      ...values,
+      url: `${values.title}`,
+      title: values.title || "",
+      layouts: {
+        create: [],
+      },
+    })
     wait().then(() => setOpen(false))
   }
 
@@ -120,7 +114,7 @@ export function AddRouteDialog() {
                   )}
                 />
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="layoutType"
                   render={({ field }) => (
@@ -152,7 +146,7 @@ export function AddRouteDialog() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 <FormField
                   control={form.control}
                   name="open"

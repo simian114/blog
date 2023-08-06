@@ -1,0 +1,34 @@
+@use "@styles" as *;
+
+.simple-post-list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  @include rds-grid(32px);
+  @include rds-grid-layout((6), (6));
+
+  @include mobile {
+    @include rds-grid(16px);
+    @include rds-grid-layout((12));
+  }
+}
+
+.simple-post-list {
+  display: flex;
+  flex-direction: column;
+  gap: rds-space(space-04);
+}
+
+.simple-post {
+  display: flex;
+  gap: rds-space(space-04);
+  align-items: end;
+
+  @include pointing-hover {
+    .simple-post {
+      &__date,
+      &__title {
+        color: var(--primary12);
+      }
+    }
+  }
+}
