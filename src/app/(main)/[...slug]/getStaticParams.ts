@@ -50,7 +50,6 @@ export async function getStaticParams() {
   const tagSlug = tags.map(tag => ({
     slug: [hasTagSelectorRoute?.url || "", tag.url],
   }))
-  console.log(tagSlug)
 
   const filtered = posts.filter(post => getPostURL(post))
   return [

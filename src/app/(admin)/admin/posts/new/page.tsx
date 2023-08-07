@@ -10,13 +10,15 @@ async function getData() {
       posts: true,
     },
   })
-  const routes = await prisma.route.findMany({ include: { categories: true } })
+  const routes = await prisma.route.findMany({
+    include: { categories: true, layouts: true },
+  })
   return { tags, routes }
 }
 
 export type CateogoryWithRoute = Category & { route: Route | null }
 export type RouteWithCategories = Prisma.RouteGetPayload<{
-  include: { categories: true }
+  include: { categories: true; layouts: true }
 }>
 
 export default async function NewPostPage() {

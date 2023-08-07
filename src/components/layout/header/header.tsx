@@ -13,7 +13,6 @@ import MagicButtonLink from "@/components/magicButton/ButtonLink"
 import { useDevice } from "@/components/providers/deviceWidthProvider"
 import { ThemeSelector } from "@/components/theme"
 import DisableScroll from "@/components/util/DisableScroll"
-import { capitalizeFirstLetter } from "@/lib/utils"
 import { RouteWithCategories } from "@/types/prisma"
 
 import HeaderMobileMenu from "./_mobileMenu"
@@ -97,7 +96,7 @@ export default function Header(props: HeaderProps): ReactElement {
                         : ""
                     }`}
                   >
-                    {capitalizeFirstLetter(route.title)}
+                    {route.title}
                   </ButtonLink>
                   {!isMobile && !!route.categories?.length && (
                     <>

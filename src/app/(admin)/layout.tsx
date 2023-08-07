@@ -17,7 +17,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-background font-sans antialiased dark">
+      <body className="min-h-screen bg-background font-sans antialiased dark-theme dark">
         <div className="relative flex min-h-screen flex-col w-full">
           <Providers>
             <AdminHeader />
