@@ -1,4 +1,10 @@
 @use "@styles" as *;
+// @use "@styles/1-base/functions" as *;
+@use "@styles/3-foundations/typography/functions" as *;
+@use "@styles/3-foundations/typography/data" as *;
+
+$count: 10;
+$list-height: rds-line-height(subtitle1) * rds-font-size(subtitle1) * $count;
 
 .simple-post-list-wrapper {
   display: flex;
@@ -8,7 +14,7 @@
 
   @include mobile {
     @include rds-grid(16px);
-    @include rds-grid-layout((12));
+    @include rds-grid-layout((12), (12));
   }
 }
 
@@ -16,18 +22,24 @@
   display: flex;
   flex-direction: column;
   gap: rds-space(space-04);
+  max-height: $list-height;
+  overflow: auto;
+  @include thin-scrollbar;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .simple-post {
   display: flex;
   gap: rds-space(space-04);
-  align-items: end;
+  align-items: baseline;
+  width: fit-content;
 
   @include pointing-hover {
     .simple-post {
       &__date,
       &__title {
-        color: var(--primary12);
+        color: var(--primary11);
       }
     }
   }

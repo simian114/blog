@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Tag } from "@prisma/client"
+import { Prisma, SubUrlSelector, Tag } from "@prisma/client"
 import readingTime from "reading-time"
 import { z } from "zod"
 
@@ -56,7 +56,19 @@ interface AddPostDialogProps {
 
 export function AddPostDialog(props: AddPostDialogProps) {
   const [open, setOpen] = useState(false)
-  const routes = useMemo(() => props.allRoutes, [props.allRoutes])
+  const routes = useMemo(
+    () =>
+      props.allRoutes.filter(
+        route =>
+          !!route.layouts.find(
+            layout =>
+              layout.type === "SUB_URL" &&
+              (layout.extendedData as Prisma.JsonObject)?.selector ===
+                SubUrlSelector.CATEGORY
+          )
+      ),
+    [props.allRoutes]
+  )
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -65,8 +77,8 @@ export function AddPostDialog(props: AddPostDialogProps) {
       content: props.content,
       published: false,
       description: "",
-      routeId: props.allRoutes?.[0].id,
-      categoryId: props.allRoutes?.[0]?.categories?.[0]?.id,
+      routeId: routes?.[0].id,
+      categoryId: routes?.[0]?.categories?.[0]?.id,
       url: "",
     },
   })
@@ -170,7 +182,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
                   )}
                 />
 
-                {/* <FormField
+                <FormField
                   control={form.control}
                   name="routeId"
                   render={({ field }) => {
@@ -185,7 +197,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
                           }}
                           defaultValue={
                             field.value?.toString() ||
-                            props.allRoutes?.[0]?.id.toString()
+                            routes?.[0]?.id.toString()
                           }
                         >
                           <FormControl>
@@ -202,7 +214,6 @@ export function AddPostDialog(props: AddPostDialogProps) {
                                 >
                                   <div className="flex flex-row gap-4">
                                     <span>{route?.title}</span>{" "}
-                                    <span>type: {route?.layoutType}</span>
                                   </div>
                                 </SelectItem>
                               )
@@ -213,7 +224,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
                       </FormItem>
                     )
                   }}
-                /> */}
+                />
 
                 <FormField
                   control={form.control}
@@ -221,8 +232,8 @@ export function AddPostDialog(props: AddPostDialogProps) {
                   render={({ field }) => {
                     const routeID = form.getValues("routeId")
                     const categoriesByRoute =
-                      props.allRoutes.find(route => route.id === routeID)
-                        ?.categories || []
+                      routes.find(route => route.id === routeID)?.categories ||
+                      []
 
                     return (
                       <FormItem className="flex flex-col">

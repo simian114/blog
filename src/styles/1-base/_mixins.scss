@@ -83,7 +83,7 @@ $desktop: 1280;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
-    background-color: gray;
+    background-color: var(--gray11);
   }
   &::-webkit-scrollbar-button {
     width: 0;
