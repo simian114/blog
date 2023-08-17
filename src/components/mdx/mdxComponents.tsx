@@ -72,6 +72,7 @@ const MdxComponents = {
   hr: (props: React.HTMLProps<HTMLHRElement>) => (
     <hr className="mdx-hr" {...props} />
   ),
+  Temp: () => <div>Temp</div>,
 }
 
 export { MdxComponents }
