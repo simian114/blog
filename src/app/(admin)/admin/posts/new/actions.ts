@@ -10,7 +10,7 @@ export type CreatePostDTO = Prisma.PostCreateInput
 
 interface UpdatePostDTO {
   id: Post["id"]
-  data: Omit<Post, "id">
+  data: Prisma.PostUpdateInput
 }
 
 // TODO: 임시저장은 나중에
@@ -32,5 +32,6 @@ export async function updatePost(dto: UpdatePostDTO) {
     },
     include: { category: true, route: true },
   })
+  getPostURL(post) && revalidatePath(getPostURL(post))
   return post
 }
