@@ -30,6 +30,8 @@ import {
 
 import Button from "@/components/button/Button"
 
+import { AllIncludedPost } from "../[id]/page"
+
 import { AddPostDialog } from "./add-post-dialog.client"
 
 import "@mdxeditor/editor/style.css"
@@ -39,8 +41,14 @@ const MDXEditor = dynamic(
   { ssr: false, loading: () => <></> }
 )
 
-export default function MdxEditorContainer() {
-  const [markdown, setMarkdown] = useState(`# hello world\n # hwy?`)
+interface MdxEditorContainerProps {
+  post?: AllIncludedPost
+}
+
+export default function MdxEditorContainer(props: MdxEditorContainerProps) {
+  const [markdown, setMarkdown] = useState(
+    props.post?.content || `# hello world\n # hwy?`
+  )
   const ref = React.useRef<MDXEditorMethods>(null)
 
   // NOTE: 공백 컴포넌트
@@ -75,10 +83,7 @@ export default function MdxEditorContainer() {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-row-reverse gap-4">
-        <AddPostDialog content={markdown} />
-        <Button design={{ type: "secondary" }} className="self-end">
-          임시 저장
-        </Button>
+        <AddPostDialog content={markdown} post={props.post} />
       </div>
 
       <div className="border border-solid rounded h-full">

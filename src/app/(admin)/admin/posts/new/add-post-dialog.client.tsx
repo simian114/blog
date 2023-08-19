@@ -1,4 +1,5 @@
 "use client"
+
 import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -34,7 +35,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { createPost } from "./actions"
+import { AllIncludedPost } from "../[id]/page"
+
+import { createPost, updatePost } from "./actions"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -50,7 +53,8 @@ const formSchema = z.object({
 })
 
 interface AddPostDialogProps {
-  content: string
+  post?: AllIncludedPost
+  content?: string
 }
 
 async function fetchRouteList(): Promise<
@@ -92,33 +96,67 @@ export function AddPostDialog(props: AddPostDialogProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
+      title: props.post?.title || "",
       content: props.content || "",
-      published: false,
-      description: "",
-      routeId: routes?.[0].id,
-      categoryId: routes?.[0]?.categories?.[0]?.id,
-      url: "",
-      tagIds: [],
+      published: props.post?.published || false,
+      description: props.post?.description || "",
+      routeId: props.post?.routeId || routes?.[0].id,
+      categoryId: props.post?.categoryId || routes?.[0]?.categories?.[0]?.id,
+      url: props.post?.url || "",
+      tagIds: props.post?.tags.map(tag => tag.tagId) || [],
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { categoryId, routeId, tagIds, url, ...rest } = values
 
-    await createPost({
-      ...rest,
-      url: url.replaceAll(" ", "-"),
-      readingTime: readingTime(props.content || "").minutes,
-      content: props.content,
-      category: !categoryId ? undefined : { connect: { id: categoryId } },
-      route: !routeId ? undefined : { connect: { id: routeId } },
-      tags: {
-        createMany: {
-          data: tagIds.map(id => ({ tagId: id, assignedBy: "" })),
+    if (!!props.post) {
+      const addedTags = tagIds
+        .filter(tagId => !props.post?.tags.find(tag => tag.tagId === tagId))
+        .map(id => ({ tagId: id, assignedBy: "" }))
+      const deletedTags = props.post.tags
+        .filter(tag => !tagIds.find(id => id === tag.tagId))
+        .map(tag => ({ tagId: tag.tagId }))
+
+      await updatePost({
+        id: props.post.id,
+        data: {
+          ...rest,
+          url: url.replaceAll(" ", "-"),
+          readingTime: readingTime(props.content || "").minutes,
+          content: props.content,
+          category:
+            props.post.categoryId === categoryId
+              ? undefined
+              : { connect: { id: categoryId } },
+          route:
+            props.post.routeId === routeId
+              ? undefined
+              : { connect: { id: routeId } },
+          tags: {
+            deleteMany: deletedTags,
+            createMany: {
+              data: addedTags,
+            },
+          },
         },
-      },
-    })
+      })
+    } else {
+      await createPost({
+        ...rest,
+        url: url.replaceAll(" ", "-"),
+        readingTime: readingTime(props.content || "").minutes,
+        content: props.content,
+        category: !categoryId ? undefined : { connect: { id: categoryId } },
+        route: !routeId ? undefined : { connect: { id: routeId } },
+        tags: {
+          createMany: {
+            data: tagIds.map(id => ({ tagId: id, assignedBy: "" })),
+          },
+        },
+      })
+    }
+
     wait().then(() => setOpen(false))
   }
 
