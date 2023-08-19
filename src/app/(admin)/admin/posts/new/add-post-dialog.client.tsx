@@ -40,11 +40,11 @@ const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
 const formSchema = z.object({
   title: z.string().min(1).max(100),
-  content: z.string().min(1),
-  published: z.boolean(),
-  routeId: z.number(),
+  content: z.string().optional(),
+  published: z.boolean().optional(),
+  routeId: z.number().optional(),
   categoryId: z.number().optional(),
-  description: z.string(),
+  description: z.string().optional(),
   url: z.string().min(1).max(100),
   tagIds: z.array(z.number()),
 })
@@ -93,7 +93,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      content: props.content,
+      content: props.content || "",
       published: false,
       description: "",
       routeId: routes?.[0].id,
@@ -109,10 +109,10 @@ export function AddPostDialog(props: AddPostDialogProps) {
     await createPost({
       ...rest,
       url: url.replaceAll(" ", "-"),
-      readingTime: readingTime(props.content).minutes,
+      readingTime: readingTime(props.content || "").minutes,
       content: props.content,
-      category: { connect: { id: categoryId } },
-      route: { connect: { id: routeId } },
+      category: !categoryId ? undefined : { connect: { id: categoryId } },
+      route: !routeId ? undefined : { connect: { id: routeId } },
       tags: {
         createMany: {
           data: tagIds.map(id => ({ tagId: id, assignedBy: "" })),
