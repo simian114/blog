@@ -10,16 +10,19 @@ interface TagSelectorProps {
 }
 
 async function getData() {
-  const tags = await prisma.tag.findMany({})
+  const tags = await prisma.tag.findMany({
+    include: { posts: true },
+  })
   return { tags }
 }
 
 export default async function TagSelectorList(props: TagSelectorProps) {
   const { tags } = await getData()
+  const tagsHasPost = tags.filter(tag => !!tag.posts?.length)
 
   return (
     <ul className="tag-selector-list">
-      {tags.map(tag => (
+      {tagsHasPost.map(tag => (
         <li key={tag.id}>
           <TagSelector
             route={props.route}
