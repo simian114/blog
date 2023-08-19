@@ -12,6 +12,7 @@ interface TagSelectorProps {
 export default function TagSelector(props: TagSelectorProps) {
   return (
     <Link
+      scroll={false}
       className={`tag-selector ${
         props.selected ? "tag-selector--selected" : ""
       }`}
