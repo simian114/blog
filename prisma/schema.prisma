@@ -73,10 +73,10 @@ model Post {
   title       String
   content     String?
   description String?
-  published   Boolean   @default(false)
+  published   Boolean?   @default(false)
 
   // NOTE: like computed fields by route / category
-  readingTime Int
+  readingTime Int?
 
   // NOTE: relations
   tags       TagsOnPosts[]
