@@ -27,12 +27,10 @@ import {
   toolbarPlugin,
   UndoRedo,
 } from "@mdxeditor/editor"
-import { Tag } from "@prisma/client"
 
 import Button from "@/components/button/Button"
 
 import { AddPostDialog } from "./add-post-dialog.client"
-import { RouteWithCategories } from "./page"
 
 import "@mdxeditor/editor/style.css"
 
@@ -41,12 +39,7 @@ const MDXEditor = dynamic(
   { ssr: false, loading: () => <></> }
 )
 
-interface MdxEditorContainerProps {
-  tags: Tag[]
-  routes: RouteWithCategories[]
-}
-
-export default function MdxEditorContainer(props: MdxEditorContainerProps) {
+export default function MdxEditorContainer() {
   const [markdown, setMarkdown] = useState(`# hello world\n # hwy?`)
   const ref = React.useRef<MDXEditorMethods>(null)
 
@@ -82,11 +75,7 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-row-reverse gap-4">
-        <AddPostDialog
-          content={markdown}
-          allTags={props.tags}
-          allRoutes={props.routes}
-        />
+        <AddPostDialog content={markdown} />
         <Button design={{ type: "secondary" }} className="self-end">
           임시 저장
         </Button>

@@ -3,6 +3,7 @@ import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Prisma, SubUrlSelector, Tag } from "@prisma/client"
+import { useQueries } from "@tanstack/react-query"
 import readingTime from "reading-time"
 import { z } from "zod"
 
@@ -34,7 +35,6 @@ import {
 } from "@/components/ui/select"
 
 import { createPost } from "./actions"
-import { RouteWithCategories } from "./page"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -46,19 +46,38 @@ const formSchema = z.object({
   categoryId: z.number().optional(),
   description: z.string(),
   url: z.string().min(1).max(100),
+  tagIds: z.array(z.number()),
 })
 
 interface AddPostDialogProps {
-  allRoutes: RouteWithCategories[]
-  allTags: Tag[]
   content: string
 }
 
+async function fetchRouteList(): Promise<
+  Prisma.RouteGetPayload<{
+    include: { categories: true; posts: true; layouts: true }
+  }>[]
+> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/route`)
+  return await res.json()
+}
+
+async function fetchTagList(): Promise<Tag[]> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/tag`)
+  return await res.json()
+}
+
 export function AddPostDialog(props: AddPostDialogProps) {
+  const [{ data: routes }, { data: tags }] = useQueries({
+    queries: [
+      { queryKey: ["routes"], queryFn: fetchRouteList },
+      { queryKey: ["tags"], queryFn: fetchTagList },
+    ],
+  })
   const [open, setOpen] = useState(false)
-  const routes = useMemo(
+  const filteredRoutes = useMemo(
     () =>
-      props.allRoutes.filter(
+      routes?.filter(
         route =>
           !!route.layouts.find(
             layout =>
@@ -66,8 +85,8 @@ export function AddPostDialog(props: AddPostDialogProps) {
               (layout.extendedData as Prisma.JsonObject)?.selector ===
                 SubUrlSelector.CATEGORY
           )
-      ),
-    [props.allRoutes]
+      ) || [],
+    [routes]
   )
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -80,20 +99,25 @@ export function AddPostDialog(props: AddPostDialogProps) {
       routeId: routes?.[0].id,
       categoryId: routes?.[0]?.categories?.[0]?.id,
       url: "",
+      tagIds: [],
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { categoryId, routeId, url, ...rest } = values
-    const time = readingTime(props.content).minutes
+    const { categoryId, routeId, tagIds, url, ...rest } = values
 
     await createPost({
       ...rest,
       url: url.replaceAll(" ", "-"),
-      readingTime: time,
+      readingTime: readingTime(props.content).minutes,
       content: props.content,
       category: { connect: { id: categoryId } },
       route: { connect: { id: routeId } },
+      tags: {
+        createMany: {
+          data: tagIds.map(id => ({ tagId: id, assignedBy: "" })),
+        },
+      },
     })
     wait().then(() => setOpen(false))
   }
@@ -197,7 +221,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
                           }}
                           defaultValue={
                             field.value?.toString() ||
-                            routes?.[0]?.id.toString()
+                            filteredRoutes?.[0]?.id.toString()
                           }
                         >
                           <FormControl>
@@ -206,7 +230,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {routes.map(route => {
+                            {filteredRoutes.map(route => {
                               return (
                                 <SelectItem
                                   key={route.id}
@@ -232,8 +256,8 @@ export function AddPostDialog(props: AddPostDialogProps) {
                   render={({ field }) => {
                     const routeID = form.getValues("routeId")
                     const categoriesByRoute =
-                      routes.find(route => route.id === routeID)?.categories ||
-                      []
+                      filteredRoutes.find(route => route.id === routeID)
+                        ?.categories || []
 
                     return (
                       <FormItem className="flex flex-col">
@@ -272,6 +296,63 @@ export function AddPostDialog(props: AddPostDialogProps) {
                       </FormItem>
                     )
                   }}
+                />
+                <FormField
+                  control={form.control}
+                  name="tagIds"
+                  render={() => (
+                    <FormItem className="flex flex-col gap-4">
+                      <div className="flex flex-col gap-4">
+                        <FormLabel>태그를 선택해주세요</FormLabel>
+                      </div>
+                      <div className="flex flex-row gap-4 flex-wrap">
+                        {tags?.map(tag => (
+                          <FormField
+                            key={tag.id}
+                            control={form.control}
+                            name="tagIds"
+                            render={({ field }) => {
+                              return (
+                                <FormItem
+                                  key={tag.id}
+                                  className="flex flex-row gap-4 items-center"
+                                >
+                                  <FormControl>
+                                    <Checkbox
+                                      className="bg-white"
+                                      checked={field.value?.includes(tag.id)}
+                                      // NOTE: disable condition
+                                      // disabled={
+                                      //   !!tag.route &&
+                                      //   tag.routeId !== props.route.id
+                                      // }
+                                      onCheckedChange={checked => {
+                                        return checked
+                                          ? field.onChange([
+                                              ...field.value,
+                                              tag.id,
+                                            ])
+                                          : field.onChange(
+                                              field.value?.filter(
+                                                value => value !== tag.id
+                                              )
+                                            )
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <FormLabel className="text-sm font-normal !mt-0 hello world">
+                                    {tag.title}
+                                  </FormLabel>
+                                </FormItem>
+                              )
+                            }}
+                          />
+                        ))}
+                      </div>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
 
                 {/* NOTE: */}

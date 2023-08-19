@@ -17,7 +17,7 @@ interface UpdatePostDTO {
 export async function createPost(data: CreatePostDTO) {
   const post = await prisma.post.create({
     data,
-    include: { category: true, route: true },
+    include: { category: true, route: true, tags: true },
   })
   getPostURL(post) && revalidatePath(getPostURL(post))
 
