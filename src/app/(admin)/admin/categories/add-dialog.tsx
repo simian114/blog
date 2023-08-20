@@ -2,10 +2,10 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Category } from "@prisma/client"
 import { z } from "zod"
 
 import Button from "@/components/button/Button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
   DialogContent,
@@ -24,37 +24,46 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { newCategory } from "./actions"
+import { newCategory, updateCategory } from "./actions"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
 const formSchema = z.object({
   title: z.string().min(1).max(20),
   description: z.string().min(1).max(20),
-  open: z.boolean(),
-  url: z.string(),
+  url: z.string().min(1).max(20),
 })
 
-export function AddDialog() {
+interface AddDialogProps {
+  category?: Category
+}
+
+export function AddDialog(props: AddDialogProps) {
   const [open, setOpen] = useState(false)
+  const isEditMode = !!props.category
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      open: false,
+      title: props.category?.title || "",
+      description: props.category?.description || "",
+      url: props.category?.url || "",
     },
   })
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const category = await newCategory(values)
+    if (isEditMode && props.category?.id) {
+      await updateCategory({ ...values, id: props.category.id })
+    } else {
+      await newCategory(values)
+    }
     wait().then(() => setOpen(false))
   }
-  //
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>추가</Button>
+        <Button>{isEditMode ? "수정" : "추가 "}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -74,7 +83,19 @@ export function AddDialog() {
                       <FormControl>
                         <Input placeholder="Category Title" {...field} />
                       </FormControl>
-                      {/* <FormDescription>display name</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="url"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>url</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Category url" {...field} />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -87,23 +108,6 @@ export function AddDialog() {
                       <FormLabel>Description</FormLabel>
                       <FormControl>
                         <Input placeholder="Category Description" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="open"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>노출</FormLabel>
-                      <FormControl>
-                        <Checkbox
-                          className="bg-white"
-                          checked={field.value}
-                          onCheckedChange={v => field.onChange(v as boolean)}
-                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma"
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 
+export const dynamic = "force-dynamic"
+
 async function getCategoryData() {
   const categories = await prisma.category.findMany({
     orderBy: {
