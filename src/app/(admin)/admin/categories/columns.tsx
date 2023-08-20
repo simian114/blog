@@ -1,25 +1,20 @@
 "use client"
 
-import Link from "next/link"
 import { Category, Route } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
+
+import { AddDialog } from "./add-dialog"
 
 export const columns: ColumnDef<Category>[] = [
   { accessorKey: "id", header: "id" },
   {
     accessorKey: "title",
     header: "Title",
-    cell({ row }) {
-      return (
-        <Link
-          className="hover:text-sky-700 font-bold"
-          href={row.getValue<string>("title")}
-        >
-          {row.getValue<string>("title")}
-        </Link>
-      )
-    },
+  },
+  {
+    accessorKey: "url",
+    header: "Url",
   },
   {
     accessorKey: "createdAt",
@@ -43,6 +38,17 @@ export const columns: ColumnDef<Category>[] = [
     cell({ row }) {
       const route = row.getValue<Route>("route")
       return <div className="whitespace-pre">{route?.title}</div>
+    },
+  },
+  {
+    id: "actions",
+    header: "actions",
+    cell: ({ row }) => {
+      return (
+        <div className="flex gap-4">
+          <AddDialog category={row.original} />
+        </div>
+      )
     },
   },
 ]

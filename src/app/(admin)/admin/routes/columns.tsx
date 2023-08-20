@@ -82,6 +82,7 @@ export const columns: ColumnDef<
       return (
         <div className="flex gap-4">
           <AddRouteDialog route={row.original} />
+          <UpdateRouteDialog route={row.original} />
           <DeleteRouteDialog route={row.original} />
           <UpdateRouteCategoryDialog
             route={row.original}

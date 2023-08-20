@@ -16,8 +16,9 @@ import DisableScroll from "@/components/util/DisableScroll"
 import { RouteWithCategories } from "@/types/prisma"
 
 import HeaderMobileMenu from "./_mobileMenu"
+
 interface HeaderProps {
-  routes: RouteWithCategories<"id" | "title">[]
+  routes: RouteWithCategories<"id" | "title" | "url">[]
 }
 
 export default function Header(props: HeaderProps): ReactElement {
@@ -120,7 +121,7 @@ export default function Header(props: HeaderProps): ReactElement {
                             {route.categories.map(category => (
                               <ButtonLink
                                 key={category.id}
-                                href={`/${route.title}/${category.title}`}
+                                href={`/${route.url}/${category.url}`}
                                 design={{
                                   type: "secondary",
                                 }}

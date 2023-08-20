@@ -52,6 +52,7 @@ async function getRoutes() {
         select: {
           id: true,
           title: true,
+          url: true,
         },
       },
     },
