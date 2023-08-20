@@ -5,6 +5,7 @@ import { Category, Prisma } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
 
+import { AddRouteDialog } from "./add-dialog"
 import { DeleteRouteDialog } from "./delete-dialog"
 import { UpdateRouteCategoryDialog } from "./update-category-dialog"
 import { UpdateRouteDialog } from "./update-dialog"
@@ -80,7 +81,7 @@ export const columns: ColumnDef<
     cell: ({ row }) => {
       return (
         <div className="flex gap-4">
-          <UpdateRouteDialog route={row.original} />
+          <AddRouteDialog route={row.original} />
           <DeleteRouteDialog route={row.original} />
           <UpdateRouteCategoryDialog
             route={row.original}
