@@ -2,6 +2,8 @@ import prisma from "@/lib/prisma"
 
 import { RouteTableWrapper } from "./table-wrapper"
 
+export const dynamic = "force-dynamic"
+
 async function getRouteData() {
   const routes = await prisma.route.findMany({
     orderBy: {

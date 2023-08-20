@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Route } from "@prisma/client"
 import { z } from "zod"
 
 import Button from "@/components/button/Button"
@@ -25,7 +26,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { newRoute } from "./actions"
+import { newRoute, updateRoute } from "./actions"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -33,39 +34,53 @@ const formSchema = z.object({
   title: z.string().min(1).max(20),
   description: z.string().min(1).max(20),
   open: z.boolean(),
-  url: z.string(),
-
   priority: z.number(),
 })
 
-export function AddRouteDialog() {
+interface AddRouteDialogProps {
+  route?: Route
+}
+
+export function AddRouteDialog(props: AddRouteDialogProps) {
   const [open, setOpen] = useState(false)
+  const isEditMode = typeof props.route?.id === "number"
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      priority: 255,
+      title: props.route?.title || "",
+      description: props.route?.description || "",
+      priority: props.route?.priority ?? 255,
+      open: props.route?.open || false,
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await newRoute({
-      ...values,
-      url: `${values.title}`,
-      title: values.title || "",
-      layouts: {
-        create: [],
-      },
-    })
+    if (isEditMode && props.route?.id) {
+      await updateRoute({
+        id: props.route.id,
+        data: {
+          ...values,
+          url: `${values.title}`,
+        },
+      })
+    } else {
+      await newRoute({
+        ...values,
+        url: `${values.title}`,
+        title: values.title || "",
+        layouts: {
+          create: [],
+        },
+      })
+    }
     wait().then(() => setOpen(false))
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>추가</Button>
+        <Button>{isEditMode ? "수정" : "추가 "}</Button>
       </DialogTrigger>
       <DialogContent className="border-solid">
         <DialogHeader>
