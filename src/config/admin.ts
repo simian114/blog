@@ -55,7 +55,7 @@ export const adminConfig: AdminConfig = {
         },
         {
           title: "Tags",
-          href: "/admin/tags",
+          href: "/admin/post-tags",
           items: [],
         },
       ],
