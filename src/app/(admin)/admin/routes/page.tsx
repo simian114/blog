@@ -11,6 +11,7 @@ async function getRouteData() {
     },
     include: {
       categories: true,
+      components: true,
     },
   })
   return routes

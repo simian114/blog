@@ -1,20 +1,6 @@
 import { cwd } from "process"
 
-const POST_PATH_PREFIX = cwd() + "/src/posts"
+const COMPONENT_PREFIX = cwd() + "/src/components"
+const LAYOUT_COMPONENTS_PATH = COMPONENT_PREFIX + "/layout/components"
 
-const HOME_PATH = POST_PATH_PREFIX + ""
-const BLOG_PATH = POST_PATH_PREFIX + "/blog"
-const SNIPPET_PATH = POST_PATH_PREFIX + "/snippet"
-const ARCHIVES_PATH = POST_PATH_PREFIX + "/archives"
-const MDX_SKETCH_PATH = POST_PATH_PREFIX + "/mdx-sketch"
-const DESIGN_SYSTEM_PATH = POST_PATH_PREFIX + "/design-system"
-
-export {
-  POST_PATH_PREFIX,
-  HOME_PATH,
-  BLOG_PATH,
-  SNIPPET_PATH,
-  ARCHIVES_PATH,
-  MDX_SKETCH_PATH,
-  DESIGN_SYSTEM_PATH,
-}
+export { LAYOUT_COMPONENTS_PATH }

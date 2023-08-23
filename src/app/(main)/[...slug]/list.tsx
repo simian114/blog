@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { LayoutType, Prisma, SubUrlPost, SubUrlSelector } from "@prisma/client"
 
 import CategorySubURLSelector from "@/components/layout/index/default/common/CategorySubURLSelector"
+import TagSelector from "@/components/layout/index/default/common/tagSelectorList/TagSelector"
 import TagSubURLSelector from "@/components/layout/index/default/common/TagSubUrlSelector"
 import Typography from "@/components/typography/Typography"
 import prisma from "@/lib/prisma"
@@ -18,7 +19,7 @@ async function getData() {
   const routes = await prisma.route.findMany({
     where: { open: true },
     include: {
-      layouts: true,
+      components: true,
       categories: {
         include: {
           route: true,
@@ -51,12 +52,13 @@ export default async function MainList(props: MainListProps) {
           </Typography>
         </p>
       </div>
-      {route.layouts.map((layout, index) => {
-        if (layout.type === LayoutType.SUB_URL) {
-          const extendedData = layout?.extendedData as Prisma.JsonObject
-          const selector = extendedData.selector
-          if (selector === SubUrlSelector.CATEGORY) {
-            const postType = extendedData.post as SubUrlPost
+      {route.components.map((component, index) => {
+        const componentName = component.name
+        const componentProps = component.props as Prisma.JsonObject
+        if (component.type === LayoutType.SUB_URL) {
+          const postType = (componentProps.post || SubUrlPost.CARD) as string
+
+          if (componentName === "CategorySelector") {
             return (
               <CategorySubURLSelector
                 key={index}
@@ -66,7 +68,7 @@ export default async function MainList(props: MainListProps) {
                 currentCategory={category}
               />
             )
-          } else if (selector === SubUrlSelector.TAG) {
+          } else if (componentName === "TagSelector") {
             return (
               <TagSubURLSelector
                 key={index}
@@ -75,14 +77,11 @@ export default async function MainList(props: MainListProps) {
               />
             )
           }
-        } else if (layout.type === LayoutType.COMPONENT) {
-          const componentName = (layout.extendedData as Prisma.JsonObject)
-            .name as string
+        } else if (component.type === LayoutType.COMPONENT) {
           const Component = ComponentMapper[componentName]
           if (!Component) {
             return <></>
           }
-          // NOTE: mapper 만들기
           return <Component key={index} />
         }
         return <></>

@@ -9,7 +9,7 @@ export interface PostListProp {
   description: string
   categoryId?: number
   routeId: number
-  type: SubUrlPost
+  type: SubUrlPost | string
 }
 
 async function getData({ routeId }: { routeId: number }) {

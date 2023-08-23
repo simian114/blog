@@ -69,7 +69,7 @@ export function AddRouteDialog(props: AddRouteDialogProps) {
         ...values,
         url: `${values.title}`,
         title: values.title || "",
-        layouts: {
+        components: {
           create: [],
         },
       })

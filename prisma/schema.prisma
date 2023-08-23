@@ -13,13 +13,39 @@ datasource db {
 // A Post can have zero or more Tag
 // A Tag must always have an Post
 
-model Layout {
-  id   Int        @id @default(autoincrement())
+// type: SUB_URL
+// extendedData: {
+//   post: table / card
+//   selector: CATEGORY / TAG
+// }
+//
+// type: COMPONENT
+// extendedData: {
+//   name: server component name
+// }
+//
+
+// name: SimplePost
+// type: Component
+// props: null
+//
+// name: CategorySelector / TagSelector
+// type: Sub_URL
+// props: { type: tag / category, post: table / card }
+//
+
+enum ComponentType {
+  SUB_URL
+  COMPONENT
+  CURATION
+}
+
+model Component {
+  id Int @id @default(autoincrement())
+  name String
+  props Json?
   type LayoutType
-
-  extendedData Json?
-
-  Route   Route? @relation(fields: [routeId], references: [id])
+  route   Route? @relation(fields: [routeId], references: [id])
   routeId Int?
 }
 
@@ -36,15 +62,11 @@ model Route {
 
   priority Int @default(autoincrement())
 
-  // layoutType RouteLayoutType
-
   categories Category[]
   posts      Post[]
 
   // NOTE: route 페이지에서 post 보여줄 경우 대비
-
-  // NOTE: layoutType. if Layout array is empty then custom
-  layouts Layout[]
+  components Component[]
 }
 
 model Category {
@@ -162,7 +184,9 @@ enum TagColor {
 model Temp {
   id             Int            @id
   subUrlSelector SubUrlSelector
+  componentType  ComponentType
   subUrlPost     SubUrlPost
 }
+
 
 // TODO: Curation
