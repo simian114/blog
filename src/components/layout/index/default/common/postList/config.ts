@@ -7,8 +7,10 @@ import PostCardList from "./PostCardList"
 import PostListTable from "./PostListTable"
 
 export const PostListMapper: {
-  [key in SubUrlPost]?: (props: { posts: Post[] }) => ReactElement
+  [key in SubUrlPost | string]?: (props: { posts: Post[] }) => ReactElement
 } = {
   [SubUrlPost.CARD]: PostCardList,
   [SubUrlPost.TABLE]: PostListTable,
+  [SubUrlPost.CARD.toLowerCase()]: PostCardList,
+  [SubUrlPost.TABLE.toLowerCase()]: PostListTable,
 }

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Prisma, SubUrlSelector, Tag } from "@prisma/client"
+import { Prisma, Tag } from "@prisma/client"
 import { useQueries } from "@tanstack/react-query"
 import readingTime from "reading-time"
 import { z } from "zod"
@@ -59,7 +59,7 @@ interface AddPostDialogProps {
 
 async function fetchRouteList(): Promise<
   Prisma.RouteGetPayload<{
-    include: { categories: true; posts: true; layouts: true }
+    include: { categories: true; posts: true; components: true }
   }>[]
 > {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/route`)
@@ -83,11 +83,10 @@ export function AddPostDialog(props: AddPostDialogProps) {
     () =>
       routes?.filter(
         route =>
-          !!route.layouts.find(
-            layout =>
-              layout.type === "SUB_URL" &&
-              (layout.extendedData as Prisma.JsonObject)?.selector ===
-                SubUrlSelector.CATEGORY
+          !!route.components.find(
+            component =>
+              component.type === "SUB_URL" &&
+              component.name === "CategorySelector"
           )
       ) || [],
     [routes]
@@ -294,7 +293,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
                   render={({ field }) => {
                     const routeID = form.getValues("routeId")
                     const categoriesByRoute =
-                      filteredRoutes.find(route => route.id === routeID)
+                      filteredRoutes?.find(route => route.id === routeID)
                         ?.categories || []
 
                     return (

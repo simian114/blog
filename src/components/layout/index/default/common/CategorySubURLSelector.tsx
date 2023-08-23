@@ -5,7 +5,7 @@ import PostList from "./postList/PostList"
 
 interface PostListWrapper {
   className: string
-  type: SubUrlPost
+  type: SubUrlPost | string
   currentCategory?: Category
   currentRoute: Route
 }

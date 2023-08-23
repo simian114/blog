@@ -1,17 +1,18 @@
 "use client"
 
 import Link from "next/link"
-import { Category, Prisma } from "@prisma/client"
+import { Category, Component, Prisma } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
 
 import { AddRouteDialog } from "./add-dialog"
 import { DeleteRouteDialog } from "./delete-dialog"
 import { UpdateRouteCategoryDialog } from "./update-category-dialog"
+import { UpdateRouteComponentDialog } from "./update-component-dialog"
 import { UpdateRouteDialog } from "./update-dialog"
 
 export const columns: ColumnDef<
-  Prisma.RouteGetPayload<{ include: { categories: true } }>
+  Prisma.RouteGetPayload<{ include: { categories: true; components: true } }>
 >[] = [
   {
     accessorKey: "id",
@@ -52,13 +53,25 @@ export const columns: ColumnDef<
       )
     },
   },
-  // {
-  //   id: "layoutType",
-  //   header: "레이아웃 타입",
-  //   cell({ row }) {
-  //     return <div>{row.original?.layoutType}</div>
-  //   },
-  // },
+  {
+    id: "components",
+    accessorKey: "components",
+    header: "컴포넌트 타입",
+    cell({ row }) {
+      const components = row.getValue("components") as Component[]
+      return (
+        <div className="flex flex-col gap-4">
+          {components.map((component, index) => (
+            <div className="flex gap-4" key={index}>
+              <span>type: {component.type}</span>
+              <span>name: {component.name}</span>
+              <span>props: {JSON.stringify(component.props)}</span>
+            </div>
+          ))}
+        </div>
+      )
+    },
+  },
   {
     id: "priority",
     accessorKey: "priority",
@@ -88,7 +101,10 @@ export const columns: ColumnDef<
             route={row.original}
             currentRouteID={row.getValue<number>("id")}
           />
-          {/* <UpdateRouteLayoutDialog route={row.original} /> */}
+          <UpdateRouteComponentDialog
+            route={row.original}
+            currentRouteID={row.getValue<number>("id")}
+          />
         </div>
       )
     },

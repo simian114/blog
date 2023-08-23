@@ -1,9 +1,7 @@
 import {
-  LayoutType,
+  ComponentType,
   PrismaClient,
   SubUrlPost,
-  SubUrlSelector,
-  // SubUrlPost,
   TagColor,
 } from "@prisma/client"
 const prisma = new PrismaClient()
@@ -14,17 +12,17 @@ async function main() {
       title: "home",
       priority: 1,
       url: "",
-      layouts: [],
+      components: [],
     },
     {
       title: "blog",
       priority: 1,
       url: "blog",
-      layouts: [
+      components: [
         {
-          type: LayoutType.SUB_URL,
-          extendedData: {
-            selector: SubUrlSelector.CATEGORY,
+          type: ComponentType.SUB_URL,
+          name: "CategorySelector",
+          props: {
             post: SubUrlPost.CARD,
           },
         },
@@ -34,11 +32,11 @@ async function main() {
       title: "snippet",
       priority: 2,
       url: "snippet",
-      layouts: [
+      components: [
         {
-          type: LayoutType.SUB_URL,
-          extendedData: {
-            selector: SubUrlSelector.CATEGORY,
+          type: ComponentType.SUB_URL,
+          name: "CategorySelector",
+          props: {
             post: SubUrlPost.TABLE,
           },
         },
@@ -48,28 +46,26 @@ async function main() {
       title: "archives",
       priority: 3,
       url: "archives",
-      layouts: [
+      components: [
         {
-          type: LayoutType.COMPONENT,
-          extendedData: {
-            name: "SimplePostList",
-          },
+          type: ComponentType.COMPONENT,
+          name: "SimplePostList",
         },
         {
-          type: LayoutType.SUB_URL,
-          extendedData: {
-            selector: SubUrlSelector.TAG,
-            post: "table",
+          type: ComponentType.SUB_URL,
+          name: "TagSelector",
+          props: {
+            post: SubUrlPost.CARD,
           },
         },
       ],
     },
-    { title: "mdx", priority: 4, url: "mdx", layouts: [] },
+    { title: "mdx", priority: 4, url: "mdx", components: [] },
     {
       title: "guestbook",
       priority: 5,
       url: "guestbook",
-      layouts: [],
+      components: [],
     },
   ]
 
@@ -82,8 +78,8 @@ async function main() {
           url: route.url,
           description: route.title,
           priority: route.priority,
-          layouts: {
-            create: route.layouts,
+          components: {
+            create: route.components,
           },
         },
       })

@@ -12,10 +12,10 @@ export async function getStaticParams() {
   const routes = (
     await prisma.route.findMany({
       where: { open: true },
-      include: { layouts: true },
+      include: { components: true },
     })
   )
-    .filter(route => !!route.layouts.length)
+    .filter(route => !!route.components.length)
     .filter(route => route.url !== "")
 
   const categories = await prisma.category.findMany({
@@ -32,11 +32,9 @@ export async function getStaticParams() {
   // NOTE: route 에 의존 tag
   const hasTagSelectorRoute = routes.find(
     route =>
-      !!route.layouts.find(
-        layout =>
-          layout.type === "SUB_URL" &&
-          (layout.extendedData as Prisma.JsonObject).selector ===
-            SubUrlSelector.TAG
+      !!route.components.find(
+        component =>
+          component.type === "SUB_URL" && component.name === "TagSelector"
       )
   )
   const tags = (
