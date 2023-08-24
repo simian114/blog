@@ -24,6 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
@@ -32,18 +33,15 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import { updateRoute } from "./actions"
+
 interface UpdateRouteComponentDialogProps {
   route: Prisma.RouteGetPayload<{ include: { components: true } }>
   currentRouteID: number
 }
 
 const formSchema = z.object({
-  components: z.array(
-    z.object({
-      type: z.enum([ComponentType.COMPONENT, ComponentType.SUB_URL]),
-      extendedData: z.any(),
-    })
-  ),
+  components: z.any(),
 })
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
@@ -58,16 +56,18 @@ async function getLayoutComponentList() {
 export function UpdateRouteComponentDialog(
   props: UpdateRouteComponentDialogProps
 ) {
+  const [open, setOpen] = useState(false)
+
+  const [componentList, setComponentList] = useState<
+    (Pick<Component, "type" | "name" | "props"> & {
+      id?: number
+    })[]
+  >(props.route.components)
+
   const { data: LayoutComponentList } = useQuery<string[]>({
     queryKey: ["getRouteLayoutList"],
     queryFn: getLayoutComponentList,
   })
-
-  const [open, setOpen] = useState(false)
-
-  const [componentList, setComponentList] = useState<
-    Pick<Component, "type" | "name" | "props">[]
-  >(props.route.components)
 
   const hasSubUrl = !!componentList.find(
     component => component.type === ComponentType.SUB_URL
@@ -79,15 +79,40 @@ export function UpdateRouteComponentDialog(
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    values
-    // await updateRoute({
-    //   id: props.currentRouteID,
-    //   data: {
-    //     categories: {
-    //       set: values.categories.map(id => ({ id })),
-    //     },
-    //   },
-    // })
+    const updateList = componentList
+      .filter(component => typeof component.id === "number")
+      .map(component => {
+        const { id = 0, routeId, ...rest } = component as any
+        routeId
+        return {
+          where: { id },
+          data: { ...rest } as any,
+        }
+      })
+    const deleteList = props.route.components
+      .filter(
+        prevComponent =>
+          !componentList.find(
+            newComponent => prevComponent.id === newComponent.id
+          )
+      )
+      .map(component => ({ id: component.id }))
+    const newList = componentList.filter(
+      component => typeof component.id !== "number"
+    )
+
+    await updateRoute({
+      id: props.currentRouteID,
+      data: {
+        components: {
+          updateMany: updateList,
+          deleteMany: deleteList,
+          createMany: {
+            data: newList as unknown as any,
+          },
+        },
+      },
+    })
     wait().then(() => setOpen(false))
   }
 
@@ -127,6 +152,120 @@ export function UpdateRouteComponentDialog(
   // NOTE: sub url 타입
   // NOTE: components
   // 순서대로 나올 수 있도록 만들어야함
+  function handleAddProp({ targetIndex }: { targetIndex: number }) {
+    const targetComponent = componentList[targetIndex] as unknown as Pick<
+      Component,
+      "type" | "name" | "props"
+    >
+    const targetComponentProps = (targetComponent.props || {}) as Record<
+      string,
+      string
+    >
+    const beforeComponents = [...componentList]
+    targetComponentProps.propKey = "prop value"
+    targetComponent.props = targetComponentProps
+    beforeComponents[targetIndex] = targetComponent
+    setComponentList(beforeComponents)
+  }
+
+  function handleChangePropKey({
+    targetIndex,
+    prevKey,
+    newKey,
+  }: {
+    targetIndex: number
+    prevKey: string
+    newKey: string
+  }) {
+    const targetComponent = componentList[targetIndex] as unknown as Pick<
+      Component,
+      "type" | "name" | "props"
+    >
+    const targetComponentProps = (targetComponent.props || {}) as Record<
+      string,
+      string
+    >
+    const beforeComponents = [...componentList]
+    const value = targetComponentProps[prevKey]
+    delete targetComponentProps[prevKey]
+    targetComponentProps[newKey] = value
+    targetComponent.props = targetComponentProps
+    beforeComponents[targetIndex] = targetComponent
+    setComponentList(beforeComponents)
+  }
+
+  function handleDeleteProp({
+    targetIndex,
+    key,
+  }: {
+    targetIndex: number
+    key: string
+  }) {
+    const targetComponent = componentList[targetIndex] as unknown as Pick<
+      Component,
+      "type" | "name" | "props"
+    >
+    const targetComponentProps = (targetComponent.props || {}) as Record<
+      string,
+      string
+    >
+    const beforeComponents = [...componentList]
+    delete targetComponentProps[key]
+    targetComponent.props = targetComponentProps
+    beforeComponents[targetIndex] = targetComponent
+    setComponentList(beforeComponents)
+  }
+
+  function handleChangePropValue({
+    targetIndex,
+    key,
+    value,
+  }: {
+    targetIndex: number
+    key: string
+    value: string
+  }) {
+    const targetComponent = componentList[targetIndex] as unknown as Pick<
+      Component,
+      "type" | "name" | "props"
+    >
+    const targetComponentProps = (targetComponent.props || {}) as Record<
+      string,
+      string
+    >
+    const beforeComponents = [...componentList]
+    targetComponentProps[key] = value
+    targetComponent.props = targetComponentProps
+    beforeComponents[targetIndex] = targetComponent
+    setComponentList(beforeComponents)
+  }
+
+  function handleChangeComponent({
+    targetIndex,
+    componentName,
+    type,
+  }: {
+    targetIndex: number
+    componentName: string
+    type: ComponentType
+  }) {
+    const targetComponent = componentList[targetIndex] as unknown as Pick<
+      Component,
+      "type" | "name" | "props"
+    >
+    const beforeComponents = [...componentList]
+    targetComponent.name = componentName
+    targetComponent.type = type
+    targetComponent.props = {}
+    beforeComponents[targetIndex] = targetComponent
+
+    setComponentList(beforeComponents)
+  }
+
+  // NOTE: targetIndex 는 component 컴포넌트를 의미
+  function handleDeleteComponent({ targetIndex }: { targetIndex: number }) {
+    setComponentList(prev => prev.filter((_, index) => index !== targetIndex))
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -154,42 +293,127 @@ export function UpdateRouteComponentDialog(
                 control={form.control}
                 name="components"
                 render={() => (
-                  <div>
-                    {componentList.map((component, index) => (
-                      <FormItem key={index} className="flex flex-col">
-                        <FormLabel>layout</FormLabel>
-                        <Select
-                          onValueChange={v => {
-                            console.log(v)
-                            // field.onChange(Number(v) || 0)
-                            // form.trigger("categoryId")
-                            // form.trigger("routeId")
-                          }}
-                          defaultValue={JSON.stringify(component.props)}
+                  <div className="mb-16">
+                    {componentList.map((component, targetIndex) => (
+                      <FormItem
+                        key={targetIndex}
+                        className="flex flex-col mt-16"
+                      >
+                        <Button
+                          type="button"
+                          design={{ size: "xsmall", color: "secondary" }}
+                          onClick={() => handleDeleteComponent({ targetIndex })}
                         >
-                          <FormControl>
-                            <SelectTrigger className="border-solid">
-                              <SelectValue placeholder="Select a verified email to display" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {/* 타입에 따라 다름 */}
-                            {component.type === "COMPONENT" ? (
-                              <SelectItem
-                                value={JSON.stringify(component.props)}
+                          delete component
+                        </Button>
+                        <FormLabel>
+                          {component.name}
+                          {component.type === ComponentType.SUB_URL
+                            ? "sub url"
+                            : "component"}
+                        </FormLabel>
+                        <div className="flex flex-col gap-2">
+                          <Select
+                            onValueChange={v => {
+                              handleChangeComponent({
+                                targetIndex,
+                                componentName: v,
+                                type: component.type,
+                              })
+                            }}
+                            defaultValue={component.name}
+                          >
+                            <FormControl>
+                              <SelectTrigger className="border-solid">
+                                <SelectValue placeholder="Select a verified email to display" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {/* 타입에 따라 다름 */}
+                              {component.type === "COMPONENT" ? (
+                                <>
+                                  {LayoutComponentList?.map(componentName => (
+                                    <div
+                                      key={componentName}
+                                      className={`flex flex-col gap-2 `}
+                                    >
+                                      <SelectItem value={componentName}>
+                                        {componentName}
+                                      </SelectItem>
+                                    </div>
+                                  ))}
+                                </>
+                              ) : (
+                                <>
+                                  {["CategorySelector", "TagSelector"].map(
+                                    selectorName => (
+                                      <SelectItem
+                                        key={selectorName}
+                                        value={selectorName}
+                                      >
+                                        {selectorName}
+                                      </SelectItem>
+                                    )
+                                  )}
+                                </>
+                              )}
+                            </SelectContent>
+                            <div>
+                              <Button
+                                type="button"
+                                onClick={() => handleAddProp({ targetIndex })}
+                                className="mt-4"
                               >
-                                {JSON.stringify(component.props)}
-                              </SelectItem>
-                            ) : (
-                              <SelectItem
-                                value={JSON.stringify(component.props)}
-                              >
-                                {JSON.stringify(component.props)}
-                              </SelectItem>
-                            )}
-                            <div></div>
-                          </SelectContent>
-                        </Select>
+                                prop 추가
+                              </Button>
+                              <span className="mt-2">props</span>
+                              {/*  */}
+                              {Object.entries(
+                                (component.props || {}) as any
+                              ).map(([key, value], index) => (
+                                <div
+                                  key={index}
+                                  className="flex gap-2 align-middle mt-2"
+                                >
+                                  <Button
+                                    design={{ size: "xsmall" }}
+                                    className="mr-4"
+                                    onClick={() =>
+                                      handleDeleteProp({ targetIndex, key })
+                                    }
+                                  >
+                                    delete
+                                  </Button>
+                                  <Input
+                                    className="border-solid"
+                                    placeholder={`prop`}
+                                    value={key}
+                                    onChange={e =>
+                                      handleChangePropKey({
+                                        targetIndex,
+                                        prevKey: key,
+                                        newKey: e.target.value,
+                                      })
+                                    }
+                                  />
+                                  :
+                                  <Input
+                                    className="border-solid"
+                                    placeholder={`prop key: ${key}`}
+                                    value={value as string}
+                                    onChange={e =>
+                                      handleChangePropValue({
+                                        targetIndex,
+                                        key: key,
+                                        value: e.target.value,
+                                      })
+                                    }
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          </Select>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     ))}

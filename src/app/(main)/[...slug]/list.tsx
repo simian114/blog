@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation"
-import { LayoutType, Prisma, SubUrlPost, SubUrlSelector } from "@prisma/client"
+import { LayoutType, Prisma, SubUrlPost } from "@prisma/client"
 
 import CategorySubURLSelector from "@/components/layout/index/default/common/CategorySubURLSelector"
-import TagSelector from "@/components/layout/index/default/common/tagSelectorList/TagSelector"
 import TagSubURLSelector from "@/components/layout/index/default/common/TagSubUrlSelector"
 import Typography from "@/components/typography/Typography"
 import prisma from "@/lib/prisma"
