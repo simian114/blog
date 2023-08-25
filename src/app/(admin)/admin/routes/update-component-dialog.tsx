@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Component, ComponentType, Prisma } from "@prisma/client"
+import { Component, ComponentType, Prisma, ROUTE_TYPE } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
 import * as z from "zod"
 
@@ -270,7 +270,9 @@ export function UpdateRouteComponentDialog(
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>레이아웃 변경</Button>
+        <Button disabled={props.route.type !== ROUTE_TYPE.BESPOKE}>
+          레이아웃 변경
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

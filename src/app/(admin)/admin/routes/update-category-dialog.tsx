@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Prisma } from "@prisma/client"
+import { Prisma, ROUTE_TYPE } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
 import * as z from "zod"
 
@@ -76,7 +76,9 @@ export function UpdateRouteCategoryDialog(props: RouteCategoryDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>카테고리 변경</Button>
+        <Button disabled={props.route.type !== ROUTE_TYPE.BESPOKE}>
+          카테고리 변경
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
