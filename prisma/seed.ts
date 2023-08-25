@@ -1,6 +1,7 @@
 import {
   ComponentType,
   PrismaClient,
+  ROUTE_TYPE,
   SubUrlPost,
   TagColor,
 } from "@prisma/client"
@@ -12,12 +13,14 @@ async function main() {
       title: "home",
       priority: 1,
       url: "",
+      type: ROUTE_TYPE.CUSTOM,
       components: [],
     },
     {
       title: "blog",
       priority: 1,
       url: "blog",
+      type: ROUTE_TYPE.BESPOKE,
       components: [
         {
           type: ComponentType.SUB_URL,
@@ -32,6 +35,7 @@ async function main() {
       title: "snippet",
       priority: 2,
       url: "snippet",
+      type: ROUTE_TYPE.BESPOKE,
       components: [
         {
           type: ComponentType.SUB_URL,
@@ -46,6 +50,7 @@ async function main() {
       title: "archives",
       priority: 3,
       url: "archives",
+      type: ROUTE_TYPE.BESPOKE,
       components: [
         {
           type: ComponentType.COMPONENT,
@@ -60,12 +65,19 @@ async function main() {
         },
       ],
     },
-    { title: "mdx", priority: 4, url: "mdx", components: [] },
+    {
+      title: "mdx",
+      priority: 4,
+      url: "mdx",
+      components: [],
+      type: ROUTE_TYPE.CUSTOM,
+    },
     {
       title: "guestbook",
       priority: 5,
       url: "guestbook",
       components: [],
+      type: ROUTE_TYPE.CUSTOM,
     },
   ]
 
@@ -77,6 +89,7 @@ async function main() {
           title: route.title,
           url: route.url,
           description: route.title,
+          type: route.type,
           priority: route.priority,
           components: {
             create: route.components,

@@ -26,9 +26,11 @@ export async function getStaticParams() {
   const routeSlug = routes.map(route => ({
     slug: [route.url],
   }))
+
   const categorySlug = categories.map(category => ({
     slug: [category.route?.url, category.url],
   }))
+
   // NOTE: route 에 의존 tag
   const hasTagSelectorRoute = routes.find(
     route =>
@@ -37,6 +39,7 @@ export async function getStaticParams() {
           component.type === "SUB_URL" && component.name === "TagSelector"
       )
   )
+
   const tags = (
     await prisma.tag.findMany({
       include: {
