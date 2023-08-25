@@ -1,4 +1,4 @@
-import { Prisma, SubUrlSelector } from "@prisma/client"
+import { ROUTE_TYPE } from "@prisma/client"
 
 import { getPostSlug, getPostURL } from "@/helpers/model/post"
 import prisma from "@/lib/prisma"
@@ -11,7 +11,7 @@ export async function getStaticParams() {
   // NOTE: routes
   const routes = (
     await prisma.route.findMany({
-      where: { open: true },
+      where: { type: { equals: ROUTE_TYPE.BESPOKE } },
       include: { components: true },
     })
   )
@@ -19,7 +19,7 @@ export async function getStaticParams() {
     .filter(route => route.url !== "")
 
   const categories = await prisma.category.findMany({
-    where: { route: { open: true } },
+    where: { route: { type: { equals: ROUTE_TYPE.BESPOKE } } },
     include: { route: true },
   })
 
