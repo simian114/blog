@@ -32,7 +32,11 @@ async function getData() {
   return { posts }
 }
 
-export default async function SimplePostList() {
+interface SimplePostListProps {
+  title?: string
+}
+
+export default async function SimplePostList(props: SimplePostListProps) {
   const { posts } = await getData()
   const postsByRoute = posts.reduce((prev, curr) => {
     const currentPostRoute = curr.route?.title
@@ -49,7 +53,7 @@ export default async function SimplePostList() {
       <br />
       <div>
         <Typography variants="h2" colorLevel={12}>
-          All Posts
+          {props.title || "All Posts"}
         </Typography>
       </div>
       <br />
