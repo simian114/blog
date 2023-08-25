@@ -9,7 +9,6 @@ import { AddRouteDialog } from "./add-dialog"
 import { DeleteRouteDialog } from "./delete-dialog"
 import { UpdateRouteCategoryDialog } from "./update-category-dialog"
 import { UpdateRouteComponentDialog } from "./update-component-dialog"
-import { UpdateRouteDialog } from "./update-dialog"
 
 export const columns: ColumnDef<
   Prisma.RouteGetPayload<{ include: { categories: true; components: true } }>
@@ -100,7 +99,6 @@ export const columns: ColumnDef<
       return (
         <div className="flex gap-4">
           <AddRouteDialog route={row.original} />
-          <UpdateRouteDialog route={row.original} />
           <DeleteRouteDialog route={row.original} />
           <UpdateRouteCategoryDialog
             route={row.original}
