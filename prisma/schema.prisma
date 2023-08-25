@@ -49,6 +49,11 @@ model Component {
   routeId Int?
 }
 
+enum ROUTE_TYPE {
+  BESPOKE
+  CUSTOM
+}
+
 model Route {
   id        Int       @id @default(autoincrement())
   createdAt DateTime  @default(now())
@@ -57,10 +62,11 @@ model Route {
 
   title       String
   description String?
-  open        Boolean
+  open        Boolean // NOTE: header 영역에 보일지 여부를 정함
   url         String  @unique
 
   priority Int @default(autoincrement())
+  type ROUTE_TYPE
 
   categories Category[]
   posts      Post[]

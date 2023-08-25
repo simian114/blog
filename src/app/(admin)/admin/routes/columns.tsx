@@ -38,6 +38,11 @@ export const columns: ColumnDef<
     header: "url",
   },
   {
+    id: "type",
+    accessorKey: "type",
+    header: "type",
+  },
+  {
     accessorKey: "open",
     header: "노출",
   },

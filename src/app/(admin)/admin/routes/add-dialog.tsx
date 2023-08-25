@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Route } from "@prisma/client"
+import { Route, ROUTE_TYPE } from "@prisma/client"
 import { z } from "zod"
 
 import Button from "@/components/button/Button"
@@ -25,6 +25,13 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 import { newRoute, updateRoute } from "./actions"
 
@@ -35,6 +42,7 @@ const formSchema = z.object({
   description: z.string().min(1).max(20),
   open: z.boolean(),
   priority: z.number(),
+  type: z.enum([ROUTE_TYPE.CUSTOM, ROUTE_TYPE.BESPOKE]),
 })
 
 interface AddRouteDialogProps {
@@ -52,6 +60,7 @@ export function AddRouteDialog(props: AddRouteDialogProps) {
       description: props.route?.description || "",
       priority: props.route?.priority ?? 255,
       open: props.route?.open || false,
+      type: props.route?.type || ROUTE_TYPE.CUSTOM,
     },
   })
 
@@ -129,39 +138,37 @@ export function AddRouteDialog(props: AddRouteDialogProps) {
                   )}
                 />
 
-                {/* <FormField
+                <FormField
                   control={form.control}
-                  name="layoutType"
+                  name="type"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Layout type</FormLabel>
+                      <FormLabel>Route type</FormLabel>
                       <Select
-                        onValueChange={v =>
-                          field.onChange(v as RouteLayoutType)
-                        }
+                        onValueChange={v => field.onChange(v as ROUTE_TYPE)}
                         defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger className="border-solid">
-                            <SelectValue placeholder="Select a verified email to display" />
+                            <SelectValue placeholder="Select Route Type. default is CUSTOM" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {Object.values(RouteLayoutType).map(layoutType => {
-                            return (
-                              <SelectItem key={layoutType} value={layoutType}>
+                          {[ROUTE_TYPE.CUSTOM, ROUTE_TYPE.BESPOKE].map(
+                            routeType => (
+                              <SelectItem key={routeType} value={routeType}>
                                 <div className="flex flex-row gap-4">
-                                  <span>{layoutType}</span>
+                                  <span>{routeType}</span>
                                 </div>
                               </SelectItem>
                             )
-                          })}
+                          )}
                         </SelectContent>
                       </Select>
                       <FormMessage />
                     </FormItem>
                   )}
-                /> */}
+                />
                 <FormField
                   control={form.control}
                   name="open"
