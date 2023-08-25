@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation"
-import { LayoutType, Prisma, SubUrlPost } from "@prisma/client"
+import { ComponentType, LayoutType } from "@prisma/client"
 
-import CategorySubURLSelector from "@/components/layout/index/default/common/CategorySubURLSelector"
-import TagSubURLSelector from "@/components/layout/index/default/common/TagSubUrlSelector"
 import Typography from "@/components/typography/Typography"
 import prisma from "@/lib/prisma"
 import { capitalizeFirstLetter } from "@/lib/utils"
 
-import ComponentMapper from "./ComponentMapper"
+import ComponentContainer from "./ComponentContainer"
+import SubURLContainer from "./SubURLContainer"
 
 interface MainListProps {
   routeURL: string
@@ -36,9 +35,11 @@ export default async function MainList(props: MainListProps) {
   const category = route?.categories.find(
     category => category.url === props.subURL || ""
   )
+
   if (!route) {
     return notFound()
   }
+
   return (
     <main className="index-main">
       <div>
@@ -51,39 +52,20 @@ export default async function MainList(props: MainListProps) {
           </Typography>
         </p>
       </div>
-      {route.components.map((component, index) => {
-        const componentName = component.name
-        const componentProps = component.props as Prisma.JsonObject
-        if (component.type === LayoutType.SUB_URL) {
-          const postType = (componentProps.post || SubUrlPost.CARD) as string
 
-          if (componentName === "CategorySelector") {
-            return (
-              <CategorySubURLSelector
-                key={index}
-                className="index-main__category-list"
-                type={postType}
-                currentRoute={route}
-                currentCategory={category}
-              />
-            )
-          } else if (componentName === "TagSelector") {
-            return (
-              <TagSubURLSelector
-                key={index}
-                currentRoute={route}
-                subURL={props.subURL || ""}
-              />
-            )
-          }
+      {route.components.map((component, index) => {
+        if (component.type === ComponentType.SUB_URL) {
+          return (
+            <SubURLContainer
+              key={index}
+              component={component}
+              route={route}
+              category={category}
+            />
+          )
         } else if (component.type === LayoutType.COMPONENT) {
-          const Component = ComponentMapper[componentName]
-          if (!Component) {
-            return <></>
-          }
-          return <Component key={index} />
-        }
-        return <></>
+          return <ComponentContainer key={index} component={component} />
+        } else return <></>
       })}
     </main>
   )

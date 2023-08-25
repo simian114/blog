@@ -34,6 +34,11 @@ datasource db {
 // props: { type: tag / category, post: table / card }
 //
 
+enum SUB_URL_SELECTOR {
+  CATEGORY
+  TAG
+}
+
 enum ComponentType {
   SUB_URL
   COMPONENT
@@ -192,6 +197,7 @@ model Temp {
   subUrlSelector SubUrlSelector
   componentType  ComponentType
   subUrlPost     SubUrlPost
+  selector SUB_URL_SELECTOR
 }
 
 
