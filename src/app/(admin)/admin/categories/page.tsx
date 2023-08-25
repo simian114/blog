@@ -19,11 +19,5 @@ async function getCategoryData() {
 
 export default async function AdminRoutes() {
   const allCategories = await getCategoryData()
-  return (
-    <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex border-solid rounded">
-      <div className="flex items-center justify-between space-y-2 border">
-        <DataTable columns={columns} data={allCategories} />
-      </div>
-    </div>
-  )
+  return <DataTable columns={columns} data={allCategories} />
 }
