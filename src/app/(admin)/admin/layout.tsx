@@ -13,7 +13,11 @@ export default function DocsLayout({ children }: { children: ReactNode }) {
             <DocsSidebarNav items={adminConfig.sidebarNav} />
           </ScrollArea>
         </aside>
-        {children}
+        <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex border-solid rounded">
+          <div className="flex items-center overflow-auto justify-between space-y-2 border">
+            {children}
+          </div>
+        </div>
       </div>
     </div>
   )

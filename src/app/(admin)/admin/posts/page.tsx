@@ -21,11 +21,5 @@ async function getAllPosts() {
 
 export default async function AdminPosts() {
   const posts = await getAllPosts()
-  return (
-    <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex border-solid rounded">
-      <div className="flex items-center justify-between space-y-2 border">
-        <DataTable columns={columns} data={posts} />
-      </div>
-    </div>
-  )
+  return <DataTable columns={columns} data={posts} />
 }
