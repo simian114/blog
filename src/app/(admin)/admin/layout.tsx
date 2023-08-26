@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 
-import { DocsSidebarNav } from "@/components/admin/sidebar-nav"
+import { DocsSidebarNav } from "@/components/admin/SidebarNav"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { adminConfig } from "@/config/admin"
 

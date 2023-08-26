@@ -15,7 +15,7 @@ import { ThemeSelector } from "@/components/theme"
 import DisableScroll from "@/components/util/DisableScroll"
 import { RouteWithCategories } from "@/types/prisma"
 
-import HeaderMobileMenu from "./_mobileMenu"
+import HeaderMobileMenu from "./HeaderMobileMenu"
 
 interface HeaderProps {
   routes: RouteWithCategories<"id" | "title" | "url">[]
