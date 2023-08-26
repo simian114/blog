@@ -5,7 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Provider as JotaiProvider } from "jotai"
 
 import DeviceWidthProvider from "@/components/providers/deviceWidthProvider"
-import ThemeScript from "@/components/theme/_script"
+
+import ThemeScript from "../theme/ThemeScript"
 
 interface ProvidersProps {
   children: JSX.Element[] | JSX.Element

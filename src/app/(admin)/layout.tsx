@@ -2,9 +2,9 @@
 
 import { ReactNode } from "react"
 
-import { TailwindIndicator } from "@/components/admin/tailwind-indicator"
-import AdminFooter from "@/components/layout/admin/footer"
-import AdminHeader from "@/components/layout/admin/header"
+import { TailwindIndicator } from "@/components/admin/TailwindIndicator"
+import AdminFooter from "@/components/layout/admin/Footer"
+import AdminHeader from "@/components/layout/admin/Header"
 import { Providers } from "@/components/providers/providers"
 
 import "@styles/admin.scss"

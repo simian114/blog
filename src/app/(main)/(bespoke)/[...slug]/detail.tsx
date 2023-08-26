@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 
-import DetailDefaultLayout from "@/components/layout/detail/default/_default"
+import DetailDefaultLayout from "@/components/layout/detail/default/DetailDefaultLayout"
 import { MdxComponents } from "@/components/mdx/mdxComponents"
 import prisma from "@/lib/prisma"
 
