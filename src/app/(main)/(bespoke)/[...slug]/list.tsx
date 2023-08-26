@@ -61,6 +61,7 @@ export default async function MainList(props: MainListProps) {
               component={component}
               route={route}
               category={category}
+              subURL={props.subURL}
             />
           )
         } else if (component.type === LayoutType.COMPONENT) {
