@@ -4,7 +4,7 @@ import * as path from "path"
 import rehypeHighlight from "rehype-highlight"
 import remarkGfm from "remark-gfm"
 
-import createColors from "./build-config.js"
+import createBespoke from "./bespoke/createBespoke.js"
 
 const __dirname = path.resolve()
 
@@ -50,13 +50,13 @@ const withMDX = createMDX({
   },
 })
 
-const withColors = createColors({
+const withBespoke = createBespoke({
   colors: {
     primary: "cyan",
     secondary: "crimson",
-    tertiary: "yellow",
+    tertiary: "crimson",
     gray: "slate",
   },
 })
 
-export default withColors(withMDX(nextConfig))
+export default withBespoke(withMDX(nextConfig))

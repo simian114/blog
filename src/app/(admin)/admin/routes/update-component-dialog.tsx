@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Component, ComponentType, Prisma, ROUTE_TYPE } from "@prisma/client"
-import { useQuery } from "@tanstack/react-query"
 import * as z from "zod"
 
 import Button from "@/components/button/Button"
@@ -32,9 +31,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import ComponentList from "@/constants/bespoke-components"
 
 import { updateRoute } from "./actions"
-
 interface UpdateRouteComponentDialogProps {
   route: Prisma.RouteGetPayload<{ include: { components: true } }>
   currentRouteID: number
@@ -46,13 +45,6 @@ const formSchema = z.object({
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
-async function getLayoutComponentList() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/layout/component`
-  )
-  return await res.json()
-}
-
 export function UpdateRouteComponentDialog(
   props: UpdateRouteComponentDialogProps
 ) {
@@ -63,11 +55,7 @@ export function UpdateRouteComponentDialog(
       id?: number
     })[]
   >(props.route.components)
-
-  const { data: LayoutComponentList } = useQuery<string[]>({
-    queryKey: ["getRouteLayoutList"],
-    queryFn: getLayoutComponentList,
-  })
+  const LayoutComponentList = ComponentList
 
   const hasSubUrl = !!componentList.find(
     component => component.type === ComponentType.SUB_URL
