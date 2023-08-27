@@ -45,7 +45,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   )
 
   const tagRouteMap = posts.reduce((prev, cur) => {
-    console.log(hasTagSelectorRoutes)
     if (!cur.tags.length) {
       return prev
     }
