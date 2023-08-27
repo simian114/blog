@@ -32,7 +32,7 @@ export async function getStaticParams() {
   }))
 
   // NOTE: route 에 의존 tag
-  const hasTagSelectorRoute = routes.find(
+  const hasTagSelectorRoutes = routes.filter(
     route =>
       !!route.components.find(
         component =>
@@ -48,9 +48,13 @@ export async function getStaticParams() {
     })
   ).filter(tag => !!tag.posts.length)
 
-  const tagSlug = tags.map(tag => ({
-    slug: [hasTagSelectorRoute?.url || "", tag.url],
-  }))
+  const tagSlug = hasTagSelectorRoutes
+    .map(hasTagSelectorRoute =>
+      tags.map(tag => ({
+        slug: [hasTagSelectorRoute?.url || "", tag.url],
+      }))
+    )
+    .flat()
 
   const filtered = posts.filter(post => getPostURL(post))
   return [
