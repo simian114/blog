@@ -125,8 +125,7 @@ export function UpdateRouteComponentDialog(
       setComponentList([
         ...componentList,
         {
-          // routeId: props.route.id,
-          type: ComponentType.COMPONENT,
+          type: ComponentType.SUB_URL,
           name: "CategorySelector",
           props: {
             post: "card",
