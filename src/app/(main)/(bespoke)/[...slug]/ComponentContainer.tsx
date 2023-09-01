@@ -3,8 +3,6 @@ import { Component, Prisma } from "@prisma/client"
 
 import * as ComponentList from "@/components/layout/components"
 
-// TODO: build 타임 때 먼저 불러올 수는 없나?
-
 interface ComponentContainerProps {
   component: Component
 }
