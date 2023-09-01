@@ -38,12 +38,15 @@ interface SimplePostListProps {
 
 /**
  *
- * @param {string} [title=helloworld] this is a description
+ * @param {string} [temp=helloworld] this is a description
+ * @param {string} [ temp2 ] this is a description2
+ * @param {string} temp3 this is a
+ * with new line
  * @description this is description tag
  *
  */
 
-export default async function SimplePostList(props: SimplePostListProps) {
+export default async function Temp(props: SimplePostListProps) {
   const { posts } = await getData()
   const postsByRoute = posts.reduce((prev, curr) => {
     const currentPostRoute = curr.route?.title
@@ -55,7 +58,6 @@ export default async function SimplePostList(props: SimplePostListProps) {
     }
     return prev
   }, new Map<string, Post[]>())
-
   return (
     <>
       <br />

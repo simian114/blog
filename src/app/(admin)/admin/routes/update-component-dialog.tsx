@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Component, ComponentType, Prisma, ROUTE_TYPE } from "@prisma/client"
@@ -31,9 +32,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import ComponentList from "@/constants/bespoke-components"
+import { COMPONENT_LIST } from "@/constants/components"
+import {
+  getComponentPropTarget,
+  isComponentPropsKey,
+  makeComponentProps,
+} from "@/helpers/components"
 
 import { updateRoute } from "./actions"
+
 interface UpdateRouteComponentDialogProps {
   route: Prisma.RouteGetPayload<{ include: { components: true } }>
   currentRouteID: number
@@ -49,13 +56,13 @@ export function UpdateRouteComponentDialog(
   props: UpdateRouteComponentDialogProps
 ) {
   const [open, setOpen] = useState(false)
-
   const [componentList, setComponentList] = useState<
     (Pick<Component, "type" | "name" | "props"> & {
       id?: number
     })[]
   >(props.route.components)
-  const LayoutComponentList = ComponentList
+
+  const LayoutComponentList = COMPONENT_LIST
 
   const hasSubUrl = !!componentList.find(
     component => component.type === ComponentType.SUB_URL
@@ -67,6 +74,7 @@ export function UpdateRouteComponentDialog(
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    values
     const updateList = componentList
       .filter(component => typeof component.id === "number")
       .map(component => {
@@ -124,13 +132,15 @@ export function UpdateRouteComponentDialog(
       if (!LayoutComponentList?.length) {
         return
       }
+      const componentName = LayoutComponentList[0]
+
+      const props = makeComponentProps({ componentName })
       setComponentList([
         ...componentList,
         {
-          // routeId: props.route.id,
           type: ComponentType.COMPONENT,
           name: LayoutComponentList[0],
-          props: {},
+          props,
         },
       ])
     }
@@ -243,9 +253,8 @@ export function UpdateRouteComponentDialog(
     const beforeComponents = [...componentList]
     targetComponent.name = componentName
     targetComponent.type = type
-    targetComponent.props = {}
+    targetComponent.props = makeComponentProps({ componentName })
     beforeComponents[targetIndex] = targetComponent
-
     setComponentList(beforeComponents)
   }
 
@@ -360,45 +369,59 @@ export function UpdateRouteComponentDialog(
                               {Object.entries(
                                 (component.props || {}) as any
                               ).map(([key, value], index) => (
-                                <div
-                                  key={index}
-                                  className="flex gap-2 align-middle mt-2"
-                                >
-                                  <Button
-                                    design={{ size: "xsmall" }}
-                                    className="mr-4"
-                                    onClick={() =>
-                                      handleDeleteProp({ targetIndex, key })
-                                    }
-                                  >
-                                    delete
-                                  </Button>
-                                  <Input
-                                    className="border-solid"
-                                    placeholder={`prop`}
-                                    value={key}
-                                    onChange={e =>
-                                      handleChangePropKey({
-                                        targetIndex,
-                                        prevKey: key,
-                                        newKey: e.target.value,
-                                      })
-                                    }
-                                  />
-                                  :
-                                  <Input
-                                    className="border-solid"
-                                    placeholder={`prop key: ${key}`}
-                                    value={value as string}
-                                    onChange={e =>
-                                      handleChangePropValue({
-                                        targetIndex,
-                                        key: key,
-                                        value: e.target.value,
-                                      })
-                                    }
-                                  />
-                                </div>
+                                <Fragment key={index}>
+                                  <div className="flex gap-2 align-middle mt-2">
+                                    {isComponentPropsKey({
+                                      componentName: component.name,
+                                      propKey: key,
+                                    }) ? (
+                                      <></>
+                                    ) : (
+                                      <Button
+                                        design={{ size: "xsmall" }}
+                                        className="mr-4"
+                                        onClick={() =>
+                                          handleDeleteProp({
+                                            targetIndex,
+                                            key,
+                                          })
+                                        }
+                                      >
+                                        delete
+                                      </Button>
+                                    )}
+                                    <Input
+                                      className="border-solid"
+                                      placeholder={`prop`}
+                                      value={key}
+                                      onChange={e =>
+                                        handleChangePropKey({
+                                          targetIndex,
+                                          prevKey: key,
+                                          newKey: e.target.value,
+                                        })
+                                      }
+                                    />
+                                    :
+                                    <Input
+                                      className="border-solid"
+                                      placeholder={`prop key: ${key}`}
+                                      value={value as string}
+                                      onChange={e =>
+                                        handleChangePropValue({
+                                          targetIndex,
+                                          key: key,
+                                          value: e.target.value,
+                                        })
+                                      }
+                                    />
+                                  </div>
+                                  {getComponentPropTarget({
+                                    componentName: component.name,
+                                    propKey: key,
+                                    target: "description",
+                                  })}
+                                </Fragment>
                               ))}
                             </div>
                           </Select>

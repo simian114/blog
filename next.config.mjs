@@ -54,7 +54,7 @@ const withBespoke = createBespoke({
   colors: {
     primary: "cyan",
     secondary: "crimson",
-    tertiary: "crimson",
+    tertiary: "yellow",
     gray: "slate",
   },
 })
