@@ -51,7 +51,7 @@ export const columns: ColumnDef<Tag>[] = [
     cell({ row }) {
       return (
         <div className="flex" style={{ whiteSpace: "pre" }}>
-          <TagComponent tag={row.original} />
+          <TagComponent tag={row.original} color={row.original.color} />
         </div>
       )
     },

@@ -46,7 +46,7 @@ export default async function CategorySelector(props: CategorySelectorProps) {
             <Typography
               as="h3"
               variants="h3"
-              colorType="gray"
+              colorType="GRAY"
               colorLevel={11}
               className="post-list__name"
             >
@@ -77,7 +77,7 @@ export default async function CategorySelector(props: CategorySelectorProps) {
               <Typography
                 as="h3"
                 variants="h3"
-                colorType="gray"
+                colorType="GRAY"
                 colorLevel={11}
                 className="post-list__name"
               >

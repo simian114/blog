@@ -16,12 +16,15 @@ $colors: (
   red
 );
 
-$levels: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+$scales: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 
 @each $color in $colors {
-  @each $level in $levels {
-    .rds-color-#{$color}-#{$level} {
-      color: var(--#{$color}#{$level});
+  @each $scale in $scales {
+    .rds-color--#{$color}-#{$scale} {
+      color: var(--#{$color}#{$scale});
+    }
+    .rds-bg--#{$color}-#{$scale} {
+      background-color:var(--#{$color}#{$scale});
     }
   }
 }

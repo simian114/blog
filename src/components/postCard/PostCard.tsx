@@ -74,7 +74,7 @@ export default function PostCard(props: PostCardProps) {
             className={"post-card__title"}
             as="h3"
             variants="h3"
-            colorType="gray"
+            colorType="GRAY"
             colorLevel={12}
           >
             <Link href={`${getPostURL(post)}`}>
@@ -87,7 +87,7 @@ export default function PostCard(props: PostCardProps) {
           {!!post.tags?.length && (
             <div className="post-card__tag-container">
               {post.tags.map(tag => (
-                <Tag key={tag.tagId} tag={tag.tag} />
+                <Tag key={tag.tagId} tag={tag.tag} color={tag.tag.color} />
               ))}
             </div>
           )}

@@ -42,7 +42,7 @@ export default async function TagSubURLSelector(props: TagSubURLSelectorProps) {
 
   return (
     <section>
-      <Typography colorType="gray" colorLevel={12} variants="h2">
+      <Typography colorType="GRAY" colorLevel={12} variants="h2">
         Tag
       </Typography>
       <TagSelectorList

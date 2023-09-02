@@ -36,7 +36,7 @@ export default function PostListTable(props: PostListTableProps) {
           >
             <td className="postlist-table__td postlist-table__td--name">
               <Link href={getPostURL(post)}>
-                <Typography colorLevel={10} colorType="primary" weight="bold">
+                <Typography colorLevel={10} colorType="PRIMARY" weight="bold">
                   {post.title}
                 </Typography>
               </Link>
@@ -49,7 +49,7 @@ export default function PostListTable(props: PostListTableProps) {
             </td>
             <td className="postlist-table__td postlist-table__td--tags">
               {post.tags?.map((tag, i) => (
-                <Tag key={i} tag={tag.tag} />
+                <Tag key={i} tag={tag.tag} color={tag.tag.color} />
               ))}
             </td>
           </tr>
