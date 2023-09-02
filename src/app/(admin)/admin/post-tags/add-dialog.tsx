@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Tag, TagColor } from "@prisma/client"
+import { COLOR_TYPE, Tag } from "@prisma/client"
 import { z } from "zod"
 
 import Button from "@/components/button/Button"
@@ -35,21 +35,21 @@ import { newTag, updatetag } from "./actions"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
-const TagColors = [
-  TagColor.BLUE,
-  TagColor.BROWN,
-  TagColor.CRIMSON,
-  TagColor.CYAN,
-  TagColor.GRAY,
-  TagColor.GREEN,
-  TagColor.ORANGE,
-  TagColor.PINK,
-  TagColor.PRIMARY,
-  TagColor.PURPLE,
-  TagColor.RED,
-  TagColor.SECONDARY,
-  TagColor.TERTIARY,
-  TagColor.YELLOW,
+const COLOR_TYPEs = [
+  COLOR_TYPE.BLUE,
+  COLOR_TYPE.BROWN,
+  COLOR_TYPE.CRIMSON,
+  COLOR_TYPE.CYAN,
+  COLOR_TYPE.GRAY,
+  COLOR_TYPE.GREEN,
+  COLOR_TYPE.ORANGE,
+  COLOR_TYPE.PINK,
+  COLOR_TYPE.PRIMARY,
+  COLOR_TYPE.PURPLE,
+  COLOR_TYPE.RED,
+  COLOR_TYPE.SECONDARY,
+  COLOR_TYPE.TERTIARY,
+  COLOR_TYPE.YELLOW,
 ]
 
 const formSchema = z.object({
@@ -58,20 +58,20 @@ const formSchema = z.object({
   // description: z.string().min(1).max(20).optional(),
   url: z.string().min(1).max(20),
   color: z.enum([
-    TagColor.BLUE,
-    TagColor.BROWN,
-    TagColor.CRIMSON,
-    TagColor.CYAN,
-    TagColor.GRAY,
-    TagColor.GREEN,
-    TagColor.ORANGE,
-    TagColor.PINK,
-    TagColor.PRIMARY,
-    TagColor.PURPLE,
-    TagColor.RED,
-    TagColor.SECONDARY,
-    TagColor.TERTIARY,
-    TagColor.YELLOW,
+    COLOR_TYPE.BLUE,
+    COLOR_TYPE.BROWN,
+    COLOR_TYPE.CRIMSON,
+    COLOR_TYPE.CYAN,
+    COLOR_TYPE.GRAY,
+    COLOR_TYPE.GREEN,
+    COLOR_TYPE.ORANGE,
+    COLOR_TYPE.PINK,
+    COLOR_TYPE.PRIMARY,
+    COLOR_TYPE.PURPLE,
+    COLOR_TYPE.RED,
+    COLOR_TYPE.SECONDARY,
+    COLOR_TYPE.TERTIARY,
+    COLOR_TYPE.YELLOW,
   ]),
   // color: z.string(),
 })
@@ -90,7 +90,7 @@ export function AddDialog(props: AddDialogProps) {
       title: props.tag?.title || "",
       description: props.tag?.description || "",
       url: props.tag?.url || "",
-      color: props.tag?.color || TagColor.PRIMARY,
+      color: props.tag?.color || COLOR_TYPE.PRIMARY,
     },
   })
 
@@ -167,7 +167,7 @@ export function AddDialog(props: AddDialogProps) {
                         <FormLabel>route</FormLabel>
                         <Select
                           onValueChange={v => {
-                            field.onChange(v as TagColor)
+                            field.onChange(v as COLOR_TYPE)
                           }}
                           defaultValue={field.value}
                         >
@@ -177,11 +177,11 @@ export function AddDialog(props: AddDialogProps) {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {TagColors.map(tagColor => {
+                            {COLOR_TYPEs.map(COLOR_TYPE => {
                               return (
-                                <SelectItem key={tagColor} value={tagColor}>
+                                <SelectItem key={COLOR_TYPE} value={COLOR_TYPE}>
                                   <div className="flex flex-row gap-4">
-                                    <span>{tagColor}</span>
+                                    <span>{COLOR_TYPE}</span>
                                   </div>
                                 </SelectItem>
                               )

@@ -1,9 +1,9 @@
 import {
+  COLOR_TYPE,
   ComponentType,
   PrismaClient,
   ROUTE_TYPE,
   SubUrlPost,
-  TagColor,
 } from "@prisma/client"
 const prisma = new PrismaClient()
 
@@ -158,12 +158,12 @@ async function main() {
   )
 
   const TagInfos = [
-    { title: "React", color: TagColor.PRIMARY, url: "React" },
-    { title: "Javascript", color: TagColor.SECONDARY, url: "Javascript" },
-    { title: "Next.js", color: TagColor.TERTIARY, url: "Next.js" },
-    { title: "CSS", color: TagColor.SECONDARY, url: "CSS" },
-    { title: "SCSS", color: TagColor.PRIMARY, url: "SCSS" },
-    { title: "Tailwind", color: TagColor.TERTIARY, url: "Tailwind" },
+    { title: "React", color: COLOR_TYPE.PRIMARY, url: "React" },
+    { title: "Javascript", color: COLOR_TYPE.SECONDARY, url: "Javascript" },
+    { title: "Next.js", color: COLOR_TYPE.TERTIARY, url: "Next.js" },
+    { title: "CSS", color: COLOR_TYPE.SECONDARY, url: "CSS" },
+    { title: "SCSS", color: COLOR_TYPE.PRIMARY, url: "SCSS" },
+    { title: "Tailwind", color: COLOR_TYPE.TERTIARY, url: "Tailwind" },
   ]
 
   const tags = await Promise.all(
