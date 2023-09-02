@@ -11,9 +11,6 @@ import { getPostSlug } from "@/helpers/model/post"
 
 import MobileController from "../../mobileController/MobileController"
 
-// import DocumentTOC from "../../../documentTOC/DocumentTOC"
-// import Tag from "../../../postCard/tag/Tag"
-// import MobileController from "../../mobileController/MobileController"
 import ViewCounter from "./common/ViewCounter"
 
 export default function DetailDefaultLayout({
@@ -82,7 +79,7 @@ export default function DetailDefaultLayout({
                   {!!post.tags?.length && (
                     <div className="post-card__tag-container">
                       {post.tags.map((tag, index) => (
-                        <Tag key={index} tag={tag.tag} />
+                        <Tag key={index} tag={tag.tag} color={tag.tag.color} />
                       ))}
                     </div>
                   )}

@@ -23,7 +23,7 @@ export default function TagSelector(props: TagSelectorProps) {
       }
     >
       <TagComponent
-        color={!props.selected ? "gray" : undefined}
+        color={!props.selected ? "GRAY" : props.tag.color}
         tag={props.tag}
       />
     </Link>

@@ -1,6 +1,8 @@
 import { ElementType, forwardRef, Ref } from "react"
 
+import getRDSColorClassName from "@/helpers/rds/base/getRDSColorClassName"
 import { getRDSTypographyClassName } from "@/helpers/rds/base/getRDSTypographyClassName"
+import { RDSColorScale, RDSColorType } from "@/types/rds.t"
 
 import { PolymorphicComponentProp } from "../polymorphic/Polymorphic"
 
@@ -21,51 +23,32 @@ export type TypographyVariants =
 
 export type TypographyWeight = "bold" | "medium" | "regular"
 
-export type ColorType =
-  | "gray"
-  | "primary"
-  | "secondary"
-  | "tertiary"
-  | "red"
-  | "pink"
-  | "purple"
-  | "blue"
-  | "green"
-  | "orange"
-  | "brown"
-  | "cyan"
-  | "yellow"
-  | "crimson"
-
-export type ColorLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
-
 export interface Color {
-  colorType: ColorType
-  colorLevel: ColorLevel
+  colorType: RDSColorType
+  colorLevel: RDSColorScale
 }
 
-export interface RDSTypographyProps {
+// NOTE: 수정되어야함
+export interface RDSTypographyLegacyProps {
   weight?: TypographyWeight
   variants?: TypographyVariants
 }
 
-interface TypographyBasicProps extends RDSTypographyProps, Partial<Color> {}
+interface TypographyBasicProps
+  extends RDSTypographyLegacyProps,
+    Partial<Color> {}
 
 type TypographyProps<C extends ElementType> = PolymorphicComponentProp<
   C,
   TypographyBasicProps
 >
 
-function getRDSColorClass(props: Color): string {
-  return `rds-color-${props.colorType}-${props.colorLevel}`
-}
-
 const Typography = <C extends ElementType>(
   {
     as,
     variants = "body1",
     colorLevel = 11,
-    colorType = "gray",
+    colorType = "GRAY",
     weight,
     className,
     ...rest
@@ -75,9 +58,11 @@ const Typography = <C extends ElementType>(
   const cn = `${getRDSTypographyClassName({
     variants,
     weight,
-  })} ${colorType ? getRDSColorClass({ colorType, colorLevel }) : ""} ${
-    className ? className : ""
-  }`
+  })} ${
+    colorType
+      ? getRDSColorClassName({ color: colorType, scale: colorLevel })
+      : ""
+  } ${className ? className : ""}`
 
   // const { as, ...rest } = props
   const Component = as || "span"

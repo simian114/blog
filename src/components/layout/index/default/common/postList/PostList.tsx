@@ -37,7 +37,7 @@ export default async function PostList(props: PostListProp) {
         <Typography
           as="h4"
           variants="subtitle1"
-          colorType="gray"
+          colorType="GRAY"
           colorLevel={12}
         >
           {props.description}
