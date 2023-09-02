@@ -128,7 +128,7 @@ model Tag {
   // 
   title       String
   description String?
-  color       TagColor
+  color       COLOR_TYPE
   url         String    @unique
 
   // NOTE: Relation
@@ -174,7 +174,8 @@ enum SubUrlPost {
   TABLE
 }
 
-enum TagColor {
+
+enum COLOR_TYPE {
   GRAY
   PRIMARY
   SECONDARY
@@ -191,7 +192,6 @@ enum TagColor {
   RED
 }
 
-// NOTE: json 에서 사용할 type. 자동생성되지 않음
 model Temp {
   id             Int            @id
   subUrlSelector SubUrlSelector
