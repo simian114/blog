@@ -38,7 +38,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ROUTE_COMPONENT_LIST } from "@/constants/components"
+import { POST_COMPONENT_LIST } from "@/constants/components"
 import {
   getComponentPropTarget,
   isComponentPropsKey,
@@ -47,7 +47,7 @@ import {
 
 import { updateRoute } from "./actions"
 
-interface UpdateRouteComponentDialogProps {
+interface UpdatePostComponetDialogProps {
   route: Prisma.RouteGetPayload<{ include: { components: true } }>
   currentRouteID: number
 }
@@ -58,8 +58,8 @@ const formSchema = z.object({
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
-export function UpdateRouteComponentDialog(
-  props: UpdateRouteComponentDialogProps
+export function UpdatePostComponentDialog(
+  props: UpdatePostComponetDialogProps
 ) {
   const [open, setOpen] = useState(false)
   const [componentList, setComponentList] = useState<
@@ -69,16 +69,12 @@ export function UpdateRouteComponentDialog(
   >(() => {
     return (
       props.route.components.filter(
-        component => component.position === COMPONENT_POSITION.ROUTE
+        component => component.position === COMPONENT_POSITION.POST
       ) || []
     )
   })
 
-  const LayoutComponentList = ROUTE_COMPONENT_LIST
-
-  const hasSubUrl = !!componentList.find(
-    component => component.type === ComponentType.SUB_URL
-  )
+  const PostComponentList = POST_COMPONENT_LIST
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -94,12 +90,12 @@ export function UpdateRouteComponentDialog(
         routeId
         return {
           where: { id },
-          data: { ...rest, position: COMPONENT_POSITION.ROUTE } as any,
+          data: { ...rest } as any,
         }
       })
     const deleteList = (
       props.route.components.filter(
-        component => component.position === COMPONENT_POSITION.ROUTE
+        component => component.position === COMPONENT_POSITION.POST
       ) || []
     )
       .filter(
@@ -128,40 +124,22 @@ export function UpdateRouteComponentDialog(
     wait().then(() => setOpen(false))
   }
 
-  function handleAddLayout(type: ComponentType) {
-    if (type === ComponentType.SUB_URL) {
-      if (hasSubUrl) {
-        alert("이미 존재")
-        return
-      }
-      setComponentList([
-        ...componentList,
-        {
-          type: ComponentType.SUB_URL,
-          name: "CategorySelector",
-          position: COMPONENT_POSITION.ROUTE,
-          props: {
-            post: "card",
-          },
-        },
-      ])
-    } else {
-      if (!LayoutComponentList?.length) {
-        return
-      }
-      const componentName = LayoutComponentList[0]
-
-      const props = makeComponentProps({ componentName })
-      setComponentList([
-        ...componentList,
-        {
-          type: ComponentType.COMPONENT,
-          name: LayoutComponentList[0],
-          position: COMPONENT_POSITION.ROUTE,
-          props,
-        },
-      ])
+  function handleAddComponent() {
+    if (!PostComponentList?.length) {
+      return
     }
+    const componentName = PostComponentList[0]
+
+    const props = makeComponentProps({ componentName })
+    setComponentList([
+      ...componentList,
+      {
+        type: ComponentType.COMPONENT,
+        name: PostComponentList[0],
+        position: COMPONENT_POSITION.POST,
+        props,
+      },
+    ])
   }
 
   // NOTE: sub url 타입
@@ -281,27 +259,28 @@ export function UpdateRouteComponentDialog(
     setComponentList(prev => prev.filter((_, index) => index !== targetIndex))
   }
 
+  const hasCategorySelector =
+    props.route.components.find(
+      component => component.type === ComponentType.SUB_URL
+    )?.name === "CategorySelector"
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button disabled={props.route.type !== ROUTE_TYPE.BESPOKE}>
-          레이아웃 변경
+        <Button
+          disabled={
+            props.route.type !== ROUTE_TYPE.BESPOKE || !hasCategorySelector
+          }
+        >
+          상세페이지 컴포넌트 변경
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>레이아웃 변경</DialogTitle>
+          <DialogTitle>상세페이지 컴포넌트 변경</DialogTitle>
           <DialogDescription></DialogDescription>
           <div className="flex gap-4">
-            <Button
-              disabled={hasSubUrl}
-              onClick={() => handleAddLayout(ComponentType.SUB_URL)}
-            >
-              add sub url
-            </Button>
-            <Button onClick={() => handleAddLayout(ComponentType.COMPONENT)}>
-              add components
-            </Button>
+            <Button onClick={handleAddComponent}>add components</Button>
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -322,12 +301,7 @@ export function UpdateRouteComponentDialog(
                         >
                           delete component
                         </Button>
-                        <FormLabel>
-                          {component.name}
-                          {component.type === ComponentType.SUB_URL
-                            ? "sub url"
-                            : "component"}
-                        </FormLabel>
+                        <FormLabel>{component.name}</FormLabel>
                         <div className="flex flex-col gap-2">
                           <Select
                             onValueChange={v => {
@@ -345,34 +319,16 @@ export function UpdateRouteComponentDialog(
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              {/* 타입에 따라 다름 */}
-                              {component.type === "COMPONENT" ? (
-                                <>
-                                  {LayoutComponentList?.map(componentName => (
-                                    <div
-                                      key={componentName}
-                                      className={`flex flex-col gap-2 `}
-                                    >
-                                      <SelectItem value={componentName}>
-                                        {componentName}
-                                      </SelectItem>
-                                    </div>
-                                  ))}
-                                </>
-                              ) : (
-                                <>
-                                  {["CategorySelector", "TagSelector"].map(
-                                    selectorName => (
-                                      <SelectItem
-                                        key={selectorName}
-                                        value={selectorName}
-                                      >
-                                        {selectorName}
-                                      </SelectItem>
-                                    )
-                                  )}
-                                </>
-                              )}
+                              {PostComponentList?.map(componentName => (
+                                <div
+                                  key={componentName}
+                                  className={`flex flex-col gap-2 `}
+                                >
+                                  <SelectItem value={componentName}>
+                                    {componentName}
+                                  </SelectItem>
+                                </div>
+                              ))}
                             </SelectContent>
                             <div>
                               <Button
