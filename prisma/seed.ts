@@ -1,5 +1,6 @@
 import {
   COLOR_TYPE,
+  COMPONENT_POSITION,
   ComponentType,
   PrismaClient,
   ROUTE_TYPE,
@@ -28,6 +29,19 @@ async function main() {
           props: {
             post: SubUrlPost.CARD,
           },
+          position: COMPONENT_POSITION.ROUTE,
+        },
+        {
+          type: ComponentType.COMPONENT,
+          name: "Comment",
+          props: {},
+          position: COMPONENT_POSITION.POST,
+        },
+        {
+          type: ComponentType.COMPONENT,
+          name: "TOC",
+          props: {},
+          position: COMPONENT_POSITION.POST,
         },
       ],
     },
@@ -43,6 +57,13 @@ async function main() {
           props: {
             post: SubUrlPost.TABLE,
           },
+          position: COMPONENT_POSITION.ROUTE,
+        },
+        {
+          type: ComponentType.COMPONENT,
+          name: "Comment",
+          props: {},
+          position: COMPONENT_POSITION.POST,
         },
       ],
     },
@@ -55,6 +76,7 @@ async function main() {
         {
           type: ComponentType.COMPONENT,
           name: "SimplePostList",
+          position: COMPONENT_POSITION.ROUTE,
         },
         {
           type: ComponentType.SUB_URL,
@@ -62,6 +84,7 @@ async function main() {
           props: {
             post: SubUrlPost.CARD,
           },
+          position: COMPONENT_POSITION.ROUTE,
         },
       ],
     },

@@ -30,3 +30,4 @@ export const RouteComponents = {
     },
   },
 }
+export const PostComponents = { Comment: {}, TOC: {} }

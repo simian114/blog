@@ -45,6 +45,12 @@ enum ComponentType {
   CURATION
 }
 
+enum COMPONENT_POSITION {
+  ROUTE
+  POST
+  MARKDOWN
+}
+
 model Component {
   id Int @id @default(autoincrement())
   name String
@@ -52,6 +58,8 @@ model Component {
   type LayoutType
   route   Route? @relation(fields: [routeId], references: [id])
   routeId Int?
+  // NOTE: 어디에 들어갈지 여기서 정의하면 좋을듯?
+  position COMPONENT_POSITION
 }
 
 enum ROUTE_TYPE {
