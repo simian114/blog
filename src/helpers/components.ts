@@ -1,8 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { RouteComponents } from "@/constants/bespoke-components"
-import { ROUTE_COMPONENT_LIST } from "@/constants/components"
-import { ComponentNameType } from "@/types/bespoke-components"
+import {
+  POST_COMPONENT_LIST,
+  ROUTE_COMPONENT_LIST,
+} from "@/constants/components"
+import {
+  PostComponentNameType,
+  RouteComponentNameType,
+} from "@/types/bespoke-components"
 
 interface BaseParam {
   componentName: any
@@ -13,19 +19,23 @@ interface PropParam extends BaseParam {
   target: "param" | "description" | "default" | "optional"
 }
 
-function isComponentName(v: any): v is ComponentNameType {
+function isRouteComponentName(v: any): v is RouteComponentNameType {
   return ROUTE_COMPONENT_LIST.indexOf(v) !== -1
 }
 
+function isPostComponentName(v: any): v is PostComponentNameType {
+  return POST_COMPONENT_LIST.indexOf(v) !== -1
+}
+
 function getComponentPropByName(v: any) {
-  if (!isComponentName(v)) {
+  if (!isRouteComponentName(v)) {
     return null
   }
   return (RouteComponents as any)[v]
 }
 
 function isComponentPropsKey({ componentName, propKey }: BaseParam) {
-  if (!isComponentName(componentName)) {
+  if (!isRouteComponentName(componentName)) {
     return false
   }
   const componentProps = getComponentPropByName(componentName)
@@ -55,9 +65,10 @@ function makeComponentProps({ componentName }: { componentName: any }) {
 }
 
 export {
-  isComponentName,
-  isComponentPropsKey,
   getComponentPropByName,
   getComponentPropTarget,
+  isComponentPropsKey,
+  isPostComponentName,
+  isRouteComponentName,
   makeComponentProps,
 }

@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation"
-import { ComponentType, LayoutType } from "@prisma/client"
+import { COMPONENT_POSITION, ComponentType, LayoutType } from "@prisma/client"
 
 import Typography from "@/components/typography/Typography"
 import prisma from "@/lib/prisma"
 import { capitalizeFirstLetter } from "@/lib/utils"
 
-import ComponentContainer from "./ComponentContainer"
+import RouteComponentMapper from "./ComponentContainer"
 import SubURLContainer from "./SubURLContainer"
 
 interface MainListProps {
@@ -40,6 +40,10 @@ export default async function MainList(props: MainListProps) {
     return notFound()
   }
 
+  const routeComponents = route.components.filter(
+    component => component.position === COMPONENT_POSITION.ROUTE
+  )
+
   return (
     <main className="index-main">
       <div>
@@ -53,7 +57,7 @@ export default async function MainList(props: MainListProps) {
         </p>
       </div>
 
-      {route.components.map((component, index) => {
+      {routeComponents.map((component, index) => {
         if (component.type === ComponentType.SUB_URL) {
           return (
             <SubURLContainer
@@ -65,7 +69,7 @@ export default async function MainList(props: MainListProps) {
             />
           )
         } else if (component.type === LayoutType.COMPONENT) {
-          return <ComponentContainer key={index} component={component} />
+          return <RouteComponentMapper key={index} component={component} />
         } else return <></>
       })}
     </main>

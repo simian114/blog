@@ -1,64 +1,74 @@
 import { notFound } from "next/navigation"
-import { ReactNode } from "react"
-import { Prisma } from "@prisma/client"
+import { compileMDX } from "next-mdx-remote/rsc"
+import { COMPONENT_POSITION } from "@prisma/client"
 import { CalendarIcon, LapTimerIcon } from "@radix-ui/react-icons"
 import dayjs from "dayjs"
 
-import Comments from "@/components/comment/Comments"
-import DocumentTOC from "@/components/documentTOC/DocumentTOC"
+import DeatilBespokeComponentMapper from "@/app/(main)/(bespoke)/[...slug]/DetailBespokeComponentMapper"
+import { MdxComponents } from "@/components/mdx/mdxComponents"
 import Tag from "@/components/postCard/tag/Tag"
 import { getPostSlug } from "@/helpers/model/post"
-
-import MobileController from "../../mobileController/MobileController"
+import prisma from "@/lib/prisma"
 
 import ViewCounter from "./common/ViewCounter"
 
-export default function DetailDefaultLayout({
-  children,
-  post,
-}: {
-  children: ReactNode
-  post: Prisma.PostGetPayload<{
-    include: {
-      category: true
-      route: true
-      tags: { include: { tag: true } }
-    }
-  }>
-}) {
+async function getData(slug: string[]) {
+  const post =
+    (slug.length &&
+      (await prisma.post.findFirst({
+        where: {
+          route: { url: `${slug[0]}` },
+          category: { url: `${slug[1]}` },
+          url: slug[2],
+        },
+        include: {
+          route: {
+            include: {
+              components: true,
+            },
+          },
+          category: true,
+          tags: { include: { tag: true } },
+        },
+      }))) ||
+    undefined
+
+  return { post }
+}
+
+interface DetailDefaultLayoutProps {
+  slug: string[]
+}
+
+export default async function DetailDefaultLayout(
+  props: DetailDefaultLayoutProps
+) {
+  const { post } = await getData(props.slug)
+
   if (!post) {
     notFound()
   }
 
-  const headingRegex = /\n(?<header>#{2,3})\s+(?<title>.+)/g
-  const headings = Array.from((post.content || "").matchAll(headingRegex))
-    .map(({ groups }) => {
-      const header = groups?.header
-      const title = groups?.title
-      return {
-        level: header?.length || -1,
-        title,
-      }
-    })
-    .reduce((prev, cur) => {
-      if (cur.level === 2) {
-        prev.push({ title: cur.title || "", children: [] })
-        return prev
-      } else {
-        const lastIdx = prev.length - 1
-        if (lastIdx === -1) {
-          prev.push({ title: "", children: [] })
-          prev[0].children?.push(cur.title || "")
-          return prev
-        }
-        prev[lastIdx].children?.push(cur.title || "")
-        return prev
-      }
-    }, [] as Array<{ title: string; children?: Array<string> }>)
+  const { content: MDXContent } = await compileMDX({
+    source: post?.content || "",
+    components: MdxComponents,
+  })
+
+  const postComponent =
+    post.route?.components.filter(
+      component => component.position === COMPONENT_POSITION.POST
+    ) || []
+
+  const comment = postComponent.find(component => component.name === "Comment")
+  const toc = postComponent.find(component => component.name === "TOC")
 
   return (
     <>
-      <div className="detail-main-wrapper">
+      <div
+        className={`detail-main-wrapper ${
+          !!toc ? "detail-main-wrapper--aside" : ""
+        }`}
+      >
         <main className="detail-main">
           <div className="detail-main__title-wrapper">
             <h1 className="detail-main__title">{post.title}</h1>
@@ -87,17 +97,14 @@ export default function DetailDefaultLayout({
               </div>
             </div>
           </div>
-          <div className="detail-main__contents">{children}</div>
+          <div className="detail-main__contents">{MDXContent}</div>
         </main>
-        <aside className="sidebar-container">
-          {/* NOTE: */}
-          <nav>
-            <DocumentTOC headings={headings} />
-          </nav>
-        </aside>
-        <MobileController headings={headings} />
+
+        {!!toc && <DeatilBespokeComponentMapper post={post} component={toc} />}
       </div>
-      <Comments />
+      {!!comment && (
+        <DeatilBespokeComponentMapper post={post} component={comment} />
+      )}
     </>
   )
 }

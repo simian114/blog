@@ -4,8 +4,11 @@
 .detail-main-wrapper {
   position: relative;
   height: 100%;
+  width: 100%;
+  &--aside {
   @include rds-grid(16px);
   @include rds-grid-layout((9), (3));
+  }
 }
 
 .detail-main {
