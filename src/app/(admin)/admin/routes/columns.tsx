@@ -9,6 +9,7 @@ import { AddRouteDialog } from "./add-dialog"
 import { DeleteRouteDialog } from "./delete-dialog"
 import { UpdateRouteCategoryDialog } from "./update-category-dialog"
 import { UpdateRouteComponentDialog } from "./update-component-dialog"
+import { UpdatePostComponentDialog } from "./update-post-component-dialog"
 
 export const columns: ColumnDef<
   Prisma.RouteGetPayload<{ include: { categories: true; components: true } }>
@@ -105,6 +106,10 @@ export const columns: ColumnDef<
             currentRouteID={row.getValue<number>("id")}
           />
           <UpdateRouteComponentDialog
+            route={row.original}
+            currentRouteID={row.getValue<number>("id")}
+          />
+          <UpdatePostComponentDialog
             route={row.original}
             currentRouteID={row.getValue<number>("id")}
           />
