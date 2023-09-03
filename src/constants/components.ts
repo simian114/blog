@@ -1,5 +1,7 @@
 import { ComponentNameType } from "@/types/bespoke-components"
 
-import { ComponentProps } from "./bespoke-components"
+import { RouteComponents } from "./bespoke-components"
 
-export const COMPONENT_LIST = Object.keys(ComponentProps) as ComponentNameType[]
+export const ROUTE_COMPONENT_LIST = Object.keys(
+  RouteComponents
+) as ComponentNameType[]

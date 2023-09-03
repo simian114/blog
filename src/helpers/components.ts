@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ComponentProps } from "@/constants/bespoke-components"
-import { COMPONENT_LIST } from "@/constants/components"
+import { RouteComponents } from "@/constants/bespoke-components"
+import { ROUTE_COMPONENT_LIST } from "@/constants/components"
 import { ComponentNameType } from "@/types/bespoke-components"
 
 interface BaseParam {
@@ -14,14 +14,14 @@ interface PropParam extends BaseParam {
 }
 
 function isComponentName(v: any): v is ComponentNameType {
-  return COMPONENT_LIST.indexOf(v) !== -1
+  return ROUTE_COMPONENT_LIST.indexOf(v) !== -1
 }
 
 function getComponentPropByName(v: any) {
   if (!isComponentName(v)) {
     return null
   }
-  return (ComponentProps as any)[v]
+  return (RouteComponents as any)[v]
 }
 
 function isComponentPropsKey({ componentName, propKey }: BaseParam) {

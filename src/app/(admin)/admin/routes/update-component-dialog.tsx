@@ -32,7 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { COMPONENT_LIST } from "@/constants/components"
+import { ROUTE_COMPONENT_LIST } from "@/constants/components"
 import {
   getComponentPropTarget,
   isComponentPropsKey,
@@ -62,7 +62,7 @@ export function UpdateRouteComponentDialog(
     })[]
   >(props.route.components)
 
-  const LayoutComponentList = COMPONENT_LIST
+  const LayoutComponentList = ROUTE_COMPONENT_LIST
 
   const hasSubUrl = !!componentList.find(
     component => component.type === ComponentType.SUB_URL

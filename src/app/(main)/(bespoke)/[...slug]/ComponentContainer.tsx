@@ -1,7 +1,7 @@
 import { Fragment } from "react"
 import { Component, Prisma } from "@prisma/client"
 
-import * as ComponentList from "@/components/layout/components"
+import * as ComponentList from "@/components/bespoke/route"
 
 interface ComponentContainerProps {
   component: Component

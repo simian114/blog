@@ -1,9 +1,9 @@
-import { ComponentProps } from "@/constants/bespoke-components";
+import { RouteComponents } from "@/constants/bespoke-components";
 
-type ComponentNameType = keyof typeof ComponentProps;
+type ComponentNameType = keyof typeof RouteComponents;
 
 type PropsTypeByComponent<T extends ComponentNameType> =
-  typeof ComponentProps[T];
+  typeof RouteComponents[T];
 
 // NOTE: usage
 // type Temp = PropsTypeByComponent<"SimplePostList">;
