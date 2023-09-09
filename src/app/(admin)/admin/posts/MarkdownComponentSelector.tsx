@@ -1,3 +1,10 @@
+import { useState } from "react"
+import {
+  GenericJsxEditor,
+  JsxComponentDescriptor,
+  jsxPluginHooks,
+} from "@mdxeditor/editor"
+
 import Button from "@/components/magicButton/Button"
 import {
   Dialog,
@@ -7,7 +14,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-
 import {
   Select,
   SelectContent,
@@ -15,20 +21,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useState } from "react"
-
-import {
-  MARKDOWN_COMPONENT_LIST,
-  POST_COMPONENT_LIST,
-} from "@/constants/components"
-import {
-  GenericJsxEditor,
-  JsxComponentDescriptor,
-  jsxPluginHooks,
-} from "@mdxeditor/editor"
 import { MarkdownComponents } from "@/constants/bespoke-components"
-import { MarkdownComponentNameType } from "@/types/bespoke-components"
+import { MARKDOWN_COMPONENT_LIST } from "@/constants/components"
 import { wait } from "@/lib/utils"
+import { MarkdownComponentNameType } from "@/types/bespoke-components"
 
 export const jsxComponentDescriptors: JsxComponentDescriptor[] =
   MARKDOWN_COMPONENT_LIST.map(name => {
@@ -113,7 +109,4 @@ export default function MarkdownSelectInput() {
       </DialogContent>
     </Dialog>
   )
-}
-function insertJsx(arg0: { name: string; kind: string; props: {} }) {
-  throw new Error("Function not implemented.")
 }
