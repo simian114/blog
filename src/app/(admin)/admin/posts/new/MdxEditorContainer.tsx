@@ -11,30 +11,28 @@ import {
   diffSourcePlugin,
   DiffSourceToggleWrapper,
   directivesPlugin,
-  GenericJsxEditor,
   headingsPlugin,
   InsertAdmonition,
   InsertCodeBlock,
-  JsxComponentDescriptor,
   jsxPlugin,
-  jsxPluginHooks,
   linkPlugin,
   listsPlugin,
   markdownShortcutPlugin,
-  MDXEditorMethods,
   quotePlugin,
   thematicBreakPlugin,
   toolbarPlugin,
   UndoRedo,
 } from "@mdxeditor/editor"
 
-import Button from "@/components/button/Button"
 
 import { AllIncludedPost } from "../[id]/page"
 
 import { AddPostDialog } from "./add-post-dialog.client"
 
 import "@mdxeditor/editor/style.css"
+import MarkdownSelectInput, {
+  jsxComponentDescriptors,
+} from "../MarkdownComponentSelector"
 
 const MDXEditor = dynamic(
   () => import("@mdxeditor/editor").then(mod => mod.MDXEditor),
@@ -49,36 +47,6 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
   const [markdown, setMarkdown] = useState(
     props.post?.content || `# hello world\n # hwy?`
   )
-  const ref = React.useRef<MDXEditorMethods>(null)
-
-  // NOTE: 공백 컴포넌트
-  const jsxComponentDescriptors: JsxComponentDescriptor[] = [
-    {
-      name: "br",
-      kind: "flow",
-      source: "source is not important",
-      defaultExport: true,
-      props: [{ name: "foo", type: "string" }],
-      Editor: GenericJsxEditor,
-    },
-  ]
-
-  const InsertBR = () => {
-    const insertJsx = jsxPluginHooks.usePublisher("insertJsx")
-    return (
-      <Button
-        onClick={() =>
-          insertJsx({
-            name: "br",
-            kind: "flow",
-            props: { foo: "bar", bar: "baz" },
-          })
-        }
-      >
-        InsertBR
-      </Button>
-    )
-  }
 
   return (
     <div className="flex flex-col gap-8">
@@ -88,7 +56,6 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
 
       <div className="border border-solid rounded h-full">
         <MDXEditor
-          ref={ref}
           markdown={markdown}
           onChange={setMarkdown}
           contentEditableClassName="mdx"
@@ -122,7 +89,7 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
                   <CreateLink />
                   <InsertAdmonition />
                   <InsertCodeBlock />
-                  <InsertBR />
+                  <MarkdownSelectInput />
                 </>
               ),
             }),
