@@ -18,7 +18,7 @@ const eslint = new ESLint({ fix: true, useEslintrc: true })
 
 const ComponentFolders = [
   { path: ROUTE_COMPONENTS_PATH, name: "RouteComponents" },
-  { path: POST_COMPONENTS_PATH, name: "PostComponets" },
+  { path: POST_COMPONENTS_PATH, name: "PostComponents" },
   { path: MARKDOWN_COMPONENTS_PATH, name: "MarkdownComponents" },
 ]
 

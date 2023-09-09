@@ -1,4 +1,15 @@
+import { MARKDOWN_COMPONENT_LIST } from "@/constants/components"
 import AnchorText from "./AnchorText"
+import * as MarkdownComponents from "@/components/bespoke/markdown"
+import { Fragment } from "react"
+
+const CustomComponents = MARKDOWN_COMPONENT_LIST.reduce((prev, cur) => {
+  prev[cur] = (props: any) => {
+    const Component = MarkdownComponents[cur] || Fragment
+    return <Component {...props} />
+  }
+  return prev
+}, {} as any)
 
 const MdxComponents = {
   /** h1 colored in yellow */
@@ -73,6 +84,7 @@ const MdxComponents = {
     <hr className="mdx-hr" {...props} />
   ),
   Temp: () => <div>Temp</div>,
+  ...CustomComponents,
 }
 
 export { MdxComponents }

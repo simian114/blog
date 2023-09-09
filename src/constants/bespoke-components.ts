@@ -30,5 +30,23 @@ export const RouteComponents = {
     },
   },
 }
-export const PostComponets = { Comment: {}, TOC: {} }
-export const MarkdownComponents = { Br: {} }
+export const PostComponents = { Comment: {}, TOC: {} }
+export const MarkdownComponents = {
+  Br: {
+    kind: {
+      tag: "param",
+      type: "string",
+      optional: true,
+      description: "",
+      default: "flow",
+    },
+    hasChildren: {
+      tag: "param",
+      type: "boolean",
+      optional: true,
+      description: "",
+      default: "true",
+    },
+    title: { tag: "param", type: "string", optional: false, description: "" },
+  },
+}
