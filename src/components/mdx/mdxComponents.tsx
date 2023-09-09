@@ -1,7 +1,9 @@
-import { MARKDOWN_COMPONENT_LIST } from "@/constants/components"
-import AnchorText from "./AnchorText"
-import * as MarkdownComponents from "@/components/bespoke/markdown"
 import { Fragment } from "react"
+
+import * as MarkdownComponents from "@/components/bespoke/markdown"
+import { MARKDOWN_COMPONENT_LIST } from "@/constants/components"
+
+import AnchorText from "./AnchorText"
 
 const CustomComponents = MARKDOWN_COMPONENT_LIST.reduce((prev, cur) => {
   prev[cur] = (props: any) => {

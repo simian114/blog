@@ -24,15 +24,14 @@ import {
   UndoRedo,
 } from "@mdxeditor/editor"
 
-
 import { AllIncludedPost } from "../[id]/page"
+import MarkdownSelectInput, {
+  jsxComponentDescriptors,
+} from "../MarkdownComponentSelector"
 
 import { AddPostDialog } from "./add-post-dialog.client"
 
 import "@mdxeditor/editor/style.css"
-import MarkdownSelectInput, {
-  jsxComponentDescriptors,
-} from "../MarkdownComponentSelector"
 
 const MDXEditor = dynamic(
   () => import("@mdxeditor/editor").then(mod => mod.MDXEditor),
