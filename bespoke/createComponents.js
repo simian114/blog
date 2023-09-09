@@ -7,69 +7,57 @@ const { parse } = require("comment-parser")
 const { ESLint } = require("eslint")
 
 const ROOT = path.resolve()
+
 const TARGET = ROOT + "/src/constants/bespoke-components.ts"
+
 const ROUTE_COMPONENTS_PATH = ROOT + "/src/components/bespoke/route"
 const POST_COMPONENTS_PATH = ROOT + "/src/components/bespoke/post"
+const MARKDOWN_COMPONENTS_PATH = ROOT + "/src/components/bespoke/markdown"
 
 const eslint = new ESLint({ fix: true, useEslintrc: true })
 
+const ComponentFolders = [
+  { path: ROUTE_COMPONENTS_PATH, name: "RouteComponents" },
+  { path: POST_COMPONENTS_PATH, name: "PostComponets" },
+  { path: MARKDOWN_COMPONENTS_PATH, name: "MarkdownComponents" },
+]
+
 async function createComponents() {
-  const routeFilesWithExt = await fs.readdir(ROUTE_COMPONENTS_PATH)
-  const postFilesWithExt = await fs.readdir(POST_COMPONENTS_PATH)
-  const routeComponents = {}
-  const postComponets = {}
+  const data = {}
 
-  // TODO: console.log 로 어떤 컴포넌트가 만들어지는지 표현해주기
-  for await (const fileWithExt of routeFilesWithExt) {
-    if (fileWithExt === "index.ts") {
-      continue
-    }
-    const fileAsString = await fs.readFile(
-      `${ROUTE_COMPONENTS_PATH}/${fileWithExt}`,
-      { encoding: "utf-8" }
-    )
-    const parsedJSDoc = parse(fileAsString, { spacing: "preserve" })
+  for await (const folder of ComponentFolders) {
+    const filesWithExt = await fs.readdir(folder.path)
 
-    const props = parsedJSDoc[0]?.tags.reduce((prev, tag) => {
-      if (tag.tag !== "param" || !tag.name || !tag.type) {
-        return prev
+    data[folder.name] = {}
+
+    for await (const fileWithExt of filesWithExt) {
+      if (fileWithExt === "index.ts") {
+        continue
       }
-      const { name, source, problems, param, ...rest } = tag
-      prev[name] = { ...rest }
-      return prev
-    }, {})
 
-    const fileName = fileWithExt.split(".")[0]
-    routeComponents[fileName] = props
-  }
-  // post components
-  for await (const fileWithExt of postFilesWithExt) {
-    if (fileWithExt === "index.ts") {
-      continue
-    }
-    const fileAsString = await fs.readFile(
-      `${POST_COMPONENTS_PATH}/${fileWithExt}`,
-      { encoding: "utf-8" }
-    )
-    const parsedJSDoc = parse(fileAsString, { spacing: "preserve" })
+      const fileAsString = await fs.readFile(`${folder.path}/${fileWithExt}`, {
+        encoding: "utf-8",
+      })
 
-    const props = parsedJSDoc[0]?.tags.reduce((prev, tag) => {
-      if (tag.tag !== "param" || !tag.name || !tag.type) {
+      const parsedJSDoc = parse(fileAsString, { spacing: "preserve" })
+
+      const props = parsedJSDoc[0]?.tags.reduce((prev, tag) => {
+        if (tag.tag !== "param" || !tag.name || !tag.type) {
+          return prev
+        }
+        const { name, source, problems, param, ...rest } = tag
+        prev[name] = { ...rest }
         return prev
-      }
-      const { name, source, problems, param, ...rest } = tag
-      prev[name] = { ...rest }
-      return prev
-    }, {})
+      }, {})
 
-    const fileName = fileWithExt.split(".")[0]
-    postComponets[fileName] = props
+      const componentName = fileWithExt.split(".")[0]
+      data[folder.name][componentName] = props
+    }
   }
-  //
-  const beforeFormat = `export const RouteComponents = ${JSON.stringify(
-    routeComponents
-  )}
-  export const PostComponents = ${JSON.stringify(postComponets)}`
+
+  const beforeFormat = Object.entries(data)
+    .map(([key, value]) => `export const ${key} = ${JSON.stringify(value)}`)
+    .join("\n")
   const afterFormat = (await eslint.lintText(beforeFormat))?.[0]?.output || ""
   await fs.writeFile(TARGET, afterFormat)
 }
