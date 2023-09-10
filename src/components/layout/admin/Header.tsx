@@ -1,7 +1,10 @@
+import { signOut } from "next-auth/react"
 import { GitHubLogoIcon } from "@radix-ui/react-icons"
 import { HomeIcon } from "lucide-react"
 
+import SignoutButton from "@/components/admin/SignoutButton"
 import IconButtonLink from "@/components/button/IconButtonLink"
+import Button from "@/components/magicButton/Button"
 
 export default function AdminHeader() {
   return (
@@ -14,6 +17,7 @@ export default function AdminHeader() {
         </div>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <nav className="flex flex-items-center">
+            <SignoutButton />
             <IconButtonLink
               href="https://github.com/simian114/blog"
               target="_blank"
