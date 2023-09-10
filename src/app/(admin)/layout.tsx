@@ -5,7 +5,7 @@ import { ReactNode } from "react"
 import { TailwindIndicator } from "@/components/admin/TailwindIndicator"
 import AdminFooter from "@/components/layout/admin/Footer"
 import AdminHeader from "@/components/layout/admin/Header"
-import { Providers } from "@/components/providers/providers"
+import { AdminProviders } from "@/components/providers/AdminProviders"
 
 import "@styles/admin.scss"
 import "highlight.js/styles/a11y-dark.css"
@@ -19,11 +19,11 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans antialiased dark-theme dark">
         <div className="relative flex min-h-screen flex-col w-full">
-          <Providers>
+          <AdminProviders>
             <AdminHeader />
             <div className="flex-1">{children}</div>
             <AdminFooter />
-          </Providers>
+          </AdminProviders>
           <TailwindIndicator />
         </div>
       </body>
