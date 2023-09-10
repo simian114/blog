@@ -44,3 +44,5 @@ next-env.d.ts
 # dark / light theme
 src/styles/2-theme/_light.scss
 src/styles/2-theme/_dark.scss
+
+certificates/*
