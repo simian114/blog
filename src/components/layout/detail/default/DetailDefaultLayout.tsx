@@ -4,7 +4,7 @@ import { COMPONENT_POSITION } from "@prisma/client"
 import { CalendarIcon, LapTimerIcon } from "@radix-ui/react-icons"
 import dayjs from "dayjs"
 
-import DeatilBespokeComponentMapper from "@/app/(main)/(bespoke)/[...slug]/DetailBespokeComponentMapper"
+import DeatilBespokeComponentMapper from "@/app/(main)/(bespoke-detail)/[route]/[subURL]/[post]/DetailBespokeComponentMapper"
 import { MdxComponents } from "@/components/mdx/mdxComponents"
 import Tag from "@/components/postCard/tag/Tag"
 import { getPostSlug } from "@/helpers/model/post"
@@ -12,38 +12,38 @@ import prisma from "@/lib/prisma"
 
 import ViewCounter from "./common/ViewCounter"
 
-async function getData(slug: string[]) {
+async function getData(params: DetailDefaultLayoutProps) {
   const post =
-    (slug.length &&
-      (await prisma.post.findFirst({
-        where: {
-          route: { url: `${slug[0]}` },
-          category: { url: `${slug[1]}` },
-          url: slug[2],
-        },
-        include: {
-          route: {
-            include: {
-              components: true,
-            },
+    (await prisma.post.findFirst({
+      where: {
+        route: { url: params.route },
+        category: { url: params.category },
+        url: params.post,
+      },
+      include: {
+        route: {
+          include: {
+            components: true,
           },
-          category: true,
-          tags: { include: { tag: true } },
         },
-      }))) ||
-    undefined
+        category: true,
+        tags: { include: { tag: true } },
+      },
+    })) || undefined
 
   return { post }
 }
 
 interface DetailDefaultLayoutProps {
-  slug: string[]
+  route: string
+  category: string
+  post: string
 }
 
 export default async function DetailDefaultLayout(
   props: DetailDefaultLayoutProps
 ) {
-  const { post } = await getData(props.slug)
+  const { post } = await getData(props)
 
   if (!post) {
     notFound()

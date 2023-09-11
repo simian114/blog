@@ -1,14 +1,14 @@
+import { notFound } from "next/navigation"
 import { ROUTE_TYPE } from "@prisma/client"
 
-import { getPostSlug, getPostURL } from "@/helpers/model/post"
 import prisma from "@/lib/prisma"
 
-export async function getStaticParams() {
-  const posts = await prisma.post.findMany({
-    where: { published: true },
-    include: { route: true, category: true, tags: { include: { tag: true } } },
-  })
-  // NOTE: routes
+import MainList from "../list"
+
+export const revalidate = 60 // revalidate this page every 60 seconds
+
+// NOTE: category only
+export async function generateStaticParams() {
   const routes = (
     await prisma.route.findMany({
       where: { type: { equals: ROUTE_TYPE.BESPOKE } },
@@ -23,12 +23,9 @@ export async function getStaticParams() {
     include: { route: true },
   })
 
-  const routeSlug = routes.map(route => ({
-    slug: [route.url],
-  }))
-
   const categorySlug = categories.map(category => ({
-    slug: [category.route?.url, category.url],
+    route: category.route?.url,
+    subURL: category.url,
   }))
 
   // NOTE: route 에 의존 tag
@@ -51,16 +48,21 @@ export async function getStaticParams() {
   const tagSlug = hasTagSelectorRoutes
     .map(hasTagSelectorRoute =>
       tags.map(tag => ({
-        slug: [hasTagSelectorRoute?.url || "", tag.url],
+        route: hasTagSelectorRoute?.url,
+        subURL: tag.url,
       }))
     )
     .flat()
+  return [...categorySlug, ...tagSlug]
+}
 
-  const filtered = posts.filter(post => getPostURL(post))
-  return [
-    ...routeSlug,
-    ...categorySlug,
-    ...tagSlug,
-    ...filtered.map(post => ({ slug: getPostSlug(post) })),
-  ]
+export default async function SubURLPage({
+  params,
+}: {
+  params: { route: string; subURL: string }
+}) {
+  if (params.route || params.subURL) {
+    return <MainList routeURL={params.route} subURL={params.subURL} />
+  }
+  return notFound()
 }
