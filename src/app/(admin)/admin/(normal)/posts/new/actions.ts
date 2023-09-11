@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache"
 import { Post, Prisma } from "@prisma/client"
 
-import { getPostURL } from "@/helpers/model/post"
 import prisma from "@/lib/prisma"
 
 export type CreatePostDTO = Prisma.PostCreateInput
@@ -19,7 +18,9 @@ export async function createPost(data: CreatePostDTO) {
     data,
     include: { category: true, route: true, tags: true },
   })
-  getPostURL(post) && revalidatePath(getPostURL(post))
+  revalidatePath("/[route]")
+  revalidatePath("/[route]/[subURL]")
+  revalidatePath("/[route]/[subURL]/post")
 
   return post
 }
@@ -32,6 +33,8 @@ export async function updatePost(dto: UpdatePostDTO) {
     },
     include: { category: true, route: true },
   })
-  getPostURL(post) && revalidatePath(getPostURL(post))
+  revalidatePath("/[route]")
+  revalidatePath("/[route]/[subURL]")
+  revalidatePath("/[route]/[subURL]/post")
   return post
 }

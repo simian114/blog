@@ -5,8 +5,6 @@ import prisma from "@/lib/prisma"
 
 import MainList from "./list"
 
-export const revalidate = 60
-
 export async function generateStaticParams() {
   const routes = (
     await prisma.route.findMany({

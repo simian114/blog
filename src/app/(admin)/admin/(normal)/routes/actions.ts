@@ -5,9 +5,8 @@ import { revalidateTag } from "next/dist/server/web/spec-extension/revalidate-ta
 import { Prisma, Route } from "@prisma/client"
 
 import prisma from "@/lib/prisma"
-// Prisma.CategoryCreateInput
+
 type CreateRouteDTO = Prisma.RouteCreateInput
-// type CreateRouteDTO = Pick<Route, "title" | "description" | "open">
 
 interface UpdateRouteDTO {
   id: number
@@ -19,6 +18,8 @@ export async function newRoute(data: CreateRouteDTO): Promise<Route> {
     data,
   })
   revalidateTag("/admin/routes")
+  revalidatePath("/[route]")
+  revalidatePath("/[route]/[subURL]")
   return newRoute
 }
 
@@ -27,8 +28,8 @@ export async function updateRoute(data: UpdateRouteDTO): Promise<Route> {
     data: data.data,
     where: { id: data.id },
   })
-
-  revalidatePath("/admin/routes")
-  revalidatePath("/")
+  revalidateTag("/admin/routes")
+  revalidatePath("/[route]")
+  revalidatePath("/[route]/[subURL]")
   return updatedRoute
 }
