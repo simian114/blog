@@ -18,6 +18,7 @@ export async function newCategory(data: CreateRouteDTO): Promise<Category> {
     data,
   })
   revalidateTag("/admin/categories")
+  revalidatePath("/")
   revalidatePath("/[route]")
   revalidatePath("/[route]/[subURL]")
   return category
@@ -29,6 +30,7 @@ export async function updateCategory(
   const { id, ...rest } = updateData
   const category = await prisma.category.update({ data: rest, where: { id } })
   revalidateTag("/admin/categories")
+  revalidatePath("/")
   revalidatePath("/[route]")
   revalidatePath("/[route]/[subURL]")
   return category
