@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { revalidateTag } from "next/dist/server/web/spec-extension/revalidate-tag"
 import { Prisma, Tag } from "@prisma/client"
 
@@ -28,5 +29,6 @@ export async function updatetag(data: UpdateTagDTO): Promise<Tag> {
     },
   })
   revalidateTag("/admin/post-tags")
+  revalidatePath("/", "layout")
   return tag
 }
