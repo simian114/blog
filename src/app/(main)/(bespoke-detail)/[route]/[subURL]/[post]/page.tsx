@@ -1,6 +1,8 @@
 import DetailDefaultLayout from "@/components/layout/detail/default/DetailDefaultLayout"
 import prisma from "@/lib/prisma"
 
+export const revalidate = 60 // revalidate this page every 60 seconds
+
 export async function generateStaticParams() {
   const posts = await prisma.post.findMany({
     where: { published: true },
