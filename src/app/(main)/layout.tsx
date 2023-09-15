@@ -70,6 +70,8 @@ async function getRoutes() {
   return routes
 }
 
+export const revalidate = 60 // revalidate this page every 60 seconds
+
 export default async function RootLayout(props: any) {
   const routes = await getRoutes()
 
