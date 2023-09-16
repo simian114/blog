@@ -18,7 +18,6 @@ export async function createPost(data: CreatePostDTO) {
     data,
     include: { category: true, route: true, tags: true },
   })
-  revalidatePath("/", "layout")
 
   return post
 }
@@ -31,6 +30,5 @@ export async function updatePost(dto: UpdatePostDTO) {
     },
     include: { category: true, route: true },
   })
-  revalidatePath("/", "layout")
   return post
 }
