@@ -17,7 +17,8 @@ export async function newRoute(data: CreateRouteDTO): Promise<Route> {
   const newRoute = await prisma.route.create({
     data,
   })
-  revalidatePath("/", "layout")
+  // revalidatePath("/", "layout")
+  revalidateTag("header")
   return newRoute
 }
 
@@ -26,6 +27,7 @@ export async function updateRoute(data: UpdateRouteDTO): Promise<Route> {
     data: data.data,
     where: { id: data.id },
   })
-  revalidatePath("/", "layout")
+  revalidateTag("header")
+  // revalidatePath("/", "layout")
   return updatedRoute
 }

@@ -6,8 +6,6 @@ import remarkGfm from "remark-gfm"
 
 import { MdxComponents } from "@/components/mdx/mdxComponents"
 
-export const revalidate = 60 // revalidate this page every 60 seconds
-
 // NOTE: Home router 는 custom router.
 export default async function Home() {
   const post = await fs.readFile(`${path.resolve()}/src/posts/index.mdx`)

@@ -46,31 +46,12 @@ export const metadata = {
 }
 
 async function getRoutes() {
-  const routes = await prisma.route.findMany({
-    include: {
-      categories: {
-        select: {
-          id: true,
-          title: true,
-          url: true,
-        },
-      },
-    },
-    orderBy: {
-      priority: "asc",
-    },
-    where: {
-      deletedAt: null,
-      open: true,
-      NOT: {
-        url: "",
-      },
-    },
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/route`, {
+    next: { tags: ["header"] },
   })
+  const routes = await res.json()
   return routes
 }
-
-export const revalidate = 60 // revalidate this page every 60 seconds
 
 export default async function RootLayout(props: any) {
   const routes = await getRoutes()

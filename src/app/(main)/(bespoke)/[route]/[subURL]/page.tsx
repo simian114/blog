@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma"
 
 import MainList from "../list"
 
-export const revalidate = 60 // revalidate this page every 60 seconds
+export const dynamicParams = true
 
 // NOTE: category only
 export async function generateStaticParams() {

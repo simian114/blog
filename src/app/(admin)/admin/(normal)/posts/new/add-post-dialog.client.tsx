@@ -83,7 +83,7 @@ export function AddPostDialog(props: AddPostDialogProps) {
     () =>
       routes?.filter(
         route =>
-          !!route.components.find(
+          !!route.components?.find(
             component =>
               component.type === "SUB_URL" &&
               component.name === "CategorySelector"
