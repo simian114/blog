@@ -30,6 +30,7 @@ async function getData() {
 export default async function TagSubURLSelector(props: TagSubURLSelectorProps) {
   const { posts } = await getData()
   const List = PostListMapper["CARD"]
+  // NOTE: posts 는 전부 불러온다?
   const filteredPost = props.subURL
     ? posts.filter(
         post => !!post.tags.find(tag => tag.tag.url === props.subURL)

@@ -2,7 +2,6 @@ import Link from "next/link"
 import { Category, Route } from "@prisma/client"
 
 import Typography from "@/components/typography/Typography"
-import prisma from "@/lib/prisma"
 
 // NOTE: server component 기 때문에 category 를 넘겨 줄 필요가 없음
 
@@ -11,23 +10,25 @@ interface CategorySelectorProps {
   currentRoute: Route
 }
 
-async function getCategories({ routeId }: { routeId: number }) {
-  const categories = await prisma.category.findMany({
-    where: {
-      routeId,
-    },
-    include: {
-      route: true,
-      posts: {
-        include: { tags: { include: { tag: true } } },
-      },
-    },
-  })
-  return categories
+async function getData({ routeId }: { routeId: number }) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/route/${routeId}/category`,
+      {
+        next: { tags: [`/api/route/${routeId}`] },
+      }
+    )
+    const categories = await res.json()
+    return { categories }
+  } catch (error) {
+    return { categories: [] }
+  }
 }
 
 export default async function CategorySelector(props: CategorySelectorProps) {
-  const categories = await getCategories({ routeId: props.currentRoute.id })
+  const { categories } = (await getData({
+    routeId: props.currentRoute.id,
+  })) as { categories: Category[] }
   return (
     <section className="post-list__category-section">
       <ul className="post-list__category-list">

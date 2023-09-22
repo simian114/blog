@@ -22,6 +22,7 @@ async function main() {
       priority: 1,
       url: "blog",
       type: ROUTE_TYPE.BESPOKE,
+      open: false,
       components: [
         {
           type: ComponentType.SUB_URL,

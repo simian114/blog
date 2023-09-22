@@ -13,25 +13,29 @@ import prisma from "@/lib/prisma"
 import ViewCounter from "./common/ViewCounter"
 
 async function getData(params: DetailDefaultLayoutProps) {
-  const post =
-    (await prisma.post.findFirst({
-      where: {
-        route: { url: params.route },
-        category: { url: params.category },
-        url: params.post,
-      },
-      include: {
-        route: {
-          include: {
-            components: true,
-          },
+  try {
+    const post =
+      (await prisma.post.findFirst({
+        where: {
+          route: { url: params.route },
+          category: { url: params.category },
+          url: params.post,
         },
-        category: true,
-        tags: { include: { tag: true } },
-      },
-    })) || undefined
+        include: {
+          route: {
+            include: {
+              components: true,
+            },
+          },
+          category: true,
+          tags: { include: { tag: true } },
+        },
+      })) || undefined
 
-  return { post }
+    return { post }
+  } catch (error) {
+    return { post: null }
+  }
 }
 
 interface DetailDefaultLayoutProps {

@@ -1,6 +1,5 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
 import { revalidateTag } from "next/dist/server/web/spec-extension/revalidate-tag"
 import { Category, Prisma } from "@prisma/client"
 
@@ -11,23 +10,24 @@ type CreateRouteDTO = Omit<
   "updatedAt" | "createdAt"
 >
 
-type UpdateRouteDTO = Prisma.CategoryUpdateInput & { id: Category["id"] }
+type UpdateRouteDTO = Prisma.CategoryUpdateInput & {
+  id: Category["id"]
+  revalidateTags?: string[]
+}
 
 export async function newCategory(data: CreateRouteDTO): Promise<Category> {
   const category = await prisma.category.create({
     data,
   })
-  revalidateTag("/admin/categories")
-  revalidatePath("/", "layout")
   return category
 }
 
 export async function updateCategory(
   updateData: UpdateRouteDTO
 ): Promise<Category> {
-  const { id, ...rest } = updateData
+  const { id, revalidateTags, ...rest } = updateData
   const category = await prisma.category.update({ data: rest, where: { id } })
-  revalidateTag("/admin/categories")
-  revalidatePath("/", "layout")
+  revalidateTags?.forEach(tag => revalidateTag(tag))
+
   return category
 }
