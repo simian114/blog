@@ -45,16 +45,21 @@ export const metadata = {
   },
 }
 
-async function getRoutes() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/route`, {
-    next: { tags: ["header"] },
-  })
-  const routes = await res.json()
-  return routes
+async function getData() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/layout/header`,
+      { next: { tags: ["/api/layout/header"] } }
+    )
+    const routes = await res.json()
+    return { routes }
+  } catch (error) {
+    return { routes: [] }
+  }
 }
 
 export default async function RootLayout(props: any) {
-  const routes = await getRoutes()
+  const { routes } = await getData()
 
   return (
     <html lang="en" className={myFont.className} suppressHydrationWarning>

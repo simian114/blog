@@ -12,6 +12,7 @@ async function getCategoryData() {
     },
     include: {
       route: true,
+      posts: true,
     },
   })
   return categories

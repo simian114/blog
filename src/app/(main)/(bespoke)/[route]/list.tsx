@@ -32,6 +32,7 @@ async function getData() {
 export default async function MainList(props: MainListProps) {
   const { routes } = await getData()
   const route = routes.find(route => route.url === props.routeURL)
+
   const category = route?.categories.find(
     category => category.url === props.subURL || ""
   )

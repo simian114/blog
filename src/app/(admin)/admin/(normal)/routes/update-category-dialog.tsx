@@ -69,6 +69,10 @@ export function UpdateRouteCategoryDialog(props: RouteCategoryDialogProps) {
           set: values.categories.map(id => ({ id })),
         },
       },
+      revalidateTags: [
+        "/api/layout/header",
+        `/api/route/${props.currentRouteID}`,
+      ],
     })
     wait().then(() => setOpen(false))
   }

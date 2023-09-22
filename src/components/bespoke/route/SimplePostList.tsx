@@ -16,20 +16,15 @@ type Post = Prisma.PostGetPayload<{
 }>
 
 async function getData() {
-  const posts =
-    (await prisma.post.findMany({
-      include: {
-        route: true,
-        category: true,
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-      where: {
-        published: true,
-      },
-    })) || []
-  return { posts }
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
+      next: { tags: [`/api/post`] },
+    })
+    const posts = await res.json()
+    return { posts }
+  } catch (error) {
+    return { posts: [] }
+  }
 }
 
 interface SimplePostListProps {
@@ -44,17 +39,32 @@ interface SimplePostListProps {
  */
 
 export default async function SimplePostList(props: SimplePostListProps) {
-  const { posts } = await getData()
-  const postsByRoute = posts.reduce((prev, curr) => {
-    const currentPostRoute = curr.route?.title
-    if (!currentPostRoute) return prev
-    if (Array.isArray(prev.get(currentPostRoute))) {
-      prev.set(currentPostRoute, [...(prev.get(currentPostRoute) || []), curr])
-    } else {
-      prev.set(currentPostRoute, [curr])
-    }
-    return prev
-  }, new Map<string, Post[]>())
+  const { posts } = (await getData()) as {
+    posts: Prisma.PostGetPayload<{
+      include: { route: true; category: true }
+    }>[]
+  }
+  const postsByRoute = posts.reduce(
+    (prev, curr) => {
+      const currentPostRoute = curr.route?.title
+      if (!currentPostRoute) return prev
+      if (Array.isArray(prev.get(currentPostRoute))) {
+        prev.set(currentPostRoute, [
+          ...(prev.get(currentPostRoute) || []),
+          curr,
+        ])
+      } else {
+        prev.set(currentPostRoute, [curr])
+      }
+      return prev
+    },
+    new Map<
+      string,
+      Prisma.PostGetPayload<{
+        include: { route: true; category: true }
+      }>[]
+    >()
+  )
 
   return (
     <>

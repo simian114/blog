@@ -1,12 +1,14 @@
 "use client"
 
-import { Category, Route } from "@prisma/client"
+import { Prisma, Route } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
 
 import { AddDialog } from "./add-dialog"
 
-export const columns: ColumnDef<Category>[] = [
+export const columns: ColumnDef<
+  Prisma.CategoryGetPayload<{ include: { route: true; posts: true } }>
+>[] = [
   { accessorKey: "id", header: "id" },
   {
     accessorKey: "title",

@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Category } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import { z } from "zod"
 
 import Button from "@/components/button/Button"
@@ -35,7 +36,9 @@ const formSchema = z.object({
 })
 
 interface AddDialogProps {
-  category?: Category
+  category?: Prisma.CategoryGetPayload<{
+    include: { posts: true }
+  }>
 }
 
 export function AddDialog(props: AddDialogProps) {
@@ -53,7 +56,25 @@ export function AddDialog(props: AddDialogProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (isEditMode && props.category?.id) {
-      await updateCategory({ ...values, id: props.category.id })
+      const listTags = []
+      const params = new URLSearchParams()
+      if (typeof props.category.routeId === "number") {
+        params.append("routeId", props.category.routeId.toString())
+        listTags.push(`/api/post?${params.toString()}`)
+        params.append("categoryId", props.category.id.toString())
+        listTags.push(`/api/post?${params.toString()}`)
+      }
+
+      await updateCategory({
+        ...values,
+        id: props.category.id,
+        revalidateTags: [
+          "/api/layout/header",
+          `/api/route/${props.category.routeId}`,
+          "/api/post",
+          ...listTags,
+        ],
+      })
     } else {
       await newCategory(values)
     }

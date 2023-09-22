@@ -124,6 +124,7 @@ export function UpdateRouteComponentDialog(
           },
         },
       },
+      revalidateTags: [],
     })
     wait().then(() => setOpen(false))
   }
