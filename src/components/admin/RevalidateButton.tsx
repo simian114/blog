@@ -18,9 +18,9 @@ import { Input } from "@/components/ui/input"
 import Button from "../button/Button"
 
 const formSchema = z.object({
-  path: z.string().min(1).max(20).optional(),
+  path: z.string().optional(),
   type: z.enum(["layout", "page"]).optional(),
-  tag: z.string().min(1).max(20).optional(),
+  tag: z.string().optional(),
 })
 
 import {
