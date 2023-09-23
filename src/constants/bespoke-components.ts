@@ -1,12 +1,5 @@
 export const RouteComponents = {
-  RouteDescriptor: {
-    routeURL: {
-      tag: "param",
-      type: "string",
-      optional: false,
-      description: "this is route url",
-    },
-  },
+  RouteDescriptor: {},
   SimplePostList: {
     title: {
       tag: "param",

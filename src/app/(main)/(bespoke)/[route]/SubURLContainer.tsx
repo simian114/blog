@@ -9,6 +9,7 @@ interface SubURLContainerProps {
   route: AllIncludeRoute
   category?: AllIncludeCategory
   subURL?: string
+  routeURL: string
 }
 
 export default function SubURLContainer(props: SubURLContainerProps) {
