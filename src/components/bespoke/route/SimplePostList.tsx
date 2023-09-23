@@ -3,17 +3,9 @@ import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 
 import { getPostURL } from "@/helpers/model/post"
-import prisma from "@/lib/prisma"
 import { capitalizeFirstLetter } from "@/lib/utils"
 
 import Typography from "../../typography/Typography"
-
-type Post = Prisma.PostGetPayload<{
-  include: {
-    route: true
-    category: true
-  }
-}>
 
 async function getData() {
   try {
