@@ -1,4 +1,6 @@
-import { Category, Route, SubUrlPost } from "@prisma/client"
+import { SubUrlPost } from "@prisma/client"
+
+import { AllIncludeCategory, AllIncludeRoute } from "@/types/bespoke-components"
 
 import CategorySelector from "./categorySelector/CategorySelector"
 import PostList from "./postList/PostList"
@@ -6,8 +8,8 @@ import PostList from "./postList/PostList"
 interface PostListWrapper {
   className: string
   type: SubUrlPost | string
-  currentCategory?: Category
-  currentRoute: Route
+  currentCategory?: AllIncludeCategory
+  currentRoute: AllIncludeRoute
 }
 
 /**
@@ -15,6 +17,7 @@ interface PostListWrapper {
  *
  */
 export default async function CategorySubURLSelector(props: PostListWrapper) {
+  // NOTE: data 를 여기서 가져와서 뿌려주는게 더 좋을듯. 여기서 모든걸 다 가져오자
   return (
     <section className={`${props.className} post-list`}>
       {/* NOTE: layout - category */}
@@ -28,8 +31,9 @@ export default async function CategorySubURLSelector(props: PostListWrapper) {
         description={props.currentCategory?.description || ""}
         categoryId={props.currentCategory?.id}
         routeId={props.currentRoute.id}
+        route={props.currentRoute}
+        category={props.currentCategory}
       />
-      {/* NOTE: layout -  */}
     </section>
   )
 }

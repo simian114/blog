@@ -2,8 +2,8 @@ import { notFound } from "next/navigation"
 import { COMPONENT_POSITION, ComponentType, LayoutType } from "@prisma/client"
 
 import Typography from "@/components/typography/Typography"
-import prisma from "@/lib/prisma"
 import { capitalizeFirstLetter } from "@/lib/utils"
+import { AllIncludeRoute } from "@/types/bespoke-components"
 
 import RouteComponentMapper from "./ComponentContainer"
 import SubURLContainer from "./SubURLContainer"
@@ -13,25 +13,24 @@ interface MainListProps {
   subURL?: string
 }
 
-async function getData() {
-  const routes = await prisma.route.findMany({
-    where: { open: true },
-    include: {
-      components: true,
-      categories: {
-        include: {
-          route: true,
-        },
-      },
-    },
-  })
-
-  return { routes }
+// NOTE: route 정보는 들어가야함
+async function getData({ url }: { url: string }): Promise<{
+  route: AllIncludeRoute | null
+}> {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/layout/components/category-selector/${url}`,
+      { next: { tags: [`category-selector/${url}`] } }
+    )
+    const route = await res.json()
+    return { route }
+  } catch (error) {
+    return { route: null }
+  }
 }
 
 export default async function MainList(props: MainListProps) {
-  const { routes } = await getData()
-  const route = routes.find(route => route.url === props.routeURL)
+  const { route } = await getData({ url: props.routeURL })
 
   const category = route?.categories.find(
     category => category.url === props.subURL || ""

@@ -1,7 +1,11 @@
 import { SubUrlPost } from "@prisma/client"
 
 import Typography from "@/components/typography/Typography"
-import prisma from "@/lib/prisma"
+import {
+  AllIncludeCategory,
+  AllIncludePost,
+  AllIncludeRoute,
+} from "@/types/bespoke-components"
 
 import { PostListMapper } from "./config"
 
@@ -10,38 +14,16 @@ export interface PostListProp {
   categoryId?: number
   routeId: number
   type: SubUrlPost | string
+  route: AllIncludeRoute
+  category?: AllIncludeCategory
 }
 
-async function getData({
-  routeId,
-  categoryId,
-}: {
-  routeId: number
-  categoryId?: number
-}) {
-  const params = new URLSearchParams()
-  params.append("routeId", routeId.toString())
-  if (typeof categoryId === "number") {
-    params.append("categoryId", categoryId.toString())
-  }
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/post?${params.toString()}`,
-      { next: { tags: [`/api/post?${params.toString()}`] } }
-    )
-    const data = await res.json()
-    return data
-  } catch (error) {
-    return []
-  }
-}
-
-// NOTE: get posts
 export default async function PostList(props: PostListProp) {
-  const posts = await getData({
-    routeId: props.routeId,
-    categoryId: props.categoryId,
-  })
+  const posts = (
+    props.category
+      ? props.category.posts
+      : props.route.categories.map(category => category.posts).flat()
+  ) as AllIncludePost[]
 
   const List = PostListMapper[props.type]
 
