@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation"
 import { COMPONENT_POSITION, ComponentType, LayoutType } from "@prisma/client"
 
-import Typography from "@/components/typography/Typography"
-import { capitalizeFirstLetter } from "@/lib/utils"
 import { AllIncludeRoute } from "@/types/bespoke-components"
 
 import RouteComponentMapper from "./ComponentContainer"
@@ -20,7 +18,7 @@ async function getData({ url }: { url: string }): Promise<{
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/layout/components/category-selector/${url}`,
-      { next: { tags: [`category-selector/${url}`] } }
+      { next: { tags: [`category-selector/${url}`, `bespoke/route/${url}`] } }
     )
     const route = await res.json()
     return { route }
@@ -29,6 +27,9 @@ async function getData({ url }: { url: string }): Promise<{
   }
 }
 
+// NOTE: AllIncludeRoute 는 무조건 각 컴포넌트에 들어감
+// Route Component 에는 반드시 AllIncludeRoute 가 들어가고
+// Post Component 에는 반드시 AllIncludePost 가 들어간다
 export default async function MainList(props: MainListProps) {
   const { route } = await getData({ url: props.routeURL })
 
@@ -54,11 +55,18 @@ export default async function MainList(props: MainListProps) {
               component={component}
               route={route}
               category={category}
+              routeURL={props.routeURL}
               subURL={props.subURL}
             />
           )
         } else if (component.type === LayoutType.COMPONENT) {
-          return <RouteComponentMapper key={index} component={component} />
+          return (
+            <RouteComponentMapper
+              key={index}
+              component={component}
+              route={route}
+            />
+          )
         } else return <></>
       })}
     </main>

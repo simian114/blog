@@ -27,6 +27,7 @@ export async function updateRoute(data: UpdateRouteDTO): Promise<Route> {
     where: { id: data.id },
     include: { categories: true },
   })
+  revalidateTag(`bespoke/route/${updatedRoute.url}`)
   data.revalidateTags?.forEach(tag => revalidateTag(tag))
   revalidateTag("/api/layout/header")
   revalidateTag(`/api/route/${updatedRoute.id}`)
