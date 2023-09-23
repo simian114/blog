@@ -46,17 +46,6 @@ export default async function MainList(props: MainListProps) {
 
   return (
     <main className="index-main">
-      <div>
-        <Typography variants="h1" colorLevel={12}>
-          {capitalizeFirstLetter(route.title)}
-        </Typography>
-        <p>
-          <Typography variants="subtitle1" colorLevel={11}>
-            {route.description}
-          </Typography>
-        </p>
-      </div>
-
       {routeComponents.map((component, index) => {
         if (component.type === ComponentType.SUB_URL) {
           return (
