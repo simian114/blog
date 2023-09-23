@@ -1,3 +1,7 @@
+import {
+  Prisma,
+} from "@prisma/client"
+
 import { RouteComponents } from "@/constants/bespoke-components";
 import { PostComponents } from "@/constants/bespoke-components";
 import { MarkdownComponents } from "@/constants/bespoke-components";
@@ -23,3 +27,30 @@ export type {
   MarkdownComponentNameType,
   MarddownComponentProps
 };
+
+export type AllIncludeRoute = Prisma.RouteGetPayload<{
+  include: {
+    components: true
+    categories: {
+      include: { posts: { include: { tags: { include: { tag: true } } } } }
+    }
+  }
+}>
+
+export type AllIncludeCategory = Prisma.CategoryGetPayload<{
+  include: {
+    posts: {
+      include: {
+        tags: {
+          include: {
+            tag: true
+          }
+        }
+      }
+    }
+  }
+}>
+
+export type AllIncludePost = Prisma.PostGetPayload<{
+  include: { route: true; category: true; tags: { include: { tag: true } } }
+}>

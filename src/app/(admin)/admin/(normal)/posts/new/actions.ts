@@ -18,19 +18,7 @@ export async function createPost(data: CreatePostDTO) {
     data,
     include: { category: true, route: true, tags: true },
   })
-  const routeId = post.routeId
-  const categoryId = post.categoryId
-  const params = new URLSearchParams()
-
-  if (typeof routeId === "number") {
-    params.append("routeId", routeId.toString())
-    revalidateTag(`/api/post?${params.toString()}`)
-  }
-  if (typeof categoryId === "number") {
-    params.append("categoryId", categoryId.toString())
-    revalidateTag(`/api/post?${params.toString()}`)
-  }
-
+  revalidateTag(`category-selector/${post.route?.url}`)
   return post
 }
 

@@ -1,12 +1,13 @@
-import { Category, Component, Prisma, Route } from "@prisma/client"
+import { Component, Prisma } from "@prisma/client"
 
 import CategorySubURLSelector from "@/components/layout/index/default/common/CategorySubURLSelector"
 import TagSubURLSelector from "@/components/layout/index/default/common/TagSubUrlSelector"
+import { AllIncludeCategory, AllIncludeRoute } from "@/types/bespoke-components"
 
 interface SubURLContainerProps {
   component: Component
-  route: Route
-  category?: Category
+  route: AllIncludeRoute
+  category?: AllIncludeCategory
   subURL?: string
 }
 
