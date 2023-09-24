@@ -5,7 +5,6 @@ import { Analytics } from "@vercel/analytics/react"
 import { Footer, Header } from "@/components/layout"
 import { Providers } from "@/components/providers/providers"
 import { defaultMeta, openGraphImage } from "@/constants/metadata"
-import prisma from "@/lib/prisma"
 
 import "@styles/globals.scss"
 import "highlight.js/styles/a11y-dark.css"
@@ -57,10 +56,8 @@ async function getData() {
     return { routes: [] }
   }
 }
-
 export default async function RootLayout(props: any) {
   const { routes } = await getData()
-
   return (
     <html lang="en" className={myFont.className} suppressHydrationWarning>
       <body>

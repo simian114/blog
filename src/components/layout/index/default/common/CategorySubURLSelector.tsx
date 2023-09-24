@@ -28,9 +28,6 @@ export default async function CategorySubURLSelector(props: PostListWrapper) {
       {/* NOTE: layout - PostList */}
       <PostList
         type={props.type}
-        description={props.currentCategory?.description || ""}
-        categoryId={props.currentCategory?.id}
-        routeId={props.currentRoute.id}
         route={props.currentRoute}
         category={props.currentCategory}
       />

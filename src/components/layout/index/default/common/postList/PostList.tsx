@@ -10,9 +10,6 @@ import {
 import { PostListMapper } from "./config"
 
 export interface PostListProp {
-  description: string
-  categoryId?: number
-  routeId: number
   type: SubUrlPost | string
   route: AllIncludeRoute
   category?: AllIncludeCategory
@@ -29,14 +26,14 @@ export default async function PostList(props: PostListProp) {
 
   return (
     <section className="post-list__post-section">
-      {props.description && (
+      {props.category?.description && (
         <Typography
           as="h4"
           variants="subtitle1"
           colorType="GRAY"
           colorLevel={12}
         >
-          {props.description}
+          {props.category.description}
         </Typography>
       )}
       {!!List && <List posts={posts} />}
