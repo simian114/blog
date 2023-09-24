@@ -55,7 +55,6 @@ export default async function MainList(props: MainListProps) {
               component={component}
               route={route}
               category={category}
-              routeURL={props.routeURL}
               subURL={props.subURL}
             />
           )
