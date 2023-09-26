@@ -37,7 +37,7 @@ const formSchema = z.object({
 
 interface AddDialogProps {
   category?: Prisma.CategoryGetPayload<{
-    include: { posts: true }
+    include: { posts: true; route: true }
   }>
 }
 
@@ -56,23 +56,14 @@ export function AddDialog(props: AddDialogProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (isEditMode && props.category?.id) {
-      const listTags = []
-      const params = new URLSearchParams()
-      if (typeof props.category.routeId === "number") {
-        params.append("routeId", props.category.routeId.toString())
-        listTags.push(`/api/post?${params.toString()}`)
-        params.append("categoryId", props.category.id.toString())
-        listTags.push(`/api/post?${params.toString()}`)
-      }
-
       await updateCategory({
         ...values,
         id: props.category.id,
         revalidateTags: [
           "/api/layout/header",
-          `/api/route/${props.category.routeId}`,
-          "/api/post",
-          ...listTags,
+          props.category.route
+            ? `/bespoke/route/${props.category.route.url}`
+            : "",
         ],
       })
     } else {

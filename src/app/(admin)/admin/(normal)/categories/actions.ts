@@ -27,7 +27,7 @@ export async function updateCategory(
 ): Promise<Category> {
   const { id, revalidateTags, ...rest } = updateData
   const category = await prisma.category.update({ data: rest, where: { id } })
+  revalidateTag(`bespoke/route/${category.routeId}`)
   revalidateTags?.forEach(tag => revalidateTag(tag))
-
   return category
 }
