@@ -17,11 +17,11 @@ import { RouteWithCategories } from "@/types/prisma"
 
 import HeaderMobileMenu from "./HeaderMobileMenu"
 
-interface HeaderProps {
+interface HeaderClientProps {
   routes: RouteWithCategories<"id" | "title" | "url">[]
 }
 
-export default function Header(props: HeaderProps): ReactElement {
+export default function HeaderClient(props: HeaderClientProps): ReactElement {
   const pathname = usePathname()
   const headerRef = useRef<HTMLHeadElement>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
