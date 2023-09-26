@@ -18,7 +18,7 @@ async function getData({ url }: { url: string }): Promise<{
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/layout/components/category-selector/${url}`,
-      { next: { tags: [`category-selector/${url}`, `bespoke/route/${url}`] } }
+      { next: { tags: [`bespoke/route/${url}`] } }
     )
     const route = await res.json()
     return { route }
