@@ -8,8 +8,14 @@ interface CategorySelectorProps {
   currentRoute: AllIncludeRoute
 }
 
+// NOTE: category selector 의 생성순으로 정렬
 export default async function CategorySelector(props: CategorySelectorProps) {
-  const categories = props.currentRoute.categories
+  const categoriesSortedByCreatedAt = [
+    ...(props.currentRoute.categories || []),
+  ].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  )
+
   return (
     <section className="post-list__category-section">
       <ul className="post-list__category-list">
@@ -36,7 +42,7 @@ export default async function CategorySelector(props: CategorySelectorProps) {
             </Typography>
           </Link>
         </li>
-        {categories.map(category => (
+        {categoriesSortedByCreatedAt.map(category => (
           <li
             key={category.id}
             className={`post-list__category-item ${

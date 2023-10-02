@@ -44,7 +44,7 @@ export const metadata = {
   },
 }
 
-export default async function RootLayout(props: any) {
+export default async function BespokeRootLayout(props: any) {
   return (
     <html lang="en" className={myFont.className} suppressHydrationWarning>
       <body>
