@@ -89,11 +89,15 @@ export default function HeaderClient(props: HeaderClientProps): ReactElement {
                         variants: "h3",
                       },
                     }}
-                    href={`/${route.title}`}
+                    href={`/${route.url}`}
                     key={route.id}
                     className={`navigation__menu-link ${
-                      pathname !== "/" && pathname.startsWith(`/${route.title}`)
+                      pathname !== "/" && pathname.startsWith(`/${route.url}`)
                         ? "active"
+                        : ""
+                    } ${
+                      pathname !== "/" && pathname.startsWith(`/${route.url}`)
+                        ? "navigation__menu-link--active"
                         : ""
                     }`}
                   >

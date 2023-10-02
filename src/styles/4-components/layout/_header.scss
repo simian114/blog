@@ -44,7 +44,7 @@ header.header {
       align-items: center;
     }
     &__menu-link {
-      &.active {
+      &--active {
         color: var(--text-high-color);
       }
     }
