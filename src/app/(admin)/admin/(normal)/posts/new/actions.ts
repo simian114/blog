@@ -18,7 +18,7 @@ export async function createPost(data: CreatePostDTO) {
     data,
     include: { category: true, route: true, tags: true },
   })
-  revalidateTag(`category-selector/${post.route?.url}`)
+  post?.route?.url && revalidateTag(`bespoke/route/${post.route.url}`)
   return post
 }
 
@@ -35,10 +35,13 @@ export async function updatePost(dto: UpdatePostDTO) {
   const categoryId = post.categoryId
   const params = new URLSearchParams()
 
+  post?.route?.url && revalidateTag(`bespoke/route/${post.route.url}`)
+
   if (typeof routeId === "number") {
     params.append("routeId", routeId.toString())
     revalidateTag(`/api/post?${params.toString()}`)
   }
+  // NOTE: for simple post list
   if (typeof categoryId === "number") {
     params.append("categoryId", categoryId.toString())
     revalidateTag(`/api/post?${params.toString()}`)
