@@ -59,12 +59,6 @@ export function AddDialog(props: AddDialogProps) {
       await updateCategory({
         ...values,
         id: props.category.id,
-        revalidateTags: [
-          "/api/layout/header",
-          props.category.route
-            ? `/bespoke/route/${props.category.route.url}`
-            : "",
-        ],
       })
     } else {
       await newCategory(values)
