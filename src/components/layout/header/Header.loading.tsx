@@ -6,7 +6,8 @@ import IconButtonLink from "@/components/button/IconButtonLink"
 import Skeleton from "@/components/skeleton/Skeleton"
 import Typography from "@/components/typography/Typography"
 
-const temp = Array.from({ length: 5 })
+const Routes = Array.from({ length: 5 })
+const Utils = Array.from({ length: 3 })
 
 export default function HeaderLoading(): ReactElement {
   return (
@@ -21,7 +22,7 @@ export default function HeaderLoading(): ReactElement {
             <RocketIcon />
           </IconButtonLink>
           <ul className="navigation__menus">
-            {temp.map((_, index) => (
+            {Routes.map((_, index) => (
               <li
                 key={index}
                 className={`navigation__menu-item navigation__menu-item--loading`}
@@ -35,6 +36,19 @@ export default function HeaderLoading(): ReactElement {
               </li>
             ))}
           </ul>
+
+          <div className="navigation__utils navigation__utils--loading">
+            {Utils.map((_, index) => (
+              <div key={index} className={``}>
+                <Skeleton
+                  design={{
+                    type: "text",
+                    variant: "h3",
+                  }}
+                />
+              </div>
+            ))}
+          </div>
         </nav>
       </header>
     </>
