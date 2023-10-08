@@ -31,8 +31,8 @@ const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
 const formSchema = z.object({
   title: z.string().min(1).max(20),
-  description: z.string().min(1).max(20),
-  url: z.string().min(1).max(20),
+  description: z.string().min(1),
+  url: z.string().min(1).max(100),
 })
 
 interface AddDialogProps {
