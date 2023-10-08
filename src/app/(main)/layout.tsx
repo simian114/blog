@@ -54,9 +54,7 @@ export default async function BespokeRootLayout(props: any) {
       <body>
         <Providers>
           <div id="app">
-            <Suspense fallback={<HeaderLoading />}>
-              <Header />
-            </Suspense>
+            <Header />
             <section className="inner">{props.children}</section>
             <Footer />
           </div>
@@ -66,18 +64,3 @@ export default async function BespokeRootLayout(props: any) {
     </html>
   )
 }
-
-// <Suspense
-//   fallback={
-//     <div>
-//       <div>loading</div>
-//       <div>loading</div>
-//       <div>loading</div>
-//       <div>loading</div>
-//       <div>loading</div>
-//       <div>loading</div>
-//     </div>
-//   }
-// >
-//   <Header />
-// </Suspense>
