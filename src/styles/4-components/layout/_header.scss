@@ -151,6 +151,13 @@ header.header {
         &__mobile-menu {
           display: block;
         }
+        &--loading {
+          > div {
+            width: 42px;
+            height: 38px;
+            margin-left: 16px;
+          }
+        }
       }
     }
   }

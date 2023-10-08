@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import localFont from "next/font/local"
-import { Suspense } from "react"
 import { Analytics } from "@vercel/analytics/react"
 
 import { Footer, Header } from "@/components/layout"
-import HeaderLoading from "@/components/layout/header/Header.loading"
 import { Providers } from "@/components/providers/providers"
 import { defaultMeta, openGraphImage } from "@/constants/metadata"
 
@@ -45,8 +43,6 @@ export const metadata = {
     ["google-site-verification"]: "7TQcAdD6UTznqrsliaYKwBgt8_ooHnzAfkP_M3n0RMA",
   },
 }
-
-export const dynamic = "force-dynamic"
 
 export default async function BespokeRootLayout(props: any) {
   return (
