@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { compileMDX } from "next-mdx-remote/rsc"
 import { COMPONENT_POSITION } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import { CalendarIcon, LapTimerIcon } from "@radix-ui/react-icons"
 import dayjs from "dayjs"
 
@@ -8,40 +9,35 @@ import DeatilBespokeComponentMapper from "@/app/(main)/(bespoke-detail)/[route]/
 import { MdxComponents } from "@/components/mdx/mdxComponents"
 import Tag from "@/components/postCard/tag/Tag"
 import { getPostSlug } from "@/helpers/model/post"
-import prisma from "@/lib/prisma"
 
 import ViewCounter from "./common/ViewCounter"
 
+interface DetailDefaultLayoutProps {
+  post: string
+}
+
+type PostWithComponentRoute = Prisma.PostGetPayload<{
+  include: {
+    route: { include: { components: true } }
+    category: true
+    tags: { include: { tag: true } }
+  }
+}>
+
 async function getData(params: DetailDefaultLayoutProps) {
   try {
-    const post =
-      (await prisma.post.findFirst({
-        where: {
-          route: { url: params.route },
-          category: { url: params.category },
-          url: params.post,
-        },
-        include: {
-          route: {
-            include: {
-              components: true,
-            },
-          },
-          category: true,
-          tags: { include: { tag: true } },
-        },
-      })) || undefined
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/post/${params.post}`,
+      {
+        next: { tags: [`/api/post/${params.post}`] },
+      }
+    )
+    const post = (await res.json()) as PostWithComponentRoute
 
     return { post }
   } catch (error) {
     return { post: null }
   }
-}
-
-interface DetailDefaultLayoutProps {
-  route: string
-  category: string
-  post: string
 }
 
 export default async function DetailDefaultLayout(

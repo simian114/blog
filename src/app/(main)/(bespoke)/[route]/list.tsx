@@ -20,6 +20,10 @@ async function getData({ url }: { url: string }): Promise<{
       `${process.env.NEXT_PUBLIC_API_URL}/api/layout/components/category-selector/${url}`,
       { next: { tags: [`bespoke/route/${url}`] } }
     )
+    // NOTE: for SimplePostList
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
+      next: { tags: [`/api/post`] },
+    })
     const route = await res.json()
     return { route }
   } catch (error) {

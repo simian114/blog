@@ -2,10 +2,9 @@ import Link from "next/link"
 import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 
+import Typography from "@/components/typography/Typography"
 import { getPostURL } from "@/helpers/model/post"
 import { capitalizeFirstLetter } from "@/lib/utils"
-
-import Typography from "../../typography/Typography"
 
 async function getData() {
   try {
@@ -22,6 +21,8 @@ async function getData() {
 interface SimplePostListProps {
   title?: string
 }
+
+// NOTE: revalidateTag 는 layout / page 단계에 선언해 놓은 함수에만 통하는듯...
 
 /**
  *
