@@ -56,10 +56,10 @@ export default function RevalidateButton() {
     }
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?${params.toString()}`,
-      {
-        next: { tags: [`/api/post`, "simple-post-list"] },
-      }
+      `${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?${params.toString()}`
+      // {
+      //   next: { tags: [`/api/post`, "simple-post-list"] },
+      // }
     )
     const d = await res.json()
     if (d.revalidated) {

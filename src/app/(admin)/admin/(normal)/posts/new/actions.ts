@@ -18,7 +18,10 @@ export async function createPost(data: CreatePostDTO) {
     data,
     include: { category: true, route: true, tags: true },
   })
-  post?.route?.url && revalidateTag(`bespoke/route/${post.route.url}`)
+  if (post?.route?.url) {
+    revalidateTag(`bespoke/route/${post.route.url}`)
+    revalidateTag("/api/post")
+  }
   return post
 }
 
@@ -31,21 +34,10 @@ export async function updatePost(dto: UpdatePostDTO) {
     include: { category: true, route: true },
   })
 
-  const routeId = post.routeId
-  const categoryId = post.categoryId
-  const params = new URLSearchParams()
-
-  post?.route?.url && revalidateTag(`bespoke/route/${post.route.url}`)
-
-  if (typeof routeId === "number") {
-    params.append("routeId", routeId.toString())
-    revalidateTag(`/api/post?${params.toString()}`)
+  if (post?.route?.url) {
+    revalidateTag(`bespoke/route/${post.route.url}`)
+    revalidateTag("/api/post")
+    revalidateTag(`/api/post/${post.url}`)
   }
-  // NOTE: for simple post list
-  if (typeof categoryId === "number") {
-    params.append("categoryId", categoryId.toString())
-    revalidateTag(`/api/post?${params.toString()}`)
-  }
-  revalidateTag("/api/post")
   return post
 }
