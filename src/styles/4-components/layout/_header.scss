@@ -42,6 +42,10 @@ header.header {
     &__menu-item {
       display: flex;
       align-items: center;
+      &--loading {
+        width: 60px;
+        margin-left: 16px;
+      }
     }
     &__menu-link {
       &--active {
@@ -137,6 +141,10 @@ header.header {
         width: 100%;
         justify-content: center;
         text-align: center;
+
+        &--loading {
+          display: none;
+        }
       }
       &__utils {
         &__mobile-menu {
