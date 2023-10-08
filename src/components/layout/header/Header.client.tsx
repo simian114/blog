@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { ReactElement, useEffect, useMemo, useRef, useState } from "react"
 import { RocketIcon } from "@radix-ui/react-icons"
 import * as Popover from "@radix-ui/react-popover"
+import { useQuery } from "@tanstack/react-query"
 import { ChevronDown } from "lucide-react"
 
 import ButtonLink from "@/components/button/ButtonLink"
@@ -13,19 +14,38 @@ import MagicButtonLink from "@/components/magicButton/ButtonLink"
 import { useDevice } from "@/components/providers/deviceWidthProvider"
 import { ThemeSelector } from "@/components/theme"
 import DisableScroll from "@/components/util/DisableScroll"
+import { wait } from "@/lib/utils"
 import { RouteWithCategories } from "@/types/prisma"
 
+import HeaderLoading from "./Header.loading"
 import HeaderMobileMenu from "./HeaderMobileMenu"
 
-interface HeaderClientProps {
-  routes: RouteWithCategories<"id" | "title" | "url">[]
+async function getHeaderRoutes() {
+  const currentTime = new Date().getTime()
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/layout/header`
+  )
+  const afterTime = new Date().getTime()
+  console.log({ timeDiff: afterTime - currentTime })
+  if (afterTime - currentTime < 1000) {
+    await wait(1000 - (afterTime - currentTime))
+  }
+  return await res.json()
 }
 
-export default function HeaderClient(props: HeaderClientProps): ReactElement {
+export default function HeaderClient(): ReactElement {
   const pathname = usePathname()
   const headerRef = useRef<HTMLHeadElement>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { isMobile } = useDevice()
+
+  const { data, isLoading } = useQuery<
+    RouteWithCategories<"id" | "url" | "title">[]
+  >({
+    queryKey: ["categories"],
+    queryFn: getHeaderRoutes,
+  })
+  const routes = data || []
 
   const open = useMemo(
     () => isMobile && isMobileMenuOpen,
@@ -33,7 +53,7 @@ export default function HeaderClient(props: HeaderClientProps): ReactElement {
   )
 
   const [routeMenuOpen, setRouteMenuOpen] = useState(() => {
-    return props.routes.reduce((prev, cur) => {
+    return routes.reduce((prev: any, cur: any) => {
       if (!cur.categories?.length) return prev
       return { ...prev, [cur.title]: false }
     }, {} as { [key: string]: boolean })
@@ -50,6 +70,10 @@ export default function HeaderClient(props: HeaderClientProps): ReactElement {
   useEffect(() => {
     setIsMobileMenuOpen(false)
   }, [pathname])
+
+  if (isLoading) {
+    return <HeaderLoading />
+  }
 
   return (
     <>
@@ -71,7 +95,7 @@ export default function HeaderClient(props: HeaderClientProps): ReactElement {
             className="navigation__menus"
             data-state={open ? "open" : "close"}
           >
-            {props.routes.map(route => (
+            {routes.map((route: any) => (
               <li key={route.id} className={`navigation__menu-item`}>
                 <Popover.Root
                   onOpenChange={open =>
@@ -122,7 +146,7 @@ export default function HeaderClient(props: HeaderClientProps): ReactElement {
                           asChild
                         >
                           <ul>
-                            {route.categories.map(category => (
+                            {route.categories.map((category: any) => (
                               <ButtonLink
                                 key={category.id}
                                 href={`/${route.url}/${category.url}`}
