@@ -7,7 +7,7 @@ interface TOCProps {
   post: Post
 }
 
-const HEADING_REGEX = /\n(?<header>#{2,3})\s+(?<title>.+)/g
+const HEADING_REGEX = /(?<header>#{2,3})\s+(?<title>.+)/g
 
 /**
  *

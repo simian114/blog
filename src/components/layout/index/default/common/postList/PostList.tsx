@@ -22,7 +22,7 @@ export default async function PostList(props: PostListProp) {
       : props.route.categories.map(category => category.posts).flat()
   ) as AllIncludePost[]
 
-  const sortedPosts = [...posts].sort((a, b) => {
+  const sortedPosts = [...(posts || [])].sort((a, b) => {
     return a.id - b.id
   })
 
