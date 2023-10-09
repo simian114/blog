@@ -4,6 +4,8 @@ import { COMPONENT_POSITION } from "@prisma/client"
 import { Prisma } from "@prisma/client"
 import { CalendarIcon, LapTimerIcon } from "@radix-ui/react-icons"
 import dayjs from "dayjs"
+import rehypeHighlight from "rehype-highlight"
+import remarkGfm from "remark-gfm"
 
 import DeatilBespokeComponentMapper from "@/app/(main)/(bespoke-detail)/[route]/[subURL]/[post]/DetailBespokeComponentMapper"
 import { MdxComponents } from "@/components/mdx/mdxComponents"
@@ -51,6 +53,14 @@ export default async function DetailDefaultLayout(
 
   const { content: MDXContent } = await compileMDX({
     source: post?.content || "",
+
+    options: {
+      mdxOptions: {
+        remarkPlugins: [remarkGfm],
+        rehypePlugins: [rehypeHighlight],
+        format: "mdx",
+      },
+    },
     components: MdxComponents,
   })
 
