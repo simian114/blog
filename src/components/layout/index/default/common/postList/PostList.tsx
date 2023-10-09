@@ -22,6 +22,10 @@ export default async function PostList(props: PostListProp) {
       : props.route.categories.map(category => category.posts).flat()
   ) as AllIncludePost[]
 
+  const sortedPosts = [...posts].sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  })
+
   const List = PostListMapper[props.type]
 
   return (
@@ -36,7 +40,7 @@ export default async function PostList(props: PostListProp) {
           {props.category.description}
         </Typography>
       )}
-      {!!List && <List posts={posts} />}
+      {!!List && <List posts={sortedPosts} />}
     </section>
   )
 }

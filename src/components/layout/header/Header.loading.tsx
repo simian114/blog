@@ -1,13 +1,11 @@
-import { ReactElement, useEffect, useMemo, useRef, useState } from "react"
+import { ReactElement } from "react"
 import { RocketIcon } from "@radix-ui/react-icons"
 
-import ButtonLink from "@/components/button/ButtonLink"
 import IconButtonLink from "@/components/button/IconButtonLink"
 import Skeleton from "@/components/skeleton/Skeleton"
-import Typography from "@/components/typography/Typography"
 
-const Routes = Array.from({ length: 5 })
-const Utils = Array.from({ length: 3 })
+const Routes = Array.from({ length: 4 })
+const Utils = Array.from({ length: 2 })
 
 export default function HeaderLoading(): ReactElement {
   return (
