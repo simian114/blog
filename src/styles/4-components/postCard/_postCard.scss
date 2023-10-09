@@ -11,6 +11,7 @@ $postcard-shape: rds-shape(secondary);
   border: 1px solid var(--ui-static-border-color);
   @include rds-grid();
   @include rds-grid-layout((2), (10));
+  height: 100%;
 
   &__meta {
     min-width: 92px;
