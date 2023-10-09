@@ -103,6 +103,7 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
                   <CreateLink />
                   <InsertCodeBlock />
                   <MarkdownSelectInput />
+                  <InsertAdmonition />
                 </>
               ),
             }),

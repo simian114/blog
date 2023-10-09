@@ -3,6 +3,7 @@ import { Fragment } from "react"
 import * as MarkdownComponents from "@/components/bespoke/markdown"
 import { MARKDOWN_COMPONENT_LIST } from "@/constants/components"
 
+import Admonition from "./Admonition"
 import AnchorText from "./AnchorText"
 
 const CustomComponents = MARKDOWN_COMPONENT_LIST.reduce((prev, cur) => {
@@ -85,6 +86,23 @@ const MdxComponents = {
   hr: (props: React.HTMLProps<HTMLHRElement>) => (
     <hr className="mdx-hr" {...props} />
   ),
+  // NOTE: Admonition
+  tip: (props: React.HTMLProps<HTMLDivElement>) => {
+    return <Admonition {...props} type="tip" />
+  },
+  note: (props: React.HTMLProps<HTMLDivElement>) => {
+    return <Admonition {...props} type="note" />
+  },
+  danger: (props: React.HTMLProps<HTMLDivElement>) => {
+    return <Admonition {...props} type="danger" />
+  },
+
+  info: (props: React.HTMLProps<HTMLDivElement>) => {
+    return <Admonition {...props} type="info" />
+  },
+  caution: (props: React.HTMLProps<HTMLDivElement>) => {
+    return <Admonition {...props} type="caution" />
+  },
   Temp: () => <div>Temp</div>,
   ...CustomComponents,
 }
