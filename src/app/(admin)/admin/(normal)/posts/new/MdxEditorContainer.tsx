@@ -6,6 +6,7 @@ import {
   BlockTypeSelect,
   BoldItalicUnderlineToggles,
   codeBlockPlugin,
+  codeMirrorPlugin,
   CodeToggle,
   CreateLink,
   diffSourcePlugin,
@@ -69,7 +70,19 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
             linkDialogPlugin({}),
             listsPlugin(),
             headingsPlugin(),
-            codeBlockPlugin(),
+            codeBlockPlugin({ defaultCodeBlockLanguage: "js" }),
+            codeMirrorPlugin({
+              codeBlockLanguages: {
+                js: "JavaScript",
+                css: "CSS",
+                c: "C",
+                sh: "Shell",
+                scss: "SCSS",
+                sass: "Sass",
+                go: "Go",
+                lua: "Lua",
+              },
+            }),
             quotePlugin(),
             markdownShortcutPlugin(),
             thematicBreakPlugin(),
@@ -88,7 +101,6 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
                   <BoldItalicUnderlineToggles />
                   <CodeToggle />
                   <CreateLink />
-                  <InsertAdmonition />
                   <InsertCodeBlock />
                   <MarkdownSelectInput />
                 </>
