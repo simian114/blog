@@ -23,7 +23,7 @@ export default async function PostList(props: PostListProp) {
   ) as AllIncludePost[]
 
   const sortedPosts = [...posts].sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    return a.id - b.id
   })
 
   const List = PostListMapper[props.type]

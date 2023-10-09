@@ -33,7 +33,7 @@ export default function ViewCounter(props: ViewCounterProps): ReactElement {
   const { data, isLoading } = usePostViewCounter({ slug: props.slug })
 
   return (
-    <div className={`detail-main__view-count `}>
+    <div className={`detail-header__view-count `}>
       {isLoading ? <EyeClosedIcon /> : <EyeOpenIcon />}
 
       <span className={`${isLoading ? "skeleton skeleton-text" : ""}`}>
