@@ -76,39 +76,37 @@ export default async function DetailDefaultLayout(
 
   return (
     <>
+      <div className="detail-header-wrapper">
+        <h1 className="detail-header__title">{post.title}</h1>
+        <div className="detail-header__info">
+          <div className="detail-header__meta">
+            <div className="detail-header__date">
+              <CalendarIcon />
+              <span>{dayjs(post.updatedAt).format("YYYY-MM-DD")}</span>
+            </div>
+            <div className="detail-header__reading-time">
+              <LapTimerIcon />
+              <span>{post.readingTime}min</span>
+            </div>
+            <ViewCounter slug={getPostSlug(post)} />
+          </div>
+          <div className="detail-header__tag-container">
+            {!!post.tags?.length && (
+              <>
+                {post.tags.map((tag, index) => (
+                  <Tag key={index} tag={tag.tag} color={tag.tag.color} />
+                ))}
+              </>
+            )}
+          </div>
+        </div>
+      </div>
       <div
         className={`detail-main-wrapper ${
           !!toc ? "detail-main-wrapper--aside" : ""
         }`}
       >
         <main className="detail-main">
-          <div className="detail-main__title-wrapper">
-            <h1 className="detail-main__title">{post.title}</h1>
-            <div className="detail-main__info">
-              <div className="detail-main__info__left">
-                <div className="detail-main__date">
-                  <CalendarIcon />
-                  <span>{dayjs(post.updatedAt).format("YYYY-MM-DD")}</span>
-                </div>
-                <div className="detail-main__reading-time">
-                  <LapTimerIcon />
-                  <span>{post.readingTime}min</span>
-                </div>
-                <ViewCounter slug={getPostSlug(post)} />
-              </div>
-              <div className="detail-main__info__right">
-                <div className="detail-main__tags">
-                  {!!post.tags?.length && (
-                    <div className="post-card__tag-container">
-                      {post.tags.map((tag, index) => (
-                        <Tag key={index} tag={tag.tag} color={tag.tag.color} />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
           <div className="detail-main__contents">{MDXContent}</div>
         </main>
 

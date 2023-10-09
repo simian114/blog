@@ -6,22 +6,38 @@
   height: 100%;
   width: 100%;
   &--aside {
-  @include rds-grid(16px);
-  @include rds-grid-layout((9), (3));
+    @include rds-grid(16px);
+    @include rds-grid-layout((9), (3));
   }
 }
 
-.detail-main {
-  color: var(--text-high-color);
-  &__title-wrapper {
+.detail-header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: rds-space(space-32);
+  border-bottom: 2px solid var(--separator-color);
+  padding-bottom: rds-space(space-24);
+  padding-top: rds-space(space-24);
+}
+
+.detail-header {
+  &__date,
+  &__reading-time,
+  &__view-count {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-bottom: rds-space(space-32);
-    border-bottom: 2px solid var(--separator-color);
-    padding-bottom: rds-space(space-24);
-    padding-top: rds-space(space-24);
+    color: var(--text-high-color);
+    > span {
+      width: max-content;
+    }
+  }
+  &__view-count {
+    color: var(--text-high-color);
+    > .skeleton {
+      width: 24px;
+    }
   }
   &__title {
     @include rds-h1;
@@ -37,34 +53,26 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    &__left {
-      display: flex;
-      align-items: center;
-      gap: rds-space(space-16);
-      @include rds-caption1;
-      svg {
-        margin-right: rds-space(space-04);
-      }
-      align-self: flex-end;
-    }
-    &__right {
-      display: flex;
-    }
+
+    @include rds-grid(16px);
+    @include rds-grid-layout((9), (3));
   }
 
-  &__date,
-  &__reading-time,
-  &__view-count {
+  &__meta {
     display: flex;
     align-items: center;
-    > span {
-      width: max-content;
+    gap: rds-space(space-16);
+    @include rds-caption1;
+    svg {
+      margin-right: rds-space(space-04);
     }
+    align-self: flex-end;
   }
-  &__view-count {
-    > .skeleton {
-      width: 24px;
-    }
+  &__tag-container {
+    display: flex;
+    gap: 4px;
+    overflow: auto;
+    @include thin-scrollbar;
   }
 }
 
@@ -95,11 +103,16 @@
 }
 
 @include mobile {
-  .detail-main-wrapper {
+  .detail-header-wrapper {
     display: block;
     gap: unset;
   }
-  .detail-main {
+
+  .detail-header-wrapper {
+    display: block;
+    gap: unset;
+  }
+  .detail-header {
     &__title {
       font-size: 2.5rem;
       color: var(--text-high-color);
@@ -111,8 +124,8 @@
       margin-bottom: rds-space(space-24);
     }
     &__info {
+      display: flex;
       flex-direction: column;
-      justify-content: flex-end;
       align-items: flex-end;
     }
   }
