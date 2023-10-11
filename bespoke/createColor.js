@@ -30,6 +30,7 @@ function getLightTemplate({ gray, primary, secondary, tertiary }) {
   return `
   @use "@styles/2-theme/css-variable";
   @use "./colors" as *;
+  @use "@styles/0-plugins/highlightJS" as hljs;
 
 :root {
   @include css-variable.colors;
@@ -104,11 +105,13 @@ function getLightTemplate({ gray, primary, secondary, tertiary }) {
 @media (prefers-color-scheme: light) {
   :root {
     @include light;
+    @include hljs.a11yLight;
   }
 }
 
 .light-theme {
   @include light;
+  @include hljs.a11yLight;
 }
   `
 }
@@ -117,6 +120,7 @@ function getDarkTemplate({ gray, primary, secondary, tertiary }) {
   return `
   @use "@styles/2-theme/css-variable";
   @use "./colors" as *;
+  @use "@styles/0-plugins/highlightJS" as hljs;
 
 @mixin dark {
   @include slateDark;
@@ -186,11 +190,13 @@ function getDarkTemplate({ gray, primary, secondary, tertiary }) {
 @media (prefers-color-scheme: dark) {
   :root {
     @include dark;
+    @include hljs.a11yDark
   }
 }
 
 .dark-theme {
   @include dark;
+  @include hljs.a11yDark
 }
 
   `
