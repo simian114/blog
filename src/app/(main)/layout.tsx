@@ -7,7 +7,6 @@ import { Providers } from "@/components/providers/providers"
 import { defaultMeta, openGraphImage } from "@/constants/metadata"
 
 import "@styles/globals.scss"
-import "highlight.js/styles/a11y-dark.css"
 
 // Font files can be colocated inside of `app`
 const myFont = localFont({
