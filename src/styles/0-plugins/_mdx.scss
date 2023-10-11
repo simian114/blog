@@ -124,7 +124,24 @@
 
 .mdx-pre {
   margin: 0.75rem auto;
+  margin: rds-space(space-16) auto;
   overflow: auto;
+
+  box-shadow: 0px 10px 20px -10px var(--secondary9);
+  &__container {
+    position: relative;
+    overflow: hidden;
+    border-radius: rds-shape(primary);
+  }
+  &__lang {
+    position: absolute;
+    right: 0rem;
+    top: 0rem;
+    padding: rds-space(space-04) rds-space(space-08);
+    background-color: var(--secondary3);
+    border-bottom-left-radius: rds-shape(primary);
+    opacity: 0.75;
+  }
 }
 
 .mdx-pre .mdx-code {
