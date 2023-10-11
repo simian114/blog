@@ -5,6 +5,7 @@ import { MARKDOWN_COMPONENT_LIST } from "@/constants/components"
 
 import Admonition from "./Admonition"
 import AnchorText from "./AnchorText"
+import Pre from "./Pre"
 
 const CustomComponents = MARKDOWN_COMPONENT_LIST.reduce((prev, cur) => {
   prev[cur] = (props: any) => {
@@ -75,7 +76,7 @@ const MdxComponents = {
   ),
   // TODO: codesand 로 사용하기
   pre: (props: React.HTMLProps<HTMLPreElement>) => {
-    return <pre className="mdx-pre" {...props} />
+    return <Pre {...props} />
   },
   img: (props: React.HTMLProps<HTMLImageElement>) => (
     <img className="mdx-img" {...props} />
