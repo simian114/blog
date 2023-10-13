@@ -5,19 +5,14 @@ type PreProps = React.HTMLProps<HTMLPreElement>
 interface ChildrenProps {
   props: {
     className: string
+    ["data-language"]: string
   }
 }
-
-const LANG_PREFIX = "language-"
 
 export default function Pre(props: PreProps) {
   const { children, ...rest } = props
 
-  const lang = (children as ChildrenProps).props.className
-    .split(" ")
-    .find(className => className.startsWith(LANG_PREFIX))
-    ?.replace(LANG_PREFIX, "")
-    ?.toUpperCase()
+  const lang = (children as ChildrenProps)?.props?.["data-language"]
 
   return (
     <pre className="mdx-pre" {...rest}>
