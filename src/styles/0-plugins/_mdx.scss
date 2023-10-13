@@ -2,6 +2,48 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap");
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    pre[data-theme="light"],
+    code[data-theme="light"] {
+      display: none;
+    }
+  }
+}
+
+.dark-theme {
+  pre[data-theme="light"],
+  code[data-theme="light"] {
+    display: none;
+  }
+
+  pre[data-theme="dark"],
+  code[data-theme="dark"] {
+    display: grid;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    pre[data-theme="dark"],
+    code[data-theme="dark"] {
+      display: none;
+    }
+  }
+}
+
+.light-theme {
+  pre[data-theme="dark"],
+  code[data-theme="dark"] {
+    display: none;
+  }
+
+  pre[data-theme="light"],
+  code[data-theme="light"] {
+    display: grid;
+  }
+}
+
 .mdx-h1 {
   @include rds-h1;
 }
@@ -110,28 +152,20 @@
 .mdx-code,
 .mdx-pre {
   font-family: "Fira Code", monospace;
-  font-size: 90%;
   background-color: transparent;
 }
-
-.mdx-code {
-  padding: 0.2em 0;
-  margin: 0;
-  background-color: var(--ui-el-bg-primary-color);
-  border-radius: var(--box-border-radius);
-  color: var(--text-low-primary-color);
-}
-
 .mdx-pre {
   margin: 0.75rem auto;
   margin: rds-space(space-16) auto;
   overflow: auto;
 
   box-shadow: 0px 10px 20px -10px var(--secondary9);
+  border-radius: rds-shape(primary);
+  position: relative;
   &__container {
-    position: relative;
-    overflow: hidden;
-    border-radius: rds-shape(primary);
+    overflow: auto;
+    padding: 1rem;
+    @include thin-scrollbar;
   }
   &__lang {
     position: absolute;
@@ -146,6 +180,53 @@
 
 .mdx-pre .mdx-code {
   background: transparent;
+
+  counter-reset: line;
+  span[data-line] {
+    width: calc(100% + 2rem);
+    margin-left: -1rem;
+    padding-left: 1rem;
+    line-height: 2;
+  }
+  span[data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+
+    /* Other styling */
+    display: inline-block;
+    width: 1rem;
+    margin-right: 2rem;
+    text-align: right;
+    color: gray;
+  }
+  span[data-highlighted-line] {
+    background-color: var(--primary8);
+    background-color: var(--secondary7);
+    background-image: linear-gradient(
+      to right,
+      var(--primary7),
+      var(--secondary7),
+      var(--tertiary7)
+    );
+  }
+  span[data-highlighted-chars] {
+    @include bold;
+    padding-top: rds-space(space-04);
+    padding-bottom: rds-space(space-02);
+    padding: rds-space(space-04) rds-space(space-04) rds-space(space-02)
+      rds-space(space-04);
+    border-radius: rds-shape(primary);
+  }
+
+  $colors: "primary", "secondary", "tertiary", "yellow", "blue", "brown",
+    "green", "orange", "pink", "purple", "red", "cyan";
+  @each $color in $colors {
+    span[data-chars-id="#{$color}"] {
+      background-color: var(--#{$color}6);
+      color: var(--#{$color}10);
+      border-bottom: 2px solid var(--#{$color}8);
+    }
+  }
 }
 
 .mdx-pre .mdx-code::before,
@@ -156,6 +237,18 @@
 .mdx-code::before,
 .mdx-code::after {
   content: "\00a0";
+}
+
+@include mobile {
+  .mdx-code,
+  .mdx-pre {
+    font-size: 95%;
+  }
+  .mdx-pre .mdx-code {
+    span[data-line]::before {
+      display: none;
+    }
+  }
 }
 
 .mdx-a > .mdx-em,

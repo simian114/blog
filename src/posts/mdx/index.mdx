@@ -56,20 +56,12 @@ Some paragraph _asterrisks_ for emphasis
 
 `this is code` hello world
 
-```js
+```jsx {1-2} /email/#red /"world"/#blue /setName/#primary
 const hello = "world"
+const [email, setEmail] = useState("foobar@gmail.com");
+const [name, setName] = useState("sanam");
 
-console.log(hello)
 // 굉장히 긴거 테스트굉장히 긴거 테스트굉장히 긴거 테스트굉장히 긴거 테스트굉장히 긴거 테스트굉장히 긴거 테스트굉장히 긴거 테스트굉장히 긴거 테스트
-```
-
-```js
-const hello = "world"
-if (hello !== "zz") {
-  console.log("zz")
-}
-
-console.log(hello)
 ```
 
 ```css
