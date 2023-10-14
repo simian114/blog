@@ -1,31 +1,16 @@
-import { compileMDX } from "next-mdx-remote/rsc"
 import fs from "fs/promises"
 import path from "path"
-import rehypePrettyCode from "rehype-pretty-code"
-import remarkGfm from "remark-gfm"
 
-import { MdxComponents } from "@/components/mdx/mdxComponents"
+import MDX from "@/components/mdx/MDX"
 
 export default async function MdxStyle() {
-  const post = await fs.readFile(`${path.resolve()}/src/posts/mdx/index.mdx`)
-  const options = {
-    theme: {
-      light: "github-light",
-      dark: "one-dark-pro",
-    },
-  }
+  const post = (await fs.readFile(
+    `${path.resolve()}/src/posts/mdx/index.mdx`
+  )) as unknown as string
 
-  const { content } = await compileMDX({
-    source: post || "",
-    options: {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-        rehypePlugins: [() => rehypePrettyCode(options)],
-        format: "mdx",
-      },
-    },
-    components: MdxComponents,
-  })
-
-  return <main>{content}</main>
+  return (
+    <main>
+      <MDX source={post || ""} />
+    </main>
+  )
 }
