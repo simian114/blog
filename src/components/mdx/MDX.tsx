@@ -18,7 +18,7 @@ export default async function MDX(props: MDXProps) {
   const options = {
     theme: {
       light: "github-light",
-      dark: "one-dark-pro",
+      dark: "github-dark",
     },
   }
 
