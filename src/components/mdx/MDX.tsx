@@ -6,6 +6,10 @@ import remarkGfm from "remark-gfm"
 
 import { MdxComponents } from "@/components/mdx/mdxComponents"
 
+import "shiki"
+import "shiki/themes/one-dark-pro.json"
+import "shiki/themes/github-light.json"
+
 interface MDXProps {
   source: string
 }
