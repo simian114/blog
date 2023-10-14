@@ -10,6 +10,7 @@ import remarkDirectiveRehype from "remark-directive-rehype"
 import remarkGfm from "remark-gfm"
 
 import DeatilBespokeComponentMapper from "@/app/(main)/(bespoke-detail)/[route]/[subURL]/[post]/DetailBespokeComponentMapper"
+import MDX from "@/components/mdx/MDX"
 import { MdxComponents } from "@/components/mdx/mdxComponents"
 import Tag from "@/components/postCard/tag/Tag"
 import { getPostSlug } from "@/helpers/model/post"
@@ -53,19 +54,6 @@ export default async function DetailDefaultLayout(
     notFound()
   }
 
-  const { content: MDXContent } = await compileMDX({
-    source: post?.content || "",
-
-    options: {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm, remarkDirective, remarkDirectiveRehype],
-        rehypePlugins: [rehypeHighlight],
-        format: "mdx",
-      },
-    },
-    components: MdxComponents,
-  })
-
   const postComponent =
     post.route?.components.filter(
       component => component.position === COMPONENT_POSITION.POST
@@ -107,7 +95,9 @@ export default async function DetailDefaultLayout(
         }`}
       >
         <main className="detail-main">
-          <div className="detail-main__contents">{MDXContent}</div>
+          <div className="detail-main__contents">
+            <MDX source={post.content || ""} />
+          </div>
         </main>
 
         {!!toc && <DeatilBespokeComponentMapper post={post} component={toc} />}
