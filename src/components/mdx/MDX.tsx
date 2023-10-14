@@ -19,6 +19,9 @@ const getShikiPath = (): string => {
 
 const touched = { current: false }
 
+// LINK: https://github.com/vercel/next.js/issues/52711
+// NOTE: 위 링크에 on demand revalidate 시 에러 해결 방법 나와있음
+
 // "Touch" the shiki assets so that Vercel will include them in the production
 // bundle. This is required because shiki itself dynamically access these files,
 // so Vercel doesn't know about them by default
