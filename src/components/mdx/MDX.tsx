@@ -3,12 +3,9 @@ import rehypePrettyCode from "rehype-pretty-code"
 import remarkDirective from "remark-directive"
 import remarkDirectiveRehype from "remark-directive-rehype"
 import remarkGfm from "remark-gfm"
-import {
-  BUNDLED_LANGUAGES,
-  BUNDLED_THEMES,
-  getHighlighter,
-  HighlighterOptions,
-} from "shiki"
+import { BUNDLED_LANGUAGES, getHighlighter, HighlighterOptions } from "shiki"
+import githubLight from "shiki/themes/github-light.json"
+import oneDarkPro from "shiki/themes/one-dark-pro.json"
 
 import { MdxComponents } from "@/components/mdx/mdxComponents"
 
@@ -26,7 +23,7 @@ export default async function MDX(props: MDXProps) {
           [
             rehypePrettyCode,
             {
-              theme: { light: "github-light", dark: "one-dark-pro" },
+              theme: { dark: oneDarkPro, light: githubLight },
               getHighlighter: (options: HighlighterOptions) =>
                 getHighlighter({
                   ...options,
