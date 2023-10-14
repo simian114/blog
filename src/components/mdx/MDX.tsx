@@ -1,16 +1,48 @@
 import { compileMDX } from "next-mdx-remote/rsc"
+import * as fs from "fs/promises"
+import { join as pathJoin } from "path"
 import rehypePrettyCode from "rehype-pretty-code"
 import remarkDirective from "remark-directive"
 import remarkDirectiveRehype from "remark-directive-rehype"
 import remarkGfm from "remark-gfm"
-import { BUNDLED_LANGUAGES, getHighlighter, HighlighterOptions } from "shiki"
-import githubLight from "shiki/themes/github-light.json"
-import oneDarkPro from "shiki/themes/one-dark-pro.json"
+import { HighlighterOptions } from "shiki"
+import * as shiki from "shiki"
 
 import { MdxComponents } from "@/components/mdx/mdxComponents"
-
 interface MDXProps {
   source: string
+}
+
+const getShikiPath = (): string => {
+  return pathJoin(process.cwd(), "src/lib/shiki")
+}
+
+const touched = { current: false }
+
+// "Touch" the shiki assets so that Vercel will include them in the production
+// bundle. This is required because shiki itself dynamically access these files,
+// so Vercel doesn't know about them by default
+const touchShikiPath = (): void => {
+  if (touched.current) return // only need to do once
+  fs.readdir(getShikiPath()) // fire and forget
+  touched.current = true
+}
+
+const getHighlighter = async (options: HighlighterOptions) => {
+  touchShikiPath()
+
+  const highlighter = await shiki.getHighlighter({
+    // This is technically not compatible with shiki's interface but
+    // necessary for rehype-pretty-code to work
+    // - https://rehype-pretty-code.netlify.app/ (see Custom Highlighter)
+    ...(options as any),
+    paths: {
+      languages: `${getShikiPath()}/languages/`,
+      themes: `${getShikiPath()}/themes/`,
+    },
+  })
+
+  return highlighter
 }
 
 export default async function MDX(props: MDXProps) {
@@ -23,26 +55,8 @@ export default async function MDX(props: MDXProps) {
           [
             rehypePrettyCode,
             {
-              theme: { dark: oneDarkPro, light: githubLight },
-              getHighlighter: (options: HighlighterOptions) =>
-                getHighlighter({
-                  ...options,
-                  paths: {
-                    themes:
-                      typeof window !== "undefined"
-                        ? "https://cdn.jsdelivr.net/npm/shiki@latest/themes/"
-                        : "",
-                    wasm:
-                      typeof window !== "undefined"
-                        ? "https://cdn.jsdelivr.net/npm/shiki@latest/dist/"
-                        : "",
-                    languages:
-                      typeof window !== "undefined"
-                        ? "https://cdn.jsdelivr.net/npm/shiki@latest/languages/"
-                        : "",
-                  },
-                  langs: [...BUNDLED_LANGUAGES],
-                }),
+              theme: { dark: "one-dark-pro", light: "github-light" },
+              getHighlighter,
             },
           ],
         ],
