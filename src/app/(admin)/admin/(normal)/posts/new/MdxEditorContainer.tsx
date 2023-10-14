@@ -74,6 +74,7 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
             codeMirrorPlugin({
               codeBlockLanguages: {
                 js: "JavaScript",
+                jsx: "JavaScript",
                 css: "CSS",
                 c: "C",
                 sh: "Shell",
