@@ -4,8 +4,6 @@ import MdxEditorContainer from "../new/MdxEditorContainer"
 
 import { AllIncludedPost } from "./page"
 
-import "@mdxeditor/editor/style.css"
-
 interface EditMDXEditorProps {
   post: AllIncludedPost
 }
