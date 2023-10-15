@@ -1,8 +1,11 @@
 "use client"
 import dynamic from "next/dynamic"
 import React, { useEffect, useState } from "react"
+import { json } from "stream/consumers"
 
+import ThemeToggler from "@/components/theme/ThemeToggler"
 import useDebounce from "@/lib/hooks/useDebounce"
+import { useCurrentAppliedTheme } from "@/store/theme"
 
 import { AllIncludedPost } from "../[id]/page"
 
@@ -20,10 +23,31 @@ interface MdxEditorContainerProps {
   post?: AllIncludedPost
 }
 
-export default function MdxEditorContainer(props: MdxEditorContainerProps) {
-  const [markdown, setMarkdown] = useState(
-    props.post?.content || `# hello world\n # hwy?`
+const MARKDOWN_DEFAULT_VALUE = `
+## Write your own story!
+
+\`\`\`js /cyan/#cyan /pink/#pink /yellow/#yellow {6} caption="helloworld"
+import React from "react"
+
+export default function App() {
+  return (
+    <div>
+     <div>highlight line</div>
+     <div>highlight cyan</div>
+     <div>highlight pink</div>
+     <div>highlight yellow</div>
+    </div>
+
   )
+}
+
+\`\`\`
+
+`
+
+export default function MdxEditorContainer(props: MdxEditorContainerProps) {
+  const currentTheme = useCurrentAppliedTheme()
+  const [markdown, setMarkdown] = useState(MARKDOWN_DEFAULT_VALUE)
   const debouncedMarkdown = useDebounce(markdown, 1000)
   const [source, setSource] = useState<any>()
 
@@ -47,16 +71,23 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-row-reverse gap-4">
+        <ThemeToggler />
         <AddPostDialog content={markdown} post={props.post} />
       </div>
-      {source && (
-        <div>
-          <MDXPreview {...source} />
-        </div>
-      )}
       <div className="border border-solid rounded h-full">
         <MarkdownEditor value={markdown} onChange={setMarkdown} />
       </div>
+      {source && (
+        <div
+          style={{
+            backgroundColor: currentTheme === "dark" ? "#151718" : "white",
+            padding: "1rem",
+            borderRadius: "0.5rem",
+          }}
+        >
+          <MDXPreview {...source} />
+        </div>
+      )}
     </div>
   )
 }

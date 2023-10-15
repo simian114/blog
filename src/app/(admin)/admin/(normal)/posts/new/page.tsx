@@ -9,7 +9,7 @@ export type RouteWithCategories = Prisma.RouteGetPayload<{
 
 export default async function NewPostPage() {
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
       <MdxEditorContainer />
     </div>
   )
