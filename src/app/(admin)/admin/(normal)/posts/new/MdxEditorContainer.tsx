@@ -45,7 +45,9 @@ export default function App() {
 
 export default function MdxEditorContainer(props: MdxEditorContainerProps) {
   const currentTheme = useCurrentAppliedTheme()
-  const [markdown, setMarkdown] = useState(MARKDOWN_DEFAULT_VALUE)
+  const [markdown, setMarkdown] = useState(
+    props.post?.content ?? MARKDOWN_DEFAULT_VALUE
+  )
   const debouncedMarkdown = useDebounce(markdown, 1000)
   const [source, setSource] = useState<any>()
 
