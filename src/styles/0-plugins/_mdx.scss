@@ -4,43 +4,65 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    pre[data-theme="light"],
-    code[data-theme="light"] {
-      display: none;
+    div[data-rehype-pretty-code-fragment] {
+      pre[data-theme="light"],
+      code[data-theme="light"] {
+        display: none;
+      }
+      div[data-theme="dark"] {
+        display: none;
+      }
     }
   }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    pre[data-theme="dark"],
-    code[data-theme="dark"] {
-      display: none;
+    div[data-rehype-pretty-code-fragment] {
+      pre[data-theme="dark"],
+      code[data-theme="dark"] {
+        display: none;
+      }
+      div[data-theme="dark"] {
+        display: none;
+      }
     }
   }
 }
 
 .dark-theme {
-  pre[data-theme="light"],
-  code[data-theme="light"] {
-    display: none;
-  }
+  div[data-rehype-pretty-code-fragment] {
+    pre[data-theme="light"],
+    div[data-theme="light"],
+    code[data-theme="light"] {
+      display: none;
+    }
 
-  pre[data-theme="dark"],
-  code[data-theme="dark"] {
-    display: grid;
+    pre[data-theme="dark"],
+    code[data-theme="dark"] {
+      display: grid;
+    }
+    div[data-theme="dark"] {
+      display: flex;
+    }
   }
 }
 
 .light-theme {
-  pre[data-theme="dark"],
-  code[data-theme="dark"] {
-    display: none;
-  }
+  div[data-rehype-pretty-code-fragment] {
+    pre[data-theme="dark"],
+    div[data-theme="dark"],
+    code[data-theme="dark"] {
+      display: none;
+    }
 
-  pre[data-theme="light"],
-  code[data-theme="light"] {
-    display: grid;
+    pre[data-theme="light"],
+    code[data-theme="light"] {
+      display: grid;
+    }
+    div[data-theme="light"] {
+      display: flex;
+    }
   }
 }
 
@@ -149,17 +171,89 @@
   margin: 0.5rem auto;
 }
 
+div[data-rehype-pretty-code-fragment] {
+  margin: rds-space(space-16) auto;
+  div[data-rehype-pretty-code-title] {
+    margin-top: 8px;
+    justify-content: center;
+    color: var(--text-high-color);
+    @include rds-subtitle1;
+    @include bold;
+    background-color: red;
+    border-top-left-radius: rds-shape(primary);
+    border-top-right-radius: rds-shape(primary);
+    padding: rds-space(space-04) rds-space(space-08);
+    background-color: var(--gray7);
+    transform: translateY(2px);
+    position: relative;
+    &::before {
+      content: " ";
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      position: absolute;
+      transform: translateY(50%);
+      left: 12px;
+      background: var(--gray10);
+      transition-property: background;
+      transition-duration: 200ms;
+      transition-timing-function: ease-out;
+    }
+    &::after {
+      content: " ";
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      position: absolute;
+      transform: translateY(50%);
+      left: 32px;
+      background: var(--gray10);
+      transition-property: background;
+      transition-duration: 200ms;
+      transition-timing-function: ease-out;
+    }
+  }
+  div[data-rehype-pretty-code-caption] {
+    margin-top: 8px;
+    justify-content: center;
+    color: var(--text-low-color);
+    @include rds-body2;
+    @include bold;
+  }
+  &:focus-within {
+    pre {
+      box-shadow: 0px 10px 20px -10px var(--yellow9);
+      transition-property: box-shadow;
+      transition-duration: 200ms;
+      transition-timing-function: ease-out;
+    }
+    div[data-rehype-pretty-code-title] {
+      &::before {
+        background: #ff605c;
+        transition-property: background;
+        transition-duration: 200ms;
+        transition-timing-function: ease-out;
+      }
+      &::after {
+        background-color: #00ca4e;
+        transition-property: background;
+        transition-duration: 200ms;
+        transition-timing-function: ease-out;
+      }
+    }
+  }
+}
 .mdx-code,
 .mdx-pre {
   font-family: "Fira Code", monospace;
   background-color: transparent;
 }
 .mdx-pre {
-  margin: 0.75rem auto;
-  margin: rds-space(space-16) auto;
   overflow: auto;
-
   box-shadow: 0px 10px 20px -10px var(--secondary9);
+  transition-property: box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
   border-radius: rds-shape(primary);
   position: relative;
   &__container {

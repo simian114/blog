@@ -26,7 +26,7 @@ interface MdxEditorContainerProps {
 const MARKDOWN_DEFAULT_VALUE = `
 ## Write your own story!
 
-\`\`\`js /cyan/#cyan /pink/#pink /yellow/#yellow {6} caption="helloworld"
+\`\`\`js /cyan/#cyan /pink/#pink /yellow/#yellow {6} title="this is title" caption="this is caption"
 import React from "react"
 
 export default function App() {
@@ -37,10 +37,8 @@ export default function App() {
      <div>highlight pink</div>
      <div>highlight yellow</div>
     </div>
-
   )
 }
-
 \`\`\`
 
 `
