@@ -19,6 +19,14 @@ export const themeAtom = atom("" as Theme)
 
 export const useTheme = () => useAtom(themeAtom)
 
+export const useCurrentAppliedTheme = () => {
+  const [theme] = useTheme()
+  if (theme === "system") {
+    return isMachesMediaQuery(MEDIA_COLOR_SCHEME) ? "dark" : "light"
+  }
+  return theme
+}
+
 const setThemeAtom = atom(null, (get, set, theme: Theme) => {
   if (theme === "dark") {
     document.body.classList.remove("light-theme")
