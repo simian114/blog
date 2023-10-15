@@ -7,6 +7,7 @@ import AdminFooter from "@/components/layout/admin/Footer"
 import AdminHeader from "@/components/layout/admin/Header"
 import { AdminProviders } from "@/components/providers/AdminProviders"
 
+import "@styles/globals.scss"
 import "@styles/admin.scss"
 import "highlight.js/styles/a11y-dark.css"
 
