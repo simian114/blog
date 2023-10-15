@@ -48,12 +48,9 @@ export const dynamic = "force-dynamic"
 
 export async function POST(request: NextRequest) {
   const body = await request.json()
-  console.log("---------- body ------------")
-  console.log(body)
   const source = body.source
-  console.log("---------------------------")
 
-  const z = await serialize(source || "", {
+  const serialized = await serialize(source || "", {
     mdxOptions: {
       remarkPlugins: [remarkGfm, remarkDirective, remarkDirectiveRehype],
       rehypePlugins: [
@@ -68,5 +65,5 @@ export async function POST(request: NextRequest) {
       format: "mdx",
     },
   })
-  return new Response(JSON.stringify(z))
+  return new Response(JSON.stringify(serialized))
 }
