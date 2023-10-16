@@ -1,4 +1,8 @@
+import { MoonIcon, SunIcon } from "lucide-react"
+
 import { useCurrentAppliedTheme, useSetTheme, useTheme } from "@/store/theme"
+
+import IconButton from "../button/IconButton"
 
 export default function ThemeToggler() {
   const theme = useCurrentAppliedTheme()
@@ -11,5 +15,13 @@ export default function ThemeToggler() {
       actions("dark")
     }
   }
-  return <button onClick={handleToggle}>current applied theme: {theme}</button>
+  return (
+    <IconButton onClick={handleToggle}>
+      {theme === "dark" ? (
+        <MoonIcon style={{ fill: "yellow", color: "yellow" }} />
+      ) : (
+        <SunIcon style={{ fill: "yellow", color: "yellow" }} />
+      )}
+    </IconButton>
+  )
 }
