@@ -70,24 +70,31 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-row-reverse gap-4">
+      <div className="flex gap-4">
         <ThemeToggler />
         <AddPostDialog content={markdown} post={props.post} />
       </div>
-      <div className="border border-solid rounded h-full">
-        <MarkdownEditor value={markdown} onChange={setMarkdown} />
-      </div>
-      {source && (
-        <div
-          style={{
-            backgroundColor: currentTheme === "dark" ? "#151718" : "white",
-            padding: "1rem",
-            borderRadius: "0.5rem",
-          }}
-        >
-          <MDXPreview {...source} />
+      <div className="flex flex-row w-full gap-16">
+        {source && (
+          <div
+            className="flex-1"
+            style={{
+              backgroundColor: currentTheme === "dark" ? "#151718" : "white",
+              padding: "1rem",
+              borderRadius: "0.5rem",
+            }}
+          >
+            <MDXPreview {...source} />
+          </div>
+        )}
+        <div className="flex-1 border border-solid rounded ">
+          <MarkdownEditor
+            value={markdown}
+            onChange={setMarkdown}
+            enablePreview={false}
+          />
         </div>
-      )}
+      </div>
     </div>
   )
 }
