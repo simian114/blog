@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import Motion from "@/components/motion/Motion"
 import { Post } from "@/components/postCard/PostCard"
 import Tag from "@/components/postCard/tag/Tag"
 import Typography from "@/components/typography/Typography"
@@ -29,10 +30,14 @@ export default function PostListTable(props: PostListTableProps) {
         </tr>
       </thead>
       <tbody className="postlist-table__tbody">
-        {props.posts.map(post => (
-          <tr
+        {props.posts.map((post, index) => (
+          <Motion
+            as="tr"
             key={post.id}
             className="postlist-table__tr postlist-table__tr--item"
+            initial={{ opacity: 0, translateX: 20 }}
+            animate={{ opacity: 1, translateX: 0 }}
+            transition={{ delay: 0.1 * index }}
           >
             <td className="postlist-table__td postlist-table__td--name">
               <Link href={getPostURL(post)}>
@@ -52,7 +57,7 @@ export default function PostListTable(props: PostListTableProps) {
                 <Tag key={i} tag={tag.tag} color={tag.tag.color} />
               ))}
             </td>
-          </tr>
+          </Motion>
         ))}
       </tbody>
     </table>

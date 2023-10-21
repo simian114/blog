@@ -1,17 +1,12 @@
 import { notFound } from "next/navigation"
-import { compileMDX } from "next-mdx-remote/rsc"
 import { COMPONENT_POSITION } from "@prisma/client"
 import { Prisma } from "@prisma/client"
 import { CalendarIcon, LapTimerIcon } from "@radix-ui/react-icons"
 import dayjs from "dayjs"
-import rehypeHighlight from "rehype-highlight"
-import remarkDirective from "remark-directive"
-import remarkDirectiveRehype from "remark-directive-rehype"
-import remarkGfm from "remark-gfm"
 
 import DeatilBespokeComponentMapper from "@/app/(main)/(bespoke-detail)/[route]/[subURL]/[post]/DetailBespokeComponentMapper"
 import MDX from "@/components/mdx/MDX"
-import { MdxComponents } from "@/components/mdx/mdxComponents"
+import Motion from "@/components/motion/Motion"
 import Tag from "@/components/postCard/tag/Tag"
 import { getPostSlug } from "@/helpers/model/post"
 
@@ -63,7 +58,7 @@ export default async function DetailDefaultLayout(
   const toc = postComponent.find(component => component.name === "TOC")
 
   return (
-    <>
+    <Motion as="div" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <div className="detail-header-wrapper">
         <h1 className="detail-header__title">{post.title}</h1>
         <div className="detail-header__info">
@@ -105,6 +100,6 @@ export default async function DetailDefaultLayout(
       {!!comment && (
         <DeatilBespokeComponentMapper post={post} component={comment} />
       )}
-    </>
+    </Motion>
   )
 }
