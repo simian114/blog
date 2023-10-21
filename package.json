@@ -54,6 +54,7 @@
     "eslint": "8.35.0",
     "eslint-config-next": "^13.5.2",
     "feed": "^4.2.2",
+    "framer-motion": "^10.16.4",
     "glob": "^9.3.4",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.7.0",
