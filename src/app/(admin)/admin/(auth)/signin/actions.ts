@@ -7,8 +7,7 @@ interface SignInProps {
 
 export async function signin(data: SignInProps) {
   "use server"
-  console.log("in actions")
-  console.log(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/signin`)
+  data
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signin`
@@ -20,7 +19,6 @@ export async function signin(data: SignInProps) {
     //   body: JSON.stringify(data),
     // }
   )
-  console.log("------ res ---------")
-  console.log(res)
-  console.log("---------------")
+  // TODO: log 시스템 설계 후 적용할것
+  res
 }

@@ -26,7 +26,6 @@ async function getHeaderRoutes() {
     `${process.env.NEXT_PUBLIC_API_URL}/api/layout/header`
   )
   const afterTime = new Date().getTime()
-  console.log({ timeDiff: afterTime - currentTime })
   if (afterTime - currentTime < 1000) {
     await wait(1000 - (afterTime - currentTime))
   }

@@ -43,9 +43,7 @@ export default function SigninDialog() {
   })
 
   function handleSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-    console.log("submit")
-    // signin(values)
+    values
     signIn()
   }
 
