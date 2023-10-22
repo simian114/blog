@@ -13,6 +13,12 @@ $postcard-shape: rds-shape(secondary);
   @include rds-grid-layout((2), (10));
   height: 100%;
 
+  &__content {
+    overflow: hidden;
+    @include textEllipsis(1);
+    display: flex;
+    flex-direction: column;
+  }
   &__meta {
     min-width: 92px;
     display: flex;
@@ -32,18 +38,14 @@ $postcard-shape: rds-shape(secondary);
   }
   &__title {
     > a {
+      @include textEllipsis(1);
       &:focus {
         outline: none;
       }
     }
-    @supports (-webkit-line-clamp: 2) {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: initial;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
+  }
+  &__description {
+    @include textEllipsis(2);
   }
   &__tag-container {
     margin-top: rds-space(space-08);
