@@ -55,7 +55,8 @@
     overflow: hidden;
   }
   &__posts {
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding-top: rds-space(space-16);
     padding-bottom: rds-space(space-16);
     @include thin-scrollbar;
