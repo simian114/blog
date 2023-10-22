@@ -9,9 +9,5 @@ interface EditMDXEditorProps {
 }
 
 export default function EditMDXEditor(props: EditMDXEditorProps) {
-  return (
-    <div>
-      <MdxEditorContainer post={props.post} />
-    </div>
-  )
+  return <MdxEditorContainer post={props.post} />
 }

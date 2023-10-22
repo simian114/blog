@@ -37,9 +37,5 @@ export default async function EditPostPage({
   if (!post) {
     return <div>not found</div>
   }
-  return (
-    <div>
-      <EditMDXEditor post={post} />
-    </div>
-  )
+  return <EditMDXEditor post={post} />
 }
