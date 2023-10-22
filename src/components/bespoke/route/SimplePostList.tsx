@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 
+import Motion from "@/components/motion/Motion"
 import Typography from "@/components/typography/Typography"
 import { getPostURL } from "@/helpers/model/post"
 import { capitalizeFirstLetter } from "@/lib/utils"
@@ -59,6 +60,14 @@ export default async function SimplePostList(props: SimplePostListProps) {
     >()
   )
 
+  /**
+   * 다음 section 의 시작 시점은 이전 section 의 애니메이션이 마무리되고 0.1초 후 로 한다.
+   * cumulative 하게 시간을 세야한다.
+   * 이전 섹션의 총 애니메이션 시간은 title + items 의 개수의 총합이다.
+   *
+   */
+
+  let delay = -0.1
   return (
     <>
       <br />
@@ -70,10 +79,15 @@ export default async function SimplePostList(props: SimplePostListProps) {
       <br />
       <section className="simple-post-list-wrapper">
         {Array.from(postsByRoute).map(postsWithRoute => {
+          delay = delay + 0.1
           return (
-            <section
+            <Motion
+              as={"section"}
               key={postsWithRoute[0]}
               className="simple-post-list-container"
+              initial={{ opacity: 0.5 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay }}
             >
               <Link href={`/${postsWithRoute[1]?.[0].route?.url}`}>
                 <Typography variants="h3" colorLevel={12}>
@@ -82,26 +96,37 @@ export default async function SimplePostList(props: SimplePostListProps) {
               </Link>
 
               <ul className="simple-post-list">
-                {postsWithRoute[1].map(post => (
-                  <li key={post.id}>
-                    <Link className="simple-post" href={getPostURL(post)}>
-                      <Typography
-                        className="simple-post__date"
-                        variants="caption1"
-                      >
-                        {dayjs(post.createdAt).format("MM.DD")}
-                      </Typography>
-                      <Typography
-                        variants="subtitle1"
-                        className="simple-post__title"
-                      >
-                        {post.title}
-                      </Typography>
-                    </Link>
-                  </li>
-                ))}
+                {postsWithRoute[1].map(post => {
+                  delay = delay + 0.1
+                  return (
+                    <Motion
+                      as="li"
+                      key={post.id}
+                      initial={{ opacity: 0.5 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        delay,
+                      }}
+                    >
+                      <Link className="simple-post" href={getPostURL(post)}>
+                        <Typography
+                          className="simple-post__date"
+                          variants="caption1"
+                        >
+                          {dayjs(post.createdAt).format("MM.DD")}
+                        </Typography>
+                        <Typography
+                          variants="subtitle1"
+                          className="simple-post__title"
+                        >
+                          {post.title}
+                        </Typography>
+                      </Link>
+                    </Motion>
+                  )
+                })}
               </ul>
-            </section>
+            </Motion>
           )
         })}
       </section>
