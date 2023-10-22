@@ -69,7 +69,7 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
   }, [debouncedMarkdown])
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 w-full">
       <div className="flex gap-4">
         <ThemeToggler />
         <AddPostDialog content={markdown} post={props.post} />
