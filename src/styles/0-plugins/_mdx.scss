@@ -315,7 +315,8 @@ div[data-rehype-pretty-code-fragment] {
   }
 
   $colors: "primary", "secondary", "tertiary", "yellow", "blue", "brown",
-    "green", "orange", "pink", "purple", "red", "cyan";
+    "green", "orange", "pink", "purple", "red", "cyan", "gray", "crimson",
+    "slate";
   @each $color in $colors {
     span[data-chars-id="#{$color}"] {
       background-color: var(--#{$color}6);
