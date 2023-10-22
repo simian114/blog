@@ -37,15 +37,16 @@ $postcard-shape: rds-shape(secondary);
     margin-top: rds-space(space-08);
   }
   &__title {
-    > a {
-      @include textEllipsis(1);
-      &:focus {
-        outline: none;
-      }
+    max-width: 100%;
+    @include textEllipsis(2);
+    word-break: break-all;
+    &:focus {
+      outline: none;
     }
   }
   &__description {
     @include textEllipsis(2);
+    margin-bottom: auto;
   }
   &__tag-container {
     margin-top: rds-space(space-08);
@@ -91,16 +92,5 @@ $postcard-shape: rds-shape(secondary);
     border-radius: 0px;
     border-left: 0px;
     border-right: 0px;
-
-    &__title {
-      @supports (-webkit-line-clamp: 1) {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: initial;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-      }
-    }
   }
 }

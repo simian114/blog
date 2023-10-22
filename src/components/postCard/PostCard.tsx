@@ -70,17 +70,18 @@ export default function PostCard(props: PostCardProps) {
           </Typography>
         </div>
         <div className="post-card__content">
-          <Typography
-            className={"post-card__title"}
-            as="h3"
-            variants="h3"
-            colorType="GRAY"
-            colorLevel={12}
-          >
-            <Link href={`${getPostURL(post)}`}>
+          <h3 className="post-card__title-wrapper">
+            <Typography
+              className={"post-card__title"}
+              as="a"
+              variants="h3"
+              colorType="GRAY"
+              colorLevel={12}
+              href={`${getPostURL(post)}`}
+            >
               {props.post.title || "post title"}
-            </Link>
-          </Typography>
+            </Typography>
+          </h3>
           <Typography as="p" color="cyan" className="post-card__description">
             {post.description || "설명이 비어있습니다."}
           </Typography>
