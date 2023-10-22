@@ -5,17 +5,12 @@ import prisma from "@/lib/prisma"
 export const dynamic = "force-dynamic"
 
 export async function GET(request: NextRequest) {
-  const routeId = request.nextUrl.searchParams.get("routeId")
-  const categoryId = request.nextUrl.searchParams.get("categoryId")
+  // const routeId = request.nextUrl.searchParams.get("routeId")
+  // const categoryId = request.nextUrl.searchParams.get("categoryId")
 
+  // NOTE: deletedAt 이 동작하지 않음. 왜?
   const posts = await prisma.post.findMany({
-    where:
-      typeof categoryId === "string"
-        ? { category: { id: Number(categoryId) } }
-        : typeof routeId === "string"
-        ? { routeId: Number(routeId) }
-        : undefined,
-
+    where: { deletedAt: null },
     include: {
       route: true,
       category: true,

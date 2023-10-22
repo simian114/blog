@@ -22,9 +22,11 @@ export default async function PostList(props: PostListProp) {
       : props.route.categories.map(category => category.posts).flat()
   ) as AllIncludePost[]
 
-  const sortedPosts = [...(posts || [])].sort((a, b) => {
-    return a.id - b.id
-  })
+  const sortedPosts = [...(posts || [])]
+    .sort((a, b) => {
+      return a.id - b.id
+    })
+    .filter(post => post.deletedAt === null)
 
   const List = PostListMapper[props.type]
 

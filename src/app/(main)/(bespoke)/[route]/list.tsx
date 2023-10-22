@@ -18,7 +18,7 @@ async function getData({ url }: { url: string }): Promise<{
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/layout/components/category-selector/${url}`,
-      { next: { tags: [`bespoke/route/${url}`] } }
+      { next: { tags: [`bespoke/route/${url}`], revalidate: 3600 } }
     )
     // NOTE: for SimplePostList
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {

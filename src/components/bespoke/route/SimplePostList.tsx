@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Prisma } from "@prisma/client"
+import { Post, Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 
 import Motion from "@/components/motion/Motion"
@@ -13,7 +13,7 @@ async function getData() {
       next: { tags: [`/api/post`] },
     })
     const posts = await res.json()
-    return { posts }
+    return { posts: posts.filter((post: Post) => !post.deletedAt) }
   } catch (error) {
     return { posts: [] }
   }
