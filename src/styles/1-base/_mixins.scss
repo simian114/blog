@@ -11,6 +11,7 @@
   -webkit-line-clamp: $line;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  min-width: unset;
 }
 
 @mixin cover-background {
