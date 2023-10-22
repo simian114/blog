@@ -75,7 +75,7 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
         <AddPostDialog content={markdown} post={props.post} />
       </div>
       <div className="flex flex-row w-full gap-16">
-        <div className="flex-1 border border-solid rounded ">
+        <div className="flex-1 border border-solid rounded max-w-[50%]">
           <MarkdownEditor
             value={markdown}
             onChange={setMarkdown}
