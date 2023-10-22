@@ -15,9 +15,5 @@ interface RouteTableWrapperProps {
 }
 
 export function RouteTableWrapper(props: RouteTableWrapperProps) {
-  // const keys = LayoutComponentList
-  // console.log("---------- mapper keys ------------")
-  // console.log(keys)
-  // console.log("-----------------------------------")
   return <DataTable columns={columns} data={props.allRoutes} />
 }
