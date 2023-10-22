@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { ElementType, forwardRef, Ref } from "react"
 
 import getRDSColorClassName from "@/helpers/rds/base/getRDSColorClassName"
@@ -65,9 +66,9 @@ const Typography = <C extends ElementType>(
   } ${className ? className : ""}`
 
   // const { as, ...rest } = props
-  const Component = as || "span"
+  const Component = as === "a" ? Link : as || "span"
 
-  return <Component {...rest} className={cn} ref={ref} />
+  return <Component {...(rest as any)} className={cn} ref={ref} />
 }
 
 export default forwardRef(Typography) as typeof Typography
