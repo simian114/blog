@@ -75,6 +75,13 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
         <AddPostDialog content={markdown} post={props.post} />
       </div>
       <div className="flex flex-row w-full gap-16">
+        <div className="flex-1 border border-solid rounded ">
+          <MarkdownEditor
+            value={markdown}
+            onChange={setMarkdown}
+            enablePreview={false}
+          />
+        </div>
         {source && (
           <div
             className="flex-1"
@@ -87,13 +94,6 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
             <MDXPreview {...source} />
           </div>
         )}
-        <div className="flex-1 border border-solid rounded ">
-          <MarkdownEditor
-            value={markdown}
-            onChange={setMarkdown}
-            enablePreview={false}
-          />
-        </div>
       </div>
     </div>
   )
