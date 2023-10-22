@@ -1,7 +1,8 @@
-import { Route } from "@prisma/client"
+import { Post, Route } from "@prisma/client"
 
 import Typography from "@/components/typography/Typography"
 import prisma from "@/lib/prisma"
+import { AllIncludePost } from "@/types/bespoke-components"
 
 import { PostListMapper } from "./postList/config"
 import TagSelectorList from "./tagSelectorList/TagSelectorList"
@@ -12,19 +13,15 @@ interface TagSubURLSelectorProps {
 }
 
 async function getData() {
-  const posts = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      route: true,
-      category: true,
-      tags: {
-        include: {
-          tag: true,
-        },
-      },
-    },
-  })
-  return { posts }
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
+      next: { tags: [`/api/post`] },
+    })
+    const posts = (await res.json()) as AllIncludePost[]
+    return { posts: posts.filter((post: Post) => !post.deletedAt) }
+  } catch (error) {
+    return { posts: [] }
+  }
 }
 
 export default async function TagSubURLSelector(props: TagSubURLSelectorProps) {

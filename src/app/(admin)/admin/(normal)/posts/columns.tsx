@@ -5,8 +5,11 @@ import { Category, Post, Tag } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
 
+import Button from "@/components/button/Button"
 import ButtonLink from "@/components/button/ButtonLink"
 import Typography from "@/components/typography/Typography"
+
+import { DeletePostDialog } from "./delete-dialog"
 
 export const columns: ColumnDef<Post>[] = [
   {
@@ -97,7 +100,12 @@ export const columns: ColumnDef<Post>[] = [
     header: "actions",
     cell({ row }) {
       const id = row.getValue<number>("id")
-      return <ButtonLink href={`/admin/posts/${id}`}>수정</ButtonLink>
+      return (
+        <div className="flex gap-4">
+          <DeletePostDialog post={row.original} />
+          <ButtonLink href={`/admin/posts/${id}`}>수정</ButtonLink>
+        </div>
+      )
     },
   },
 ]

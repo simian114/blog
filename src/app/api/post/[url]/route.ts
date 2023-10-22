@@ -11,6 +11,7 @@ export async function GET(
   const post = await prisma.post.findFirst({
     where: {
       url: params.url,
+      deletedAt: null,
     },
     include: {
       route: {

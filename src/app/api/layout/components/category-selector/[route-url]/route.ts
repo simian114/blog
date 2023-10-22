@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma"
 export const dynamic = "force-dynamic"
 
 export async function GET(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: { "route-url": "string" } }
 ) {
   const routeURL = params["route-url"]
@@ -16,6 +16,7 @@ export async function GET(
       categories: {
         include: {
           posts: {
+            where: { deletedAt: null },
             include: {
               category: true,
               route: true,
