@@ -1,7 +1,9 @@
 "use client"
 import dynamic from "next/dynamic"
-import React, { useEffect, useState } from "react"
-import { json } from "stream/consumers"
+import React, { useEffect, useRef, useState } from "react"
+import { EditorSelection, ReactCodeMirrorRef } from "@uiw/react-codemirror"
+import { type PutBlobResult } from "@vercel/blob"
+import { LucideUpload } from "lucide-react"
 
 import ThemeToggler from "@/components/theme/ThemeToggler"
 import useDebounce from "@/lib/hooks/useDebounce"
@@ -10,6 +12,7 @@ import { useCurrentAppliedTheme } from "@/store/theme"
 import { AllIncludedPost } from "../[id]/page"
 
 import { AddPostDialog } from "./add-post-dialog.client"
+import FileUploadDialog from "./FileUploadDialog"
 import MDXPreview from "./MDXPreview"
 
 import "@uiw/react-markdown-editor/markdown-editor.css"
@@ -51,6 +54,28 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
   const debouncedMarkdown = useDebounce(markdown, 1000)
   const [source, setSource] = useState<any>()
 
+  const [imageUploadDialog, setImageUploadDialog] = useState(false)
+  const ref = useRef<ReactCodeMirrorRef>()
+
+  function handleImageUploadSuceess(blob: PutBlobResult) {
+    if (!ref.current) {
+      return
+    }
+    const { state, view } = ref.current
+    if (!state || !view) {
+      return
+    }
+    const insert = `![image title](${blob.url})`
+
+    view.dispatch(
+      view.state.changeByRange(range => ({
+        changes: [{ from: range.from, insert }],
+        range: EditorSelection.range(range.from + 2, range.to + 2),
+      }))
+    )
+    setImageUploadDialog(false)
+  }
+
   useEffect(() => {
     async function getMarkdown() {
       const res = await fetch(
@@ -68,8 +93,25 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
     getMarkdown()
   }, [debouncedMarkdown])
 
+  const imageUpload = {
+    name: "image upload",
+    keyCommand: "image upload",
+    button: { "aria-label": "image upload button" },
+    icon: <LucideUpload width={16} height={16} />,
+
+    execute: (mirror: ReactCodeMirrorRef) => {
+      ref.current = mirror
+      setImageUploadDialog(true)
+    },
+  }
+
   return (
     <div className="flex flex-col gap-8 w-full">
+      <FileUploadDialog
+        onSuccess={handleImageUploadSuceess}
+        open={imageUploadDialog}
+        onOpenChange={setImageUploadDialog}
+      />
       <div className="flex gap-4">
         <ThemeToggler />
         <AddPostDialog content={markdown} post={props.post} />
@@ -80,6 +122,25 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
             value={markdown}
             onChange={setMarkdown}
             enablePreview={false}
+            toolbars={[
+              "undo",
+              "redo",
+              "bold",
+              "italic",
+              "header",
+              "strike",
+              "underline",
+              "quote",
+              "olist",
+              "ulist",
+              "todo",
+              "link",
+              "image",
+              "code",
+              "codeBlock",
+              "fullscreen",
+              imageUpload,
+            ]}
           />
         </div>
         {source && (

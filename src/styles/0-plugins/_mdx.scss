@@ -105,13 +105,28 @@
   @include rds-body1;
 }
 
+.mdx-img-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
 .mdx-img {
   border-style: none;
   border: 0;
-  max-width: 100%;
   border-radius: var(--box-border-radius);
   vertical-align: middle;
   margin: 2px 0;
+  object-fit: containe;
+  max-width: 600px;
+}
+
+.mdx-img-alt {
+  color: var(--text-low-color);
+  @include bold;
 }
 
 .mdx-em {
@@ -124,10 +139,11 @@
 
 .mdx-p {
   margin: 0.75rem auto;
+  display: block;
 }
 
 .mdx-strong {
-  color: var(--text-high-color);
+  color: var(--text-highcolor);
 }
 
 .mdx-p,

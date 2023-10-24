@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Fragment } from "react"
 
 import * as MarkdownComponents from "@/components/bespoke/markdown"
@@ -78,9 +79,14 @@ const MdxComponents = {
   pre: (props: React.HTMLProps<HTMLPreElement>) => {
     return <Pre {...props} />
   },
-  img: (props: React.HTMLProps<HTMLImageElement>) => (
-    <img className="mdx-img" {...props} />
-  ),
+  img: (props: React.HTMLProps<HTMLImageElement>) => {
+    return (
+      <div className="mdx-img-wrapper">
+        <img className="mdx-img" {...props} />
+        <p className="mdx-img-alt">{props.alt}</p>
+      </div>
+    )
+  },
   blockquote: (props: React.HTMLProps<HTMLQuoteElement>) => (
     <blockquote className="mdx-blockquote" {...props} />
   ),

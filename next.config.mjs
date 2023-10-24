@@ -16,7 +16,16 @@ const nextConfig = {
     serverComponentsExternalPackages: ["shiki", "vscode-oniguruma"],
   },
   images: {
-    domains: ["images.unsplash.com"],
+    domains: [
+      "images.unsplash.com",
+      "gkmmtc05ookl5cyq.public.blob.vercel-storage.com",
+    ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "gkmmtc05ookl5cyq.public.blob.vercel-storage.com",
+      },
+    ],
   },
 
   webpack(config) {
