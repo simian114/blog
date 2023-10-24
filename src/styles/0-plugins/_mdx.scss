@@ -121,7 +121,13 @@
   vertical-align: middle;
   margin: 2px 0;
   object-fit: containe;
-  max-width: 600px;
+  max-width: 37.5rem;
+}
+
+@include mobile {
+  .mdx-img {
+    max-width: 100%;
+  }
 }
 
 .mdx-img-alt {

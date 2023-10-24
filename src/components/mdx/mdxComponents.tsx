@@ -83,7 +83,7 @@ const MdxComponents = {
     return (
       <div className="mdx-img-wrapper">
         <img className="mdx-img" {...props} />
-        <p className="mdx-img-alt">{props.alt}</p>
+        <span className="mdx-img-alt">{props.alt}</span>
       </div>
     )
   },
