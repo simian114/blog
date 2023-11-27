@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Metadata } from "next"
 import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/react"
 
 import { Footer, Header } from "@/components/layout"
 import { Providers } from "@/components/providers/providers"
-import { defaultMeta, openGraphImage } from "@/constants/metadata"
+import { defaultMeta } from "@/constants/metadata"
 
 import "@styles/globals.scss"
 
@@ -30,17 +31,8 @@ const myFont = localFont({
   display: "swap",
 })
 
-// NOTE: https://beta.nextjs.org/docs/api-reference/metadata#optional-metadata
-export const metadata = {
+export const metadata: Metadata = {
   ...defaultMeta,
-  openGraph: {
-    ...defaultMeta,
-    ...openGraphImage,
-    images: "/images/og-image.png",
-  },
-  other: {
-    ["google-site-verification"]: "7TQcAdD6UTznqrsliaYKwBgt8_ooHnzAfkP_M3n0RMA",
-  },
 }
 
 export default async function BespokeRootLayout(props: any) {

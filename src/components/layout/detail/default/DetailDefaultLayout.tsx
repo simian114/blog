@@ -16,7 +16,7 @@ interface DetailDefaultLayoutProps {
   post: string
 }
 
-type PostWithComponentRoute = Prisma.PostGetPayload<{
+export type PostWithComponentRoute = Prisma.PostGetPayload<{
   include: {
     route: { include: { components: true } }
     category: true
