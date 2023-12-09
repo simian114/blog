@@ -34,7 +34,8 @@ const myFont = localFont({
 export const metadata: Metadata = {
   ...defaultMeta,
 }
-
+// NOTE: 여기 자체가 static 이기 때문에 header 를 아무리 동적으로 만들려고해고bbin/
+// 절대 되지 않는다. 따라서 헤더 영역은 Partial rendering 이 필요
 export default async function BespokeRootLayout(props: any) {
   return (
     <html lang="en" className={myFont.className} suppressHydrationWarning>
