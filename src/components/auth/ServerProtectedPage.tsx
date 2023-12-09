@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { authOptions } from "@/helpers/auth/auth"
 
 export default async function ServerProtectedPage() {
   const session = await getServerSession(authOptions)

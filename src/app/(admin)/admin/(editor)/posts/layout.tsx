@@ -2,10 +2,7 @@ import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { ReactNode } from "react"
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-import { DocsSidebarNav } from "@/components/admin/SidebarNav"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { adminConfig } from "@/config/admin"
+import { authOptions } from "@/helpers/auth/auth"
 
 export default async function AdminLayout({
   children,
