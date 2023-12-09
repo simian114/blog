@@ -4,7 +4,7 @@ import { getPostURL } from "@/helpers/model/post"
 import prisma from "@/lib/prisma"
 
 export const revalidate = 60 * 60 * 24
-
+export const dynamic = "force-dynamic"
 // NOTE: last modified 가 있어야함.
 // tag 경로
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

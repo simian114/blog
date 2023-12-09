@@ -1,7 +1,6 @@
 "use client"
 
 import Giscus from "@giscus/react"
-import { Post } from "@prisma/client"
 
 import { isMachesMediaQuery } from "@/lib/client/mediaQuery.client"
 import { MEDIA_COLOR_SCHEME, useTheme } from "@/store/theme"

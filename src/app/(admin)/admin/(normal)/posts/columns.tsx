@@ -5,7 +5,6 @@ import { Category, Post, Tag } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
 
-import Button from "@/components/button/Button"
 import ButtonLink from "@/components/button/ButtonLink"
 import Typography from "@/components/typography/Typography"
 

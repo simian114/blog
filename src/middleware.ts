@@ -1,4 +1,3 @@
-import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
 /**
@@ -7,7 +6,7 @@ import { NextResponse } from "next/server"
  * 사실 media-query 로 해결해서 의미는 없지만, ...
  * 참고링크: https://web.dev/user-preference-media-features-headers/#complete-list-of-the-client-hints
  */
-export function middleware(request: NextRequest) {
+export function middleware() {
   const response = NextResponse.next({})
   response.headers.set("Accept-CH", "Sec-CH-Prefers-Color-Scheme")
 

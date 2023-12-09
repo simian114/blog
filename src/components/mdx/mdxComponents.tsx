@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { Fragment } from "react"
 
 import * as MarkdownComponents from "@/components/bespoke/markdown"

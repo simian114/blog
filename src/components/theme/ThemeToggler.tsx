@@ -1,6 +1,6 @@
 import { MoonIcon, SunIcon } from "lucide-react"
 
-import { useCurrentAppliedTheme, useSetTheme, useTheme } from "@/store/theme"
+import { useCurrentAppliedTheme, useSetTheme } from "@/store/theme"
 
 import IconButton from "../button/IconButton"
 

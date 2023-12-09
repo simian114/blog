@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma"
 
 import MainList from "./list"
 
+export const dynamic = "force-dynamic"
 // export const dynamic = "force-dynamic"
 
 export const dynamicParams = true
