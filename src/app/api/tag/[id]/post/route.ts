@@ -1,15 +1,8 @@
-import { NextRequest } from "next/server"
-
-import prisma from "@/lib/prisma"
-
 export const dynamic = "force-dynamic"
 
 // NOTE: url => /api/tag/id/post
 // get tag post
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: "string" } }
-) {
+export async function GET() {
   // params.
 
   // const allCategories = await prisma.tagsOnPosts.findMany({

@@ -1,5 +1,3 @@
-import { Route } from "@prisma/client"
-
 import Typography from "@/components/typography/Typography"
 import { capitalizeFirstLetter } from "@/lib/utils"
 import { AllIncludeRoute } from "@/types/bespoke-components"

@@ -2,7 +2,6 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Category } from "@prisma/client"
 import { Prisma } from "@prisma/client"
 import { z } from "zod"
 

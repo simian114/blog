@@ -1,4 +1,3 @@
-import { signOut } from "next-auth/react"
 import { GitHubLogoIcon } from "@radix-ui/react-icons"
 import { HomeIcon } from "lucide-react"
 

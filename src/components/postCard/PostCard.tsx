@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link"
 import { useEffect, useRef } from "react"
 import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"

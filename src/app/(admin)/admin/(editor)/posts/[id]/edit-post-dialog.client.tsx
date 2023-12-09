@@ -55,12 +55,13 @@ export function EditPostDialog(props: AddPostDialogProps) {
     },
   })
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { url, ...rest } = values
-    // await editPost({
-    //   ...(rest as unknown as CreatePostDTO),
-    //   content: props.content,
-    //   info: { url },
-    // })
+    values
+    // const { url, ...rest } = values
+    // // await editPost({
+    // //   ...(rest as unknown as CreatePostDTO),
+    // //   content: props.content,
+    // //   info: { url },
+    // // })
     wait().then(() => setOpen(false))
   }
 

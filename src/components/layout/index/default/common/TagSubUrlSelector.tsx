@@ -1,7 +1,6 @@
 import { Post, Route } from "@prisma/client"
 
 import Typography from "@/components/typography/Typography"
-import prisma from "@/lib/prisma"
 import { AllIncludePost } from "@/types/bespoke-components"
 
 import { PostListMapper } from "./postList/config"
