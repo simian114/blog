@@ -13,6 +13,7 @@ const nextConfig = {
   experimental: {
     serverActions: true,
     mdxRs: true,
+    ppr: true,
     serverComponentsExternalPackages: ["shiki", "vscode-oniguruma"],
   },
   images: {
