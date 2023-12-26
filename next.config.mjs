@@ -11,7 +11,6 @@ const __dirname = path.resolve()
 const nextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   experimental: {
-    serverActions: true,
     mdxRs: true,
     ppr: true,
     serverComponentsExternalPackages: ["shiki", "vscode-oniguruma"],

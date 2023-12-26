@@ -3,8 +3,8 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.removeUnusedImports": true
+    "source.fixAll": "explicit",
+    "source.removeUnusedImports": "explicit"
   },
   "liveSassCompile.settings.showOutputWindowOn": "Debug",
   "WillLuke.nextjs.addTypesOnSave": true,
