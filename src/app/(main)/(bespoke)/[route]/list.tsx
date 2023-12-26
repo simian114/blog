@@ -11,16 +11,14 @@ interface MainListProps {
   subURL?: string
 }
 
-// NOTE: route 정보는 들어가야함
 async function getData({ url }: { url: string }): Promise<{
   route: AllIncludeRoute | null
 }> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/layout/components/category-selector/${url}`,
-      { next: { tags: [`bespoke/route/${url}`], revalidate: 3600 } }
+      { next: { tags: [`bespoke/route/${url}`] } }
     )
-    // NOTE: for SimplePostList
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
       next: { tags: [`/api/post`] },
     })
