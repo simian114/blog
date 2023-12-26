@@ -12,7 +12,6 @@ const nextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   experimental: {
     mdxRs: true,
-    ppr: true,
     serverComponentsExternalPackages: ["shiki", "vscode-oniguruma"],
   },
   images: {
