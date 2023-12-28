@@ -1,5 +1,4 @@
 import {
-  COLOR_TYPE,
   COMPONENT_POSITION,
   ComponentType,
   PrismaClient,
@@ -77,14 +76,6 @@ async function main() {
         {
           type: ComponentType.COMPONENT,
           name: "SimplePostList",
-          position: COMPONENT_POSITION.ROUTE,
-        },
-        {
-          type: ComponentType.SUB_URL,
-          name: "TagSelector",
-          props: {
-            post: SubUrlPost.CARD,
-          },
           position: COMPONENT_POSITION.ROUTE,
         },
       ],

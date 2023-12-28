@@ -1,7 +1,6 @@
 import { Component, Prisma } from "@prisma/client"
 
 import CategorySubURLSelector from "@/components/layout/index/default/common/CategorySubURLSelector"
-import TagSubURLSelector from "@/components/layout/index/default/common/TagSubUrlSelector"
 import { AllIncludeCategory, AllIncludeRoute } from "@/types/bespoke-components"
 
 interface SubURLContainerProps {
@@ -24,13 +23,6 @@ export default function SubURLContainer(props: SubURLContainerProps) {
         currentCategory={props.category}
       />
     )
-  } else if (name === "TagSelector") {
-    return (
-      <TagSubURLSelector
-        currentRoute={props.route}
-        subURL={props.subURL || ""}
-      />
-    )
   }
-  return <></>
+  return null
 }

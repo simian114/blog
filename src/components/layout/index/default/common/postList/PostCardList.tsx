@@ -5,6 +5,7 @@ interface PostCardListProps {
   posts: Post[]
 }
 
+// NOTE: disable
 export default function PostCardList(props: PostCardListProps) {
   return (
     <ul className="post-list__posts">
