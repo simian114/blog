@@ -35,6 +35,13 @@ async function createComponents() {
         continue
       }
 
+      // fs.Stats
+      // console.log(fs.Stats)
+      const stat = await fs.lstat(`${folder.path}/${fileWithExt}`)
+      if (!stat.isFile()) {
+        continue
+      }
+
       const fileAsString = await fs.readFile(`${folder.path}/${fileWithExt}`, {
         encoding: "utf-8",
       })

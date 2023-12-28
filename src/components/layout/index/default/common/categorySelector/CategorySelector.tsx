@@ -8,8 +8,11 @@ interface CategorySelectorProps {
   currentRoute: AllIncludeRoute
 }
 
+// NOTE: category 까지는 useParams를 사용하면 될듯?
+// NOTE: tag는 useSearchParams를 이용하자
+
 // NOTE: category selector 의 생성순으로 정렬
-export default async function CategorySelector(props: CategorySelectorProps) {
+export default function CategorySelector(props: CategorySelectorProps) {
   const categoriesSortedByCreatedAt = [
     ...(props.currentRoute.categories || []),
   ].sort(

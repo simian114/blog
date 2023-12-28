@@ -1,21 +1,13 @@
-import { revalidateTag } from "next/cache"
-
-import Typography from "@/components/typography/Typography"
-
-import CommentInputs from "./_commentInputs"
-import CommentList from "./_commentList"
-import { createGuestBook } from "./actions"
-
 async function GuestBook() {
-  async function handleAction(data: FormData) {
-    "use server"
-    await createGuestBook(data)
-    revalidateTag(`/guestbook`)
-  }
+  // async function handleAction(data: FormData) {
+  //   "use server"
+  //   await createGuestBook(data)
+  //   revalidateTag(`/guestbook`)
+  // }
 
   return (
     <>
-      <Typography variants="h1" as="h1" colorLevel={12}>
+      {/* <Typography variants="h1" as="h1" colorLevel={12}>
         방명록
       </Typography>
       <form action={handleAction}>
@@ -25,7 +17,7 @@ async function GuestBook() {
           </div>
         </div>
         <CommentList />
-      </form>
+      </form> */}
     </>
   )
 }

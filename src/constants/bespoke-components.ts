@@ -9,6 +9,15 @@ export const RouteComponents = {
       default: "helloworld",
     },
   },
+  TagSelectorAndPostList: {
+    postType: {
+      tag: "param",
+      type: "string",
+      optional: true,
+      description: "",
+      default: "card",
+    },
+  },
   Temp: {
     temp: {
       tag: "param",
