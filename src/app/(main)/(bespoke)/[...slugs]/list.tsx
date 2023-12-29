@@ -39,7 +39,7 @@ export default async function MainList(props: MainListProps) {
     category => category.url === props.subURL || ""
   )
 
-  if (!route) {
+  if (!route || !category) {
     return notFound()
   }
 
@@ -52,6 +52,7 @@ export default async function MainList(props: MainListProps) {
       {routeComponents.map((component, index) => {
         if (component.type === ComponentType.SUB_URL) {
           return (
+            // NOTE: 언젠가 새로운 Selector 가 생길 수 있으므로, 내비둔다
             <SubURLContainer
               key={index}
               component={component}
