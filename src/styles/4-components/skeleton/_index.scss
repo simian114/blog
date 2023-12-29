@@ -16,11 +16,12 @@
     bottom: 0;
     left: 0;
     transform: translateX(-100%);
+
     background-image: linear-gradient(
       90deg,
-      var(--primary11) 10%,
-      var(--secondary11) 60%,
-      var(--tertiary11)
+      var(--primary8) 20%,
+      var(--secondary8) 60%,
+      var(--tertiary8)
     );
     animation: shimmer 2s infinite;
     content: "";

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, ReactNode } from "react"
 
 import getRDSBaseClassName from "@/helpers/rds/base/getRDSBaseClassName"
 import getRDSSkeletonClassName from "@/helpers/rds/skeleton/getRDSSkeletonClassName"
@@ -31,6 +31,7 @@ interface SkeletonProps<C extends SkeletonType>
   extends Pick<ComponentPropsWithoutRef<"div">, "className"> {
   design?: SkeletonDesignProps<C>
   baseDesign?: RDSBaseProps
+  children?: ReactNode
 }
 
 function Skeleton<C extends SkeletonType>(props: SkeletonProps<C>) {
@@ -43,7 +44,7 @@ function Skeleton<C extends SkeletonType>(props: SkeletonProps<C>) {
         className ? className : ""
       } ${rdsSkeletonClassName}  ${rdsBaseClassName}`}
     >
-      .
+      {props.children || "."}
     </div>
   )
 }

@@ -14,21 +14,15 @@ import MagicButtonLink from "@/components/magicButton/ButtonLink"
 import { useDevice } from "@/components/providers/deviceWidthProvider"
 import { ThemeSelector } from "@/components/theme"
 import DisableScroll from "@/components/util/DisableScroll"
-import { wait } from "@/lib/utils"
 import { RouteWithCategories } from "@/types/prisma"
 
 import HeaderLoading from "./Header.loading"
 import HeaderMobileMenu from "./HeaderMobileMenu"
 
 async function getHeaderRoutes() {
-  const currentTime = new Date().getTime()
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/layout/header`
   )
-  const afterTime = new Date().getTime()
-  if (afterTime - currentTime < 1000) {
-    await wait(1000 - (afterTime - currentTime))
-  }
   return await res.json()
 }
 
