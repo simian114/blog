@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Post, SubUrlPost } from "@prisma/client"
 import { PrismaClient } from "@prisma/client"
 
@@ -22,8 +23,7 @@ async function getData() {
 }
 
 interface TagSelectorAndPostListProps {
-  postType: string
-  // postType: SubUrlPost
+  postType: string // SubUrlPost
 }
 
 /**
@@ -43,11 +43,13 @@ export default async function TagSelectorAndPostList(
       <Typography colorType="GRAY" colorLevel={12} variants="h2">
         Tag
       </Typography>
-      <TagSelectorList
-        tags={tags}
-        posts={posts}
-        postType={props.postType as SubUrlPost}
-      />
+      <Suspense fallback={<></>}>
+        <TagSelectorList
+          tags={tags}
+          posts={posts}
+          postType={props.postType as SubUrlPost}
+        />
+      </Suspense>
     </section>
   )
 }

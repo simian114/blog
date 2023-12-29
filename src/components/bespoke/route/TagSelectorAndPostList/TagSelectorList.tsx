@@ -1,4 +1,6 @@
-import { Suspense } from "react"
+"use client"
+
+import { useRouter, useSearchParams } from "next/navigation"
 import { SubUrlPost, Tag } from "@prisma/client"
 
 import TagSelectorPostList from "@/components/bespoke/route/TagSelectorAndPostList/TagSelectorPostList"
@@ -12,21 +14,43 @@ interface TagSelectorListProps {
   postType: SubUrlPost
 }
 
-export default async function TagSelectorList(props: TagSelectorListProps) {
+export default function TagSelectorList(props: TagSelectorListProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const urlSearchParams = new URLSearchParams(searchParams)
+  const selectedTags = searchParams.getAll("tag")
+
+  function handleTagSelect(val: string) {
+    const selected = selectedTags.includes(val)
+    if (selected) {
+      urlSearchParams.delete("tag")
+      selectedTags
+        .filter(tag => tag !== val)
+        .forEach(tag => urlSearchParams.append("tag", tag))
+    } else {
+      urlSearchParams.append("tag", val)
+    }
+    router.push(`?${urlSearchParams.toString()}`)
+  }
+
   return (
     <>
       <ul className="tag-selector-list">
-        {props.tags.map(tag => (
-          <li key={tag.id}>
-            <Suspense fallback={<></>}>
-              <TagSelector tag={tag} />
-            </Suspense>
-          </li>
-        ))}
+        {props.tags.map(tag => {
+          const selected =
+            selectedTags?.includes(tag.url) || !selectedTags?.length
+          return (
+            <li key={tag.id}>
+              <TagSelector
+                tag={tag}
+                selected={selected}
+                handleTagSelect={() => handleTagSelect(tag.url)}
+              />
+            </li>
+          )
+        })}
       </ul>
-      <Suspense fallback={<div></div>}>
-        <TagSelectorPostList postType={props.postType} posts={props.posts} />
-      </Suspense>
+      <TagSelectorPostList postType={props.postType} posts={props.posts} />
     </>
   )
 }
