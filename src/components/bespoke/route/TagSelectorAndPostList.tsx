@@ -1,21 +1,26 @@
 import { Suspense } from "react"
-import { Post, SubUrlPost } from "@prisma/client"
-import { PrismaClient } from "@prisma/client"
+import { Post, SubUrlPost, Tag } from "@prisma/client"
 
 import TagSelectorList from "@/components/bespoke/route/TagSelectorAndPostList/TagSelectorList"
+import TagSelectorAndPostListLoading from "@/components/bespoke/route/TagSelectorAndPostListLoading"
 import Typography from "@/components/typography/Typography"
 import { AllIncludePost } from "@/types/bespoke-components"
 
-const prisma = new PrismaClient()
 async function getData() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
-      next: { tags: [`/api/post`] },
-    })
-    const posts = (await res.json()) as AllIncludePost[]
-    const tags = await prisma.tag.findMany({
-      include: { posts: true },
-    })
+    const fetchPosts = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/post`,
+      {
+        next: { tags: [`/api/post`] },
+      }
+    )
+    const fetchTags = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/tag`,
+      { next: { tags: [`/api/tag`] } }
+    )
+    const posts = (await fetchPosts.json()) as AllIncludePost[]
+    const tags = (await fetchTags.json()) as Tag[]
+
     return { posts: posts.filter((post: Post) => !post.deletedAt), tags }
   } catch (error) {
     return { posts: [], tags: [] }
@@ -43,7 +48,7 @@ export default async function TagSelectorAndPostList(
       <Typography colorType="GRAY" colorLevel={12} variants="h2">
         Tag
       </Typography>
-      <Suspense fallback={<></>}>
+      <Suspense fallback={<TagSelectorAndPostListLoading />}>
         <TagSelectorList
           tags={tags}
           posts={posts}
