@@ -30,7 +30,7 @@ export default function TagSelectorList(props: TagSelectorListProps) {
     } else {
       urlSearchParams.append("tag", val)
     }
-    router.push(`?${urlSearchParams.toString()}`)
+    router.push(`?${urlSearchParams.toString()}`, { scroll: false })
   }
 
   return (
