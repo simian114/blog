@@ -39,7 +39,7 @@ export default async function MainList(props: MainListProps) {
     category => category.url === props.subURL || ""
   )
 
-  if (!route || !category) {
+  if (!route || (props.subURL && !category)) {
     return notFound()
   }
 
