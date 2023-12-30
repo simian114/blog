@@ -44,8 +44,7 @@ import {
   isComponentPropsKey,
   makeComponentProps,
 } from "@/helpers/components"
-
-import { updateRoute } from "./actions"
+import { updateRoute } from "@/helpers/data/route"
 
 interface UpdatePostComponetDialogProps {
   route: Prisma.RouteGetPayload<{ include: { components: true } }>
@@ -110,7 +109,7 @@ export function UpdatePostComponentDialog(
     )
 
     await updateRoute({
-      id: props.currentRouteID,
+      where: { id: props.currentRouteID },
       data: {
         components: {
           updateMany: updateList,

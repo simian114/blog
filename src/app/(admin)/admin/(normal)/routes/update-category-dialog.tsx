@@ -26,8 +26,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-
-import { updateRoute } from "./actions"
+import { updateRoute } from "@/helpers/data/route"
 
 interface RouteCategoryDialogProps {
   route: Prisma.RouteGetPayload<{ include: { categories: true } }>
@@ -63,16 +62,8 @@ export function UpdateRouteCategoryDialog(props: RouteCategoryDialogProps) {
   })
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await updateRoute({
-      id: props.currentRouteID,
-      data: {
-        categories: {
-          set: values.categories.map(id => ({ id })),
-        },
-      },
-      revalidateTags: [
-        "/api/layout/header",
-        `/api/route/${props.currentRouteID}`,
-      ],
+      where: { id: props.currentRouteID },
+      data: { categories: { set: values.categories.map(id => ({ id })) } },
     })
     wait().then(() => setOpen(false))
   }

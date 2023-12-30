@@ -35,9 +35,6 @@ export async function updatePost(dto: UpdatePostDTO) {
 
   if (post?.route?.url) {
     revalidatePath(`/(main)/(bespoke)/[...slugs]`, "layout")
-    // revalidateTag(`bespoke/route/${post.route.url}`)
-    // revalidateTag("/api/post")
-    // revalidateTag(`/api/post/${post.url}`)
   }
   return post
 }

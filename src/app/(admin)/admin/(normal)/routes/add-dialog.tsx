@@ -32,8 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-
-import { newRoute, updateRoute } from "./actions"
+import { createRoute, updateRoute } from "@/helpers/data/route"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -66,20 +65,19 @@ export function AddRouteDialog(props: AddRouteDialogProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (isEditMode && props.route?.id) {
-      await updateRoute({
-        id: props.route.id,
+      updateRoute({
+        where: { id: props.route.id },
+        data: { ...values, url: `${values.title}` },
+      })
+    } else {
+      await createRoute({
         data: {
           ...values,
           url: `${values.title}`,
-        },
-      })
-    } else {
-      await newRoute({
-        ...values,
-        url: `${values.title}`,
-        title: values.title || "",
-        components: {
-          create: [],
+          title: values.title || "",
+          components: {
+            create: [],
+          },
         },
       })
     }

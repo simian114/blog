@@ -1,11 +1,11 @@
-import prisma from "@/lib/prisma"
+import { fetchRouteList } from "@/helpers/data/route"
 
 import { RouteTableWrapper } from "./table-wrapper"
 
 export const dynamic = "force-dynamic"
 
 async function getRouteData() {
-  const routes = await prisma.route.findMany({
+  const routes = fetchRouteList({
     orderBy: {
       id: "asc",
     },
@@ -18,6 +18,6 @@ async function getRouteData() {
 }
 
 export default async function AdminRoutes() {
-  const allRoutes = await getRouteData()
-  return <RouteTableWrapper allRoutes={allRoutes} />
+  const routes = await getRouteData()
+  return <RouteTableWrapper allRoutes={routes} />
 }
