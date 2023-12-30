@@ -23,8 +23,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-import { newCategory, updateCategory } from "./actions"
+import { createCategory, updateCategory } from "@/helpers/data/category"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -55,12 +54,9 @@ export function AddDialog(props: AddDialogProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (isEditMode && props.category?.id) {
-      await updateCategory({
-        ...values,
-        id: props.category.id,
-      })
+      await updateCategory({ where: { id: props.category.id }, data: values })
     } else {
-      await newCategory(values)
+      await createCategory({ data: values })
     }
     wait().then(() => setOpen(false))
   }

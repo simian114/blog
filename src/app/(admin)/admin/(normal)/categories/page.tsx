@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma"
+import { fetchCategoryList } from "@/helpers/data/category"
 
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
@@ -6,14 +6,9 @@ import { DataTable } from "./data-table"
 export const dynamic = "force-dynamic"
 
 async function getCategoryData() {
-  const categories = await prisma.category.findMany({
-    orderBy: {
-      id: "asc",
-    },
-    include: {
-      route: true,
-      posts: true,
-    },
+  const categories = await fetchCategoryList({
+    orderBy: { id: "asc" },
+    include: { route: true, posts: true },
   })
   return categories
 }
