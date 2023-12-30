@@ -14,8 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-
-import { updateRoute } from "./actions"
+import { updateRoute } from "@/helpers/data/route"
 
 interface DeleteRouteDialogProps {
   route: Route
@@ -25,10 +24,8 @@ export function DeleteRouteDialog(props: DeleteRouteDialogProps) {
   const isDeleted = !!props.route.deletedAt
   function handleDelete() {
     updateRoute({
-      id: props.route.id,
-      data: {
-        deletedAt: isDeleted ? null : new Date(),
-      },
+      where: { id: props.route.id },
+      data: { deletedAt: isDeleted ? null : new Date() },
     })
   }
 
