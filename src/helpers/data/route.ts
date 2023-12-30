@@ -23,6 +23,7 @@ export async function fetchRouteBy<T extends Prisma.RouteFindFirstOrThrowArgs>(
 ): Promise<Prisma.RouteGetPayload<T> | null> {
   try {
     const route = await prisma.route.findFirstOrThrow(params)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return route as any
   } catch (error) {
     // TODO: logging 시스템 구축
