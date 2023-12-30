@@ -1,3 +1,6 @@
+"use server"
+
+import { revalidatePath } from "next/cache"
 import { Prisma } from "@prisma/client"
 
 import prisma from "@/lib/prisma"
@@ -47,3 +50,17 @@ export async function fetchPostBy<T extends Prisma.PostFindFirstOrThrowArgs>(
 //   url
 //   noStore()
 // }
+
+// NOTE: return타입을 추론하기 위해서는 fetch처럼 generic을 사용해야함
+export async function updatePost(params: Prisma.PostUpdateArgs) {
+  const updatePost = await prisma.post.update(params)
+  revalidatePath(`/(main)/(bespoke)/[...slugs]`, "layout")
+  return updatePost
+}
+
+// NOTE: return타입을 추론하기 위해서는 fetch처럼 generic을 사용해야함
+export async function createPost(params: Prisma.PostCreateArgs) {
+  const post = await prisma.post.create(params)
+  revalidatePath(`/(main)/(bespoke)/[...slugs]`, "layout")
+  return post
+}

@@ -14,8 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-
-import { updatePost } from "../../(editor)/posts/new/actions"
+import { updatePost } from "@/helpers/data/post"
 
 interface DeleteRouteDialogProps {
   post: Post
@@ -25,10 +24,8 @@ export function DeletePostDialog(props: DeleteRouteDialogProps) {
   const isDeleted = !!props.post.deletedAt
   function handleDelete() {
     updatePost({
-      id: props.post.id,
-      data: {
-        deletedAt: isDeleted ? null : new Date(),
-      },
+      where: { id: props.post.id },
+      data: { deletedAt: isDeleted ? null : new Date() },
     })
   }
 
