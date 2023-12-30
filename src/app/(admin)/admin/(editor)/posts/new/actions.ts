@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidateTag } from "next/cache"
+import { revalidatePath } from "next/cache"
 import { Post, Prisma } from "@prisma/client"
 
 import prisma from "@/lib/prisma"
@@ -19,8 +19,7 @@ export async function createPost(data: CreatePostDTO) {
     include: { category: true, route: true, tags: true },
   })
   if (post?.route?.url) {
-    revalidateTag(`bespoke/route/${post.route.url}`)
-    revalidateTag("/api/post")
+    revalidatePath(`/(main)/(bespoke)/[...slugs]`, "layout")
   }
   return post
 }
@@ -35,9 +34,10 @@ export async function updatePost(dto: UpdatePostDTO) {
   })
 
   if (post?.route?.url) {
-    revalidateTag(`bespoke/route/${post.route.url}`)
-    revalidateTag("/api/post")
-    revalidateTag(`/api/post/${post.url}`)
+    revalidatePath(`/(main)/(bespoke)/[...slugs]`, "layout")
+    // revalidateTag(`bespoke/route/${post.route.url}`)
+    // revalidateTag("/api/post")
+    // revalidateTag(`/api/post/${post.url}`)
   }
   return post
 }
