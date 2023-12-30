@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma"
+import { fetchPostList } from "@/helpers/data/post"
 
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
@@ -6,7 +6,7 @@ import { DataTable } from "./data-table"
 export const dynamic = "force-dynamic"
 
 async function getAllPosts() {
-  const posts = await prisma.post.findMany({
+  const posts = await fetchPostList({
     orderBy: {
       id: "desc",
     },
