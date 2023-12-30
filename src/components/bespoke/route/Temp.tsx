@@ -2,8 +2,8 @@ import Link from "next/link"
 import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 
+import { fetchPostList } from "@/helpers/data/post"
 import { getPostURL } from "@/helpers/model/post"
-import prisma from "@/lib/prisma"
 import { capitalizeFirstLetter } from "@/lib/utils"
 
 import Typography from "../../typography/Typography"
@@ -16,19 +16,19 @@ type Post = Prisma.PostGetPayload<{
 }>
 
 async function getData() {
-  const posts =
-    (await prisma.post.findMany({
-      include: {
-        route: true,
-        category: true,
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-      where: {
-        published: true,
-      },
-    })) || []
+  const posts = await fetchPostList({
+    where: {
+      published: true,
+    },
+    include: {
+      route: true,
+      category: true,
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  })
+
   return { posts }
 }
 

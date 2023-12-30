@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client"
 
-import prisma from "@/lib/prisma"
+import { fetchPostBy } from "@/helpers/data/post"
 
 import EditMDXEditor from "./EditMdxEditor"
 
@@ -16,8 +16,8 @@ export type AllIncludedPost = Prisma.PostGetPayload<{
   }
 }>
 
-async function getData(id: number): Promise<{ post: AllIncludedPost | null }> {
-  const post = await prisma.post.findUnique({
+async function getData(id: number) {
+  const post = await fetchPostBy({
     where: { id },
     include: {
       category: true,

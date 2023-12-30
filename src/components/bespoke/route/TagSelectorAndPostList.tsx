@@ -1,26 +1,23 @@
 import { Suspense } from "react"
-import { Post, SubUrlPost, Tag } from "@prisma/client"
+import { Post, SubUrlPost } from "@prisma/client"
 
 import TagSelectorList from "@/components/bespoke/route/TagSelectorAndPostList/TagSelectorList"
 import TagSelectorAndPostListLoading from "@/components/bespoke/route/TagSelectorAndPostListLoading"
 import Typography from "@/components/typography/Typography"
-import { AllIncludePost } from "@/types/bespoke-components"
+import { fetchPostList } from "@/helpers/data/post"
+import { fetchTagList } from "@/helpers/data/tag"
 
 async function getData() {
   try {
-    const fetchPosts = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/post`,
-      {
-        next: { tags: [`/api/post`] },
-      }
-    )
-    const fetchTags = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/tag`,
-      { next: { tags: [`/api/tag`] } }
-    )
-    const posts = (await fetchPosts.json()) as AllIncludePost[]
-    const tags = (await fetchTags.json()) as Tag[]
-
+    const posts = await fetchPostList({
+      where: { deletedAt: null },
+      include: {
+        route: true,
+        category: true,
+        tags: { include: { tag: true } },
+      },
+    })
+    const tags = await fetchTagList()
     return { posts: posts.filter((post: Post) => !post.deletedAt), tags }
   } catch (error) {
     return { posts: [], tags: [] }

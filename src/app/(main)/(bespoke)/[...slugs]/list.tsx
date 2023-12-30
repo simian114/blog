@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { COMPONENT_POSITION, ComponentType, LayoutType } from "@prisma/client"
 
-import { AllIncludeRoute } from "@/types/bespoke-components"
+import { fetchRouteBy } from "@/helpers/data/route"
 
 import RouteComponentMapper from "./ComponentContainer"
 import SubURLContainer from "./SubURLContainer"
@@ -11,24 +11,31 @@ interface MainListProps {
   subURL?: string
 }
 
-async function getData({ url }: { url: string }): Promise<{
-  route: AllIncludeRoute | null
-}> {
+async function getData({ url }: { url: string }) {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/layout/components/category-selector/${url}`,
-      { next: { tags: [`bespoke/route/${url}`] } }
-    )
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
-      next: { tags: [`/api/post`] },
+    const route = await fetchRouteBy({
+      where: { url },
+      include: {
+        components: true,
+        categories: {
+          include: {
+            posts: {
+              where: { deletedAt: null },
+              include: {
+                category: true,
+                route: true,
+                tags: { include: { tag: true } },
+              },
+            },
+          },
+        },
+      },
     })
-    const route = await res.json()
     return { route }
   } catch (error) {
     return { route: null }
   }
 }
-
 // NOTE: AllIncludeRoute 는 무조건 각 컴포넌트에 들어감
 // Route Component 에는 반드시 AllIncludeRoute 가 들어가고
 // Post Component 에는 반드시 AllIncludePost 가 들어간다
