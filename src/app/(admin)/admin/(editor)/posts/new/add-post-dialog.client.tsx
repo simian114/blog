@@ -34,10 +34,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { createPost, updatePost } from "@/helpers/data/post"
 
 import { AllIncludedPost } from "../[id]/page"
-
-import { createPost, updatePost } from "./actions"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -116,22 +115,22 @@ export function AddPostDialog(props: AddPostDialogProps) {
       const deletedTags = props.post.tags
         .filter(tag => !tagIds.find(id => id === tag.tagId))
         .map(tag => ({ tagId: tag.tagId }))
+      if (!categoryId && !props.post.categoryId) {
+        alert("category id는 필수입니다")
+        return
+      }
 
       await updatePost({
-        id: props.post.id,
+        where: { id: props.post.id },
         data: {
           ...rest,
           url: url.replaceAll(" ", "-"),
           readingTime: readingTime(props.content || "").minutes,
           content: props.content,
-          category:
-            props.post.categoryId === categoryId
-              ? undefined
-              : { connect: { id: categoryId } },
-          route:
-            props.post.routeId === routeId
-              ? undefined
-              : { connect: { id: routeId } },
+          category: {
+            connect: { id: categoryId || props.post.categoryId || 0 },
+          },
+          route: { connect: { id: routeId } },
           tags: {
             deleteMany: deletedTags,
             createMany: {
@@ -142,15 +141,17 @@ export function AddPostDialog(props: AddPostDialogProps) {
       })
     } else {
       await createPost({
-        ...rest,
-        url: url.replaceAll(" ", "-"),
-        readingTime: readingTime(props.content || "").minutes,
-        content: props.content,
-        category: !categoryId ? undefined : { connect: { id: categoryId } },
-        route: !routeId ? undefined : { connect: { id: routeId } },
-        tags: {
-          createMany: {
-            data: tagIds.map(id => ({ tagId: id, assignedBy: "" })),
+        data: {
+          ...rest,
+          url: url.replaceAll(" ", "-"),
+          readingTime: readingTime(props.content || "").minutes,
+          content: props.content,
+          category: !categoryId ? undefined : { connect: { id: categoryId } },
+          route: !routeId ? undefined : { connect: { id: routeId } },
+          tags: {
+            createMany: {
+              data: tagIds.map(id => ({ tagId: id, assignedBy: "" })),
+            },
           },
         },
       })

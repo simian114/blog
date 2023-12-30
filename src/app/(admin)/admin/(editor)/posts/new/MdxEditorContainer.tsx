@@ -1,6 +1,6 @@
 "use client"
 import dynamic from "next/dynamic"
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { EditorSelection, ReactCodeMirrorRef } from "@uiw/react-codemirror"
 import { type PutBlobResult } from "@vercel/blob"
 import { LucideUpload } from "lucide-react"
@@ -52,6 +52,7 @@ export default function MdxEditorContainer(props: MdxEditorContainerProps) {
     props.post?.content ?? MARKDOWN_DEFAULT_VALUE
   )
   const debouncedMarkdown = useDebounce(markdown, 1000)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [source, setSource] = useState<any>()
 
   const [imageUploadDialog, setImageUploadDialog] = useState(false)
