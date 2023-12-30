@@ -30,8 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-
-import { newTag, updatetag } from "./actions"
+import { createTag, updateTag } from "@/helpers/data/tag"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -96,9 +95,9 @@ export function AddDialog(props: AddDialogProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (isEditMode && typeof props.tag?.id === "number") {
-      await updatetag({ ...values, id: props.tag.id })
+      await updateTag({ where: { id: props.tag.id }, data: values })
     } else {
-      await newTag(values)
+      await createTag({ data: values })
     }
     wait().then(() => setOpen(false))
   }
