@@ -1,9 +1,8 @@
 "use server"
 import { revalidatePath } from "next/cache"
 import { Prisma } from "@prisma/client"
-import { PrismaClient } from "@prisma/client"
 
-const prisma = new PrismaClient()
+import prisma from "@/lib/prisma"
 
 export async function fetchTagList<T extends Prisma.TagFindManyArgs>(
   params?: T
