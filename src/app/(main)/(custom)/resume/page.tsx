@@ -3,10 +3,10 @@ import rehypeHighlight from "rehype-highlight"
 import remarkGfm from "remark-gfm"
 
 import { MdxComponents } from "@/components/mdx/mdxComponents"
-import prisma from "@/lib/prisma"
+import { fetchPostBy } from "@/helpers/data/post"
 
 async function getData() {
-  const post = await prisma.post.findFirst({
+  const post = await fetchPostBy({
     where: { route: { url: "/resume" } },
   })
   return { post }

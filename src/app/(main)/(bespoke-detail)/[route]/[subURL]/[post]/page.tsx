@@ -1,15 +1,13 @@
 import { Metadata } from "next"
 
-import DetailDefaultLayout, {
-  PostWithComponentRoute,
-} from "@/components/layout/detail/default/DetailDefaultLayout"
+import DetailDefaultLayout from "@/components/layout/detail/default/DetailDefaultLayout"
 import { defaultMeta } from "@/constants/metadata"
-import prisma from "@/lib/prisma"
+import { fetchPostBy, fetchPostList } from "@/helpers/data/post"
 
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const posts = await prisma.post.findMany({
+  const posts = await fetchPostList({
     where: { published: true },
     include: { route: true, category: true, tags: { include: { tag: true } } },
   })
@@ -28,23 +26,18 @@ export async function generateMetadata({
   params: { route: string; subURL: string; post: string }
 }): Promise<Metadata> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/post/${params.post}`,
-      { next: { tags: [`/api/post/${params.post}`] } }
-    )
-    const post = (await res.json()) as PostWithComponentRoute
+    const post = await fetchPostBy({
+      where: { url: params.post, deletedAt: null },
+      include: { tags: { include: { tag: true } } },
+    })
     if (!post) {
       return { ...defaultMeta }
     }
-
     return {
       title: post.title,
       description: post.description || "",
-      keywords: post.tags.map(tag => tag.tag.title),
-      openGraph: {
-        title: post.title,
-        description: post.description || "",
-      },
+      keywords: post.tags.map(tag => tag.tag?.title || ""),
+      openGraph: { title: post.title, description: post.description || "" },
     }
   } catch (error) {
     return { ...defaultMeta }

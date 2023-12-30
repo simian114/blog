@@ -1,26 +1,25 @@
 import Link from "next/link"
-import { Post, Prisma } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 
 import Motion from "@/components/motion/Motion"
 import Typography from "@/components/typography/Typography"
+import { fetchPostList } from "@/helpers/data/post"
 import { getPostURL } from "@/helpers/model/post"
 import { capitalizeFirstLetter } from "@/lib/utils"
 
-async function getData() {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
-      next: { tags: [`/api/post`] },
-    })
-    const posts = await res.json()
-    return { posts: posts.filter((post: Post) => !post.deletedAt) }
-  } catch (error) {
-    return { posts: [] }
-  }
+const params = {
+  where: { deletedAt: null },
+  include: {
+    route: true,
+    category: true,
+    tags: { include: { tag: true } },
+  },
 }
 
-interface SimplePostListProps {
-  title?: string
+async function getData() {
+  const posts = await fetchPostList(params)
+  return posts
 }
 
 // NOTE: revalidateTag 는 layout / page 단계에 선언해 놓은 함수에만 통하는듯...
@@ -32,33 +31,22 @@ interface SimplePostListProps {
  *
  */
 
+interface SimplePostListProps {
+  title?: string
+}
+
 export default async function SimplePostList(props: SimplePostListProps) {
-  const { posts } = (await getData()) as {
-    posts: Prisma.PostGetPayload<{
-      include: { route: true; category: true }
-    }>[]
-  }
-  const postsByRoute = posts.reduce(
-    (prev, curr) => {
-      const currentPostRoute = curr.route?.title
-      if (!currentPostRoute) return prev
-      if (Array.isArray(prev.get(currentPostRoute))) {
-        prev.set(currentPostRoute, [
-          ...(prev.get(currentPostRoute) || []),
-          curr,
-        ])
-      } else {
-        prev.set(currentPostRoute, [curr])
-      }
-      return prev
-    },
-    new Map<
-      string,
-      Prisma.PostGetPayload<{
-        include: { route: true; category: true }
-      }>[]
-    >()
-  )
+  const posts = await getData()
+  const postsByRoute = posts.reduce((prev, curr) => {
+    const currentPostRoute = curr.route?.title
+    if (!currentPostRoute) return prev
+    if (Array.isArray(prev.get(currentPostRoute))) {
+      prev.set(currentPostRoute, [...(prev.get(currentPostRoute) || []), curr])
+    } else {
+      prev.set(currentPostRoute, [curr])
+    }
+    return prev
+  }, new Map<string, Prisma.PostGetPayload<typeof params>[]>())
 
   /**
    * 다음 section 의 시작 시점은 이전 section 의 애니메이션이 마무리되고 0.1초 후 로 한다.

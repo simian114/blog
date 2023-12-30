@@ -8,6 +8,7 @@ import DeatilBespokeComponentMapper from "@/app/(main)/(bespoke-detail)/[route]/
 import MDX from "@/components/mdx/MDX"
 import Motion from "@/components/motion/Motion"
 import Tag from "@/components/postCard/tag/Tag"
+import { fetchPostBy } from "@/helpers/data/post"
 import { getPostSlug } from "@/helpers/model/post"
 
 import ViewCounter from "./common/ViewCounter"
@@ -25,19 +26,18 @@ export type PostWithComponentRoute = Prisma.PostGetPayload<{
 }>
 
 async function getData(params: DetailDefaultLayoutProps) {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/post/${params.post}`,
-      {
-        next: { tags: [`/api/post/${params.post}`] },
-      }
-    )
-    const post = (await res.json()) as PostWithComponentRoute
-
-    return { post }
-  } catch (error) {
-    return { post: null }
-  }
+  const post = await fetchPostBy({
+    where: {
+      url: params.post,
+      deletedAt: null,
+    },
+    include: {
+      route: { include: { components: true } },
+      category: true,
+      tags: { include: { tag: true } },
+    },
+  })
+  return { post }
 }
 
 export default async function DetailDefaultLayout(
