@@ -34,7 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { createPost, updatePost } from "@/helpers/data/post"
+import { createPost, updatePost } from "@/helpers/actions/post-actions"
 
 import { AllIncludedPost } from "../[id]/page"
 
