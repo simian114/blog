@@ -14,7 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { updatePost } from "@/helpers/data/post"
+import { updatePost } from "@/helpers/actions/post-actions"
 
 interface DeleteRouteDialogProps {
   post: Post

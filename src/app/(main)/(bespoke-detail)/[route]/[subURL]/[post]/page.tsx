@@ -5,6 +5,7 @@ import { defaultMeta } from "@/constants/metadata"
 import { fetchPostBy, fetchPostList } from "@/helpers/data/post"
 
 export const dynamicParams = true
+export const revalidate = 604800 // NOTE: 일주일
 
 export async function generateStaticParams() {
   const posts = await fetchPostList({

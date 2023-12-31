@@ -1,6 +1,3 @@
-"use server"
-
-import { revalidatePath } from "next/cache"
 import { Prisma } from "@prisma/client"
 
 import prisma from "@/lib/prisma"
@@ -45,22 +42,19 @@ export async function fetchPostBy<T extends Prisma.PostFindFirstOrThrowArgs>(
 //     return []
 //   }
 // }
-
 // export async function fetchPostByURL(url: string) {
 //   url
 //   noStore()
 // }
-
 // NOTE: return타입을 추론하기 위해서는 fetch처럼 generic을 사용해야함
-export async function updatePost(params: Prisma.PostUpdateArgs) {
-  const updatePost = await prisma.post.update(params)
-  revalidatePath(`/(main)/(bespoke)/[...slugs]`, "layout")
-  return updatePost
-}
-
-// NOTE: return타입을 추론하기 위해서는 fetch처럼 generic을 사용해야함
-export async function createPost(params: Prisma.PostCreateArgs) {
-  const post = await prisma.post.create(params)
-  revalidatePath(`/(main)/(bespoke)/[...slugs]`, "layout")
-  return post
-}
+// export async function updatePost(params: Prisma.PostUpdateArgs) {
+//   const updatedPost = await prisma.post.update(params)
+//   // NOTE: 리스트 쪽 재생성
+//   // NOTE: 본인 또한 재생성해야함
+//   revalidatePath(`/(main)/(bespoke)/[...slugs]`, "layout")
+//   // NOTE: route: route url
+//   // NOTE: subURL: category url
+//   // NOTE: post: post url
+//   revalidatePath(`/(main)/(bespoke-detail)/[route]/[subURL]/[post]`)
+//   return updatedPost
+// }

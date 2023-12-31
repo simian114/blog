@@ -23,7 +23,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { createCategory, updateCategory } from "@/helpers/data/category"
+import { createCategory, updateCategory } from "@/helpers/data/updateCategory"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
