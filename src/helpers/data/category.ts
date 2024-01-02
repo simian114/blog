@@ -35,6 +35,7 @@ export async function fetchCategoryBy<
 export async function updateCategory(params: Prisma.CategoryUpdateArgs) {
   const updateCategory = await prisma.category.update(params)
   revalidatePath(`/(main)/(bespoke)/[...slugs]`, "layout")
+  revalidatePath("/(main)/(bespoke-detail)/[route]/[subURL]/[post]", "layout")
   return updateCategory
 }
 

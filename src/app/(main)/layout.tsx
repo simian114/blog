@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Metadata } from "next"
 import localFont from "next/font/local"
+import { Suspense } from "react"
 import { Analytics } from "@vercel/analytics/react"
 
 import { Footer, Header } from "@/components/layout"
+import HeaderLoading from "@/components/layout/header/Header.loading"
 import { Providers } from "@/components/providers/providers"
 import { defaultMeta } from "@/constants/metadata"
 
@@ -42,7 +44,9 @@ export default async function BespokeRootLayout(props: any) {
       <body>
         <Providers>
           <div id="app">
-            <Header />
+            <Suspense fallback={<HeaderLoading />}>
+              <Header />
+            </Suspense>
             <section className="inner">{props.children}</section>
             <Footer />
           </div>

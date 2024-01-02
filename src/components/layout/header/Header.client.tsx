@@ -3,9 +3,9 @@
 // NOTE: clinet-side only
 import { usePathname } from "next/navigation"
 import { ReactElement, useEffect, useMemo, useRef, useState } from "react"
+import { Category, Prisma } from "@prisma/client"
 import { RocketIcon } from "@radix-ui/react-icons"
 import * as Popover from "@radix-ui/react-popover"
-import { useQuery } from "@tanstack/react-query"
 import { ChevronDown } from "lucide-react"
 
 import ButtonLink from "@/components/button/ButtonLink"
@@ -14,31 +14,24 @@ import MagicButtonLink from "@/components/magicButton/ButtonLink"
 import { useDevice } from "@/components/providers/deviceWidthProvider"
 import { ThemeSelector } from "@/components/theme"
 import DisableScroll from "@/components/util/DisableScroll"
-import { RouteWithCategories } from "@/types/prisma"
 
-import HeaderLoading from "./Header.loading"
 import HeaderMobileMenu from "./HeaderMobileMenu"
 
-async function getHeaderRoutes() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/layout/header`
-  )
-  return await res.json()
+type RouteWithCategories = Prisma.RouteGetPayload<{
+  include: { categories: true }
+}>
+
+interface HeaderProps {
+  routes: Array<RouteWithCategories>
 }
 
-export default function HeaderClient(): ReactElement {
+export default function HeaderClient(props: HeaderProps): ReactElement {
   const pathname = usePathname()
   const headerRef = useRef<HTMLHeadElement>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { isMobile } = useDevice()
 
-  const { data, isLoading } = useQuery<
-    RouteWithCategories<"id" | "url" | "title">[]
-  >({
-    queryKey: ["categories"],
-    queryFn: getHeaderRoutes,
-  })
-  const routes = data || []
+  const routes = props.routes
 
   const open = useMemo(
     () => isMobile && isMobileMenuOpen,
@@ -46,10 +39,13 @@ export default function HeaderClient(): ReactElement {
   )
 
   const [routeMenuOpen, setRouteMenuOpen] = useState(() => {
-    return routes.reduce((prev: any, cur: any) => {
-      if (!cur.categories?.length) return prev
-      return { ...prev, [cur.title]: false }
-    }, {} as { [key: string]: boolean })
+    return routes.reduce(
+      (prev: Record<string, boolean>, cur: RouteWithCategories) => {
+        if (!cur.categories?.length) return prev
+        return { ...prev, [cur.title]: false }
+      },
+      {} as Record<string, boolean>
+    )
   })
 
   function toggleMobileMenu() {
@@ -63,10 +59,6 @@ export default function HeaderClient(): ReactElement {
   useEffect(() => {
     setIsMobileMenuOpen(false)
   }, [pathname])
-
-  if (isLoading) {
-    return <HeaderLoading />
-  }
 
   return (
     <>
@@ -88,7 +80,7 @@ export default function HeaderClient(): ReactElement {
             className="navigation__menus"
             data-state={open ? "open" : "close"}
           >
-            {routes.map((route: any) => (
+            {routes.map((route: RouteWithCategories) => (
               <li key={route.id} className={`navigation__menu-item`}>
                 <Popover.Root
                   onOpenChange={open =>
@@ -139,7 +131,7 @@ export default function HeaderClient(): ReactElement {
                           asChild
                         >
                           <ul>
-                            {route.categories.map((category: any) => (
+                            {route.categories.map((category: Category) => (
                               <ButtonLink
                                 key={category.id}
                                 href={`/${route.url}/${category.url}`}

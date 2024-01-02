@@ -35,11 +35,14 @@ export async function fetchRouteBy<T extends Prisma.RouteFindFirstOrThrowArgs>(
 export async function updateRoute(params: Prisma.RouteUpdateArgs) {
   const updateRoute = await prisma.route.update(params)
   revalidatePath(`/(main)/(bespoke)/[...slugs]`, "layout")
+  revalidatePath("/(main)/(bespoke-detail)/[route]/[subURL]/[post]", "layout")
   return updateRoute
 }
 
 // NOTE: return타입을 추론하기 위해서는 fetch처럼 generic을 사용해야함
 export async function createRoute(params: Prisma.RouteCreateArgs) {
   const route = await prisma.route.create(params)
+  revalidatePath("/(main)/(bespoke)/[...slugs]", "layout")
+  revalidatePath("/(main)/(bespoke-detail)/[route]/[subURL]/[post]", "layout")
   return route
 }
