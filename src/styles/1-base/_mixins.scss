@@ -92,6 +92,20 @@ $desktop: 1280;
   }
 }
 
+@mixin hide-scrollbar {
+  &::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+  }
+}
+
 @mixin fade($type) {
   @if $type== "hide" {
     visibility: hidden;
