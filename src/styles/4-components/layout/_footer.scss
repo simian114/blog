@@ -1,23 +1,74 @@
 @use "@styles" as *;
 
 .footer {
-  padding-bottom: 4rem;
+  padding-bottom: rds-space(space-64);
   &__spacer {
-    height: 2px;
+    height: rds-space(space-02);
     background-color: var(--separator-color);
-    margin: 3rem auto;
+    margin: rds-space(space-48) auto;
   }
   &__link-container {
     display: flex;
     > a:not(:last-child) {
-      margin-right: 0.375rem;
+      margin-right: rds-space(space-06);
     }
   }
 
   &__contents {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: center;
     flex-direction: column;
+  }
+
+  &__bespoke-router {
+    display: flex;
+    align-items: center;
+    overflow: auto;
+    @include thin-scrollbar;
+    > a {
+      min-width: rds-space(space-80);
+      @include pointing-hover {
+        color: var(--text-high-color);
+      }
+    }
+  }
+
+  &__bespoke-category-container {
+    display: flex;
+  }
+
+  &__bespoke-category {
+    display: flex;
+    align-items: center;
+    &--bar {
+      &:after {
+        content: " ";
+        margin-left: rds-space(space-08);
+        margin-right: rds-space(space-08);
+        width: rds-space(space-02);
+        height: 55%;
+        background-color: var(--solid-bg-color);
+      }
+    }
+    > a {
+      @include pointing-hover {
+        color: var(--text-high-color);
+      }
+    }
+  }
+
+  &__developer {
+    margin-top: rds-space(space-24);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+
+  @include mobile {
+    &__bespoke-router {
+      @include hide-scrollbar;
+    }
   }
 }
