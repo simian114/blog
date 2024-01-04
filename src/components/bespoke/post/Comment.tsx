@@ -1,15 +1,14 @@
-import { Post } from "@prisma/client"
+import { Suspense } from "react"
 
 import CommentsClient from "@/components/comment/Comments"
-
-interface CommentProps {
-  post: Post
-}
 
 /**
  *
  */
-export default function Comment(props: CommentProps) {
-  props
-  return <CommentsClient />
+export default function Comment() {
+  return (
+    <Suspense>
+      <CommentsClient />
+    </Suspense>
+  )
 }
