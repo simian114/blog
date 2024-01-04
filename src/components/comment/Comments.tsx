@@ -5,14 +5,8 @@ import Giscus from "@giscus/react"
 import { isMachesMediaQuery } from "@/lib/client/mediaQuery.client"
 import { MEDIA_COLOR_SCHEME, useTheme } from "@/store/theme"
 
-// interface CommentsProps {
-//   post: Post
-// }
-
 export default function Comments() {
   const [theme] = useTheme()
-  // props
-
   return (
     <Giscus
       id="comments"
