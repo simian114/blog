@@ -37,7 +37,7 @@ export default async function PostList(props: PostListProp) {
           as="h4"
           variants="subtitle1"
           colorType="GRAY"
-          colorLevel={12}
+          colorLevel={11}
         >
           {props.category.description}
         </Typography>

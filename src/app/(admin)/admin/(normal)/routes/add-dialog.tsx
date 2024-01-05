@@ -32,13 +32,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import { createRoute, updateRoute } from "@/helpers/data/route"
 
 const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
 const formSchema = z.object({
   title: z.string().min(1).max(20),
-  description: z.string().min(1).max(20),
+  description: z.string().min(1).max(100),
   open: z.boolean(),
   priority: z.number(),
   type: z.enum([ROUTE_TYPE.CUSTOM, ROUTE_TYPE.BESPOKE]),
@@ -125,11 +126,16 @@ export function AddRouteDialog(props: AddRouteDialogProps) {
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Input
+                        <Textarea
                           className="border-solid"
                           placeholder="Route Description"
                           {...field}
                         />
+                        {/* <Input
+                          className="border-solid"
+                          placeholder="Route Description"
+                          {...field}
+                        /> */}
                       </FormControl>
                       <FormMessage />
                     </FormItem>

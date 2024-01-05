@@ -4,8 +4,8 @@ import Typography from "@/components/typography/Typography"
 import { AllIncludeCategory, AllIncludeRoute } from "@/types/bespoke-components"
 
 interface CategorySelectorProps {
-  currentCategory?: AllIncludeCategory
-  currentRoute: AllIncludeRoute
+  category?: AllIncludeCategory
+  route: AllIncludeRoute
 }
 
 // NOTE: category 까지는 useParams를 사용하면 될듯?
@@ -13,9 +13,7 @@ interface CategorySelectorProps {
 
 // NOTE: category selector 의 생성순으로 정렬
 export default function CategorySelector(props: CategorySelectorProps) {
-  const categoriesSortedByCreatedAt = [
-    ...(props.currentRoute.categories || []),
-  ].sort(
+  const categoriesSortedByCreatedAt = [...(props.route.categories || [])].sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
   )
 
@@ -24,15 +22,15 @@ export default function CategorySelector(props: CategorySelectorProps) {
       <ul className="post-list__category-list">
         <li
           className={`post-list__category-item ${
-            !props.currentCategory ? "post-list__category-item--active" : ""
+            !props.category ? "post-list__category-item--active" : ""
           }`}
         >
           <Link
             scroll={false}
-            className={`post-list__link ${
-              !props.currentCategory ? "active" : ""
-            } ${!props.currentCategory ? "post-list__link--active" : ""}`}
-            href={`/${props.currentRoute.url}`}
+            className={`post-list__link ${!props.category ? "active" : ""} ${
+              !props.category ? "post-list__link--active" : ""
+            }`}
+            href={`/${props.route.url}`}
           >
             <Typography
               as="h3"
@@ -49,7 +47,7 @@ export default function CategorySelector(props: CategorySelectorProps) {
           <li
             key={category.id}
             className={`post-list__category-item ${
-              category.url === props.currentCategory?.url
+              category.url === props.category?.url
                 ? "post-list__category-item--active"
                 : ""
             }`}
@@ -57,13 +55,13 @@ export default function CategorySelector(props: CategorySelectorProps) {
             <Link
               scroll={false}
               className={`post-list__link ${
-                category.url === props.currentCategory?.url ? "active" : ""
+                category.url === props.category?.url ? "active" : ""
               } ${
-                category.url === props.currentCategory?.url
+                category.url === props.category?.url
                   ? "post-list__link--active"
                   : ""
               }`}
-              href={`/${props.currentRoute.url}/${category.url}`}
+              href={`/${props.route.url}/${category.url}`}
             >
               <Typography
                 as="h3"

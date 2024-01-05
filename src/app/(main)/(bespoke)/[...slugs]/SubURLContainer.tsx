@@ -1,6 +1,8 @@
-import { Component, Prisma } from "@prisma/client"
+import { Component, Prisma, SubUrlPost } from "@prisma/client"
 
-import CategorySubURLSelector from "@/components/layout/index/default/common/CategorySubURLSelector"
+import CategoryBookSelector from "@/components/layout/index/default/common/categoryBookSelector/CategoryBookSelector"
+import CategorySelector from "@/components/layout/index/default/common/categorySelector/CategorySelector"
+import PostList from "@/components/layout/index/default/common/postList/PostList"
 import { AllIncludeCategory, AllIncludeRoute } from "@/types/bespoke-components"
 
 interface SubURLContainerProps {
@@ -10,19 +12,30 @@ interface SubURLContainerProps {
   subURL?: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const CategoryComponentMapper: Record<string, (props: any) => JSX.Element> = {
+  CategorySelector: CategorySelector,
+  CategoryBookSelector: CategoryBookSelector,
+}
+
 export default function SubURLContainer(props: SubURLContainerProps) {
   const { name, props: componentProps } = props.component
   const post = (componentProps as Prisma.JsonObject)?.post || "CARD"
 
-  if (name === "CategorySelector") {
-    return (
-      <CategorySubURLSelector
-        className="index-main__category-list"
-        type={post as string}
-        currentRoute={props.route}
-        currentCategory={props.category}
-      />
-    )
+  const CategoryComponent = CategoryComponentMapper[name]
+
+  if (!CategoryComponent) {
+    return null
   }
-  return null
+
+  return (
+    <section className={`index-main__category-list`}>
+      <CategoryComponent route={props.route} category={props.category} />
+      <PostList
+        type={post as SubUrlPost}
+        route={props.route}
+        category={props.category}
+      />
+    </section>
+  )
 }
