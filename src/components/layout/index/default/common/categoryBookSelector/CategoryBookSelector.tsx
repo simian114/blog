@@ -1,7 +1,6 @@
 "use client"
 import Link from "next/link"
 
-import Motion from "@/components/motion/Motion"
 import Typography from "@/components/typography/Typography"
 import { capitalizeFirstLetter } from "@/lib/utils"
 import { AllIncludeCategory, AllIncludeRoute } from "@/types/bespoke-components"
@@ -31,17 +30,12 @@ export default function CategoryBookSelector(props: CategoryBookSelectorProps) {
         </div>
       )}
       <ul className="category-book-selector-list">
-        {categoriesSortedByCreatedAt.map((category, index) => {
+        {categoriesSortedByCreatedAt.map(category => {
           const selected = category.url === props.category?.url
           return (
-            <Motion
-              as={"li"}
+            <li
               key={category.id}
               className={`category-book-selector-list__item`}
-              initial={{ opacity: 0, translateX: 20 }}
-              preventAnimationInCSR
-              animate={{ opacity: 1, translateX: 0 }}
-              transition={{ delay: 0.1 * index }}
             >
               <Link scroll={false} href={`/${props.route.url}/${category.url}`}>
                 <div
@@ -68,7 +62,7 @@ export default function CategoryBookSelector(props: CategoryBookSelectorProps) {
                   </div>
                 </div>
               </Link>
-            </Motion>
+            </li>
           )
         })}
       </ul>
