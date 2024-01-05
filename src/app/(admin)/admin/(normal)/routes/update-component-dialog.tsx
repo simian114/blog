@@ -360,7 +360,10 @@ export function UpdateRouteComponentDialog(
                                 </>
                               ) : (
                                 <>
-                                  {["CategorySelector"].map(selectorName => (
+                                  {[
+                                    "CategorySelector",
+                                    "CategoryBookSelector",
+                                  ].map(selectorName => (
                                     <SelectItem
                                       key={selectorName}
                                       value={selectorName}

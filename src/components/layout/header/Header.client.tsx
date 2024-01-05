@@ -14,6 +14,7 @@ import MagicButtonLink from "@/components/magicButton/ButtonLink"
 import { useDevice } from "@/components/providers/deviceWidthProvider"
 import { ThemeSelector } from "@/components/theme"
 import DisableScroll from "@/components/util/DisableScroll"
+import Portal from "@/components/util/Portal"
 
 import HeaderMobileMenu from "./HeaderMobileMenu"
 
@@ -30,6 +31,7 @@ export default function HeaderClient(props: HeaderProps): ReactElement {
   const headerRef = useRef<HTMLHeadElement>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { isMobile } = useDevice()
+  console.log(headerRef.current?.clientHeight)
 
   const routes = props.routes
 
@@ -59,7 +61,9 @@ export default function HeaderClient(props: HeaderProps): ReactElement {
   useEffect(() => {
     setIsMobileMenuOpen(false)
   }, [pathname])
-
+  const childStyle = {
+    ["--header-height" as string]: `${headerRef.current?.clientHeight || 56}px`,
+  }
   return (
     <>
       <DisableScroll enable={open && isMobile} />
@@ -171,6 +175,56 @@ export default function HeaderClient(props: HeaderProps): ReactElement {
             </MagicButtonLink>
             <ThemeSelector />
             <HeaderMobileMenu open={open} toggleMobileMenu={toggleMobileMenu} />
+            {
+              <Portal selector="#app">
+                <div
+                  className={`navigation-panel ${
+                    open ? "navigation-panel--open" : ""
+                  }`}
+                  style={childStyle}
+                >
+                  <ul>
+                    {props.routes.map(route => (
+                      <li key={route.id} className={`navigation__menu-item`}>
+                        <Popover.Root
+                          onOpenChange={open =>
+                            handleOpenChange({ route: route.title, open })
+                          }
+                        >
+                          <ButtonLink
+                            design={{
+                              type: "secondary",
+                            }}
+                            baseDesign={{
+                              fluid: isMobile,
+                              typography: {
+                                weight: "medium",
+                                variants: "h3",
+                              },
+                            }}
+                            href={`/${route.url}`}
+                            key={route.id}
+                            className={`navigation__menu-link ${
+                              pathname !== "/" &&
+                              pathname.startsWith(`/${route.url}`)
+                                ? "active"
+                                : ""
+                            } ${
+                              pathname !== "/" &&
+                              pathname.startsWith(`/${route.url}`)
+                                ? "navigation__menu-link--active"
+                                : ""
+                            }`}
+                          >
+                            {route.title}
+                          </ButtonLink>
+                        </Popover.Root>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Portal>
+            }
           </div>
         </nav>
       </header>
