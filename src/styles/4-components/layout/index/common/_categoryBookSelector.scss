@@ -43,6 +43,7 @@ $selected-book-inner-background: var(--app-bg-primary-color);
   height: $book-height;
   width: $book-width;
   background-color: $book-background;
+  transition: background-color 0.5s ease;
   position: relative;
   border-radius: rds-shape(secondary);
   &::before {
@@ -78,15 +79,6 @@ $selected-book-inner-background: var(--app-bg-primary-color);
     text-align: right;
     // align-self: flex-end;
   }
-  &--selected {
-    background-color: $selected-book-background;
-    // background-image: linear-gradient(
-    //   -45deg,
-    //   var(--tertiary7),
-    //   var(--secondary7),
-    //   var(--primary7)
-    // );
-  }
   &::after {
     content: " ";
     border-radius: rds-shape(secondary);
@@ -119,6 +111,18 @@ $selected-book-inner-background: var(--app-bg-primary-color);
   &:focus-within {
     &::after {
       opacity: 1;
+    }
+  }
+
+  &--selected {
+    background-color: $selected-book-background;
+    @include pointing-hover {
+      // $selected-book-background: var(--ui-el-selected-bg-primary-color);
+      background-color: var(--ui-el-selected-bg-tertiary-color);
+      &::after {
+        content: "";
+        opacity: 0;
+      }
     }
   }
 }
