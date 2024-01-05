@@ -31,7 +31,6 @@ export default function HeaderClient(props: HeaderProps): ReactElement {
   const headerRef = useRef<HTMLHeadElement>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { isMobile } = useDevice()
-  console.log(headerRef.current?.clientHeight)
 
   const routes = props.routes
 
