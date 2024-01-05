@@ -19,7 +19,7 @@ export default function Motion<C extends React.ElementType>(
       <Component
         {...rest}
         initial={
-          preventAnimationInCSR && typeof window === "undefined" ? {} : initial
+          preventAnimationInCSR && typeof window === "undefined" ? initial : {}
         }
       />
     </>
