@@ -1,8 +1,8 @@
 "use client"
 
-import { ReactElement, SVGProps, useEffect, useRef, useState } from "react"
+import { SVGProps } from "react"
 import * as Popover from "@radix-ui/react-popover"
-import { ContrastIcon, Loader2Icon, MoonIcon, SunIcon } from "lucide-react"
+import { ContrastIcon, MoonIcon, SunIcon } from "lucide-react"
 
 import { Theme, useSetTheme, useTheme } from "@/store/theme"
 
@@ -20,26 +20,9 @@ const buttonCommonProps: Partial<ButtonProps> = {
 
 const themes = ["light", "dark", "system"] as Theme[]
 
-export default function ThemeSelector(): ReactElement {
+export default function ThemeSelector() {
   const [theme] = useTheme()
   const actions = useSetTheme()
-  const [isMounted, setIsMounted] = useState(false)
-  const targetRef = useRef<HTMLElement>()
-
-  useEffect(() => {
-    setIsMounted(true)
-    const header = document.querySelector("header.header")
-    if (!header) return
-    targetRef.current = header as unknown as HTMLElement
-  }, [])
-
-  if (!isMounted) {
-    return (
-      <button className="theme-trigger">
-        <Loader2Icon className="theme-trigger__icon theme-trigger__icon--loading" />
-      </button>
-    )
-  }
 
   const IconComponent = (
     theme: Theme,
