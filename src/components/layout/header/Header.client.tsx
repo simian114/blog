@@ -1,232 +1,100 @@
 "use client"
-
-// NOTE: clinet-side only
 import { usePathname } from "next/navigation"
-import { ReactElement, useEffect, useMemo, useRef, useState } from "react"
-import { Category, Prisma } from "@prisma/client"
-import { RocketIcon } from "@radix-ui/react-icons"
+import { useState } from "react"
+import { Category } from "@prisma/client"
 import * as Popover from "@radix-ui/react-popover"
 import { ChevronDown } from "lucide-react"
 
 import ButtonLink from "@/components/button/ButtonLink"
-import IconButtonLink from "@/components/button/IconButtonLink"
-import MagicButtonLink from "@/components/magicButton/ButtonLink"
+import { RouteWithCategories } from "@/components/layout/header/Header.server"
 import { useDevice } from "@/components/providers/deviceWidthProvider"
-import { ThemeSelector } from "@/components/theme"
-import DisableScroll from "@/components/util/DisableScroll"
-import Portal from "@/components/util/Portal"
 
-import HeaderMobileMenu from "./HeaderMobileMenu"
-
-type RouteWithCategories = Prisma.RouteGetPayload<{
-  include: { categories: true }
-}>
-
-interface HeaderProps {
-  routes: Array<RouteWithCategories>
+interface HeaderClientProps {
+  routes: RouteWithCategories[]
 }
 
-export default function HeaderClient(props: HeaderProps): ReactElement {
+export default function HeaderClient(props: HeaderClientProps) {
   const pathname = usePathname()
-  const headerRef = useRef<HTMLHeadElement>(null)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { isMobile } = useDevice()
+  const [openedPopover, setOpenedPopover] = useState<string>("")
 
-  const routes = props.routes
-
-  const open = useMemo(
-    () => isMobile && isMobileMenuOpen,
-    [isMobile, isMobileMenuOpen]
-  )
-
-  const [routeMenuOpen, setRouteMenuOpen] = useState(() => {
-    return routes.reduce(
-      (prev: Record<string, boolean>, cur: RouteWithCategories) => {
-        if (!cur.categories?.length) return prev
-        return { ...prev, [cur.title]: false }
-      },
-      {} as Record<string, boolean>
-    )
-  })
-
-  function toggleMobileMenu() {
-    setIsMobileMenuOpen(prev => !prev)
+  function handleOpenPopover(v: string) {
+    setOpenedPopover(v)
   }
 
-  function handleOpenChange({ route, open }: { route: string; open: boolean }) {
-    setRouteMenuOpen({ ...routeMenuOpen, [route]: open })
-  }
-
-  useEffect(() => {
-    setIsMobileMenuOpen(false)
-  }, [pathname])
-  const childStyle = {
-    ["--header-height" as string]: `${headerRef.current?.clientHeight || 56}px`,
-  }
   return (
-    <>
-      <DisableScroll enable={open && isMobile} />
-      <header
-        className="header"
-        ref={headerRef}
-        data-state={open ? "open" : "close"}
-      >
-        <nav className="navigation inner">
-          <IconButtonLink
-            design={{ size: "large" }}
-            href="/"
-            className="navigation__home"
-          >
-            <RocketIcon />
-          </IconButtonLink>
-          <ul
-            className="navigation__menus"
-            data-state={open ? "open" : "close"}
-          >
-            {routes.map((route: RouteWithCategories) => (
-              <li key={route.id} className={`navigation__menu-item`}>
-                <Popover.Root
-                  onOpenChange={open =>
-                    handleOpenChange({ route: route.title, open })
-                  }
-                >
-                  <ButtonLink
-                    design={{
-                      type: "secondary",
-                    }}
-                    baseDesign={{
-                      fluid: isMobile,
-                      typography: {
-                        weight: "medium",
-                        variants: "h3",
-                      },
-                    }}
-                    href={`/${route.url}`}
-                    key={route.id}
-                    className={`navigation__menu-link ${
-                      pathname !== "/" && pathname.startsWith(`/${route.url}`)
-                        ? "active"
-                        : ""
-                    } ${
-                      pathname !== "/" && pathname.startsWith(`/${route.url}`)
-                        ? "navigation__menu-link--active"
-                        : ""
-                    }`}
-                  >
-                    {route.title}
-                  </ButtonLink>
-                  {!isMobile && !!route.categories?.length && (
-                    <>
-                      <Popover.Trigger asChild>
-                        <button className="navigation__icon-wrapper">
-                          <ChevronDown
-                            className={`navigation__icon navigation__icon--${
-                              routeMenuOpen[route.title] ? "open" : "close"
-                            }`}
-                            width={16}
-                            height={16}
-                          />
-                        </button>
-                      </Popover.Trigger>
-                      <Popover.Portal>
-                        <Popover.Content
-                          className="navigation__content"
-                          asChild
-                        >
-                          <ul>
-                            {route.categories.map((category: Category) => (
-                              <ButtonLink
-                                key={category.id}
-                                href={`/${route.url}/${category.url}`}
-                                design={{
-                                  type: "secondary",
-                                }}
-                                baseDesign={{
-                                  fluid: true,
-                                  typography: { weight: "medium" },
-                                }}
-                                style={{ justifyContent: "flex-start" }}
-                              >
-                                {category.title}
-                              </ButtonLink>
-                            ))}
-                            <Popover.Arrow className="navigation__arrow " />
-                          </ul>
-                        </Popover.Content>
-                      </Popover.Portal>
-                    </>
-                  )}
-                </Popover.Root>
-              </li>
-            ))}
-          </ul>
-          <div className="navigation__utils">
-            <MagicButtonLink
-              design={{
-                style: "default",
-                color: "secondary",
-                size: "xsmall",
-                weight: "bold",
-              }}
-              href="/resume"
+    <ul className="navigation__menus">
+      {props.routes.map(route => {
+        const selectedRoute =
+          pathname !== "/" && pathname.startsWith(`/${route.url}`)
+        const openedRoute = route.title === openedPopover
+
+        return (
+          <li key={route.id} className={`navigation__menu-item`}>
+            <Popover.Root
+              onOpenChange={open => open && handleOpenPopover(route.title)}
             >
-              RESUME
-            </MagicButtonLink>
-            <ThemeSelector />
-            <HeaderMobileMenu open={open} toggleMobileMenu={toggleMobileMenu} />
-            {
-              <Portal selector="#app">
-                <div
-                  className={`navigation-panel ${
-                    open ? "navigation-panel--open" : ""
-                  }`}
-                  style={childStyle}
-                >
-                  <ul>
-                    {props.routes.map(route => (
-                      <li key={route.id} className={`navigation__menu-item`}>
-                        <Popover.Root
-                          onOpenChange={open =>
-                            handleOpenChange({ route: route.title, open })
-                          }
-                        >
+              <ButtonLink
+                design={{
+                  type: "secondary",
+                }}
+                baseDesign={{
+                  fluid: isMobile,
+                  typography: {
+                    weight: "medium",
+                    variants: "h3",
+                  },
+                }}
+                href={`/${route.url}`}
+                key={route.id}
+                className={`navigation__menu-link ${
+                  selectedRoute ? "active" : ""
+                } ${selectedRoute ? "navigation__menu-link--active" : ""}`}
+              >
+                {route.title}
+              </ButtonLink>
+              {!isMobile && !!route.categories?.length && (
+                <>
+                  <Popover.Trigger asChild>
+                    <button className="navigation__icon-wrapper">
+                      <ChevronDown
+                        className={`navigation__icon navigation__icon--${
+                          openedRoute ? "open" : "close"
+                        }`}
+                        width={16}
+                        height={16}
+                      />
+                    </button>
+                  </Popover.Trigger>
+                  <Popover.Portal>
+                    <Popover.Content className="navigation__content" asChild>
+                      <ul>
+                        {route.categories.map((category: Category) => (
                           <ButtonLink
+                            key={category.id}
+                            href={`/${route.url}/${category.url}`}
                             design={{
                               type: "secondary",
                             }}
                             baseDesign={{
-                              fluid: isMobile,
-                              typography: {
-                                weight: "medium",
-                                variants: "h3",
-                              },
+                              fluid: true,
+                              typography: { weight: "medium" },
                             }}
-                            href={`/${route.url}`}
-                            key={route.id}
-                            className={`navigation__menu-link ${
-                              pathname !== "/" &&
-                              pathname.startsWith(`/${route.url}`)
-                                ? "active"
-                                : ""
-                            } ${
-                              pathname !== "/" &&
-                              pathname.startsWith(`/${route.url}`)
-                                ? "navigation__menu-link--active"
-                                : ""
-                            }`}
+                            style={{ justifyContent: "flex-start" }}
                           >
-                            {route.title}
+                            {category.title}
                           </ButtonLink>
-                        </Popover.Root>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Portal>
-            }
-          </div>
-        </nav>
-      </header>
-    </>
+                        ))}
+                        <Popover.Arrow className="navigation__arrow " />
+                      </ul>
+                    </Popover.Content>
+                  </Popover.Portal>
+                </>
+              )}
+            </Popover.Root>
+          </li>
+        )
+      })}
+    </ul>
   )
 }
