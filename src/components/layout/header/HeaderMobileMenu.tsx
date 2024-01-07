@@ -49,7 +49,7 @@ function HeaderMobileMenu(props: HeaderMobileMenuProps) {
         <div
           className={`navigation-panel ${open ? "navigation-panel--open" : ""}`}
           style={{
-            ["--header-height" as string]: `${headerHeight || 56}px`,
+            ["--header-height" as string]: `${headerHeight.current || 56}px`,
           }}
         >
           <ul>
