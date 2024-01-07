@@ -1,12 +1,3 @@
-## Prerequisite
-
-- [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)
-  - `nvm install 18.17`
-- [direnv](https://direnv.net/docs/installation.html)
-  - `direnv allow`
-
-### database
-
 ## how to deploy
 
 1. fork
