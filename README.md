@@ -1,3 +1,66 @@
+# Bespoke
+> 어드민으로 모든걸 관리하는, no-code 블로그입니다.
+
+## 기능
+
+### 1. theme 컬러 변경
+next.config.mjs에서 primary / secondary / tertiary를 아래 값으로 변경하면 됩니다.
+  - cyan(default primary), crimson(default secondary), yellow(default tertiary), blue, brown, green, orange, pink, purple, red
+
+### 2. 어드민을 통한 **페이지 조립**
+어드민을 통해 각 페이지를 조립해서 만들 수 있습니다. 
+
+#### 리스트 페이지 (/:route-url/:?cateogry-url)
+- category selector
+  - category selector
+  - category book selector
+- post list
+  - card post list
+  - table post list
+  - simple post list
+- tag selector
+
+예시)
+- [category book selector + card post list의 조합으로 만든 페이지입니다.](https://recketman.vercel.app/blog)
+- [category selector + table post list의 조합으로 만든 페이지입니다.](https://recketman.vercel.app/snippet)
+- [simple post list + tag selector의 조합으로 만든 페이지입니다.](https://recketman.vercel.app/archives)
+
+
+#### 포스트 페이지 (/:rotue-url/:category-url/:post-url)
+- TOC(table of contents)
+- comment
+
+  
+예시)
+- [디테일 페이지, TOC + comment의 조합으로 만든 페이지입니다.](https://recketman.vercel.app/blog/bespoke/tech-stack)
+
+  
+![리스트 페이지 컴포넌트 조립 모달](https://github.com/simian114/blog/assets/49119625/853c7dfc-bf78-43ab-ade7-f7de0691350d)
+
+
+
+### 3. 글 작성
+- markdown형식으로 작성 할 수 있습니다.
+- preview 기능 제공합니다.
+- post 작성 후에는 post의 route / category / tag를 선택할 수 있습니다.
+
+  <figure class="half">
+   <img src="https://github.com/simian114/blog/assets/49119625/7f55128e-75f5-4921-ad3d-7c96b3e8c560" align="center" width="69%">
+  <img src="https://github.com/simian114/blog/assets/49119625/b2966b6e-17dd-4675-8ede-6aced7bef12b" align="center" width="30%">
+  </figure>
+  
+  
+
+### 4. bespoke 컴포넌트 구현
+> no-code 블로그를 지향하지만, 개발자라면 누구나 확장할 수 있습니다.
+
+(규칙은 나중에 작성..)
+현재 bespokse 컴포넌트 시스템으로 만들 수 있는 컴포넌트는 3종류입니다.
+- list page component
+- detail page component
+- mdx custom component
+
+
 ## how to deploy
 
 1. fork
@@ -31,48 +94,6 @@
 
 첫 deploy 이후에 build command를 `next build`로 반드시 변경해주세요!
 
-## admin 페이지
-
-> admin 페이지를 통해 모든 영역을 컨트롤 할 수 있습니다.
-> 만약 admin페이지가 접속이 되지 않는다면 위 env가 잘 세팅되어있는지 다시 확인해주세요.
-
-### 1. route관리
-
-`route`는 pathname 가장 앞에 오게 되는 경로를 책임집니다. `blog` 라우트의 경로는 `https://xxxxxx.xxx.xxx/blog`입니다. 해당 라우트에 포함할 `category`를 선택할 수 있습니다.
-
-1. Route type
-   - bespoke
-       - bespoke 컴포넌트를 이용해 라우트 페이지 페이지 & post 디테일 페이지의 레이아웃을 결정수 있습니다.
-       - code 수정 필요없이 admin 수정만으로 페이지 이용이 가능합니다.
-   - custom
-       - bespoke 컴포넌트를 사용하지 않는 라우트입니다. code에 직접 경로를 추가해야지만 실제 페이지에 접속이 가능합니다.
-2. 레이아웃 변경
-   - 리스트 페이지의 레이아웃을 변경합니다.
-   - category selector / tag selector / simple post list / post list 등 을 조합해서 페이지를 만들 수 있습니다. 아래는 예시 페이지입니다.
-       - [category book selector + card type post list](https://recketman.vercel.app/blog)
-       - [category selector + table type post list](https://recketman.vercel.app/snippet)
-       - [simple post list + tag selector + card type post list](https://recketman.vercel.app/archives)
-3. 상세 페이지 컴포넌트 변경
-    - post 페이지의 구성을 변경합니다.
-    - TOC / Comment의 사용 여부를 결정할 수 있습니다.
-  
-
-### 2. post관리
-> Markdown으로 작성합니다
-기본 마크다운과 동일합니다.
-
-- code
-    - [rehype pretty code](https://rehype-pretty-code.netlify.app/) 적용
-- admonition
-    - tip / note / danger / info / caution 이 구현되어있습니다. 아래처럼 사용하면 됩니다.
-    - ```
-          :::(tip | note | danger | info | caution)
-              내용을 적습니다...
-          :::
-      ```
-### 3. 기타
-category / tag가 추가적으로 있습니다.
-둘 모두 어드민을 통해 관리할 수 있습니다.
 
 
 
