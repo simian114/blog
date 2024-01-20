@@ -27,6 +27,12 @@ function HeaderMobileMenu(props: HeaderMobileMenuProps) {
     setOpen(prev => !prev)
   }
 
+  function handleOnClick() {
+    setTimeout(() => {
+      setOpen(false)
+    }, 200)
+  }
+
   if (!isMobile) {
     return null
   }
@@ -56,16 +62,12 @@ function HeaderMobileMenu(props: HeaderMobileMenuProps) {
             {props.routes.map(route => (
               <li key={route.id} className={`navigation__menu-item`}>
                 <ButtonLink
-                  design={{
-                    type: "secondary",
-                  }}
+                  design={{ type: "secondary" }}
                   baseDesign={{
                     fluid: isMobile,
-                    typography: {
-                      weight: "medium",
-                      variants: "h3",
-                    },
+                    typography: { weight: "medium", variants: "h3" },
                   }}
+                  onClick={handleOnClick}
                   href={`/${route.url}`}
                   key={route.id}
                   className={`navigation__menu-link ${
