@@ -162,6 +162,7 @@ header.header {
   transition-duration: 0.25s;
   transition-timing-function: ease;
   &--open {
+    position: fixed;
     opacity: 1;
     z-index: 1;
     visibility: visible;
