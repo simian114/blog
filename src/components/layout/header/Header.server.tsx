@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client"
 import { RocketIcon } from "@radix-ui/react-icons"
 
 import IconButtonLink from "@/components/button/IconButtonLink"
+import CommandMenuServer from "@/components/commandMenu/CommandMenu.server"
 import HeaderClient from "@/components/layout/header/Header.client"
 import MagicButtonLink from "@/components/magicButton/ButtonLink"
 import { ThemeSelectorLoading } from "@/components/theme"
@@ -55,6 +56,10 @@ export default async function HeaderServer(): Promise<ReactElement> {
             >
               RESUME
             </MagicButtonLink>
+            {/*  */}
+            <CommandMenuServer />
+            {/* <CommandMenu /> */}
+            {/* <CommandMenuVercel /> */}
             <ThemeSelector />
             <HeaderMobileMenu routes={routes} />
           </div>
