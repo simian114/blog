@@ -6,7 +6,6 @@ import { RocketIcon } from "@radix-ui/react-icons"
 import IconButtonLink from "@/components/button/IconButtonLink"
 import CommandMenuServer from "@/components/commandMenu/CommandMenu.server"
 import HeaderClient from "@/components/layout/header/Header.client"
-import MagicButtonLink from "@/components/magicButton/ButtonLink"
 import { ThemeSelectorLoading } from "@/components/theme"
 import { fetchRouteList } from "@/helpers/data/route"
 
@@ -45,21 +44,7 @@ export default async function HeaderServer(): Promise<ReactElement> {
           </IconButtonLink>
           <HeaderClient routes={routes} />
           <div className="navigation__utils">
-            <MagicButtonLink
-              design={{
-                style: "default",
-                color: "secondary",
-                size: "xsmall",
-                weight: "bold",
-              }}
-              href="/resume"
-            >
-              RESUME
-            </MagicButtonLink>
-            {/*  */}
             <CommandMenuServer />
-            {/* <CommandMenu /> */}
-            {/* <CommandMenuVercel /> */}
             <ThemeSelector />
             <HeaderMobileMenu routes={routes} />
           </div>
