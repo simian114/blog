@@ -39,13 +39,13 @@
   }
   // NOTE: 구현해야함
   &--secondary {
-    background-color: transparent;
+    background-color: var(--ui-el-hovered-bg-color);
     color: var(--text-low-color);
     @include pointing-hover {
-      background-color: var(--ui-el-hovered-bg-color);
+      background-color: var(--ui-el-active-bg-color);
     }
     &:active {
-      background-color: var(--ui-el-hovered-bg-color);
+      background-color: var(--ui-el-active-bg-color);
     }
     &:disabled {
       background-color: var(--solid-bg-color) !important;
