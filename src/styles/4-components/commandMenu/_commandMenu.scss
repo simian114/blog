@@ -240,6 +240,7 @@
       transition: 100ms ease;
       transition-property: height;
       padding-bottom: 40px;
+      @include thin-scrollbar;
     }
 
     [cmdk-raycast-open-trigger] {
