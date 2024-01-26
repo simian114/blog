@@ -13,8 +13,10 @@ import {
   SunIcon,
 } from "lucide-react"
 
+import Button from "@/components/button/Button"
 import IconButton from "@/components/button/IconButton"
 import { CommandMenuRoute } from "@/components/commandMenu/CommandMenu.server"
+import Typography from "@/components/typography/Typography"
 import { getPostURL } from "@/helpers/model/post"
 import { capitalizeFirstLetter } from "@/lib/utils"
 import { Theme, useSetTheme, useTheme } from "@/store/theme"
@@ -150,140 +152,155 @@ export default function CommandMenuClient(props: CommandMenuClientProps) {
 
   // NOTE: tag 페이지도 만들까?
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
-      <div className="bespoke">
-        <Command ref={commandRef} onKeyDown={onKeyDown}>
-          <div cmdk-raycast-top-shine="" />
-          <Command.Input
-            ref={inputRef}
-            autoFocus
-            placeholder="어떤걸 찾고 싶으신가요?"
-            onValueChange={setInputValue}
-          />
-          <hr cmdk-raycast-loader="" />
-          <Command.List>
-            <Command.Empty>No results found.</Command.Empty>
+    <>
+      <Button
+        className={`command-menu-button ${
+          open ? "command-menu-button--open" : ""
+        }`}
+        design={{ size: "small", type: "secondary" }}
+        baseDesign={{ typography: { variants: "body2" } }}
+        onClick={() => setOpen(true)}
+      >
+        Search...
+        <Typography as="kbd" variants="caption1">
+          ⌘ K
+        </Typography>
+      </Button>
+      <CommandDialog open={open} onOpenChange={setOpen}>
+        <div className="bespoke">
+          <Command ref={commandRef} onKeyDown={onKeyDown}>
+            <div cmdk-raycast-top-shine="" />
+            <Command.Input
+              ref={inputRef}
+              autoFocus
+              placeholder="어떤걸 찾고 싶으신가요?"
+              onValueChange={setInputValue}
+            />
+            <hr cmdk-raycast-loader="" />
+            <Command.List>
+              <Command.Empty>No results found.</Command.Empty>
 
-            {activePage.type === "route" &&
-              props.routes.map(route => (
+              {activePage.type === "route" &&
+                props.routes.map(route => (
+                  <Command.Group
+                    key={route.id}
+                    heading={capitalizeFirstLetter(route.title)}
+                  >
+                    <Command.Item
+                      value={capitalizeFirstLetter(route.title)}
+                      onSelect={() => {
+                        router.push(`/${route.url}`)
+                        setOpen(false)
+                      }}
+                    >
+                      <ArrowRightToLine />
+                      {capitalizeFirstLetter(route.title)}
+                      <span cmdk-raycast-meta="">Route</span>
+                    </Command.Item>
+                    {route.categories.map(category => (
+                      <Command.Item
+                        key={category.id}
+                        value={category.title}
+                        onSelect={() =>
+                          setCategoryPage({
+                            routeID: route.id,
+                            categoryID: category.id,
+                          })
+                        }
+                      >
+                        <FolderOpen />
+                        {capitalizeFirstLetter(category.title)}
+
+                        <span cmdk-raycast-meta="">Category</span>
+                      </Command.Item>
+                    ))}
+                  </Command.Group>
+                ))}
+              {activePage.type === "category" && (
                 <Command.Group
-                  key={route.id}
-                  heading={capitalizeFirstLetter(route.title)}
+                  heading={
+                    <div>
+                      {capitalizeFirstLetter(
+                        activePage.category.route?.title || ""
+                      )}
+                      {" > "}
+                      {capitalizeFirstLetter(activePage.category.title)}
+                    </div>
+                  }
                 >
                   <Command.Item
-                    value={capitalizeFirstLetter(route.title)}
+                    value={capitalizeFirstLetter(activePage.category.title)}
                     onSelect={() => {
-                      router.push(`/${route.url}`)
+                      const route = props.routes.find(route =>
+                        route.categories.find(
+                          category => category.id === activePage.category.id
+                        )
+                      )
+                      if (!route) {
+                        return
+                      }
+                      router.push(`/${route.url}/${activePage.category.url}`)
                       setOpen(false)
                     }}
                   >
                     <ArrowRightToLine />
-                    {capitalizeFirstLetter(route.title)}
-                    <span cmdk-raycast-meta="">Route</span>
+                    {capitalizeFirstLetter(activePage.category.title)}
+                    <span cmdk-raycast-meta="">Category</span>
                   </Command.Item>
-                  {route.categories.map(category => (
+                  {activePage.category.posts.map(post => (
                     <Command.Item
-                      key={category.id}
-                      value={category.title}
-                      onSelect={() =>
-                        setCategoryPage({
-                          routeID: route.id,
-                          categoryID: category.id,
-                        })
-                      }
+                      key={post.id}
+                      value={capitalizeFirstLetter(post.title)}
+                      onSelect={() => {
+                        router.push(
+                          `/${activePage.category?.route?.url || ""}/${
+                            activePage.category.url
+                          }/${post.url}`
+                        )
+                        setOpen(false)
+                      }}
                     >
-                      <FolderOpen />
-                      {capitalizeFirstLetter(category.title)}
-
-                      <span cmdk-raycast-meta="">Category</span>
+                      <Book />
+                      {capitalizeFirstLetter(post.title)}
+                      <span cmdk-raycast-meta="">Post</span>
                     </Command.Item>
                   ))}
                 </Command.Group>
-              ))}
-            {activePage.type === "category" && (
-              <Command.Group
-                heading={
-                  <div>
-                    {capitalizeFirstLetter(
-                      activePage.category.route?.title || ""
-                    )}
-                    {" > "}
-                    {capitalizeFirstLetter(activePage.category.title)}
-                  </div>
-                }
-              >
-                <Command.Item
-                  value={capitalizeFirstLetter(activePage.category.title)}
-                  onSelect={() => {
-                    const route = props.routes.find(route =>
-                      route.categories.find(
-                        category => category.id === activePage.category.id
-                      )
-                    )
-                    if (!route) {
-                      return
-                    }
-                    router.push(`/${route.url}/${activePage.category.url}`)
-                    setOpen(false)
-                  }}
-                >
-                  <ArrowRightToLine />
-                  {capitalizeFirstLetter(activePage.category.title)}
-                  <span cmdk-raycast-meta="">Category</span>
-                </Command.Item>
-                {activePage.category.posts.map(post => (
-                  <Command.Item
-                    key={post.id}
-                    value={capitalizeFirstLetter(post.title)}
-                    onSelect={() => {
-                      router.push(
-                        `/${activePage.category?.route?.url || ""}/${
-                          activePage.category.url
-                        }/${post.url}`
-                      )
-                      setOpen(false)
-                    }}
-                  >
-                    <Book />
-                    {capitalizeFirstLetter(post.title)}
-                    <span cmdk-raycast-meta="">Post</span>
-                  </Command.Item>
-                ))}
-              </Command.Group>
-            )}
-            {!!inputValue && (
-              <Command.Group heading={"전체 포스트"}>
-                {allPosts.map(post => (
-                  <Command.Item
-                    key={post.id}
-                    value={capitalizeFirstLetter(post.title)}
-                    onSelect={() => {
-                      router.push(`${getPostURL(post)}`)
-                      setOpen(false)
-                    }}
-                  >
-                    <Book />
-                    {capitalizeFirstLetter(post.title)}
-                    <span cmdk-raycast-meta="">Post</span>
-                  </Command.Item>
-                ))}
-              </Command.Group>
-            )}
-          </Command.List>
+              )}
+              {!!inputValue && (
+                <Command.Group heading={"전체 포스트"}>
+                  {allPosts.map(post => (
+                    <Command.Item
+                      key={post.id}
+                      value={capitalizeFirstLetter(post.title)}
+                      onSelect={() => {
+                        router.push(`${getPostURL(post)}`)
+                        setOpen(false)
+                      }}
+                    >
+                      <Book />
+                      {capitalizeFirstLetter(post.title)}
+                      <span cmdk-raycast-meta="">Post</span>
+                    </Command.Item>
+                  ))}
+                </Command.Group>
+              )}
+            </Command.List>
 
-          <div cmdk-raycast-footer="">
-            <div className="theme-container">
-              <ThemeButtons />
+            <div cmdk-raycast-footer="">
+              <div className="theme-container">
+                <ThemeButtons />
+              </div>
+
+              <button cmdk-raycast-open-trigger="">
+                Open
+                <kbd>↵</kbd>
+              </button>
             </div>
-
-            <button cmdk-raycast-open-trigger="">
-              Open
-              <kbd>↵</kbd>
-            </button>
-          </div>
-        </Command>
-      </div>
-    </CommandDialog>
+          </Command>
+        </div>
+      </CommandDialog>
+    </>
   )
 }
 
