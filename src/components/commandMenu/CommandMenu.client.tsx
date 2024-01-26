@@ -267,24 +267,22 @@ export default function CommandMenuClient(props: CommandMenuClientProps) {
                   ))}
                 </Command.Group>
               )}
-              {!!inputValue && (
-                <Command.Group heading={"전체 포스트"}>
-                  {allPosts.map(post => (
-                    <Command.Item
-                      key={post.id}
-                      value={capitalizeFirstLetter(post.title)}
-                      onSelect={() => {
-                        router.push(`${getPostURL(post)}`)
-                        setOpen(false)
-                      }}
-                    >
-                      <Book />
-                      {capitalizeFirstLetter(post.title)}
-                      <span cmdk-raycast-meta="">Post</span>
-                    </Command.Item>
-                  ))}
-                </Command.Group>
-              )}
+              <Command.Group heading={"전체 포스트"}>
+                {allPosts.map(post => (
+                  <Command.Item
+                    key={post.id}
+                    value={capitalizeFirstLetter(post.title)}
+                    onSelect={() => {
+                      router.push(`${getPostURL(post)}`)
+                      setOpen(false)
+                    }}
+                  >
+                    <Book />
+                    {capitalizeFirstLetter(post.title)}
+                    <span cmdk-raycast-meta="">Post</span>
+                  </Command.Item>
+                ))}
+              </Command.Group>
             </Command.List>
 
             <div cmdk-raycast-footer="">
@@ -314,11 +312,9 @@ function ThemeButtons() {
           <IconButton
             key={theme}
             onClick={() => setTheme(theme)}
-            className={`theme-button ${
-              theme === currentTheme ? "theme-button--active" : ""
-            }
-             theme-button--${theme}
-            `}
+            className={`theme-button
+            ${theme === currentTheme ? "theme-button--active" : ""}
+             theme-button--${theme}`}
           >
             {theme === "dark" ? (
               <MoonIcon />

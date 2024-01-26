@@ -242,8 +242,9 @@
       padding-bottom: 40px;
     }
 
-    [cmdk-raycast-open-trigger],
-    [cmdk-raycast-subcommand-trigger] {
+    [cmdk-raycast-open-trigger] {
+      display: flex;
+      align-items: center;
       color: var(--gray11);
       padding: 0px 4px 0px 8px;
       border-radius: 6px;
@@ -301,11 +302,18 @@
         gap: 8px;
       }
       .theme-button {
-        &--active {
+        > svg {
+          fill: var(--solid-bg-tertiary-color);
+          color: var(--solid-bg-tertiary-color);
+        }
+        &--system {
           > svg {
-            fill: var(--solid-bg-tertiary-color);
-            color: var(--solid-bg-tertiary-color);
+            color: var(--gray11);
+            fill: var(--gray3);
           }
+        }
+        &--active {
+          background-color: var(--gray9);
         }
       }
       .theme-button--active.theme-button--system {
